@@ -1,0 +1,22 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+.row {
+  display:inline-block;
+  justify-content: table;
+}
+.column-left {
+  background-image: url("../images/login_bg.png");
+  width: 70%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+
+}
+
+.column-right {
+  width: 30%;
+  background: white;
+}
