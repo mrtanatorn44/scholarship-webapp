@@ -8,16 +8,18 @@ function LoginPage() {
         <div class="column-left d-flex ">
    
         </div>
-        <div class="column-right d-flex">
-          <div class="row-top d-flex align-self-start">
+        <div class="column-right d-flex flex-column">
+
+          <div class="row-top ">
 
           </div>
-          <div class="row-center d-flex align-self-center">
+          <div class="row-center">
             
           </div>
-          <div class="row-bottom d-flex align-self-end ">
+          <div class="row-bottom">
             
           </div>
+
         </div>
       </div>
     </body>
