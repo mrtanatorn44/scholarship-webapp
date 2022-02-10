@@ -1,0 +1,189 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+.main .row {
+  display:inline-block;
+  justify-content: table;
+}
+/*------------- COLUMN LEFT --------------*/
+.main .column-left {
+  width: 20%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+
+.main ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: 'Prompt', sans-serif;
+  
+
+}
+.main li p {
+  display: block;
+  color: white;
+  padding: calc(0.3vw + 0.3vh) calc(0.6vw + 0.6vh);
+  text-decoration: none;
+  font-size: calc(0.8vw + 0.8vh);
+  font-weight: 400;
+}
+
+.main .navs-link .bi{
+  color: white;
+  font-size: calc(1.1vw + 1.1vh);
+  margin-left: calc(0.6vw + 0.6vh);
+  margin-top: calc(0.2vw + 0.2vh);
+}
+
+/*--------NAV MENU--------*/
+.main .column-left .navs-link{
+  height: 100vh;
+  background-color: #74787C;
+}
+.main .navs-link li {
+  cursor: pointer;
+}
+.main .navs-link a {
+  color: rgb(255, 255, 255);
+}
+.main .navs-link a:hover {
+  color: rgb(255, 255, 255);
+}
+.main .navs-link li:hover {
+  background-color: #505356;
+}
+.main .navs-link li:active {
+  background-color: rgb(0, 0, 0);
+}
+
+/*------------- USER PROFILE [COLUMN LEFT] --------------*/
+.main .user-show {
+  display: flex;
+  height: 100%;     
+  overflow: hidden;
+}
+.main .user-profile {
+  width: 25%;
+  height: 100%;
+  float: left;
+  margin: auto;
+}
+.main .user-profile img {
+  margin-top: 12.5%;
+  margin-left: 25%;
+  height: 75%;
+  width: 75%;
+  border-radius: 50%;
+}
+.main .user-info {
+  margin-top: 3%;
+  float: left;
+  width: 75%;
+  text-align: center;
+}
+.main .user-info p {
+  color: white;
+  width: 100%;
+  font-size: calc(0.7vw + 0.7vh);
+  font-family: 'Prompt', sans-serif;
+  margin: auto;
+}
+/*------------- ROW TOP [COLUMN LEFT] --------------*/
+.main .column-left .row-top {
+  width: 100%;
+  height: 10vh;
+  background: #2E2E2E;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+.main .column-left .row-top h4 {
+  color: white;
+  margin: auto;
+  font-size: 20px;
+}
+.main .column-left .row-top h5 {
+  color: white;
+  margin: 1.5vh auto;
+  font-size: 16px;
+}
+
+/*------------- COLUMN RIGHT --------------*/
+.main .column-right {
+  width: 80%;  
+
+}
+/*------------- ROW TOP [COLUMN RIGHT] --------------*/
+.main .column-right .row-top {
+  width: 100%;
+  height: 10vh;
+  background-color: #A62639;
+  font-family: 'Prompt', sans-serif;
+}
+.main .column-right .row-top h5{
+  margin-left: 14vw;
+  margin-top: 2.5vh;
+  font-size: calc(0.9vw + 0.9vh);
+  font-family: 'Prompt', sans-serif;
+  color: white;
+}
+.main .icon-button{
+  margin-left: 17vw;
+  margin-top: 2vh;
+}
+.main .icon-bell{
+  font-size: 3vh;
+  margin-right: 1vw;
+  margin-top: 0.3vh;
+  color: white;
+}
+/*------------- ROW CENTER [COLUMN RIGHT] --------------*/
+.main .column-right .row-center {
+  background-color: #F5F5F5;
+  height: 80vh;
+}
+
+/*------------- ROW BOTTOM [COLUMN RIGHT] --------------*/
+.main .column-right .row-bottom{
+  width: 100%;
+  height: 10vh;
+  background: #A62639;
+  font-family: 'Prompt', sans-serif;
+  color: white;
+  position:fixed;
+  bottom : 1px;
+}
+.main .column-right .row-bottom h5{
+  margin-top: 1.5vh;
+  margin-left: 1vw;
+  font-size: calc(0.8vw + 0.8vh);;
+}
+.main .column-right .row-bottom .ku_src_logo{
+  width: calc(2vw + 2vh);
+  height: calc(2.6vw + 2.6vh);
+  margin-top: 1vh;
+  margin-left: 2vh
+}
+.main .column-right .row-bottom .ku_eng_src_logo{
+  width: calc(3.5vw + 3.5vh);
+  height: calc(2.7vw + 2.7vh);
+  margin-top: 1vh;
+  margin-left: 2vh;
+  margin-right: 2vh;
+}
+
+.main .newsbox {
+  position: absolute;
+  width: 60vw;
+  height: 76vh;
+  left: 31vw;
+  top: 11.5vh;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  font-family: 'Prompt', sans-serif;
+}
+

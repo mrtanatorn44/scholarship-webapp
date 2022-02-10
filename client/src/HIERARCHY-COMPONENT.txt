@@ -1,0 +1,56 @@
+[ALL ------------------ src/contents/all/...     ]
+  LoginPage                   [PAGE]          
+    Login                     [COMPONENT]    
+    AnnouncementLogin         [CONTENT]      
+    
+[STUDENT -------------- src/contents/student/... ]     
+  MainPage                        [PAGE]    
+    Announcement                  [CONTENT]       
+    ScholarshipList               [CONTENT]       
+      ScholarshipListRegister     [SUB-CONTENT]  
+    ScholarshipStatus             [CONTENT]     
+      ScholarshipEdit             [SUB-CONTENT]   
+      InterviewSchedule           [MODAL]           X read only (เวลาสัม)
+    Profile                       [CONTENT]    
+      ProfileEdit                 [SUB-CONTENT]
+
+[INTERVIEWER -------- src/contents/interviewer/...]
+  MainPage                        [PAGE]    
+    Announcement                  [CONTENT]       
+    ScholarshipList               [CONTENT]    
+    Interview                     [CONTENT]       
+      Profile                     [SUB-CONTENT]     X read only (nisit profile)
+      ScholarshipCheckForm        [SUB-CONTENT]     X read only 
+      InterviewRate               [SUB-CONTENT]     X read/write (ประเมิณ)
+      InterviewSchedule           [MODAL]           X read only (เวลาสัม)
+
+[ADMIN ------------- src/contents/admin/...]
+  MainPage                        [PAGE]          
+    Announcement                  [CONTENT]      
+      AnnouncementCreate          [SUB-CONTENT]  
+      AnnouncementEdit            [SUB-CONTENT]  
+    ScholarshipList               [CONTENT]     
+      ScholarshipListCreate       [SUB-CONTENT] 
+      ScholarshipListEdit         [SUB-CONTENT]   
+    Report                        [CONTENT]    
+      ReportInspect               [SUB-CONTENT]   
+    ScholarshipCheck              [CONTENT]       
+      ScholarshipCheckForm        [SUB-CONTENT]    X read/write                   
+      Profile                     [SUB-CONTENT]    X only read  (nisit profile)                 
+    RoleSetting                   [CONTENT]        
+    Interview                     [CONTENT]       
+      InterviewRate               [SUB-CONTENT]    X read only (ประเมิณ)
+      InterviewSchedule           [SUB-CONTENT]    X read/write only (เวลาสัม)
+      InterviewScheduleCreate     [SUB-CONTENT]   
+      InterviewScheduleEdit       [SUB-CONTENT]   
+
+
+
+
+
+
+
+
+
+      
+      

@@ -1,0 +1,86 @@
+/*
+    - ANNOUNCEMENT
+        - HEADER
+        - NEWSLIST
+            - NEWS
+*/
+
+.annoucement-login {
+  font-family: 'Prompt', sans-serif;
+  margin: auto auto auto auto;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  width:  80%;
+  height: 80vh;
+}
+.annoucement-login .header {
+  border-bottom: 2px solid #A62639;
+  height: 10vh;
+}
+.annoucement-login .header .icon-news {
+  width: calc(2.3vw + 2.3vh);
+  height: calc(2.3vw + 2.3vh);
+  margin: 0.5rem 0 0.5rem 0.5rem;
+  border-radius: 50%;
+  font-size: calc(1.5vw + 1.5vh); 
+  color: #fff;
+  text-align: center;
+  background : linear-gradient( #f6c8b1, #DD4A48);;
+}
+.annoucement-login .header h4 {
+  margin: auto 0 auto 0.5rem;
+  font-size: calc(1.2vw + 1.2vh);
+  font-weight: 500;
+}
+.annoucement-login .newslist {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-color: black;
+  height: 70vh;
+}
+.annoucement-login .newslist .news {
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  margin: 2.5%;
+}
+
+.news .title {
+  height: 7vh;
+  border-bottom: 2px solid #7c7c7c;
+  display: flex;
+}
+.news .title h2{
+  margin: auto 0 auto 1rem;
+  text-align: left;
+  width: 80%;
+  font-size: calc(0.9vw + 0.9vh);
+}
+.news .title h3{
+  margin: auto 1rem auto 0;
+  text-align: right;
+  width: 20%;
+  font-size: calc(0.9vw + 0.9vh);
+
+}
+
+.news img {
+  width: 100%;
+  height: 90%;
+}
+
+.news .bottom {
+  display: flex;
+  width: 100%;
+}
+.news .bottom h3{
+  margin: 2% 3% 2% 3%;
+  cursor: pointer;
+  font-size: calc(0.8vw + 0.8vh);
+}
+.news .bottom .user-panel {
+  text-align: right;
+  width: 100%;
+}
+

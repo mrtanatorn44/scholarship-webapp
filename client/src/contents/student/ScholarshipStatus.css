@@ -1,0 +1,28 @@
+.scholarshipstatus {
+    font-family: 'Prompt', sans-serif;
+    margin: 5vh auto 5vh auto;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 5px 0px #949494;
+    width:  80%;
+    height: 70vh;
+}
+.scholarshipstatus .header {
+    border-bottom: 2px solid #A62639;
+    height: 10vh;
+}
+.scholarshipstatus .header .icon-grid {
+    width: calc(2.3vw + 2.3vh);
+    height: calc(2.3vw + 2.3vh);
+    margin: 0.5rem 0 0.5rem 0.5rem;
+    border-radius: 50%;
+    font-size: calc(1.5vw + 1.5vh);
+    color: #fff;
+    text-align: center;
+    background : linear-gradient( #f6c8b1, #DD4A48);;
+}
+.scholarshipstatus .header h4 {
+    margin: auto 0 auto 0.5rem;
+    font-size: calc(1vw + 1vh);
+    font-weight: 500;
+}
