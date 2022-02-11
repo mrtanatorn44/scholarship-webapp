@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import './ScholarshipListRegister.css';
+import './ScholarshipListRegister2.css';
 
-function ScholarshipListRegister(props) {
-
+function ScholarshipListRegister2() {
   return (
     <div class="scholarshipListRegister">
         <div class="header d-flex">
             <div class="icon-three-dots">
                 <i class="bi bi-three-dots"></i>
             </div>
-            
+            <h4>ใบสมัครทุนการศึกษา</h4>
         </div>
         <div class="forms-list">
         <center>
@@ -80,5 +79,4 @@ function ScholarshipListRegister(props) {
   );
 }
 
-
-export default ScholarshipListRegister;
+export default ScholarshipListRegister2

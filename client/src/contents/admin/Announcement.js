@@ -46,7 +46,6 @@ function Announcement(props) {
             <div class='title'>
               <h2>{title}</h2>
               <h3>{date}</h3>
-              
             </div>
             
         

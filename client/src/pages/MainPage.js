@@ -8,10 +8,12 @@ import StudentAnnouncement          from '../contents/student/Announcement.js';
 import StudentScholarshipList       from '../contents/student/ScholarshipList.js';
 import StudentScholarshipStatus     from '../contents/student/ScholarshipStatus.js';
 import StudentProfile               from '../contents/student/Profile.js';
+
 // STUDENT SUB-COMPONENT
 import StudentScholarshipListRegister               from '../sub-contents/student/ScholarshipListRegister.js';
 import StudentScholarshipEdit              from '../sub-contents/student/ScholarshipEdit.js';
 import StudentProfileEdit              from '../sub-contents/student/ProfileEdit.js';
+import StudentProfileCreate              from '../sub-contents/student/ProfileCreate.js';
 // STUDENT MODAL
 import StudentInterviewSchedule               from '../modal/InterviewSchedule.js';
 
@@ -62,8 +64,8 @@ function MainPage() {
   
   const navigate = useNavigate();
 
+  const [content, setContent] = useState("Announcement");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({
     imgUrl: ku_eng_src_logo,
     email : 'before using.',
@@ -72,121 +74,64 @@ function MainPage() {
     lname : '',
     role  : ''
   });
-  const [content, setContent] = useState("Announcement");
 
-  function getLoggin(data) {
-    //setIsLoggedIn(data);
-    //alert(data)
-  }
-
-
-
-  // Authenticating
-  function showUser() {
-
-    
-
-    return (
-      <div className="user-show">
-        <div className='user-profile'>
-          <img 
-            src={user.imgUrl} 
-            alt="user profile"
-            className="user-image"
-          />
-        </div>
-        <div className='user-info'>
-          <p className="user-email">
-            {user.name}
-          </p>
-          <p className="user-name">
-            {user.email}
-          </p>
-        </div>
-      </div>
-    )
-  }
-
-  // Check is Authenticate / IF Not Pass => 'Login-Page'
+  // Check is Login ?
   useEffect(() => {
-    alert('ถ้าข้อมูลไม่ขึ้น ให้ล็อกอินใหม่ แล้วพยามอย่ารีเฟรช')
 
-    async function fetchData() {
-      alert('fetchData is lauching...')
-      console.log('fetData')
+    var isSignedIn;
+    var currentUser;
 
-      
+    async function fetchGoogleAuth() {
       if (window.gapi) {
-        //const auth2 = window.gapi.auth2;
-        var auth2;
-        window.gapi.auth2.getAuthInstance().isSignedIn.listen(fetchLogin);
-        fetchLogin(window.gapi.auth2.getAuthInstance().isSignedIn.get());
-        function fetchLogin(x) {
-          alert('IS SIGNED IN : ' + x)
-        }
-        //updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get());
-
-        if (auth2 != null) {
-          
-          const auth = auth2;
-          const isLoggedIn = auth.isSignedIn.get();
-          if (isLoggedIn && !isAuth) {
-            const cUser = await auth.currentUser.get();
-            const lName = cUser.profileObj.familyName.charAt(0).toUpperCase() + 
-                          cUser.profileObj.familyName.slice(1).toLowerCase()
-            setUser({
-              ...user,
-              imgUrl: cUser.profileObj.imageUrl,
-              email : cUser.profileObj.email,
-              name  : cUser.profileObj.givenName + ' ' + lName,
-              fname : cUser.profileObj.givenName,
-              lname : lName
-            });
-
-            setIsAuth(true);
-            setIsLoggedIn(true);
-
-          } else { alert('isLogedin:' + isLoggedIn + '\n' + 'isAuth:' + isAuth)}
-        } else { alert('auth2 is null')}
-      } else { alert('gapi is null')}
-    }
-    fetchData();
-
-    /*
-    if (!isLoggedIn) {
-      //alert('islogedin' + isLoggedIn)
-      //alert("Please log-in.");
-      //navigate("/");
-    }
-
-    
-    if (isLoggedIn) {
-      return;
-    }
-
-    async function checkSignedIn() {
-      if (window.gapi) {
-        const auth2 = window.gapi.auth2.getAuthInstance()
-        if (auth2 != null) {
-          var isLogin = auth2.isSignedIn.get()
-          if (!isLogin) {
-            navigate("/");
-            alert("Please log-in.");
-          }
-        }
+        // LOAD authenticate
+        await window.gapi.load('auth2', function() {
+          // INIT authenticate
+          window.gapi.auth2.init({
+            client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID
+          }).then( 
+            // LISTEN authenticate
+            async function() {
+              await window.gapi.auth2.getAuthInstance().isSignedIn.listen(fetchLogin);
+              // FETCH isSignedIn & currentUser
+              fetchLogin(window.gapi.auth2.getAuthInstance().isSignedIn.get(),
+                        window.gapi.auth2.getAuthInstance().currentUser.get());
+              function fetchLogin(authIsSignedIn, authCurrentUser) {
+                isSignedIn = authIsSignedIn;
+                currentUser = authCurrentUser;
+              }
+              // ASSIGN value to userState
+              if (isSignedIn && !isLoggedIn) {
+                const lName = currentUser.profileObj.familyName.charAt(0).toUpperCase() + 
+                              currentUser.profileObj.familyName.slice(1).toLowerCase();
+                setUser({
+                  ...user,
+                  imgUrl: currentUser.profileObj.imageUrl,
+                  email : currentUser.profileObj.email,
+                  name  : currentUser.profileObj.givenName + ' ' + lName,
+                  fname : currentUser.profileObj.givenName,
+                  lname : lName
+                });
+                setIsLoggedIn(true);
+              } else if (!isLoggedIn) { 
+                alert('Some thing went wrong, please re-login.')
+              }
+            }
+          );
+        });
+      } else {
+        alert('Google API is not working, please contact admin.')
       }
     }
-    checkSignedIn();*/
-    
+    fetchGoogleAuth();
   }, [])
 
-  // Run after Authenticate is Pass / TO check ROLE
+  // Check user with DB after isLoggedIn
   useEffect(() => {
-    if (isAuth === false) {
+    if (isLoggedIn === false) {
       return;
     }
 
-    console.log(user.email)
+    // GET user from DB by email from G-API
     Axios.post("http://localhost:5000/getUser", {
       email : user.email
     }).then(
@@ -199,39 +144,34 @@ function MainPage() {
             role  : dbRole
           })
           setContent(dbRole.charAt(0).toUpperCase() + dbRole.slice(1) + 'Announcement');
-          //alert('Welcome back, ' + dbRole + ' - ' + user.name);
+          alert('Welcome back, ' + dbRole + ' - ' + user.name);
         } else {
           setUser({
             ...user,
             role  : 'student'
           })
-          var email = user.email;
-          var fname = user.fname;
-          var lname = user.lname;
-          var role  = 'student';
           Axios.put("http://localhost:5000/addUser", {
-            email : email, 
-            fname : fname, 
-            lname : lname, 
-            role  : role
+            email : user.email, 
+            fname : user.fname, 
+            lname : user.lname, 
+            role  : 'student'
           }).then(
             (response) => {
-              alert('Welcome for the first time.')
               setContent('StudentAnnouncement')
+              alert('Welcome for the first time.')
             }
           );
         }
       }
     );
+  }, [isLoggedIn])
 
-  }, [isAuth])
-
-  // Get props data from component child
-  // To change content
+  // GET PROPS DATA FROM METHOD
   function getContent(data) {
     contentPermission(data[0],data[1]);
   }
   
+  // CHECK PERMISSION BEFORE RENDER CONTENT
   function contentPermission(targetRole, targetContent) {
     Axios.post("http://localhost:5000/getUser", {
       email : user.email
@@ -249,10 +189,7 @@ function MainPage() {
       }
     );
   }
-
-  /*
-asdfasdfgasdgfasdfgasdfg
-  */
+  // RENDER CONTENT
   function contentRender() {
     switch (content) {
       /*---------- STUDENT ----------*/
@@ -263,10 +200,12 @@ asdfasdfgasdgfasdfgasdfg
       case 'StudentScholarshipStatus':
         return <StudentScholarshipStatus/>
       case 'StudentProfile':
-        return <StudentProfile/>
+        return <StudentProfile sendContent={getContent}/>
       /*---------- STUDENT SUB-CONTENT --------*/
       case 'StudentScholarshipListRegister':
         return <StudentScholarshipListRegister/>
+      case 'StudentProfileCreate':
+        return <StudentProfileCreate/>
 
       /*---------- INTERVIEWER ----------*/
       case 'InterviewerAnnouncement':
@@ -291,70 +230,68 @@ asdfasdfgasdgfasdfgasdfg
       /*---------- ADMIN SUB-CONTENT ----------*/
       case 'AdminAnnouncementCreate':
         return <AdminAnnouncementCreate sendContent={getContent}/>
-      case 'AdminConfirmModal' :
-        return <AdminConfirmModal sendContent={getContent}/>
       case 'AdminScholarshipListCreate':
         return <AdminScholarshipListCreate sendContent={getContent}/>
 
         
     }
   }
-
-  const contentButtonRender = () => {
-    if (isAuth) {
+  // RENDER BUTTON TO CONTROL CONTENT
+  function contentButtonRender() {
+    if (isLoggedIn) {
       /*---------- STUDENT ----------*/
       if (user.role === 'student') {
         return (
-          <ul class="navs-link">
-            <li class="d-flex" 
+          <ul className="navs-link">
+            <li className="d-flex" 
               style={{
                 background: 
-                  (content==='Announcement')
+                  (content==='StudentAnnouncement')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('student','StudentAnnouncement')}
             >
-              <i class="bi bi-megaphone"></i>
+              <i className="bi bi-megaphone"></i>
               <p>ประกาศข่าวสาร</p>
             </li>
 
-            <li class="current d-flex"
+            <li className="current d-flex"
               style={{
                 background: 
-                  (content==='ScholarshipList')
+                  (content==='StudentScholarshipList')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('student','StudentScholarshipList')}
             >
-              <i class="bi bi-card-list"></i>
+              <i className="bi bi-card-list"></i>
               <p>ทุนที่เปิดให้ลงทะเบียน</p>
             </li>   
 
-            <li class="d-flex"
+            <li className="d-flex"
               style={{
                 background: 
-                  (content==='ScholarshipStatus')
+                  (content==='StudentScholarshipStatus')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('student','StudentScholarshipStatus')}
             >
-              <i class="bi bi-grid-3x3"></i>
+              <i className="bi bi-grid-3x3"></i>
               <p>สถานะทุนปัจจุบัน</p>
             </li>
 
-            <li class="d-flex"
+            <li className="d-flex"
               style={{
                 background: 
-                  (content==='Profile')
+                  (content==='StudentProfile')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('student','StudentProfile')}
             >
-              <i class="bi bi-person"></i>
+              <i className="bi bi-person"></i>
               <p>ข้อมูลส่วนตัว</p>
             </li>
 
@@ -368,39 +305,39 @@ asdfasdfgasdgfasdfgasdfg
             <li class="d-flex" 
               style={{
                 background: 
-                  (content==='Announcement')
+                  (content==='InterviewerAnnouncement')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('interviewer','InterviewerAnnouncement')}
             >
-              <i class="bi bi-megaphone"></i>
+              <i className="bi bi-megaphone"></i>
               <p>ประกาศข่าวสาร</p>
             </li>
 
-            <li class="current d-flex"
+            <li className="current d-flex"
               style={{
                 background: 
-                  (content==='ScholarshipList')
+                  (content==='InterviewerScholarshipList')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('interviewer','InterviewerScholarshipList')}
             >
-              <i class="bi bi-card-list"></i>
+              <i className="bi bi-card-list"></i>
               <p>ทุนที่เปิดให้ลงทะเบียน</p>
             </li>   
 
-            <li class="interview-link d-flex"
+            <li className="interview-link d-flex"
               style={{
                 background: 
-                  (content==='Interview')
+                  (content==='InterviewerInterview')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('interviewer','InterviewerInterview')}
             >
-              <i class="bi bi-calendar-check"></i>
+              <i className="bi bi-calendar-check"></i>
               <p>การสัมภาษณ์</p>
             </li>
           </ul>
@@ -409,190 +346,190 @@ asdfasdfgasdgfasdfgasdfg
       /*---------- ADMIN ----------*/
       else if (user.role === 'admin') {
         return (
-          <ul class="navs-link">
-            <li class="d-flex" 
+          <ul className="navs-link">
+            <li className="d-flex" 
               style={{
                 background: 
-                  (content==='Announcement')
+                  (content==='AdminAnnouncement')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('admin','AdminAnnouncement')}
             >
-              <i class="bi bi-megaphone"></i>
+              <i className="bi bi-megaphone"></i>
               <p>ประกาศข่าวสาร</p>
             </li>
 
-            <li class="current d-flex"
+            <li className="current d-flex"
               style={{
                 background: 
-                  (content==='ScholarshipList')
+                  (content==='AdminScholarshipList')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('admin','AdminScholarshipList')}
             >
-              <i class="bi bi-card-list"></i>
+              <i className="bi bi-card-list"></i>
               <p>ทุนที่เปิดให้ลงทะเบียน</p>
             </li>   
 
-            <li class="d-flex"
+            <li className="d-flex"
               style={{
                 background: 
-                  (content==='Report')
+                  (content==='AdminReport')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('admin','AdminReport')}
             >
-              <i class="bi bi-files"></i>
+              <i className="bi bi-files"></i>
               <p>รายงานทุน</p>
             </li>
 
-            <li class="d-flex"
+            <li className="d-flex"
               style={{
                 background: 
-                  (content==='ScholarshipCheck')
+                  (content==='AdminScholarshipCheck')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('admin','AdminScholarshipCheck')}
             >
-              <i class="bi bi-search"></i>
+              <i className="bi bi-search"></i>
               <p>ตรวจสอบข้อมูล</p>
             </li>
 
-            <li class="d-flex"
+            <li className="d-flex"
               style={{
                 background: 
-                  (content==='RoleSetting')
+                  (content==='AdminRoleSetting')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('admin','AdminRoleSetting')}
             >
-              <i class="bi bi-three-dots"></i>
+              <i className="bi bi-three-dots"></i>
               <p>กำหนดสิทธิ์การเข้าถึง</p>
             </li>
 
-            <li class="interview-link d-flex"
+            <li className="interview-link d-flex"
               style={{
                 background: 
-                  (content==='Interview')
+                  (content==='AdminInterview')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('admin','AdminInterview')}
             >
-              <i class="bi bi-calendar-check"></i>
+              <i className="bi bi-calendar-check"></i>
               <p>การสัมภาษณ์</p>
             </li>
           </ul>
         )
       } else if (user.role === 'deverloper') {
         return (
-          <ul class="navs-link">
-            <li class="d-flex" 
+          <ul className="navs-link">
+            <li className="d-flex" 
               style={{
                 background: 
-                  (content==='Announcement')
+                  (content==='DeverloperAnnouncement')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('deverloper','DeverloperAnnouncement')}
             >
-              <i class="bi bi-megaphone"></i>
+              <i className="bi bi-megaphone"></i>
               <p>ประกาศข่าวสาร</p>
             </li>
 
-            <li class="current d-flex"
+            <li className="current d-flex"
               style={{
                 background: 
-                  (content==='ScholarshipList')
+                  (content==='DeverloperScholarshipList')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('deverloper','DeverloperScholarshipList')}
             >
-              <i class="bi bi-card-list"></i>
+              <i className="bi bi-card-list"></i>
               <p>ทุนที่เปิดให้ลงทะเบียน</p>
             </li>   
 
-            <li class="d-flex"
+            <li className="d-flex"
               style={{
                 background: 
-                  (content==='ScholarshipStatus')
+                  (content==='DeverloperScholarshipStatus')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('deverloper','DeverloperScholarshipStatus')}
             >
-              <i class="bi bi-grid-3x3"></i>
+              <i className="bi bi-grid-3x3"></i>
               <p>สถานะทุนปัจจุบัน</p>
             </li>
 
-            <li class="d-flex"
+            <li className="d-flex"
               style={{
                 background: 
-                  (content==='Profile')
+                  (content==='DeverloperProfile')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('deverloper','DeverloperProfile')}
             >
-              <i class="bi bi-person"></i>
+              <i className="bi bi-person"></i>
               <p>ข้อมูลส่วนตัว</p>
             </li>
 
-            <li class="d-flex"
+            <li className="d-flex"
               style={{
                 background: 
-                  (content==='Report')
+                  (content==='DeverloperReport')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('deverloper','DeverloperReport')}
             >
-              <i class="bi bi-files"></i>
+              <i className="bi bi-files"></i>
               <p>รายงานทุน</p>
             </li>
 
-            <li class="d-flex"
+            <li className="d-flex"
               style={{
                 background: 
-                  (content==='ScholarshipCheck')
+                  (content==='DeverloperScholarshipCheck')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('deverloper','DeverloperScholarshipCheck')}
             >
-              <i class="bi bi-search"></i>
+              <i className="bi bi-search"></i>
               <p>ตรวจสอบข้อมูล</p>
             </li>
 
-            <li class="d-flex"
+            <li className="d-flex"
               style={{
                 background: 
-                  (content==='RoleSetting')
+                  (content==='DeverloperRoleSetting')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('deverloper','DeverloperRoleSetting')}
             >
-              <i class="bi bi-three-dots"></i>
+              <i className="bi bi-three-dots"></i>
               <p>กำหนดสิทธิ์การเข้าถึง</p>
             </li>
 
-            <li class="interview-link d-flex"
+            <li className="interview-link d-flex"
               style={{
                 background: 
-                  (content==='Interview')
+                  (content==='DeverloperInterview')
                     ? '#505356'
                     : '#74787C'
               }}
               onClick={() => contentPermission('deverloper','DeverloperInterview')}
             >
-              <i class="bi bi-calendar-check"></i>
+              <i className="bi bi-calendar-check"></i>
               <p>การสัมภาษณ์</p>
             </li>
           </ul>
@@ -610,7 +547,23 @@ asdfasdfgasdgfasdfgasdfg
 
         <div class="column-left d-flex flex-column"> 
           <div class="row-top">
-            {showUser()}     
+            <div className="user-show">
+              <div className='user-profile'>
+                <img 
+                  src={user.imgUrl} 
+                  alt="user profile"
+                  className="user-image"
+                />
+              </div>
+              <div className='user-info'>
+                <p className="user-email">
+                  {user.name}
+                </p>
+                <p className="user-name">
+                  {user.email}
+                </p>
+              </div>
+            </div>    
           </div>
           
           {contentButtonRender()}
@@ -624,19 +577,9 @@ asdfasdfgasdgfasdfgasdfg
           {/*-----------------------HEADER---------------------*/}
 
           <div class="row-top d-flex ">
-           
             <h5>ระบบขอทุน นิสิตวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขต ศรีราชา</h5>
-            
             <div class="icon-button d-flex">
-              {/* FOR LATER
-              <div class="icon-bell">
-                <i class="bi bi-bell"></i>
-              </div>
-              */}
-
-              {/*<button onClick={() =>test(userEmail)}>TEST</button>*/}
-              <Login sendLogin={getLoggin} />
-              
+              <Login/>
             </div>
           </div>
 
@@ -646,7 +589,6 @@ asdfasdfgasdgfasdfgasdfg
             {contentRender()}
           </div>
           
-
           {/*-----------------------FOOTER---------------------*/}
 
           <div class="row-bottom d-inline-flex ">

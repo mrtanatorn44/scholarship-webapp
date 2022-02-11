@@ -22,7 +22,7 @@ function ScholarshipList(props) {
     const Scholar = ({idScholar,title,detail,date,index,check}) => {
       return(
         <div class = "d-flex">
-          <div className = "scholar">
+          <div className = "scholar-list">
             <div class = 'title'>
               <h2>{title}</h2>
               <h3>{date}</h3>
@@ -34,7 +34,7 @@ function ScholarshipList(props) {
                       {!check ? "รายละเอียดเพิ่มเติม ⋁" : "รายละเอียดเพิ่มเติม ⋀"}
                   </h3>
                 </div>
-              </div>
+              </div> 
 
               {check && <h3>{detail}</h3>} 
           </div>
@@ -69,11 +69,10 @@ function ScholarshipList(props) {
 
   return(
     <div class="schlorshiplist">
-
         <div class="header d-flex">
             <div class="icon-card-list">
                 <i class="bi bi-card-list"></i>
-            </div>
+            </div>  
             <h4>ทุนที่เปิดให้ลงทะเบียน</h4>
 
             <div class='column-center'></div>
@@ -85,9 +84,10 @@ function ScholarshipList(props) {
               </button>
             </div>
         </div>
-
-      <div class="scholarnews">
-              <Scholarship_list/>
+      <div class="center">
+        <div class="scholarnews">
+                <Scholarship_list/>
+        </div>
       </div>
 
     </div>

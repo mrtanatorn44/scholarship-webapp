@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import './ScholarshipListCreate.css';
 import ConfirmModal from '../../modal/ConfirmModal.js';
-import Axios from "axios";
+import Axios from 'axios';
+
 
 function ScholarshipListCreate(props) {
 
   const [showModal, setShowModal] = useState(false);
+
+  const [type, setType] = useState("");
+  const [stdyears, setstdYears] = useState(0);
+  const [detail, setDetail] = useState("");
+  const [supporter, setSupporter] = useState("");
+  const [price, setPrice] = useState(0);
 
   
   
@@ -21,14 +28,17 @@ function ScholarshipListCreate(props) {
     setShowModal(false);
   }
 
+  /* like this is better, i thing. no need scls ok sure*/
+  
+  
+
   const createSCLS = () => {
-    console.log("sdasd");
     Axios.post("http://localhost:5000/creatSCLS", {
-      sclsType : "ทุนเรียนดี",
-      sclsYears : 2565,
-      sclsAttribute :"บัตรประชา",
-      sclsSupporter : "นายก",
-      sclsPrice : 15000
+      Type : type,
+      stdYears : stdyears,
+      Detail : detail,
+      Supporter : supporter,
+      Price : price
     })
   };
 
@@ -64,29 +74,30 @@ function ScholarshipListCreate(props) {
       <div className="center">
         <form>
           <div class="topic">
-            <input type="text" placeholder="ประเภททุน"></input>
-            <input type="text" placeholder="ประจำปีการศึกษา"></input>
+            <input type="text" placeholder="ประเภททุน" onChange={(event) => {setType(event.target.value)}}></input>
+            <input type="text" placeholder="ประจำปีการศึกษา" onChange={(event) => {setstdYears(event.target.value)}}></input>
           </div>
           
           <br></br>
           <div class="detail">
-            <input type="text" placeholder="คุณสมบัติผู้รับทุน"></input>
+            <input type="text" placeholder="คุณสมบัติผู้รับทุน" onChange={(event) => {setDetail(event.target.value)}}></input>
           </div>
 
           <br></br>
           <div class="add-row-bottom d-flex">
             <div class="contributor">
-              <input type="text" placeholder="ผู้สนับสนุน"></input>
+              <input type="text" placeholder="ผู้สนับสนุน" onChange={(event) => {setSupporter(event.target.value)}}></input>
             </div>
             <div class="contributor2">
-              <input type="text" placeholder="จำนวนเงิน"></input>
+              <input type="text" placeholder="จำนวนเงิน" onChange={(event) => {setPrice(event.target.value)}}></input>
             </div>
             <div class="insertbutton d-flex">
 
               <p>หน้า1</p>
-              <button type = "button" onClick ={ ()=> createSCLS()}>
+              <button type = "button">
                 next
               </button>
+              
             </div>
           </div>
             

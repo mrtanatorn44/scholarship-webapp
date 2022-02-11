@@ -26,3 +26,35 @@
     font-size: calc(1vw + 1vh);
     font-weight: 500;
 }
+.scholarshipcheck .input-group {
+    margin-top: calc(0.1vh);
+    margin-left: calc(70vh);
+    text-align: right;
+    width: 35%;
+    height: 35%;
+    border: 1px solid #A62639;
+    border-radius: 14px; 
+}
+.scholarshipcheck .input-group input{
+    width: 80%;
+    height: 100%;
+    border-width: 0px;
+    border:none;
+    outline:none;
+    padding: calc(0.3vw + 0.3vh) calc(0.5vw + 0.5vh);
+    display: inline-block;
+    border-radius: 14px;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    font-size: calc(0.66vw + 0.66vh);
+    
+}
+.scholarshipcheck .input-group button{
+    background-color: #f5f5f5;
+    width: 20%;
+    height: 100%;
+    display: inline-block;
+    border-radius: 14px;
+    box-sizing: border-box;
+    font-size: calc(0.66vw + 0.66vh);
+}

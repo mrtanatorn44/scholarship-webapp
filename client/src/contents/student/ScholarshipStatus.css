@@ -1,4 +1,12 @@
-.scholarshipstatus {
+.button{
+    width: 15%;
+    height: 12vh;
+    background-color: #03A96B;
+    margin: 5vh auto 5vh auto;
+    border-radius: 0.5rem;
+}
+
+.schlorshipstatus {
     font-family: 'Prompt', sans-serif;
     margin: 5vh auto 5vh auto;
     background-color: white;
@@ -7,11 +15,11 @@
     width:  80%;
     height: 70vh;
 }
-.scholarshipstatus .header {
+.schlorshipstatus .header {
     border-bottom: 2px solid #A62639;
     height: 10vh;
 }
-.scholarshipstatus .header .icon-grid {
+.schlorshipstatus .header .icon-grid {
     width: calc(2.3vw + 2.3vh);
     height: calc(2.3vw + 2.3vh);
     margin: 0.5rem 0 0.5rem 0.5rem;
@@ -21,8 +29,51 @@
     text-align: center;
     background : linear-gradient( #f6c8b1, #DD4A48);;
 }
-.scholarshipstatus .header h4 {
+.schlorshipstatus .header h4 {
     margin: auto 0 auto 0.5rem;
     font-size: calc(1vw + 1vh);
     font-weight: 500;
+}
+.schlorshipstatus .scholarnews {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 60vh;
+}
+.schlorshipstatus .scholarnews .scholar {
+    background-color: rgba(240, 240, 240, 0.4);
+    box-shadow: 0px 0px 5px 0px #949494;
+    border-radius: 10px;
+    margin: 2.5%;
+    width:75%;
+}
+.scholar .title {
+    height: 7vh;
+    border-bottom: 2px solid #7c7c7c;
+    display: flex;
+}
+.scholar .title h2{
+    margin: auto 0 auto 1rem;
+    text-align: left;
+    width: 80%;
+    font-size: calc(0.9vw + 0.9vh);
+}
+.scholar .title h3{
+    margin: auto 1rem auto 0;
+    text-align: right;
+    width: 20%;
+    font-size: calc(0.9vw + 0.9vh);
+
+}
+.scholar .bottom {
+    display: flex;
+    width: 100%;
+}
+.scholar .bottom h3{
+    margin: 2% 3% 2% 3%;
+    cursor: pointer;
+    font-size: calc(0.8vw + 0.8vh);
+}
+.schlorshipstatus.scholar .bottom .user-panel {
+    text-align: right;
+
 }

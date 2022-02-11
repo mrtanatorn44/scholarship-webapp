@@ -57,14 +57,7 @@
     
     <!-- GOOGLE -->
     <script src="https://apis.google.com/js/client.js"></script>
-    <script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
-    <script>
-      window.onLoadCallback = function(){
-        gapi.auth2.init({
-            client_id: process.env.GOOGLE_CLIENT_ID 
-          });
-      }
-    </script>
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

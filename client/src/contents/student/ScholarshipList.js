@@ -14,7 +14,6 @@ function ScholarshipList(props) {
     }
     
     const Scholar = ({idScholar,title,detail,date,index,check}) => {
-      
       return(
         <div class = "d-flex">
           <div className = "scholar">

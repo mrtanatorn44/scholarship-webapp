@@ -4,15 +4,15 @@ import './SchlorshipCheck.css';
 import data from '../../data/datanews.js';
 
 function ScholarshipCheck() {
-  function Name_list(){
+  function Check_list(){
     const [visible, setVisible] = useState(false);
     const Scholar = ({idScholar,title,detail,date}) => {
       return(
-        <article className = "scholar">
+        <article className = "scholarcheck">
           <button type="button" onclick="alert('การประเมิน!')">ตรวจสอบเอกสาร</button>
           <button type="button" onclick="alert('เวลาสัมภาษณ์!')">ตรวจสอบประวัติ</button>  
           <div class='bottom'>
-          <h3>{date}</h3>
+            <h3>{detail}</h3>
           </div>
                
         </article>
@@ -59,19 +59,19 @@ function ScholarshipCheck() {
                 <option value="property">ทุนขาดคุณทรัพย์</option>
                 <option value="other">ทุนอื่นๆ</option>
               </select>
-              <div class="input-icons">
-                <input placeholder="Search" required class="input-field" type="text"></input>
-                <i class="bi bi-search"></i>
+              <div class="input-group">
+              <input type="text" placeholder="Search" aria-describedby="button-addon2"/>
+                <button class="btn " type="button" >
+                 <i class="bi bi-search"></i>
+              </button>
             </div>
           </div>
         </form>
         <div calss="row-top-interview">
           <div class="scholarnews">
-                <Name_list/>
+                <Check_list/>
           </div>
         </div>
-
-   
       </div>
 
     </div>

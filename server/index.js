@@ -14,7 +14,7 @@ let dbCon = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "scholarship"
+    database: "scholarship-webapp"
 })
 
 dbCon.connect(function(err) {
@@ -116,14 +116,14 @@ app.put("/editRole", (req, res) => {
 app.post("/creatSCLS", (req,res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
-  const sclsType = req.body.sclsType;
-  const sclsYears = req.body.sclsYears;
-  const sclsAttribute = req.body.sclsAttribute;
-  const sclsSupporter = req.body.sclsSupporter;
-  const sclsPrice= req.body.sclsPrice;
+  const Type = req.body.Type;
+  const stdYears = req.body.stdYears;
+  const Detail = req.body.Detail;
+  const Supporter = req.body.Supporter;
+  const Price= req.body.Price;
   dbCon.query(
-    "INSERT INTO scholarship_list_create (sclsType, sclsYears, sclsAttribute, sclsSupporter ,sclsPrice) VALUES (?, ?, ?, ?, ?)",
-    [sclsType,sclsYears, sclsAttribute, sclsSupporter, sclsPrice],
+    "INSERT INTO scholarship (Type, stdYears, Detail, Supporter ,Price) VALUES (?, ?, ?, ?, ?)",
+    [Type,stdYears, Detail, Supporter, Price],
     (err, result) => {
       if (err) {
         console.log(err);

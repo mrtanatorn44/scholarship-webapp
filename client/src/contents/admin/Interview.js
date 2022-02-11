@@ -8,15 +8,26 @@ function Interview() {
     const [visible, setVisible] = useState(false);
     const Scholar = ({idScholar,title,detail,date}) => {
       return(
-        <article className = "scholar">
+        <article className = "scholar-Interview">
           <div class = 'title'>
             <h2>{title}</h2>
             
           </div>
-          <button type="button" onclick="alert('การประเมิน!')">การประเมิน</button>
-          <button type="button" onclick="alert('เวลาสัมภาษณ์!')">เวลาสัมภาษณ์</button>  
+          <div class="button-Interview d-flex" >
+
+            <button class="button-search d-flex" type="button" onclick="alert('การประเมิน!')">
+              <i class="bi bi-search"></i>
+              <p>การประเมิน</p>
+            </button>
+
+            <button class="button-clock d-flex"  type="button" onclick="alert('เวลาสัมภาษณ์!')">
+              <i class="bi bi-clock"></i>
+              <p>เวลาสัมภาษณ์</p>
+            </button>  
+
+          </div>
           <div class='bottom'>
-          <h3>{date}</h3>
+            <h3>{date}</h3>
           </div>
                
         </article>
@@ -77,8 +88,8 @@ function Interview() {
       </div>
 
 
-        <div calss="row-center-interview">
-          <div class="scholarnews">
+        <div calss="row-center-interview ">
+          <div class="scholarnews ">
                 <Name_list/>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import './ProfileCreate.css'
 
 function ProfileCreate() {
   return (
@@ -68,7 +69,7 @@ function ProfileCreate() {
             <input type="file" name="myfile" required></input>
           </div>
           <div>
-            <label>10.ชื่อ - นามสกุล บิดา-มารดา(ภาษาไทย)</label><br></br>
+            <label>10.ชื่อ - นามสกุล(บิดา)</label><br></br>
             <input placeholder="ชื่อภาษาไทย" required></input>
           </div>
 
@@ -78,26 +79,75 @@ function ProfileCreate() {
               <input class = "halfbar" placeholder="อายุ" required></input>
             
             <br></br>
+              <label>12.สถานะภาพ</label><br></br>
               <select class="form-select form-select-lg mb-3" required>
-                <option value="0">สถานะภาพ</option>
+                <option value="0">เลือก</option>
                 <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                 <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
               </select>
             </form>
           
           <div>
-            <label>12.อาชีพ</label><br></br>
+            <label>13.อาชีพ</label><br></br>
             <input class = "halfbar" placeholder="ระบุอาชีพ" required></input>
           </div>
           <div>
-            <label>เบอร์โทรศัพท์</label><br></br>
+            <label>14.เบอร์โทรศัพท์</label><br></br>
             <input class = "halfbar" placeholder="ระบุเบอร์โทรศัพท์" required></input>
+          </div>
+          <div>
+            <label>15.รายได้ต่อเดือน</label><br></br>
+            <input class = "halfbar" placeholder="ระบุรายได้ต่อเดือน" required></input>
+          </div>
+          <div>
+            <label>16.ที่อยู่ของบิดา</label><br></br>
+            <input class = "halfbar" placeholder="ที่อยู่ของบิดา" required></input>
+          </div>
+          <div>
+            <label>17.ชื่อ-สกุล(มารดา)</label><br></br>
+            <input class = "halfbar" placeholder="ชื่อ-สกุล(มารดา)" required></input>
+          </div>
+          <div>
+            <label>18.อายุ</label><br></br>
+            <input class = "halfbar" placeholder="อายุ" required></input>
+          </div>
+          <div>
+            <label>19.สถานะภาพ</label><br></br>
+            <select class="form-select form-select-lg mb-3" required>
+              <option value="0">เลือก</option>
+              <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
+              <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
+            </select>
+          </div>
+          <div>
+            <label>20.อาชีพ</label><br></br>
+            <input class = "halfbar" placeholder="อาชีพ" required></input>
+          </div>
+          <div>
+            <label>21.เบอร์โทรศัพท์</label><br></br>
+            <input class = "halfbar" placeholder="เบอร์โทรศัพท์" required></input>
+          </div>
+          <div>
+            <label>22.รายได้เดือนละ</label><br></br>
+            <input class = "halfbar" placeholder="รายได้เดือนละ" required></input>
+          </div>
+          <div>
+            <label>23.สถานที่ประกอบอาชีพ</label><br></br>
+            <input class = "halfbar" placeholder="สถานที่ประกอบอาชีพ" required></input>
+          </div>
+          <div>
+            <label>24.ที่อยู่ของมารดา</label><br></br>
+            <input class = "halfbar" placeholder="สถานที่ประกอบอาชีพ" required></input>
+          </div>
+          <div>
+            <label>25.สถานะสมรสของบิดา-มารดา</label><br></br>
+            <input class = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" required></input>
           </div>
 
         </form>
         <div class="footer d-flex">
-          <p class="page">หน้า 1</p>
-          <button class = "next" >ถัดไป</button>
+          <p class="page"></p>
+          <button class = "next" >บันทึก</button>
         </div>
         
       </div>

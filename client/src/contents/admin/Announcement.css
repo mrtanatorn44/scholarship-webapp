@@ -57,8 +57,6 @@
     height: calc(2vw + 2vh);
     border-style: hidden;
     margin: calc(0.7vw + 0.7vh) calc(1vw + 1vh) auto auto;
-    
-            
 }
 .annoucement .addNews p{
     font-size: calc(0.8vw + 0.8vh);

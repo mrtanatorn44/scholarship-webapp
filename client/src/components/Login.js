@@ -4,9 +4,9 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import gmail from '../images/gmail.png';
 import './Login.css';
 
-const clientId = "366469447485-oku97ujalmll79ejpn5852ema6ps668u.apps.googleusercontent.com";
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
-function Login(props) {
+function Login() {
 
   
   const navigate = useNavigate();
@@ -17,12 +17,12 @@ function Login(props) {
   var forceMyOwnLogout = ((response) => {
     //cookie.remove('MyGoogleID', { path: '/' })
     if (window.gapi) {
-        const auth2 = window.gapi.auth2.getAuthInstance()
-        if (auth2 != null) {
-            auth2.signOut().then(
-                auth2.disconnect().then(this.props.onLogoutSuccess)
-            )
-        }
+      const auth2 = window.gapi.auth2.getAuthInstance()
+      if (auth2 != null) {
+        auth2.signOut().then(
+          auth2.disconnect().then(this.props.onLogoutSuccess)
+        )
+      }
     }
     this.forceUpdate()
   })
@@ -35,7 +35,6 @@ function Login(props) {
       setShowloginButton(false);
       setShowlogoutButton(true);
       navigate('/main');
-      props.sendLogin(true);
     } else {
       alert("Please use KU G-mail!");
       forceMyOwnLogout(res);
