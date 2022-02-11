@@ -37,7 +37,7 @@ function Interview() {
               </div>
             );
           })
-        }</section>
+        }</section> 
       );
     }
   return (
@@ -48,24 +48,41 @@ function Interview() {
             </div>
             <h4>การสัมภาษณ์</h4>
         </div>
-      <div>
-        <form>
-          <label>ประเภทของทุน</label><br></br>
-          <select name="capital" id="capital">
-            <option value="study">ทุนเรียนดี</option>
-            <option value="activity">ทุนกิจกรรมเด่น</option>
-            <option value="property">ทุนขาดคุณทรัพย์</option>
-            <option value="other">ทุนอื่นๆ</option>
-          </select>
-          <div class="input-icons">
-          <input placeholder="Search" required class="input-field" type="text"></input>
-          <i class="bi bi-search"></i>
+
+      <div class="row-top-interview">
+        <form class="d-flex">
+          <div class="column-left-interview">
+          
+              <label>ประเภทของทุน</label><br></br>
+              <select  name="capital" id="capital">
+                <option value="study">ทุนเรียนดี</option>
+                <option value="activity">ทุนกิจกรรมเด่น</option>
+                <option value="property">ทุนขาดคุณทรัพย์</option>
+                <option value="other">ทุนอื่นๆ</option>
+              </select>
           </div>
+
+            <div class="column-right-interview" >
+            <div class="input-group">
+              <input type="text" placeholder="Search" aria-describedby="button-addon2"/>
+              <button class="btn " type="button" >
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+         
+              
+            </div>
+          
         </form>
-        <div class="scholarnews">
-              <Name_list/>
-        </div>
       </div>
+
+
+        <div calss="row-center-interview">
+          <div class="scholarnews">
+                <Name_list/>
+          </div>
+        </div>
+      
     </div>
   );
 }

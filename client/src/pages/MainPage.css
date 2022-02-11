@@ -42,7 +42,7 @@ html, body {
 
 /*--------NAV MENU--------*/
 .main .column-left .navs-link{
-  height: 100vh;
+  height: 78vh;
   background-color: #74787C;
 }
 .main .navs-link li {

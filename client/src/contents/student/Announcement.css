@@ -69,7 +69,7 @@
     cursor: pointer;
     font-size: calc(0.8vw + 0.8vh);
 }
-.annoucement.news .bottom .user-panel {
+.annoucement .news .bottom .user-panel {
+    width:50%;
     text-align: right;
-
 }

@@ -3,7 +3,6 @@ const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
 
-
 var corsOptions = {
   origin: "http://localhost:3000"
 };
@@ -26,20 +25,15 @@ dbCon.connect(function(err) {
 /*
   getUser-
   addUser-
-  
   getRole-
   editRole-
-
   getNews
   addNews
   editNews
-
 */
 
 app.post("/getUser", (req, res) => {
-
   const email = req.body.email;
-
   dbCon.query(
     "SELECT email,fname,lname,role FROM user WHERE email = ?",
     [email], 
@@ -52,7 +46,6 @@ app.post("/getUser", (req, res) => {
     }
   );
 });
-
 
 app.put("/addUser", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -105,12 +98,22 @@ app.put("/editRole", (req, res) => {
         console.log(err);
       } else {
         res.send(result);
+        /*
+          []
+
+          {
+            [],
+            [],
+            []
+          }
+        
+        */
       }
     }
   );
 });
 
-app.put("/creatSCLS", (req,res) => {
+app.post("/creatSCLS", (req,res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
   const sclsType = req.body.sclsType;
@@ -118,7 +121,6 @@ app.put("/creatSCLS", (req,res) => {
   const sclsAttribute = req.body.sclsAttribute;
   const sclsSupporter = req.body.sclsSupporter;
   const sclsPrice= req.body.sclsPrice;
-
   dbCon.query(
     "INSERT INTO scholarship_list_create (sclsType, sclsYears, sclsAttribute, sclsSupporter ,sclsPrice) VALUES (?, ?, ?, ?, ?)",
     [sclsType,sclsYears, sclsAttribute, sclsSupporter, sclsPrice],
@@ -131,6 +133,8 @@ app.put("/creatSCLS", (req,res) => {
     }
   );
 });
+
+
 app.listen(5000, () => {
   console.log(`running at port 5000`);
 });

@@ -1,6 +1,7 @@
-/*import React, { useState } from 'react';
+import React, { useState } from 'react';
 import './ScholarshipListCreate.css';
 import ConfirmModal from '../../modal/ConfirmModal.js';
+import Axios from "axios";
 
 function ScholarshipListCreate(props) {
 
@@ -19,6 +20,17 @@ function ScholarshipListCreate(props) {
     }
     setShowModal(false);
   }
+
+  const createSCLS = () => {
+    console.log("sdasd");
+    Axios.post("http://localhost:5000/creatSCLS", {
+      sclsType : "ทุนเรียนดี",
+      sclsYears : 2565,
+      sclsAttribute :"บัตรประชา",
+      sclsSupporter : "นายก",
+      sclsPrice : 15000
+    })
+  };
 
   return (
     <div class="schlorshiplistcreate">
@@ -53,7 +65,7 @@ function ScholarshipListCreate(props) {
         <form>
           <div class="topic">
             <input type="text" placeholder="ประเภททุน"></input>
-            <input type="text" placeholder="ประเภททุน"></input>
+            <input type="text" placeholder="ประจำปีการศึกษา"></input>
           </div>
           
           <br></br>
@@ -65,15 +77,18 @@ function ScholarshipListCreate(props) {
           <div class="add-row-bottom d-flex">
             <div class="contributor">
               <input type="text" placeholder="ผู้สนับสนุน"></input>
-              <input type="text" placeholder="จำนวนเงิน></input>
+            </div>
+            <div class="contributor2">
+              <input type="text" placeholder="จำนวนเงิน"></input>
             </div>
             <div class="insertbutton d-flex">
-              <button>
-                  <i class="bi bi-card-image"></i>  
+
+              <p>หน้า1</p>
+              <button type = "button" onClick ={ ()=> createSCLS()}>
+                next
               </button>
-              <p>เพิ่มรูปภาพ</p>
             </div>
-            </div>
+          </div>
             
            
         </form>
@@ -83,4 +98,4 @@ function ScholarshipListCreate(props) {
 }
 
 
-export default ScholarshipListCreate;*/
+export default ScholarshipListCreate;

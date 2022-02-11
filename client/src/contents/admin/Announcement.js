@@ -34,8 +34,13 @@ function Announcement(props) {
   }
 
   function NewsList() {
-    const [visible, setVisible] = useState(false);
-    const News = ({idNews,title,image,detail,date}) => {
+    const [state, setState] = useState(data.map((x)=>({...x,check:false})));
+    const checkState = (index) =>{
+      let a=[...state];
+      a[index].check=!a[index].check;
+      setState(a);
+    }
+    const News = ({idNews,title,image,detail,date,index,check}) => {
       return(
           <article className="news">
             <div class='title'>
@@ -56,13 +61,13 @@ function Announcement(props) {
                 </h3>
               </div>
               <div class='user-panel'>
-                <h3 onClick={() => setVisible(!visible)}>
-                    {!visible ? "รายละเอียดเพิ่มเติม ⋁" : "รายละเอียดเพิ่มเติม ⋀"}
+                <h3 onClick={() => checkState(index)}>
+                    {!check ? "รายละเอียดเพิ่มเติม ⋁" : "รายละเอียดเพิ่มเติม ⋀"}
                 </h3>
               </div>
             </div>
 
-            {visible && <h3>{detail}</h3>}
+            {check && <h3>{detail}</h3>}
 
           </article>
       );
@@ -70,11 +75,13 @@ function Announcement(props) {
      
     return (
       <section> {
-        data.map((news, index) => {
-          const {image, title, detail, date } = news;
+        state.map((news, index) => {
+          const {image, title, detail, date ,check} = news;
           return (
             <div>
               <News
+                check={check}
+                index={index}
                 date = {date}
                 image={image}
                 title={title}

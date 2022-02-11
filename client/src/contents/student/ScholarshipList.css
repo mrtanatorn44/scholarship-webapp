@@ -1,3 +1,11 @@
+.button{
+    width: 15%;
+    height: 12vh;
+    background-color: #03A96B;
+    margin: 5vh auto 5vh auto;
+    border-radius: 0.5rem;
+}
+
 .schlorshiplist {
     font-family: 'Prompt', sans-serif;
     margin: 5vh auto 5vh auto;

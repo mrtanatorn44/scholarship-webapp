@@ -74,37 +74,17 @@ function MainPage() {
   });
   const [content, setContent] = useState("Announcement");
 
+  function getLoggin(data) {
+    //setIsLoggedIn(data);
+    //alert(data)
+  }
+
+
 
   // Authenticating
   function showUser() {
 
-    const fetchData = async() => {
-      console.log('fetData')
-      if (window.gapi) {
-        const auth2 = window.gapi.auth2.getAuthInstance();
-        if (auth2 != null) {
-          const isLoggedIn = auth2.isSignedIn.get();
-          if (isLoggedIn && !isAuth) {
-            const cUser = await auth2.currentUser.get();
-            const lName = cUser.profileObj.familyName.charAt(0).toUpperCase() + 
-                          cUser.profileObj.familyName.slice(1).toLowerCase()
-            setUser({
-              ...user,
-              imgUrl: cUser.profileObj.imageUrl,
-              email : cUser.profileObj.email,
-              name  : cUser.profileObj.givenName + ' ' + lName,
-              fname : cUser.profileObj.givenName,
-              lname : lName
-            });
-
-            setIsAuth(true);
-            setIsLoggedIn(true);
-
-          }
-        }
-      }
-    }
-    fetchData();
+    
 
     return (
       <div className="user-show">
@@ -129,25 +109,76 @@ function MainPage() {
 
   // Check is Authenticate / IF Not Pass => 'Login-Page'
   useEffect(() => {
+    alert('ถ้าข้อมูลไม่ขึ้น ให้ล็อกอินใหม่ แล้วพยามอย่ารีเฟรช')
+
+    async function fetchData() {
+      alert('fetchData is lauching...')
+      console.log('fetData')
+
+      
+      if (window.gapi) {
+        //const auth2 = window.gapi.auth2;
+        var auth2;
+        window.gapi.auth2.getAuthInstance().isSignedIn.listen(fetchLogin);
+        fetchLogin(window.gapi.auth2.getAuthInstance().isSignedIn.get());
+        function fetchLogin(x) {
+          alert('IS SIGNED IN : ' + x)
+        }
+        //updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get());
+
+        if (auth2 != null) {
+          
+          const auth = auth2;
+          const isLoggedIn = auth.isSignedIn.get();
+          if (isLoggedIn && !isAuth) {
+            const cUser = await auth.currentUser.get();
+            const lName = cUser.profileObj.familyName.charAt(0).toUpperCase() + 
+                          cUser.profileObj.familyName.slice(1).toLowerCase()
+            setUser({
+              ...user,
+              imgUrl: cUser.profileObj.imageUrl,
+              email : cUser.profileObj.email,
+              name  : cUser.profileObj.givenName + ' ' + lName,
+              fname : cUser.profileObj.givenName,
+              lname : lName
+            });
+
+            setIsAuth(true);
+            setIsLoggedIn(true);
+
+          } else { alert('isLogedin:' + isLoggedIn + '\n' + 'isAuth:' + isAuth)}
+        } else { alert('auth2 is null')}
+      } else { alert('gapi is null')}
+    }
+    fetchData();
+
     /*
+    if (!isLoggedIn) {
+      //alert('islogedin' + isLoggedIn)
+      //alert("Please log-in.");
+      //navigate("/");
+    }
+
+    
     if (isLoggedIn) {
       return;
     }
+
     async function checkSignedIn() {
       if (window.gapi) {
         const auth2 = window.gapi.auth2.getAuthInstance()
         if (auth2 != null) {
-          var isLoggedIn = auth2.isSignedIn.get()
-          if (!isLoggedIn) {
+          var isLogin = auth2.isSignedIn.get()
+          if (!isLogin) {
             navigate("/");
             alert("Please log-in.");
           }
         }
       }
     }
-    checkSignedIn();
-    */
-  }, [isLoggedIn])
+    checkSignedIn();*/
+    
+  }, [])
 
   // Run after Authenticate is Pass / TO check ROLE
   useEffect(() => {
@@ -168,7 +199,7 @@ function MainPage() {
             role  : dbRole
           })
           setContent(dbRole.charAt(0).toUpperCase() + dbRole.slice(1) + 'Announcement');
-          alert('Welcome back, ' + dbRole + ' - ' + user.name);
+          //alert('Welcome back, ' + dbRole + ' - ' + user.name);
         } else {
           setUser({
             ...user,
@@ -228,11 +259,15 @@ asdfasdfgasdgfasdfgasdfg
       case 'StudentAnnouncement':
         return  <StudentAnnouncement/>
       case 'StudentScholarshipList':
-        return <StudentScholarshipList/>
+        return <StudentScholarshipList sendContent={getContent}/>
       case 'StudentScholarshipStatus':
         return <StudentScholarshipStatus/>
       case 'StudentProfile':
         return <StudentProfile/>
+      /*---------- STUDENT SUB-CONTENT --------*/
+      case 'StudentScholarshipListRegister':
+        return <StudentScholarshipListRegister/>
+
       /*---------- INTERVIEWER ----------*/
       case 'InterviewerAnnouncement':
         return <InterviewerAnnouncement/>
@@ -600,7 +635,7 @@ asdfasdfgasdgfasdfgasdfg
               */}
 
               {/*<button onClick={() =>test(userEmail)}>TEST</button>*/}
-              <Login/>
+              <Login sendLogin={getLoggin} />
               
             </div>
           </div>

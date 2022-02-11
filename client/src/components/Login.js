@@ -6,7 +6,7 @@ import './Login.css';
 
 const clientId = "366469447485-oku97ujalmll79ejpn5852ema6ps668u.apps.googleusercontent.com";
 
-function Login() {
+function Login(props) {
 
   
   const navigate = useNavigate();
@@ -35,6 +35,7 @@ function Login() {
       setShowloginButton(false);
       setShowlogoutButton(true);
       navigate('/main');
+      props.sendLogin(true);
     } else {
       alert("Please use KU G-mail!");
       forceMyOwnLogout(res);

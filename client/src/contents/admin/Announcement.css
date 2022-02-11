@@ -77,10 +77,7 @@
    
    
 }
-.annoucement .addNews p{ 
-    font-size: calc(0.8vw + 0.8vh);
-    margin: auto;
-}
+
 /* center */
 .annoucement .newslist {
     overflow-y: scroll;
