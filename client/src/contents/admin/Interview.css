@@ -51,23 +51,25 @@
 } 
 .interview .input-group {
     width: 60%;
+    height: 5vh;
     border: 1px solid #A62639;
     border-radius: 10px;
-    background-color: #f5f5f5;
+    
 }
 
 .interview .input-group input{
     width: 80%;
-    height: 5%;
-    border: 1px solid #f5f5f5;
+    height: 90%;
+    
     padding: calc(0.3vw + 0.3vh) calc(0.5vw + 0.5vh);
     display: inline-block;
     border-radius: 7px;
     box-sizing: border-box;
-    
+    background-color: #f5f5f5;
     font-size: calc(0.66vw + 0.66vh);
 }
 .interview .input-group button{
+    background-color: #f5f5f5;
     width: 20%;
     height: 5%;
     display: inline-block;
