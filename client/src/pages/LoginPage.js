@@ -7,23 +7,6 @@ import AnnouncementLogin from '../contents/AnnouncementLogin.js';
 
 function LoginPage() {
 
-  var show = () => {
-    if (window.gapi) {
-      const auth2 = window.gapi.auth2.getAuthInstance()
-      if (auth2 != null) {
-        var res = window.gapi.auth2.getAuthInstance();
-        if (res.isSignedIn.get()) {
-          console.log(res.currentUser.get().profileObj);
-          alert('You are ' + res.currentUser.get().profileObj.email);
-        } else {
-          alert('You are not logged in');
-        }
-      } else {
-        alert('auth2 is not working');
-      }
-    }
-  }
-
   return (
     <body class="login">
       <div class="d-flex">

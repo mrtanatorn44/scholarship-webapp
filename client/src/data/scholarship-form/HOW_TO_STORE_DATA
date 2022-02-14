@@ -1,0 +1,5 @@
+1. OPEN ScholarshipListRegister.js
+2. GET scholarship.db WHERE scholarship_require.db
+3. from 2. RENDER form content 
+4. GET user WHERE profile WHERE profile.json
+5. profile.json

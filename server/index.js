@@ -4,12 +4,23 @@ const mysql = require("mysql");
 const cors = require("cors");
 
 var corsOptions = {
-  origin: "http://localhost:3000"
+  //origin: "http://localhost:3000"
+  origin: '*',
+  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
 
+/*
+header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Headers: *');
+header('Access-Control-Max-Age: 1728000');
+header("Content-Length: 0");
+header("Content-Type: text/plain"); 
+*/
 let dbCon = mysql.createConnection({
     host: "localhost",
     user: "root",

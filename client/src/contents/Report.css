@@ -1,0 +1,121 @@
+.report {
+    font-family: 'Prompt', sans-serif;
+    margin: 5vh auto 5vh auto;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 5px 0px #949494;
+    width:  80%;
+    height: 70vh;
+}
+.report .header {
+    border-bottom: 2px solid #A62639; 
+    height: 10vh;
+}
+.report .header .icon-files{
+    width: calc(2.3vw + 2.3vh);
+    height: calc(2.3vw + 2.3vh);
+    margin: 0.5rem 0 0.5rem 0.5rem;
+    border-radius: 50%;
+    font-size: calc(1.5vw + 1.5vh);
+    color: #fff;
+    text-align: center;
+    background : linear-gradient( #f6c8b1, #DD4A48);
+
+}
+.report .header h4 {
+    margin: auto 0 auto 0.5rem;
+    font-size: calc(1vw + 1vh);
+    font-weight: 500;
+}
+/*--------------------row-top--------------------*/
+
+.report .row-top-report {
+    width: 100%;
+    height: 12vh;
+   
+}
+.report .report-scholarship, .report-term, .report-type, .report-sponcer {
+    width: 15%;
+    margin-left: calc(1vw + 1vh);
+    margin-top: 1vh;
+    font-size: calc(0.7vw + 0.7vh);
+    
+}
+
+.report .row-top-report select {
+    margin-top: calc(0.2vw + 0.2vh);
+    padding: calc(0.2vw + 0.2vh) calc(0.5vw + 0.5vh);
+    display: inline-block;
+    border: 1px solid #A62639;
+    border-radius: 7px;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    font-size: calc(0.66vw + 0.66vh);
+}
+.report .report-scholarship select{
+    width: 100%
+}
+.report .report-term select{
+    width: 100%
+}
+.report .report-type select{
+    width: 100%
+}
+.report .report-sponcer select{
+    width: 100%;
+}
+/*--------------------row-center--------------------*/
+.report .row-center-report{
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 40vh;
+
+}
+.report .reportlist{
+    background-color: white;
+    border-radius: 10px;
+    width: 90%;
+    margin: calc(0.5vw + 0.5vh) auto auto calc(2vw + 2vh);
+    border: 1px solid #A62639;
+    border-top: 4px solid #A62639;
+}
+.reportlist .bottom h3{
+    margin: 2% 3% 2% 3%;
+    cursor: pointer;
+    font-size: calc(0.8vw + 0.8vh);
+}
+
+.reportlist .button-report{
+    margin-left: calc(25vw + 25vh);
+    width: 100%;
+    margin-top: calc(1vw + 1vh);
+    
+}
+.reportlist .button-report button{
+    margin-left: calc(0.5vw + 0.5vh);
+    background-color: #F5F5F5;
+    border-radius: 5px;
+    border-style: hidden;
+    width: 20%; 
+    height: 6vh;
+}
+
+.reportlist .button-report p{
+    padding-left: 13px;
+    padding-top: 11px;
+    font-size: calc(0.7vw + 0.7vh);
+    
+}
+.reportlist .button-search .bi{
+    margin-top: calc(0.2vw + 0.2vh);
+    border-radius: 10px;
+    width: calc(1.7vw + 1.7vh);
+    height: calc(1.7vw + 1.7vh);
+    font-size: calc(1.1vw + 1.1vh);
+    color: white;
+    box-shadow: 0px 0px 2px 0px #949494;
+    background-color: #28C3D7;
+    
+
+}

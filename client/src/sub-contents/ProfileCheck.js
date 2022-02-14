@@ -1,9 +1,10 @@
 import React from 'react';
-import './Profile.css';
+import './ProfileCheck.css';
 
-function Profile(props) {
+
+function ProfileCheck(props) {
   return(
-    <div className="profile">    
+    <div className="profileCheck">    
       <div className="row-top-profile">
         <div className="form-profile">
           <form className="d-flex ">
@@ -47,11 +48,8 @@ function Profile(props) {
           </form>
         </div>
         
-        <div class="botton-edit">
-        <button onClick = {() => props.sendContent(['student','ProfileEdit'])}>
-            <p>แก้ไข้ข้อมูล</p>
-          </button>
-        </div>
+        
+        
       </div>
       <div class="row-bottom-profile">
         <div class="drop-scholaship">
@@ -69,4 +67,4 @@ function Profile(props) {
   )
 }
 
-export default Profile;
+export default ProfileCheck;
