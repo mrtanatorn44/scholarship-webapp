@@ -22,12 +22,10 @@
 }
 .annoucement .newslist .news {
     background-color: rgba(240, 240, 240, 0.4);
-    box-shadow: 0px 0px 5px 0px #cccccc;
+    box-shadow: 0px 0px 10px 0px #838383;
     border-radius: 10px;
     margin: 5% 10% 0% 10%;
 }
-
-
 
 .annoucement .news .title {
     height: 7vh;
@@ -48,9 +46,17 @@
 
 }
 
+.annoucement .news .content {
+    background-color: gray;
+}
+
 .annoucement .news img {
-    width: 100%;
-    height: 90%;
+    display: block;
+
+    margin-left: auto;
+  margin-right: auto;
+    width: auto;
+    height: 20vh;
 }
 
 .annoucement .news .bottom {

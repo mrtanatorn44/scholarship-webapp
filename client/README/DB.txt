@@ -1,0 +1,47 @@
+scholarship
+  id
+  announce_id
+  required_id
+  type              
+  create_date
+  total_price
+  spend_price
+  total_amount
+  spend_amount
+  open_date
+  close_date
+  min_student_year
+  max_student_year
+  on_year
+  on_term
+
+announce
+  id
+  title ประกาศรับนักเรียนทุนเรียนดีเด่น
+  image_url 
+  detail
+  date
+
+required
+  id
+  text
+    [
+      "profile",
+      "sibling",
+      "resident",
+      "daily_life",
+      "scholarship",
+      "volunteer"
+    ]
+  file
+    [
+      "เอกสารยืนยันนิสิต.pdf",
+      "ใบเกรดนิสิต.pdf",
+      "เรียงความ.pdf"
+    ]
+  image
+    [
+      "บัตรประชาชน",
+      "รูปบ้าน",
+      "บัตรนิสิต"
+    ]

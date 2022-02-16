@@ -22,17 +22,9 @@ dbCon.connect(function(err) {
   console.log('Connected to DB');
 });
 
-/*
-  getUser-
-  addUser-
-  getRole-
-  editRole-
-  getNews
-  addNews
-  editNews
-*/
-
 app.post("/getUser", (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   const email = req.body.email;
   dbCon.query(
     "SELECT email,fname,lname,role FROM user WHERE email = ?",
@@ -56,21 +48,6 @@ app.put("/addUser", (req, res) => {
   dbCon.query(
     "INSERT INTO user (email, fname, lname, role) VALUES (?, ?, ?, ?)",
     [email,fname, lname, role], 
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    }
-  );
-});
-
-app.put("/getRole", (req, res) => {
-  const email = req.body.email;
-  dbCon.query(
-    "SELECT role FROM user WHERE email = ?",
-    [email], 
     (err, result) => {
       if (err) {
         console.log(err);
@@ -126,29 +103,22 @@ app.post("/creatSCLS", (req,res) => {
   );
 });
 
-app.get("/announcement", (req, res) => {
+app.get("/getAnnounce", (req, res) => {
   dbCon.query(
-    "SELECT * FROM announcement", (err, result) => {
+    "SELECT * FROM announce", (err, result) => {
     if(err){
       console.log(err);
     }else{
       res.send(result);
-      console.log(result)
+      //console.log(result)
     }
   });
 });
 
-app.get("/announcement", (req, res) => {
-  dbCon.query(
-    "SELECT * FROM announcement", (err, result) => {
-    if(err){
-      console.log(err);
-    }else{
-      res.send(result);
-      console.log(result)
-    }
-  });
-});
+
+
+
+
 
 app.listen(5000, () => {
   console.log(`running at port 5000`);

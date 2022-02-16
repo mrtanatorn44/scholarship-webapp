@@ -14,14 +14,14 @@ function ScholarshipStatus(props) {
     
     const Scholar = ({idScholar,title,detail,date,index,check}) => {
       return(
-        <div class = "d-flex">
+        <div className = "d-flex">
           <div className = "scholar">
-            <div class = 'title'>
+            <div className = 'title'>
               <h2>{title}</h2>
               <h3>{date}</h3>
             </div>
-            <div class='bottom'>
-                <div class='user-panel'>
+            <div className='bottom'>
+                <div className='user-panel'>
                   <h3  onClick={() => checkState(index)}>
                       {!check ? "รายละเอียดเพิ่มเติม ⋁" : "รายละเอียดเพิ่มเติม ⋀"}
                   </h3>
@@ -30,7 +30,7 @@ function ScholarshipStatus(props) {
 
               {check && <h3>{detail}</h3>} 
           </div>
-          <button class = "button" /*onClick = {() => props.sendContent(['student','StudentScholarshipListRegister'])}*/>
+          <button className = "button" /*onClick = {() => props.sendContent(['student','StudentScholarshipListRegister'])}*/>
             นัดหมาย
           </button>
         </div>
@@ -61,15 +61,15 @@ function ScholarshipStatus(props) {
     }
   
   return (
-    <div class="schlorshipstatus">
-        <div class="header d-flex">
-            <div class="icon-grid">
-                <i class="bi bi-grid-3x3"></i>
+    <div className="schlorshipstatus">
+        <div className="header d-flex">
+            <div className="icon-grid">
+                <i className="bi bi-grid-3x3"></i>
             </div>
             <h4>สถานะการยื่นทุน</h4>
         </div>
 
-          <div class="scholarnews">
+          <div className="scholarnews">
             <Scholarship_list/>
           </div>
     </div>

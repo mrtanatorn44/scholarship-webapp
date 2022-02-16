@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
 import './ScholarshipListRegister.css';
-import myForm from '../components/ScholarshipFormFormat.js'
 
 function ScholarshipListRegister(props) {
   return (
-    <div class="scholarshipListRegister">
-        <div class="header d-flex">
-            <div class="icon-three-dots">
-                <i class="bi bi-three-dots"></i>
+    <div className="scholarshipListRegister">
+        <div className="header d-flex">
+            <div className="icon-three-dots">
+                <i className="bi bi-three-dots"></i>
             </div>
             <h4>กรอกประวัติแรกเข้า</h4>
-            
         </div>
-        <div class="forms-list">
-          
-          {myForm}
+        <div className="forms-list">
           
         <center>
-          
           <h5>กรอกประวัติแรกเข้า</h5>
         </center>
         <form className="form-profile">
@@ -27,7 +22,7 @@ function ScholarshipListRegister(props) {
           </div>
           <div>
             <label>นิสิตชั้นปีที่</label><br></br>
-            <select class="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" required>
               <option value="0">เลือก</option>
               <option value="5">5</option>
               <option value="4">4</option>
@@ -46,7 +41,7 @@ function ScholarshipListRegister(props) {
           </div>
           <div>
             <label>ภาคการเรียนการสอน</label><br></br>
-            <select class="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" required>
               <option value="0">เลือก</option>
               <option value="ภาคปกติ">ภาคปกติ</option>
               <option value="ภาคพิเศษ">ภาคพิเศษ</option>
@@ -55,7 +50,7 @@ function ScholarshipListRegister(props) {
           
           <div>
             <label>สาขา</label><br></br>
-            <select class="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" required>
                 <option value="0">เลือก</option>
                 <option value="5">คอมพิวเตอร์</option>
                 <option value="4">ไฟฟ้า</option>
@@ -76,8 +71,8 @@ function ScholarshipListRegister(props) {
             <input placeholder = "เบอร์โทรศัพท์" required></input>
           </div>
         </form>
-        <div class="form-footer">
-          <div class="next-p1 d-flex">
+        <div className="form-footer">
+          <div className="next-p1 d-flex">
             <p>หน้า 1</p>
             <button>Next</button>
           </div>

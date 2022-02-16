@@ -8,14 +8,14 @@ function Report(props) {
     const Scholar = ({idScholar,title,detail,date}) => {
       return(
         <article className = "reportlist">
-            <div class="button-report">
-              <button class="button-search d-flex" type="button"onClick = {() => props.sendContent(['admin','ReportInspect'])}>
-                <i class="bi bi-search"></i>
-                <p>การประเมิน</p>
+            <div className="button-report">
+              <button className="button-search d-flex" type="button"onClick = {() => props.sendContent(['admin','ReportInspect'])}>
+                <i className="bi bi-search"></i>
+                <p>ดูรายละเอียด</p>
               </button> 
             </div>
           
-          <div class='bottom'>
+          <div className='bottom'>
             <h3>{detail}</h3>
           </div>
           
@@ -42,17 +42,17 @@ function Report(props) {
       );
     }
   return (
-    <div class="report">
-        <div class="header d-flex">
-            <div class="icon-files">
-                <i class="bi bi-files"></i>
+    <div className="report">
+        <div className="header d-flex">
+            <div className="icon-files">
+                <i className="bi bi-files"></i>
             </div>
             <h4>รายงานทุน</h4>
         </div>
 
-        <form class="row-top-report d-flex" >
+        <form className="row-top-report d-flex" >
           
-            <div class="report-scholarship">
+            <div className="report-scholarship">
               <label>ทุนปีการศึกษา</label><br></br>
                 <select  name="capital">
                 <option value="2564">2564</option>
@@ -62,7 +62,7 @@ function Report(props) {
                   </select>
             </div> 
 
-            <div class="report-term">
+            <div className="report-term">
               <label>เทอม</label><br></br>
               <select  name="capital" >
                 <option value="first">ต้น</option>
@@ -71,7 +71,7 @@ function Report(props) {
             </div>
             
 
-            <div class="report-type">
+            <div className="report-type">
               <label>ทุนประเภท</label> <br></br>
               <select  name="capital" id="capital">
                 <option value="study">ทุนเรียนดี</option>
@@ -82,7 +82,7 @@ function Report(props) {
             </div>
           
 
-            <div class="report-sponcer">
+            <div className="report-sponcer">
               <label>โดย</label> <br></br>
               <select  name="capital" id="capital">
                 <option value="study">ผู้สนับสนุน</option>
@@ -91,7 +91,7 @@ function Report(props) {
           
        </form>
        
-      <div class="row-center-report">
+      <div className="row-center-report">
         <Report_list/>
       </div>
 

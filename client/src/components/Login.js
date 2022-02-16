@@ -86,7 +86,7 @@ function Login() {
               onClick={renderProps.onClick} 
               className='logout-button'
             >
-              <i class="bi bi-box-arrow-right"></i>
+              <i className="bi bi-box-arrow-right"></i>
             </button>
           )}
           clientId={clientId}

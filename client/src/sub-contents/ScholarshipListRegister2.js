@@ -3,14 +3,14 @@ import './ScholarshipListRegister2.css';
 
 function ScholarshipListRegister2() {
   return (
-    <div class="scholarshipListRegister">
-        <div class="header d-flex">
-            <div class="icon-three-dots">
-                <i class="bi bi-three-dots"></i>
+    <div className="scholarshipListRegister">
+        <div className="header d-flex">
+            <div className="icon-three-dots">
+                <i className="bi bi-three-dots"></i>
             </div>
             <h4>ใบสมัครทุนการศึกษา</h4>
         </div>
-        <div class="forms-list">
+        <div className="forms-list">
         <center>
           
           <h5>กรอกประวัติแรกเข้า</h5>
@@ -22,7 +22,7 @@ function ScholarshipListRegister2() {
           </div>
           <div>
             <label>นิสิตชั้นปีที่</label><br></br>
-            <select class="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" required>
               <option value="0">เลือก</option>
               <option value="5">5</option>
               <option value="4">4</option>
@@ -41,7 +41,7 @@ function ScholarshipListRegister2() {
           </div>
           <div>
             <label>ภาคการเรียนการสอน</label><br></br>
-            <select class="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" required>
               <option value="0">เลือก</option>
               <option value="ภาคปกติ">ภาคปกติ</option>
               <option value="ภาคพิเศษ">ภาคพิเศษ</option>
@@ -50,7 +50,7 @@ function ScholarshipListRegister2() {
           
           <div>
             <label>สาขา</label><br></br>
-            <select class="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" required>
                 <option value="0">เลือก</option>
                 <option value="5">คอมพิวเตอร์</option>
                 <option value="4">ไฟฟ้า</option>

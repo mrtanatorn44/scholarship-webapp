@@ -1,23 +1,18 @@
 import { React, useState, useEffect } from 'react';
 import './ScholarshipCheckForm.css';
-import myForm from '../components/ScholarshipFormFormat.js'
 
 function ScholarshipCheckForm() {
   return (
-    <div class="scholarshipCheckForm">
-        <div class="header d-flex">
-            <div class="icon-three-dots">
-                <i class="bi bi-three-dots"></i>
-                
+    <div className="scholarshipCheckForm">
+        <div className="header d-flex">
+            <div className="icon-three-dots">
+                <i className="bi bi-three-dots"></i>
             </div>
             <h4>ตรวจสอบข้อมูล</h4>
-            
         </div>
-        <div class="forms-list">
-          <myForm/>
+        <div className="forms-list">
           <center>
-          
-          <h5>ตรวจสอบข้อมูล</h5>
+            <h5>ตรวจสอบข้อมูล</h5>
           </center>
         <form className="form-profile">
           <div>
@@ -26,7 +21,7 @@ function ScholarshipCheckForm() {
           </div>
           <div>
             <label>นิสิตชั้นปีที่</label><br></br>
-            <select class="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" required>
               <option value="0">เลือก</option>
               <option value="5">5</option>
               <option value="4">4</option>
@@ -45,7 +40,7 @@ function ScholarshipCheckForm() {
           </div>
           <div>
             <label>ภาคการเรียนการสอน</label><br></br>
-            <select class="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" required>
               <option value="0">เลือก</option>
               <option value="ภาคปกติ">ภาคปกติ</option>
               <option value="ภาคพิเศษ">ภาคพิเศษ</option>
@@ -54,7 +49,7 @@ function ScholarshipCheckForm() {
           
           <div>
             <label>สาขา</label><br></br>
-            <select class="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" required>
                 <option value="0">เลือก</option>
                 <option value="5">คอมพิวเตอร์</option>
                 <option value="4">ไฟฟ้า</option>
@@ -77,28 +72,28 @@ function ScholarshipCheckForm() {
         </form>
 
         <form>
-          <div class="form-checks d-flex">
-              <div class="form-check-true">
+          <div className="form-checks d-flex">
+              <div className="form-check-true">
                 <input type="radio" id="check1"></input>
                 <label for="check1">สมบูรณ์</label>
               </div>
               
-              <div class="form-check-false">
+              <div className="form-check-false">
                 <input type="radio" id="check2"></input>
                 <label for="check2">ไม่สมบูรณ์</label>
               </div> 
           </div>
 
-          <div class="form-note">
-            <div class="note">
+          <div className="form-note">
+            <div className="note">
               <label>หมายเหตุ</label><br></br>
               <input></input>
             </div>
           </div>
         </form>
 
-        <div class="form-footer">
-          <div class="next-p1 d-flex">
+        <div className="form-footer">
+          <div className="next-p1 d-flex">
             <p>หน้า 1</p>
             <button>Next</button>
           </div>

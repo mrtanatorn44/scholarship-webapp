@@ -9,15 +9,15 @@ function AnnouncementLogin() {
     const News = ({idNews,title,image,detail,date}) => {
       return(
           <article className="news">
-            <div class='title'>
+            <div className='title'>
               <h2>{title}</h2>
               <h3>{date}</h3>
             </div>
             
         
             <img src={image} alt='scholarship promote'/>
-            <div class='bottom'>
-              <div class='user-panel'>
+            <div className='bottom'>
+              <div className='user-panel'>
                 <h3 onClick={() => setVisible(!visible)}>
                     {!visible ? "รายละเอียดเพิ่มเติม ∨" : "รายละเอียดเพิ่มเติม ∧"}
                 </h3>
@@ -50,16 +50,16 @@ function AnnouncementLogin() {
   }
 
   return (
-    <div class="annoucement-login">
+    <div className="annoucement-login">
 
-      <div class="header d-flex">
-        <div class="icon-news">
-          <i class="bi bi-megaphone"></i>
+      <div className="header d-flex">
+        <div className="icon-news">
+          <i className="bi bi-megaphone"></i>
         </div>
         <h4>ประกาศข่าวสาร</h4>
       </div>
 
-      <div class="newslist">
+      <div className="newslist">
         <NewsList/>
       </div>
 

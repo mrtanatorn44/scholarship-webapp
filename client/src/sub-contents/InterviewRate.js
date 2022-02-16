@@ -3,56 +3,57 @@ import './InterviewRate.css';
 
 function InterviewRate(props) {
   return (
-  <div class="interviewrate">
-    <div class="header d-flex">
+  <div className="interviewrate">
+    <div className="header d-flex">
       <h4>คะแนนการสัมภาษณ์</h4>
     </div>
-    <div class="center d-flex">
+    <div className="center d-flex">
       <form>
-        <div class="detail1">
-          <p>เมินด้าน1</p>
-          <input type="text" placeholder="50.00"></input>
-        </div>
-        <br></br>
-
-        <div class="detail2">
-          <p>เมินด้าน2</p>
-          <input type="text" placeholder="70.00"></input>
-        </div>
-        <br></br>
-                
-        <div class="detail3">
-          <p>เมินด้าน3</p>
-          <input type="text" placeholder="90.00"></input>
-        </div>
-        <br></br>
-
-        <div class="detail4">
-          <div class="detail4.1">
-            <p>ประเมินด้านxxx</p>
-            <button type = "button">
-              <p>ผ่าน</p>
-            </button>
-            <button type = "button">
-            <p>ไม่ผ่าน</p>
-            </button>
+        <div className="score">
+          <div className="detail1">
+            <p>ประเมินด้าน1</p>
+            <input type="text" placeholder="50.00"></input>
           </div>
-          <div class="detail4.2">
-            <p>ประเมินด้านxxx</p>
-            <button type = "button">
-              <p>ผ่าน</p>
-            </button>
-            <button type = "button">
-              <p>ไม่ผ่าน</p>
-            </button>
+          <br></br>
+
+          <div className="detail2">
+            <p>ประเมินด้าน2</p>
+            <input type="text" placeholder="70.00"></input>
           </div>
+          <br></br>
+                  
+          <div className="detail3">
+            <p>ประเมินด้าน3</p>
+            <input type="text" placeholder="90.00"></input>
+          </div>
+          <br></br>
+        </div>
+
+        <div className="detail4">
+          <div className="interview-topic">
+              <p>ประเมินด้าน xxx</p>
+          </div>
+          <div className="interview-checks d-flex ">
+              <div className="interview-check-true">
+                <input type="radio" id="check1"></input>
+                <label for="check1">สมบูรณ์</label>
+              </div>
+              
+              <div className="interview-check-false">
+                <input type="radio" id="check2"></input>
+                <label for="check2">ไม่สมบูรณ์</label>
+              </div> 
+          </div>
+         
         </div>   
       </form>
     </div>
-    <div class="confirm d-flex">
-    	<button type = "button">
-        ยืนยัน
-      </button>    
+    <div className="fotter-confirm d-flex">
+      <div className="confirm"> 
+        <button type = "button">
+          <p>ยืนยัน</p>
+        </button>    
+        </div>
     </div>
   </div>
   );

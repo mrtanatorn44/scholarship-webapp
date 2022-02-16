@@ -37,7 +37,6 @@ import ku_eng_src_logo    from "../images/engsrc.png";
 import ku_src_logo        from "../images/ku.png";
 
 
-import myData from "../data/scholarship-form/data.json";
 
 function MainPage() {
   
@@ -81,10 +80,7 @@ function MainPage() {
               
               // ASSIGN value to userState
               if (isSignedIn && !isLoggedIn) {
-                console.log(currentUser.profileObj);
-                myData.profile.fname = "kasidath"
-                console.log(JSON.stringify(myData.profile.fname ))
-
+                // console.log(currentUser.profileObj);
                 const lName = currentUser.profileObj.familyName.charAt(0).toUpperCase() + 
                               currentUser.profileObj.familyName.slice(1).toLowerCase();
                 setUser({
@@ -408,13 +404,13 @@ function MainPage() {
   }
  
   return (
-    <div class='main'>
-      <div class="d-flex">      
+    <div className='main'>
+      <div className="d-flex">      
 
         {/*-----------------------LEFT NAV BAR---------------------*/}
 
-        <div class="column-left d-flex flex-column"> 
-          <div class="row-top">
+        <div className="column-left d-flex flex-column"> 
+          <div className="row-top">
             <div className="user-show">
               <div className='user-profile'>
                 <img 
@@ -440,30 +436,30 @@ function MainPage() {
           <button onClick={() => setUser({...user, role: 'admin'})}>show ADMIN</button>
           
         </div>
-        <div class="column-right d-flex flex-column">
+        <div className="column-right d-flex flex-column">
 
           {/*-----------------------HEADER---------------------*/}
 
-          <div class="row-top d-flex">
-            <div class="title">
+          <div className="row-top d-flex">
+            <div className="title">
               <h5>ระบบขอทุน นิสิตวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขต ศรีราชา</h5>
             </div>
-            <div class="icon-button d-flex">
+            <div className="icon-button d-flex">
               <Login/>
             </div>
           </div>
 
           {/*-----------------------CONTENT---------------------*/}
 
-          <div class="row-center ">
+          <div className="row-center ">
             {contentRender()}
           </div>
           
           {/*-----------------------FOOTER---------------------*/}
 
-          <div class="row-bottom d-inline-flex ">
-            <img src={ku_src_logo} class="ku_src_logo" alt="eng src"/>
-            <img src={ku_eng_src_logo} class="ku_eng_src_logo" alt="eng src"/>
+          <div className="row-bottom d-inline-flex ">
+            <img src={ku_src_logo} className="ku_src_logo" alt="eng src"/>
+            <img src={ku_eng_src_logo} className="ku_eng_src_logo" alt="eng src"/>
             <h5>
               คณะวิศวกรรมศาสตร์ ศรีราชา
               <br></br>
