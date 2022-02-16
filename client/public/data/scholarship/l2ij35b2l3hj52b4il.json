@@ -1,0 +1,40 @@
+{
+  "id": 0,
+  "inData": {
+    "type": "เรียนดี",
+    "createDate": "10/2/2022",
+    "price": 100000,
+    "amount": 10,
+    "openDate":"15/2/2022",
+    "closeDate":"15/3/2022",
+    "minStudentYear":"62",
+    "maxStudentYear":"60",
+    "onYear":"2022",
+    "onTerm":"1"
+  },
+  "exData": {
+    "title": "ประกาศรับนักเรียนทุนเรียนดีเด่น",
+		"imageUrl": "https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg",
+		"detail": "detail xx1",
+		"showDetail": false,
+    "date": "19/1/21"
+  },
+  "required": {
+    "text": {
+      "studentProfile": true,
+      "sibling": false,
+      "residence": false,
+      "transport": false,
+      "living": false,
+      "scholarship": false,
+      "volunteer": false
+    },
+    "file": {
+      "identiryCard": false,
+      "homeImg": false,
+      "studentIdentify": false,
+      "studentGpa": false,
+      "essay": false
+    }
+  }
+}

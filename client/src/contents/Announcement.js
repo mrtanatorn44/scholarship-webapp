@@ -15,6 +15,15 @@ import AnnouncementCreate from '../sub-contents/AnnouncementCreate.js';
 */
 function Announcement(props) {
 
+  const [AnnouncementList,setAnnouncementList] = useState([]);
+  const getAnnouncement = () =>{
+    Axios.get("http://localhost:5000/announcement", {}).then((response)=> { 
+      console.log(response)
+
+      setAnnouncementList(response.data);
+    })
+      //"กูจับตาดูมึงอยู่นะ" 
+  }
   
   const navigate = useNavigate();
 
@@ -27,104 +36,51 @@ function Announcement(props) {
   }
   const getPermission =()=>{
     alert('fetching...');
-
-    Axios.get("http://localhost:5000/product").then((response)=>{
-      alert(response.data);
-    });  
   }
 
   function NewsList() {
     const [state, setState] = useState(data.map((x)=>({...x,check:false})));
-    const checkState = (index) =>{
+    const checkState = (index) => {
       let a=[...state];
       a[index].check=!a[index].check;
       setState(a);
     }
-    const News = ({idNews,title,image,detail,date,index,check}) => {
-      return(
+    
+    return (
+      state.map((news, index) => {
+        return (
           <article className="news">
             <div class='title'>
-              <h2>{title}</h2>
-              <h3>{date}</h3>
+              <h2>{news.title}</h2>
+              <h3>{news.date}</h3>
             </div>
-            
         
-            <img src={image} alt='scholarship promote'/>
+            <img src={news.image} alt='scholarship promote'/>
             <div class='bottom'>
               <div class='admin-panel'>
-                <h3 onClick={getPermission}>
-                  EDIT
-                </h3>
-                <h3 >
-                  DELETE
-                </h3>
               </div>
               <div class='user-panel'>
                 <h3 onClick={() => checkState(index)}>
-                    {!check ? "รายละเอียดเพิ่มเติม ⋁" : "รายละเอียดเพิ่มเติม ⋀"}
+                    {!news.check ? "รายละเอียดเพิ่มเติม ⋁" : "รายละเอียดเพิ่มเติม ⋀"}
                 </h3>
               </div>
             </div>
-
-            {check && <h3>{detail}</h3>}
-
+            {news.check && <h3>{news.detail}</h3>}
           </article>
-      );
-    }
-     
-    return (
-      <section> {
-        state.map((news, index) => {
-          const {image, title, detail, date ,check} = news;
-          return (
-            <div>
-              <News
-                check={check}
-                index={index}
-                date = {date}
-                image={image}
-                title={title}
-                detail={detail}
-              />
-            </div>
-          );
-        })
-      } </section>
-    );
+        );
+      })
+    )
   }
 
   return (
     <div class="annoucement">
 
-      <div class="header d-flex">
- 
-        <div class='column-left d-flex'>
-          <div class="icon-news">
-            <i class="bi bi-megaphone"></i>
-          </div> 
-          <h4>ประกาศข่าวสาร</h4>
-        </div>
-        
-        <div class='column-center'>
+      <p>Ea aute elit minim aute. Nulla consequat labore consectetur quis aute. Quis dolor sint commodo ad laborum excepteur tempor sit dolore ex incididunt velit nisi. Id sit pariatur cillum sint aliquip adipisicing elit labore officia. Ullamco qui eiusmod incididunt veniam pariatur incididunt aute ut quis esse ut non. Enim aliquip commodo tempor ex minim ea in aliquip esse. Sit excepteur elit incididunt quis sit nulla enim consequat aliquip aliqua.</p>
 
-        </div>
-
-        <div class='column-right'>
-          
-            <button  className='addNews d-flex' onClick={ () => props.sendContent(['admin', 'AnnouncementCreate']) } >
-              <i class="bi bi-plus-lg"></i>
-              <p>เพิ่มข่าวสาร</p>
-            </button>
-          
-        </div>
-
-      </div>
-
-      <div class="newslist">
-        <NewsList/>
-      </div>
-
-    </div>
+<div class="newslist">
+<NewsList/>
+</div>
+</div>
   );
 }
 

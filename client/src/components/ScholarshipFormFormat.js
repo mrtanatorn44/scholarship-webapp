@@ -2,6 +2,7 @@ import React from 'react'
 import data from '../data/form.json';
 
 function ScholarshipFormFormat() {
+  
   alert(data.name)
 
   alert("X")

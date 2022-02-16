@@ -7,99 +7,26 @@
 
 .annoucement {
     font-family: 'Prompt', sans-serif;
-    margin: 5vh auto 5vh auto;
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow: 0px 0px 5px 0px #949494;
-    width:  80%;
-    height: 70vh;
-}
-/*    header     */
-.annoucement .header{
-    border-bottom: 2px solid #A62639;
     
-}
-.annoucement .header .column-left {
-    height: 9vh;
-    width: 30%;
-    
-}
-
-.annoucement .header .column-left .icon-news {
-    width: calc(2.3vw + 2.3vh);
-    height: calc(2.3vw + 2.3vh);
-    margin: 0.5rem 0 0.5rem 0.5rem;
-    border-radius: 50%;
-    font-size: calc(1.5vw + 1.5vh);
-    color: #fff;
-    text-align: center;
-    background : linear-gradient( #f6c8b1, #DD4A48);;
-}
-.annoucement .header .column-left h4 {
-    margin: auto 0 auto 0.5rem;
-    font-size: calc(1vw + 1vh);
-    font-weight: 500;
-}
-.annoucement .header .column-center{
-    width: 40%;
-    height: 10vh;
-}
-
-.annoucement .header .column-right{
-    width: 30%;
-    height: 9vh;
-
-}
-.annoucement .header .column-right .addNews{
-    background-color: #F5F5F5;
-    border-radius: 5px;
-    width: calc(8vw + 8vh);
-    height: calc(2vw + 2vh);
-    border-style: hidden;
-    margin: calc(0.7vw + 0.7vh) calc(1vw + 1vh) auto auto;
-}
-.annoucement .addNews p{
-    font-size: calc(0.8vw + 0.8vh);
-    margin: auto;
-}
-
-.annoucement .addNews .bi{
-    background-color: #03A96B;
-    border-radius: 10px;
-    width: calc(1.5vw + 1.5vh);
-    height: calc(1.5vw + 1.5vh);
-    font-size: calc(1.1vw + 1.1vh);
-    color: white;
-    margin: auto;
-    
-   
-   
+    background-color: rgb(255, 255, 255);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 93vh;
 }
 
 /* center */
 .annoucement .newslist {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height: 60vh;
+
+    margin: 30px;
+    height: 100%;
 }
 .annoucement .newslist .news {
     background-color: rgba(240, 240, 240, 0.4);
-    box-shadow: 0px 0px 5px 0px #949494;
+    box-shadow: 0px 0px 5px 0px #cccccc;
     border-radius: 10px;
-    margin: 2.5%;
+    margin: 5% 10% 0% 10%;
 }
 
-
-
-.annoucement .createNews .createForm{
-    font-family: 'Prompt', sans-serif;
-    margin: 5vh auto 5vh auto;
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow: 0px 0px 5px 0px #949494;
-    width:  80%;
-    height: 70vh;
-}
 
 
 .annoucement .news .title {

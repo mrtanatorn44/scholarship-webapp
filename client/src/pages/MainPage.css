@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   width: 100%;
+  overflow: auto;
 }
 .main .row {
   display:inline-block;
@@ -8,8 +9,8 @@ html, body {
 }
 /*------------- COLUMN LEFT --------------*/
 .main .column-left {
-  width: 20%;
-  height: 100vh;
+  width: 17%;
+  height: 100%;
   background-repeat: no-repeat;
   background-size: cover;
   
@@ -76,8 +77,8 @@ html, body {
 .main .user-profile img {
   margin-top: 12.5%;
   margin-left: 25%;
-  height: 75%;
-  width: 75%;
+  height: 70%;
+  width: 60%;
   border-radius: 50%;
 }
 .main .user-info {
@@ -89,14 +90,14 @@ html, body {
 .main .user-info p {
   color: white;
   width: 100%;
-  font-size: calc(0.7vw + 0.7vh);
+  font-size: calc(0.6vw + 0.6vh);
   font-family: 'Prompt', sans-serif;
   margin: auto;
 }
 /*------------- ROW TOP [COLUMN LEFT] --------------*/
 .main .column-left .row-top {
   width: 100%;
-  height: 10vh;
+  height: 7vh;
   background: #2E2E2E;
   font-family: 'Roboto', sans-serif;
   text-align: center;
@@ -114,20 +115,24 @@ html, body {
 
 /*------------- COLUMN RIGHT --------------*/
 .main .column-right {
-  width: 80%;  
-
+  width: 83%;  
+  height: 100vh;
 }
 /*------------- ROW TOP [COLUMN RIGHT] --------------*/
 .main .column-right .row-top {
   width: 100%;
-  height: 10vh;
+  height: 7vh;
   background-color: #A62639;
   font-family: 'Prompt', sans-serif;
 }
+.main .column-right .row-top .title {
+  width: 60%;
+}
+
 .main .column-right .row-top h5{
   margin-left: 14vw;
   margin-top: 2.5vh;
-  font-size: calc(0.9vw + 0.9vh);
+  font-size: calc(0.7vw + 0.7vh);
   font-family: 'Prompt', sans-serif;
   color: white;
 }
@@ -145,12 +150,13 @@ html, body {
 .main .column-right .row-center {
   background-color: #F5F5F5;
   height: 80vh;
+  width: 100%;
 }
 
 /*------------- ROW BOTTOM [COLUMN RIGHT] --------------*/
 .main .column-right .row-bottom{
   width: 100%;
-  height: 10vh;
+  height: 7vh;
   background: #A62639;
   font-family: 'Prompt', sans-serif;
   color: white;

@@ -1,26 +1,15 @@
 const express = require("express");
-const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
 
-var corsOptions = {
-  //origin: "http://localhost:3000"
-  origin: '*',
-  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
-};
-
-app.use(cors(corsOptions));
+const app = express();
 app.use(express.json());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
-/*
-header("Access-Control-Allow-Origin: *");
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-header('Access-Control-Allow-Headers: *');
-header('Access-Control-Max-Age: 1728000');
-header("Content-Length: 0");
-header("Content-Type: text/plain"); 
-*/
 let dbCon = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -59,8 +48,6 @@ app.post("/getUser", (req, res) => {
 });
 
 app.put("/addUser", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
   const email = req.body.email;
   const fname= req.body.fname;
   const lname = req.body.lname;
@@ -80,8 +67,6 @@ app.put("/addUser", (req, res) => {
 });
 
 app.put("/getRole", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
   const email = req.body.email;
   dbCon.query(
     "SELECT role FROM user WHERE email = ?",
@@ -97,8 +82,6 @@ app.put("/getRole", (req, res) => {
 });
 
 app.put("/editRole", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
   const role = req.body.role;
   const email = req.body.email;
   dbCon.query(
@@ -125,8 +108,6 @@ app.put("/editRole", (req, res) => {
 });
 
 app.post("/creatSCLS", (req,res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
   const Type = req.body.Type;
   const stdYears = req.body.stdYears;
   const Detail = req.body.Detail;
@@ -145,6 +126,29 @@ app.post("/creatSCLS", (req,res) => {
   );
 });
 
+app.get("/announcement", (req, res) => {
+  dbCon.query(
+    "SELECT * FROM announcement", (err, result) => {
+    if(err){
+      console.log(err);
+    }else{
+      res.send(result);
+      console.log(result)
+    }
+  });
+});
+
+app.get("/announcement", (req, res) => {
+  dbCon.query(
+    "SELECT * FROM announcement", (err, result) => {
+    if(err){
+      console.log(err);
+    }else{
+      res.send(result);
+      console.log(result)
+    }
+  });
+});
 
 app.listen(5000, () => {
   console.log(`running at port 5000`);

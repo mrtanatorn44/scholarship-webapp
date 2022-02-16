@@ -127,7 +127,7 @@ function MainPage() {
             ...user,
             role  : dbRole
           })
-          alert('Welcome back, ' + dbRole + ' - ' + user.name);
+          //alert('Welcome back, ' + dbRole + ' - ' + user.name);
         } else {
           setUser({
             ...user,
@@ -194,7 +194,7 @@ function MainPage() {
       case 'Announcement' :
         return <Announcement sendContent={getContent} />
       case 'Report' :
-        return <Report/>
+        return <Report sendContent={getContent}/>
       case 'RoleSetting' :
         return <RoleSetting/>
       case 'AnnouncementCreate':
@@ -207,7 +207,8 @@ function MainPage() {
         return <ProfileCheck/>
       case 'InterviewSchedule':
         return <InterviewSchedule/>
-        
+      case 'ReportInspect':
+        return <ReportInspect/>
     }
   }
   // RENDER BUTTON TO CONTROL CONTENT
@@ -432,19 +433,21 @@ function MainPage() {
               </div>
             </div>    
           </div>
-          
+
           {contentButtonRender()}
-          
           <button onClick={() => setUser({...user, role: 'student'})}>show STUDENT</button>
           <button onClick={() => setUser({...user, role: 'interviewer'})}>show INTERVIEWER</button>
           <button onClick={() => setUser({...user, role: 'admin'})}>show ADMIN</button>
+          
         </div>
         <div class="column-right d-flex flex-column">
 
           {/*-----------------------HEADER---------------------*/}
 
-          <div class="row-top d-flex ">
-            <h5>ระบบขอทุน นิสิตวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขต ศรีราชา</h5>
+          <div class="row-top d-flex">
+            <div class="title">
+              <h5>ระบบขอทุน นิสิตวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขต ศรีราชา</h5>
+            </div>
             <div class="icon-button d-flex">
               <Login/>
             </div>

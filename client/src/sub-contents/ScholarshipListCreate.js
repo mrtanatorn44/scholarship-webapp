@@ -21,7 +21,7 @@ function ScholarshipListCreate(props) {
       //alert('TRUE !')
       // PUSH DATA TO DATABASE
       // CLOSE OR SAVE
-      props.sendContent(['admin','AdminScholarshipList']);
+      props.sendContent(['admin','ScholarshipList']);
     } else {
       //alert('FALSE !')
     }
@@ -98,7 +98,8 @@ function ScholarshipListCreate(props) {
       </div>
       </div> 
     </div>
-  );
+
+   );
 }
 
 

@@ -15,7 +15,7 @@ function AnnouncementCreate(props) {
       //alert('TRUE !')
       // PUSH DATA TO DATABASE
       // CLOSE OR SAVE
-      props.sendContent(['admin','AdminAnnouncement']);
+      props.sendContent(['admin','Announcement']);
     } else {
       //alert('FALSE !')
     }
@@ -36,12 +36,12 @@ function AnnouncementCreate(props) {
 
         <div class="column-right d-flex">
           
-            <button class="savebutton" onClick={() => (setShowModal(true), alert('SAVE'))}>
+            <button class="savebutton" onClick={() => (setShowModal(true))}>
               <i class="bi bi-save"></i>
             </button>
             {showModal && <ConfirmModal sendConfirm={getConfirm}/>}
             
-            <button class="cancelbutton" onClick={() => (setShowModal(true), alert('CANCEL'))}>
+            <button class="cancelbutton" onClick={() => (setShowModal(true))}>
               <i class="bi bi-x"></i>
             </button>
             {showModal && <ConfirmModal sendConfirm={getConfirm}/>}
@@ -51,7 +51,7 @@ function AnnouncementCreate(props) {
         </div>
       </div>
 
-      <div className="center">
+      <div className="center d-flex">
         <form>
           <div class="topic">
             <input type="text" placeholder="หัวข้อข่าว"></input>

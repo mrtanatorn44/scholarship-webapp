@@ -2,14 +2,14 @@ import { React, useState, useEffect } from 'react';
 import './Report.css';
 import data from '../data/datanews.js';
 
-function Report() {
+function Report(props) {
   function Report_list(){
     const [visible, setVisible] = useState(false);
     const Scholar = ({idScholar,title,detail,date}) => {
       return(
         <article className = "reportlist">
             <div class="button-report">
-              <button class="button-search d-flex" type="button" onclick="alert('การประเมิน!')">
+              <button class="button-search d-flex" type="button"onClick = {() => props.sendContent(['admin','ReportInspect'])}>
                 <i class="bi bi-search"></i>
                 <p>การประเมิน</p>
               </button> 
