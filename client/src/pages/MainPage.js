@@ -53,9 +53,8 @@ function MainPage() {
     role  : ''
   });
 
-  // Check is Login ?
+  // Check user login
   useEffect(() => {
-
     var isSignedIn;
     var currentUser;
 
@@ -103,10 +102,12 @@ function MainPage() {
       }
     }
     fetchGoogleAuth();
+    console.log('fetchAuth')
+
   }, [])
 
-  // Check user with DB after isLoggedIn
   useEffect(() => {
+
     if (isLoggedIn === false) {
       return;
     }
@@ -143,6 +144,7 @@ function MainPage() {
         }
       }
     );
+    console.log('fetchUser')
   }, [isLoggedIn])
 
   // GET PROPS DATA FROM METHOD
@@ -205,6 +207,10 @@ function MainPage() {
         return <InterviewSchedule/>
       case 'ReportInspect':
         return <ReportInspect/>
+      case 'AnnouncementEdit':
+        return <AnnouncementEdit/>
+      default:
+        return <Announcement/>
     }
   }
   // RENDER BUTTON TO CONTROL CONTENT
@@ -255,7 +261,7 @@ function MainPage() {
 
             <li className="d-flex"
               style={{
-                background: 
+                background:
                   (content==='Profile')
                     ? '#505356'
                     : '#74787C'
@@ -441,9 +447,7 @@ function MainPage() {
           {/*-----------------------HEADER---------------------*/}
 
           <div className="row-top d-flex">
-            <div className="title">
-              <h5>ระบบขอทุน นิสิตวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขต ศรีราชา</h5>
-            </div>
+            <h5>ระบบขอทุน นิสิตวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขต ศรีราชา</h5>
             <div className="icon-button d-flex">
               <Login/>
             </div>
@@ -457,7 +461,7 @@ function MainPage() {
           
           {/*-----------------------FOOTER---------------------*/}
 
-          <div className="row-bottom d-inline-flex ">
+          <div className="row-bottom d-flex ">
             <img src={ku_src_logo} className="ku_src_logo" alt="eng src"/>
             <img src={ku_eng_src_logo} className="ku_eng_src_logo" alt="eng src"/>
             <h5>

@@ -45,13 +45,14 @@ function Profile(props) {
 
             </div>
           </form>
-        </div>
-        
-        <div className="botton-edit">
-        <button onClick = {() => props.sendContent(['student','ProfileEdit'])}>
+          <div className="botton-edit">
+            <button onClick = {() => props.sendContent(['student','ProfileEdit'])}>
             <p>แก้ไข้ข้อมูล</p>
           </button>
         </div>
+        </div>
+        
+       
       </div>
       <div className="row-bottom-profile">
         <div className="drop-scholaship">

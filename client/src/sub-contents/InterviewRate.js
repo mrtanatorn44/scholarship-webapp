@@ -44,10 +44,25 @@ function InterviewRate(props) {
                 <label for="check2">ไม่สมบูรณ์</label>
               </div> 
           </div>
+          <div className="interview-topic">
+              <p>ประเมินด้าน 2</p>
+          </div>
+          <div className="interview-checks d-flex ">
+              <div className="interview-check-true">
+                <input type="radio" id="check1"></input>
+                <label for="check1">สมบูรณ์</label>
+              </div>
+              
+              <div className="interview-check-false">
+                <input type="radio" id="check2"></input>
+                <label for="check2">ไม่สมบูรณ์</label>
+              </div> 
+          </div>
          
         </div>   
       </form>
     </div>
+    <br></br>
     <div className="fotter-confirm d-flex">
       <div className="confirm"> 
         <button type = "button">

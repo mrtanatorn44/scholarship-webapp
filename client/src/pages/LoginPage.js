@@ -6,7 +6,7 @@ import ku_src_logo from "../images/ku.png";
 import AnnouncementLogin from '../contents/AnnouncementLogin.js';
 
 function LoginPage() {
-
+  
   return (
     <body class="login">
       <div class="d-flex">

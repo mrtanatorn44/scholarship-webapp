@@ -1,49 +1,58 @@
 import { React, useState, useEffect } from 'react';
 import './Rolesetting.css';
 import data from '../data/datanews.js';
-function RoleSetting() {
+import Axios from 'axios';
+
+function RoleSetting(props) {
+
+  const [User,setUser] = useState([]);
+
+  const getUser = () =>{
+      Axios.get("http://localhost:5000/getUser").then((response)=>{
+        var result = response.data;
+        setUser(result)
+      })
+  }
+  useEffect(() => {
+    getUser();
+  }, [])
+
+  function drawStuff(x){
+      alert(x);
+      if(x === "1"){
+        alert("1");
+      }else if(x == "2"){
+        alert("2");
+      }else if(x == "3"){
+        alert("3");
+      }
+  }
 
   function Role_list(){
-    const [visible, setVisible] = useState(false);
-    const Scholar = ({idScholar,title,detail,date}) => {
-      return(
+    return(
+        User.map((user)=>(
         <article className = "rolelist">
           <div className="form-rolelist">
             <div className="d-flex">
               <div className ="name">
-                <h5>{detail}</h5>  
+                <h5>{user.email}</h5> 
+                
+              </div><div className ="name">
+                <h5> {user.role}</h5> 
+                
               </div>
               <div className="right-rolesetting">
-                  <select  name="capital" id="capital">
-                    <option value="study">user</option>
-                    <option value="activity">student</option>
-                    <option value="property">admin</option>
+                  <select id="capital" onChange = {() => alert(this.value)}>
+                    <option  value="1">1</option>
+                    <option  value="2">2</option>
+                    <option  value="3">3</option>
                   </select>
               </div>
             </div>
-          </div>
-          
-           
+          </div>  
         </article>
-      );
-
-    }
-      return(
-        <section>{
-          data.map((scholar,index) => {
-            const {title,detail,date} = scholar;
-            return(
-              <div>
-                <Scholar
-                  date = {date}
-                  title={title}
-                  detail={detail}
-                />
-              </div>
-            );
-          })
-        }</section> 
-      );
+        ))
+      )
     }
   return (
     <div className="roleSetting">
@@ -66,7 +75,7 @@ function RoleSetting() {
         </div>
 
         <div className="center-list">
-            <Role_list/>
+          <Role_list/>
         </div>
 
        

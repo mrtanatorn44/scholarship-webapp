@@ -1,23 +1,24 @@
+/*--------------------roleSetting--------------------*/
 .roleSetting {
     font-family: 'Prompt', sans-serif;
-    margin: 5vh auto 5vh auto;
+    margin: 3vh auto 3vh auto;
     background-color: white;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     box-shadow: 0px 0px 5px 0px #949494;
-    width:  80%;
-    height: 70vh;
-    
+    width:  90%;
+    height: 80vh;  
 }
+/*------------------header-----------------------------*/
 .roleSetting .header {
     border-bottom: 2px solid #A62639;
-    height: 10vh;
+    height: 7vh;
 }
 .roleSetting .header .icon-three-dots {
-    width: calc(2.3vw + 2.3vh);
-    height: calc(2.3vw + 2.3vh);
-    margin: 0.5rem 0 0.5rem 0.5rem;
+    width: calc(1.6vw + 1.6vh);
+    height: calc(1.6vw + 1.6vh);
+    margin:  0.5rem 0  0.5rem 0.5rem;
     border-radius: 50%;
-    font-size: calc(1.5vw + 1.5vh);
+    font-size: calc(1.0vw + 1.0vh);
     color: #fff;
     text-align: center;
     background : linear-gradient( #f6c8b1, #DD4A48);;
@@ -27,28 +28,17 @@
     font-size: calc(1vw + 1vh);
     font-weight: 500;
 }
-
+/*--------------------search-group-------------------*/
 .roleSetting .search-group {
     margin-top: 3vh;
     width: 80%;
     height: 10%;
     border-bottom: 3px solid #C4C4C4; 
     margin-left: 10%;
-    
-  
 }
-.roleSetting .search{
-    border-radius: 14px; 
-    text-align: right;
-    border: 1px solid #A62639;
-    width: 100%; 
-    background-color: #f5f5f5;
-}
-
 .roleSetting .search-group input{
     width: 80%;
     height: 100%;
-  
     border:none;
     outline:none;
     padding: calc(0.3vw + 0.3vh) calc(0.5vw + 0.5vh);
@@ -67,24 +57,34 @@
     box-sizing: border-box;
     font-size: calc(0.66vw + 0.66vh);
 }
-/*---------------rolelist-------------*/
-.roleSetting .center-list{
-    overflow-y: scroll;
-    overflow-x: hidden;
-   margin-top: calc(0.5vw + 0.5vh);
+.roleSetting .search{
+    border-radius: 14px; 
+    text-align: right;
+    border: 1px solid #A62639;
+    width: 100%; 
+    background-color: #f5f5f5;
 }
 
+/*-----------center-list------------------*/
+.roleSetting .roleSetting .center-list{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    
+    
+}
+/*---------------rolelist-------------*/
 .roleSetting .rolelist{
     width: 100%;
     height: 90%;
-    
+   
 }
+/*----------------form-rolelist------------*/
 .roleSetting .form-rolelist{
     background-color: white;
     border-radius: 10px;
-    width: 85%;
+    width: 80%;
     height: 8vh;
-    margin: calc(0.8vw + 0.8vh) auto auto calc(3vw + 3vh);
+    margin: calc(0.8vw + 0.8vh) auto auto calc(5vw + 5vh);
     border: 1px solid #A62639;
     border-top: 4px solid #A62639;
 }
@@ -95,14 +95,14 @@
     margin-left: calc(2vw + 2vh);
     margin-top: calc(0.5vw + 0.5vh);
 }
+/*------------right-rolesetting-----------------*/
 .roleSetting .right-rolesetting{
     width: 50%; 
 }
-
 .roleSetting .right-rolesetting select{
     margin-top: calc(0.5vw +  0.5vh);
-    margin-left: calc(8vw +  8vh);
-    width: 50%;
+    margin-left: calc(1vw +  1vh);
+    width: 80%;
     padding: calc(0.2vw + 0.2vh) calc(0.5vw + 0.5vh);
     display: inline-block;
     border: 1px solid #A62639;

@@ -1,3 +1,4 @@
+/*-------------scholarshipListRegister----------*/
 .scholarshipListRegister {
     font-family: 'Prompt', sans-serif;
     margin: 5vh auto 5vh auto;
@@ -7,6 +8,7 @@
     width:  80%;
     height: 70vh;
 }
+/*-------------------header----------------*/
 .scholarshipListRegister .header {
     border-bottom: 2px solid #A62639;
     height: 10vh;
@@ -26,6 +28,7 @@
     font-size: calc(1vw + 1vh);
     font-weight: 500;
 }
+/*----------------forms-list-----------------*/
 .scholarshipListRegister .forms-list {
     overflow-y: scroll;
     overflow-x: hidden;
@@ -36,6 +39,7 @@
     margin-bottom: calc(1vw + 1vh); 
     font-weight: 500;
 }
+/*------------------form-profile--------------------*/
 .scholarshipListRegister .form-profile{
     margin-left: 20%;
 }

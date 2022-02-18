@@ -19,7 +19,7 @@ function AnnouncementLogin() {
             <div className='bottom'>
               <div className='user-panel'>
                 <h3 onClick={() => setVisible(!visible)}>
-                    {!visible ? "รายละเอียดเพิ่มเติม ∨" : "รายละเอียดเพิ่มเติม ∧"}
+                    {!visible ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)"}
                 </h3>
               </div>
             </div>

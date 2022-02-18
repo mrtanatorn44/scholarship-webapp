@@ -68,7 +68,7 @@ function ScholarshipCheck(props) {
                 <option value="activity">ทุนกิจกรรมเด่น</option>
                 <option value="property">ทุนขาดคุณทรัพย์</option>
                 <option value="other">ทุนอื่นๆ</option>
-              </select>
+              </select> 
             </div>
           </div>
 

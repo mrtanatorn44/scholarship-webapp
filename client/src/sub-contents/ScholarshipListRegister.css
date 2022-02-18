@@ -1,43 +1,49 @@
+/*----------scholarshipListRegister----------*/
 .scholarshipListRegister {
     font-family: 'Prompt', sans-serif;
-    margin: 5vh auto 5vh auto;
+    margin: 3vh auto 3vh auto;
     background-color: white;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     box-shadow: 0px 0px 5px 0px #949494;
-    width:  80%;
-    height: 70vh;
+    width:  90%;
+    height: 80vh;
 }
+/*-----------------header--------------------*/
 .scholarshipListRegister .header {
     border-bottom: 2px solid #A62639;
-    height: 10vh;
+    height: 7vh;
 }
 .scholarshipListRegister .header .icon-three-dots {
-    width: calc(2.3vw + 2.3vh);
-    height: calc(2.3vw + 2.3vh);
-    margin: 0.5rem 0 0.5rem 0.5rem;
+    width: calc(1.6vw + 1.6vh);
+    height: calc(1.6vw + 1.6vh);
+    margin: auto 0 auto 0.5vw;
     border-radius: 50%;
-    font-size: calc(1.5vw + 1.5vh);
+    font-size: calc(1.0vw + 1.0vh);
     color: #fff;
     text-align: center;
-    background : linear-gradient( #f6c8b1, #DD4A48);;
+    background : linear-gradient( #f6c8b1, #DD4A48);
 }
 .scholarshipListRegister .header h4 {
     margin: auto 0 auto 0.5rem;
     font-size: calc(1vw + 1vh);
     font-weight: 500;
 }
+/*---------------------forms-list--------------*/
 .scholarshipListRegister .forms-list {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 60vh;
+    height: 65vh;
 }
 .scholarshipListRegister .forms-list h5{
     margin-top: calc(1vw + 1vh); 
     margin-bottom: calc(1vw + 1vh); 
     font-weight: 500;
 }
+/*-------------------form-profile-------------*/
 .scholarshipListRegister .form-profile{
+    width:80%;
     margin-left: 20%;
+    margin-bottom: calc(1vw + 1vh); 
 }
 
 .scholarshipListRegister .form-profile label{
@@ -47,7 +53,6 @@
 .scholarshipListRegister .form-profile input{
     width: 80%;
     padding: 9px 20px;
-    margin: 8px 0;
     display: inline-block;
     border: 2px solid #A62639;
     border-radius: 7px;
@@ -66,23 +71,59 @@
     font-weight: 300;
 } 
 
+/*-------------------- profile-fam----------------------*/
+.scholarshipListRegister .form-profile .topic-fam{
+    margin-left: calc(12vw + 12vh);
+   
+}
+.scholarshipListRegister .form-profile .topic-doc{
+    margin-left: calc(11vw + 11vh);
+   
+}
+
+.scholarshipListRegister .form-profile p{
+    font-weight: 600;
+    margin-top: calc(1vw + 1vh);
+    margin-left: calc(3vw + 3vh);
+   
+}
+
+.scholarshipListRegister .form-profile .profile-fam {
+    width: 80%;
+    height: 10vh;
+}
+.scholarshipListRegister .profile-fam .fam1-edit{
+    width: 50%;
+}
+.scholarshipListRegister .fam1-edit input{
+    width: 90%;
+}
+.scholarshipListRegister .profile-fam .fam2-edit{
+    width: 50%;
+}
+.scholarshipListRegister .fam2-edit select{
+    width: 100%;
+}
+.scholarshipListRegister .fam2-edit input{
+    width: 100%;
+}
+
+
 
 /*---------------------footer---------------*/
-.scholarshipListRegister .form-footer{
+.scholarshipListRegister .footer{
     width: 100%;
     height: 10vh;
 }
-.scholarshipListRegister .next-p1{
-    margin-top: calc(1vw + 1vh);
-    margin-left: calc(28vw + 28vh);
+.scholarshipListRegister .save{
+    margin-left: calc(36vw + 36vh);
     margin-bottom: calc(1vw + 1vh);
 }
-.scholarshipListRegister .next-p1 p{
-    margin-top: calc(0.9vw + 0.9vh);
+.scholarshipListRegister .save p{
     font-size: calc(0.7vw + 0.7vh);
 }
 
-.scholarshipListRegister .next-p1 button {
+.scholarshipListRegister .save button {
     background-color: #03A96B;
     border: none;
     color: white;

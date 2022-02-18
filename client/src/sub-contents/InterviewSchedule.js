@@ -5,7 +5,7 @@ function InterviewSchedule(props) {
   return (
     <div className="interviewschedule">
       <div className="header d-flex">
-        <h4>กำหนดวันเวลลาสัมภาษณ์</h4>
+        <h4>กำหนดวันเวลาสัมภาษณ์</h4>
       </div>
     <div className="center d-flex">
       <form>

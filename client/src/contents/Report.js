@@ -7,18 +7,18 @@ function Report(props) {
     const [visible, setVisible] = useState(false);
     const Scholar = ({idScholar,title,detail,date}) => {
       return(
-        <article className = "reportlist">
-            <div className="button-report">
-              <button className="button-search d-flex" type="button"onClick = {() => props.sendContent(['admin','ReportInspect'])}>
-                <i className="bi bi-search"></i>
-                <p>ดูรายละเอียด</p>
-              </button> 
-            </div>
-          
+        <article className = "reportlist d-flex">
           <div className='bottom'>
             <h3>{detail}</h3>
           </div>
+          <div className="button-report">
+            <button className="button-search d-flex" type="button"onClick = {() => props.sendContent(['admin','ReportInspect'])}>
+              <i className="bi bi-search"></i>
+              <p>ดูรายละเอียด</p>
+            </button> 
+            </div>
           
+         
                 
         </article>
       );

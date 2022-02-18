@@ -38,7 +38,7 @@ function ScholarshipList(props) {
             
 
                 <h3 onClick={() => checkState(index)}>
-                  {!check ? "รายละเอียดเพิ่มเติม ⋁" : "รายละเอียดเพิ่มเติม ⋀"}
+                  {!check ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)"}
                 </h3>  
                
 
@@ -80,11 +80,10 @@ function ScholarshipList(props) {
     <div className="schlorshiplist">
       <div className="header d-flex">
 
-        <div className='column-top d-flex'>
+        <div className='column-left d-flex'>
           <div className="icon-card-list">
             <i className="bi bi-card-list"></i>
           </div>  
-
           <h4>ทุนที่เปิดให้ลงทะเบียน</h4>
         </div>
 
@@ -102,6 +101,7 @@ function ScholarshipList(props) {
       </div>
       <div className="center">
         <div className="scholarnews">
+                <ScholarshipListContent/>
                 <ScholarshipListContent/>
         </div>
       </div>

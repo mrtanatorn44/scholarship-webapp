@@ -8,20 +8,20 @@ function ProfileEdit() {
         <div className="icon-profile">
           <i className="bi bi-list-ul"></i>
         </div>
-        <h4>กรอกข้อมูล</h4>
+        <h4>กรอกประวัติ</h4>
       </div>
       <div className="forms-list">
         <center>
-          
           <h5>กรอกประวัติแรกเข้า</h5>
         </center>
         <form className="form-profile">
           <div>
-            <label>1.ชื่อ - นามสกุล(ภาษาไทย)</label><br></br>
+            <label>ชื่อ-นามสกุล(ภาษาไทย)</label><br></br>
             <input placeholder="ชื่อภาษาไทย" required></input>
           </div>
+          <br></br>
           <div>
-            <label>2.นิสิตชั้นปีที่</label><br></br>
+            <label>นิสิตชั้นปีที่</label><br></br>
             <select className="form-select form-select-lg mb-3" required>
               <option value="0">เลือก</option>
               <option value="5">5</option>
@@ -32,15 +32,17 @@ function ProfileEdit() {
             </select>
           </div>
           <div>
-            <label>3.อายุ</label><br></br>
+            <label>อายุ</label><br></br>
             <input placeholder="อายุ" required></input>
           </div>
+          <br></br>
           <div>
-            <label>4.รหัสนิสิต</label><br></br>
+            <label>รหัสนิสิต</label><br></br>
             <input placeholder="รหัสนิสิต" required></input>
           </div>
+          <br></br>
           <div>
-            <label>5.ภาคการเรียนการสอน</label><br></br>
+            <label>ภาคการเรียนการสอน</label><br></br>
             <select className="form-select form-select-lg mb-3" required>
               <option value="0">เลือก</option>
               <option value="ภาคปกติ">ภาคปกติ</option>
@@ -49,7 +51,7 @@ function ProfileEdit() {
           </div>
           
           <div>
-            <label>6.สาขา</label><br></br>
+            <label>สาขา</label><br></br>
             <select className="form-select form-select-lg mb-3" required>
                 <option value="0">เลือก</option>
                 <option value="5">คอมพิวเตอร์</option>
@@ -58,99 +60,132 @@ function ProfileEdit() {
                 <option value="4">หุ่นยนต์</option>
             </select>
           </div>
+          
           <div>
-            <label>7.ที่อยู่ปัจจุบัน (ที่ติดต่อได้สะดวก)</label><br></br>
+            <label>ที่อยู่ปัจจุบัน (ที่ติดต่อได้สะดวก)</label><br></br>
             <input placeholder="ที่อยู่ปัจจุบัน" required></input>
           </div>
-          <label>8.เบอร์โทรศัพท์</label><br></br>
-          <input placeholder="เบอร์โทรศัพท์"></input>
+          <br></br>
           <div>
-            <label>9.อัพโหลดรูปโปรไฟล์</label><br></br>
+            <label>เบอร์โทรศัพท์</label><br></br>
+            <input placeholder="เบอร์โทรศัพท์"></input>
+          </div>
+          <br></br>
+          <div>
+            <label>อัพโหลดรูปโปรไฟล์</label><br></br>
             <input type="file" name="myfile" required></input>
           </div>
           <div>
-            <label>10.ชื่อ - นามสกุล(บิดา)</label><br></br>
+            <h5>ประวัติครอบครัว</h5>
+          </div>
+          <div>
+            <label>ชื่อ-นามสกุล(บิดา)</label><br></br>
             <input placeholder="ชื่อภาษาไทย" required></input>
           </div>
-
-          
-            <form >
-              <label>11.อายุ</label><br></br>
+          <br></br>
+          <div class="profile-fam d-flex">
+            <div class="fam1-edit">
+              <label>อายุ</label><br></br>
               <input className = "halfbar" placeholder="อายุ" required></input>
-            
-            <br></br>
-              <label>12.สถานะภาพ</label><br></br>
+            </div>
+            <div class="fam2-edit">
+              <label>สถานะภาพ</label><br></br>
               <select className="form-select form-select-lg mb-3" required>
                 <option value="0">เลือก</option>
                 <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                 <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
               </select>
-            </form>
+            </div>
+          </div>
           
-          <div>
-            <label>13.อาชีพ</label><br></br>
-            <input className = "halfbar" placeholder="ระบุอาชีพ" required></input>
+          <div class="profile-fam d-flex">
+            <div class="fam1-edit">
+              <label>อาชีพ</label><br></br>
+              <input className = "halfbar" placeholder="ระบุอาชีพ" required></input>
+            </div>
+            <div class="fam2-edit">
+              <label>เบอร์โทรศัพท์</label><br></br>
+              <input className = "halfbar" placeholder="ระบุเบอร์โทรศัพท์" required></input>
+            </div>
           </div>
-          <div>
-            <label>14.เบอร์โทรศัพท์</label><br></br>
-            <input className = "halfbar" placeholder="ระบุเบอร์โทรศัพท์" required></input>
-          </div>
-          <div>
-            <label>15.รายได้ต่อเดือน</label><br></br>
+       
+        <div class="profile-fam d-flex">
+          <div class="fam1-edit">
+            <label>รายได้ต่อเดือน</label><br></br>
             <input className = "halfbar" placeholder="ระบุรายได้ต่อเดือน" required></input>
           </div>
+          <div class="fam2-edit">
+            <label>สถานที่ประกอบอาชีพ</label><br></br>
+            <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" required></input>
+          </div>
+        </div>
+        
           <div>
-            <label>16.ที่อยู่ของบิดา</label><br></br>
+            <label>ที่อยู่ของบิดา</label><br></br>
             <input className = "halfbar" placeholder="ที่อยู่ของบิดา" required></input>
           </div>
+          <br></br>
+
           <div>
-            <label>17.ชื่อ-สกุล(มารดา)</label><br></br>
+            <label>ชื่อ-นามสกุล(มารดา)</label><br></br>
             <input className = "halfbar" placeholder="ชื่อ-สกุล(มารดา)" required></input>
           </div>
-          <div>
-            <label>18.อายุ</label><br></br>
-            <input className = "halfbar" placeholder="อายุ" required></input>
+          <br></br>
+          <div class="profile-fam d-flex">
+            <div class="fam1-edit">
+              <label>อายุ</label><br></br>
+              <input className = "halfbar" placeholder="อายุ" required></input>
+            </div>
+            <div class="fam2-edit">
+              <label>สถานะภาพ</label><br></br>
+              <select className="form-select form-select-lg mb-3" required>
+                <option value="0">เลือก</option>
+                <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
+                <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
+              </select>
+            </div>
           </div>
-          <div>
-            <label>19.สถานะภาพ</label><br></br>
-            <select className="form-select form-select-lg mb-3" required>
-              <option value="0">เลือก</option>
-              <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
-              <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
-            </select>
+
+          <div class="profile-fam d-flex">
+            <div class="fam1-edit">
+              <label>อาชีพ</label><br></br>
+              <input className = "halfbar" placeholder="ระบุอาชีพ" required></input>
+            </div>
+            <div class="fam2-edit">
+              <label>เบอร์โทรศัพท์</label><br></br>
+              <input className = "halfbar" placeholder="ระบุเบอร์โทรศัพท์" required></input>
+            </div>
           </div>
-          <div>
-            <label>20.อาชีพ</label><br></br>
-            <input className = "halfbar" placeholder="อาชีพ" required></input>
+
+          <div class="profile-fam d-flex">
+            <div class="fam1-edit">
+              <label>รายได้ต่อเดือน</label><br></br>
+              <input className = "halfbar" placeholder="ระบุรายได้ต่อเดือน" required></input>
+            </div>
+            <div class="fam2-edit">
+              <label>สถานที่ประกอบอาชีพ</label><br></br>
+              <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" required></input>
+            </div>
           </div>
+          <br></br>
           <div>
-            <label>21.เบอร์โทรศัพท์</label><br></br>
-            <input className = "halfbar" placeholder="เบอร์โทรศัพท์" required></input>
-          </div>
-          <div>
-            <label>22.รายได้เดือนละ</label><br></br>
-            <input className = "halfbar" placeholder="รายได้เดือนละ" required></input>
-          </div>
-          <div>
-            <label>23.สถานที่ประกอบอาชีพ</label><br></br>
+            <label>ที่อยู่ของมารดา</label><br></br>
             <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" required></input>
           </div>
+          <br></br>
           <div>
-            <label>24.ที่อยู่ของมารดา</label><br></br>
-            <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" required></input>
-          </div>
-          <div>
-            <label>25.สถานะสมรสของบิดา-มารดา</label><br></br>
+            <label>สถานะสมรสของบิดา-มารดา</label><br></br>
             <input className = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" required></input>
           </div>
 
         </form>
-        <div className="footer d-flex">
-          <p className="page"></p>
-          <button className = "next" >บันทึก</button>
-        </div>
-        
       </div>
+      <div className="footer">
+        <div className="save d-flex">
+          <button>บันทึก</button>
+        </div>
+      </div>
+        
   
     </div>
   );  

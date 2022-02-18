@@ -23,7 +23,7 @@ function ScholarshipStatus(props) {
             <div className='bottom'>
                 <div className='user-panel'>
                   <h3  onClick={() => checkState(index)}>
-                      {!check ? "รายละเอียดเพิ่มเติม ⋁" : "รายละเอียดเพิ่มเติม ⋀"}
+                      {!check ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)"}
                   </h3>
                 </div>
               </div>

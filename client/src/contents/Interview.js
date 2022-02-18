@@ -74,7 +74,7 @@ function Interview(props) {
             <div className="column-right-interview" >
             <div className="input-group">
               <input type="text" placeholder="Search" aria-describedby="button-addon2"/>
-              <button className="btn " type="button" >
+              <button className="btn" type="button" >
                 <i className="bi bi-search"></i>
               </button>
             </div>

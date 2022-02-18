@@ -1,0 +1,80 @@
+Date : 2022-02-18 18:03:42
+Directory : c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src
+Total : 47 files,  1894 codes, 212 comments, 126 blanks, all 2232 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         23 |        973 |          5 |         43 |      1,021 |
+| CSS        |         23 |        935 |        207 |         84 |      1,226 |
+| JSON       |          1 |        -14 |          0 |         -1 |        -15 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                       | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                          |         47 |      1,894 |        212 |        126 |      2,232 |
+| contents                                                                                                                   |         16 |        344 |        130 |          2 |        476 |
+| data                                                                                                                       |          1 |        -14 |          0 |         -1 |        -15 |
+| data\scholarship-form                                                                                                      |          1 |        -14 |          0 |         -1 |        -15 |
+| modal                                                                                                                      |          4 |         79 |         10 |          9 |         98 |
+| pages                                                                                                                      |          3 |         -6 |          3 |          8 |          5 |
+| services                                                                                                                   |          1 |        -17 |         -4 |         -7 |        -28 |
+| sub-contents                                                                                                               |         22 |      1,508 |         73 |        115 |      1,696 |
++----------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                   | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\Announcement.css                 | CSS        |         43 |         84 |        -12 |        115 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\Announcement.js                  | JavaScript |         39 |         -1 |        -14 |         24 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\AnnouncementLogin.css            | CSS        |          0 |          4 |         -2 |          2 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\Interview.css                    | CSS        |          1 |          4 |         -3 |          2 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\Interview.js                     | JavaScript |          0 |          0 |         -2 |         -2 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\Profile.css                      | CSS        |         -1 |          7 |         -1 |          5 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\Profile.js                       | JavaScript |          0 |          0 |          1 |          1 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\Report.css                       | CSS        |         50 |          5 |         -3 |         52 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\Report.js                        | JavaScript |          5 |          0 |          0 |          5 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\RoleSetting.js                   | JavaScript |         19 |          0 |          9 |         28 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\Rolesetting.css                  | CSS        |         39 |          7 |          1 |         47 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\SchlorshipList.css               | CSS        |         -8 |          6 |         -2 |         -4 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\ScholarshipCheck.css             | CSS        |        146 |          9 |         24 |        179 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\ScholarshipCheck.js              | JavaScript |          5 |          0 |         -3 |          2 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\ScholarshipList.js               | JavaScript |          6 |          1 |          9 |         16 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\ScholarshipStatus.css            | CSS        |          0 |          4 |          0 |          4 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\data\scholarship-form\lo23j4g5v3.json     | JSON       |        -14 |          0 |         -1 |        -15 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\modal\ConfirmModal.css                    | CSS        |         27 |          0 |          6 |         33 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\modal\ConfirmModal.js                     | JavaScript |        -10 |         10 |         -4 |         -4 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\modal\ImageModal.css                      | CSS        |         36 |          0 |          5 |         41 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\modal\ImageModal.js                       | JavaScript |         26 |          0 |          2 |         28 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\pages\LoginPage.js                        | JavaScript |        -16 |          0 |         -1 |        -17 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\pages\MainPage.css                        | CSS        |          6 |          3 |          7 |         16 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\pages\MainPage.js                         | JavaScript |          4 |          0 |          2 |          6 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\services\firebase.js                      | JavaScript |        -17 |         -4 |         -7 |        -28 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\AnnouncementCreate.css       | CSS        |         12 |          4 |         -5 |         11 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\AnnouncementCreate.js        | JavaScript |         88 |         -4 |         -2 |         82 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\AnnouncementEdit.js          | JavaScript |         78 |          3 |         10 |         91 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\InterviewRate.css            | CSS        |         79 |          5 |         14 |         98 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\InterviewRate.js             | JavaScript |         58 |          0 |          7 |         65 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\InterviewSchedule.css        | CSS        |         65 |          3 |          9 |         77 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\InterviewSchedule.js         | JavaScript |         40 |          0 |          4 |         44 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ProfileCheck.css             | CSS        |         88 |         33 |          7 |        128 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ProfileCheck.js              | JavaScript |         -5 |          0 |          2 |         -3 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ProfileEdit.css              | CSS        |         26 |          3 |          9 |         38 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ProfileEdit.js               | JavaScript |         33 |          0 |          2 |         35 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ReportInspect.css            | CSS        |         36 |          3 |          0 |         39 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ReportInspect.js             | JavaScript |         63 |          0 |          4 |         67 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ScholarshipCheckForm.css     | CSS        |        152 |          8 |         15 |        175 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ScholarshipCheckForm.js      | JavaScript |        248 |          0 |         13 |        261 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ScholarshipListCreate.css    | CSS        |         -6 |          5 |         -1 |         -2 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ScholarshipListCreate.js     | JavaScript |         67 |          0 |          3 |         70 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ScholarshipListRegister.css  | CSS        |         34 |          4 |          7 |         45 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ScholarshipListRegister.js   | JavaScript |        166 |          0 |          2 |        168 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ScholarshipListRegister2.css | CSS        |         80 |          6 |          6 |         92 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ScholarshipListRegister2.js  | JavaScript |         76 |          0 |          6 |         82 |
+| c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\test.css                     | CSS        |         30 |          0 |          3 |         33 |
+| Total                                                                                                                      |            |      1,894 |        212 |        126 |      2,232 |
++----------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
