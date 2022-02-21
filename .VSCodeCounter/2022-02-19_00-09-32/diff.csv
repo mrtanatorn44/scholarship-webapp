@@ -1,0 +1,17 @@
+"filename", "language", "JavaScript", "Markdown", "JSON", "CSS", "HTML", "comment", "blank", "total"
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\README.md", "Markdown", 0, 38, 0, 0, 0, 0, 33, 71
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\README.old.md", "Markdown", 0, 1, 0, 0, 0, 0, 2, 3
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\package-lock.json", "JSON", 0, 0, 29140, 0, 0, 0, 1, 29141
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\package.json", "JSON", 0, 0, 47, 0, 0, 0, 1, 48
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\public\data\scholarship-form\data.json", "JSON", 0, 0, 13, 0, 0, 0, 0, 13
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\public\data\scholarship\l2ij35b2l3hj52b4il.json", "JSON", 0, 0, 40, 0, 0, 0, 0, 40
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\public\index.html", "HTML", 0, 0, 0, 0, 46, 26, 5, 77
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\public\manifest.json", "JSON", 0, 0, 25, 0, 0, 0, 1, 26
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\Announcement.js", "JavaScript", 0, 0, 0, 0, 0, 1, 0, 1
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\contents\RoleSetting.js", "JavaScript", 0, 0, 0, 0, 0, 0, -1, -1
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\AnnouncementCreate.css", "CSS", 0, 0, 0, 0, 0, 0, -4, -4
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\AnnouncementCreate.js", "JavaScript", -12, 0, 0, 0, 0, 0, -2, -14
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\AnnouncementEdit.js", "JavaScript", -18, 0, 0, 0, 0, 0, -3, -21
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ScholarshipCheckForm.css", "CSS", 0, 0, 0, 3, 0, 0, 2, 5
+"c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src\sub-contents\ScholarshipListRegister.css", "CSS", 0, 0, 0, 3, 0, 0, 1, 4
+"Total", "-", -30, 39, 29265, 6, 46, 27, 36, 29389

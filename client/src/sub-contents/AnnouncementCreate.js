@@ -92,11 +92,25 @@ function AnnouncementCreate(props) {
           <button className="save-button" onClick={() => (setShowModalSave(true))}>
             <i className="bi bi-save"></i>
           </button>
-          {showModalSave && <ConfirmSaveModal sendConfirm={getConfirmSave}/>}
-          <button className="cancel-button" onClick={() => (setShowModalCancel(true))}>
+          {
+            showModalSave && 
+            <ConfirmSaveModal 
+              sendConfirm={getConfirmSave}
+            />
+          }
+          <button className="cancel-button" 
+            onClick={
+              () => (setShowModalCancel(true))
+            }
+          >
             <i className="bi bi-x"></i>
           </button>
-          {showModalCancel && <ConfirmCancelModal sendConfirm={getConfirmCancel}/>}
+          {
+            showModalCancel && 
+            <ConfirmCancelModal 
+              sendConfirm={getConfirmCancel}
+            />
+          }
         </div>
       </div>
       <div className="center d-flex">

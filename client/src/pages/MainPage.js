@@ -220,7 +220,7 @@ function MainPage() {
       if (user.role === 'student') {
         return (
           <ul className="navs-link">
-            <li className="d-flex" 
+            <li className="announcement d-flex" 
               style={{
                 background: 
                   (content==='Announcement')
@@ -233,7 +233,7 @@ function MainPage() {
               <p>ประกาศข่าวสาร</p>
             </li>
 
-            <li className="current d-flex"
+            <li className="scholarshipList d-flex"
               style={{
                 background: 
                   (content==='ScholarshipList')
@@ -246,7 +246,7 @@ function MainPage() {
               <p>ทุนที่เปิดให้ลงทะเบียน</p>
             </li>   
 
-            <li className="d-flex"
+            <li className="scholarshipStatus d-flex"
               style={{
                 background: 
                   (content==='ScholarshipStatus')
@@ -259,7 +259,7 @@ function MainPage() {
               <p>สถานะทุนปัจจุบัน</p>
             </li>
 
-            <li className="d-flex"
+            <li className="profile d-flex"
               style={{
                 background:
                   (content==='Profile')
@@ -279,7 +279,7 @@ function MainPage() {
       else if (user.role === 'interviewer') {
         return (
           <ul className="navs-link">
-            <li className="d-flex" 
+            <li className="announcement d-flex" 
               style={{
                 background: 
                   (content==='Announcement')
@@ -292,7 +292,7 @@ function MainPage() {
               <p>ประกาศข่าวสาร</p>
             </li>
 
-            <li className="current d-flex"
+            <li className="ScholarshipList d-flex"
               style={{
                 background: 
                   (content==='ScholarshipList')
@@ -442,6 +442,8 @@ function MainPage() {
           <button onClick={() => setUser({...user, role: 'admin'})}>show ADMIN</button>
           
         </div>
+
+        {/*-----------------------RIGHT CONTENT---------------------*/}
         <div className="column-right d-flex flex-column">
 
           {/*-----------------------HEADER---------------------*/}

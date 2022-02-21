@@ -148,6 +148,7 @@
     text-align: center;
     font-size: calc(1.5vw + 1.5vh);
     margin-left: calc(30vw + 30vh);
+    cursor:pointer;
 }
 .announcementCreate .add-row-bottom p{
     margin-top: calc(0.5vw + 0.5vh);

@@ -1,59 +1,71 @@
 import { React, useState, useEffect } from 'react';
 import './Rolesetting.css';
-import data from '../data/datanews.js';
 import Axios from 'axios';
 
 function RoleSetting(props) {
 
   const [User,setUser] = useState([]);
-
+  const roles =[
+    {
+      title: 'Student',
+      value: 'student'
+    },
+    {
+      title: 'Interviewer',
+      value: 'interviewer'
+    },
+    {
+      title: 'Admin',
+      value: 'admin'
+    }
+  ]
+ 
   const getUser = () =>{
-      Axios.get("http://localhost:5000/getUser").then((response)=>{
-        var result = response.data;
-        setUser(result)
-      })
+    Axios.get("http://localhost:5000/getUser").then((response)=>{
+      var result = response.data;
+      setUser(result)
+    })
   }
   useEffect(() => {
     getUser();
   }, [])
 
-  function drawStuff(x){
-      alert(x);
-      if(x === "1"){
-        alert("1");
-      }else if(x == "2"){
-        alert("2");
-      }else if(x == "3"){
-        alert("3");
-      }
+  const onRoleChange = (e) => {
+    // MODAL CONFIRM
+    alert(e.target.value);
   }
 
   function Role_list(){
     return(
-        User.map((user)=>(
-        <article className = "rolelist">
-          <div className="form-rolelist">
-            <div className="d-flex">
-              <div className ="name">
-                <h5>{user.email}</h5> 
-                
-              </div><div className ="name">
-                <h5> {user.role}</h5> 
-                
-              </div>
-              <div className="right-rolesetting">
-                  <select id="capital" onChange = {() => alert(this.value)}>
-                    <option  value="1">1</option>
-                    <option  value="2">2</option>
-                    <option  value="3">3</option>
-                  </select>
-              </div>
+      User.map((user)=>(
+      <article className = "rolelist">
+        <div className="form-rolelist">
+          <div className="d-flex">
+
+            <div className ="name">
+              <p>Email : {user.email}</p> 
             </div>
-          </div>  
-        </article>
-        ))
-      )
-    }
+
+            <div className ="role">
+              <p> {user.role}</p> 
+            </div>
+
+            <div className="right-rolesetting">
+              <select id="capital" onChange={(e) => onRoleChange(e)}>
+                {
+                  roles.map((role) =>
+                    <option value={role.value}>{role.title}</option>
+                  )
+                }
+              </select>
+            </div>
+
+          </div>
+        </div>  
+      </article>
+      ))
+    )
+  }
   return (
     <div className="roleSetting">
 
@@ -75,9 +87,11 @@ function RoleSetting(props) {
         </div>
 
         <div className="center-list">
-          <Role_list/>
+          <div class="role-setting">
+            <Role_list/>
+          </div>
         </div>
-
+ 
        
     </div>
   );

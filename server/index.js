@@ -117,7 +117,7 @@ app.post("/ScholarshipCreate", (req,res) => {
   );
 });
 
-app.get("/getAnnounce", (req, res) => {
+app.get("/getAllAnnounce", (req, res) => {
   dbCon.query(
     "SELECT * FROM announce ORDER BY date DESC;", (err, result) => {
     if(err){
@@ -163,6 +163,52 @@ app.post("/addAnnounce", (req, res) => {
       //console.log(result)
     }
   });
+});
+
+app.post("/deleteAnnounce", (req, res) => {
+  const id = req.body.id;
+  dbCon.query(
+    "DELETE FROM announce WHERE id = ?",
+    [id],
+    (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        res.send(result);
+      }
+    }
+  )
+});
+
+app.post("/getAnnounce",(req ,res)=>{
+  const id = req.body.id;
+  dbCon.query(
+    "SELECT * FROM announce WHERE id = ?",
+    [id],
+    (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        res.send(result);
+        //console.log(result)
+      }
+    }
+  )
+});
+
+app.post("/EditAnnounce",(req ,res)=>{
+  const id = req.body.id;
+  dbCon.query(
+    "UPDATE announce SET (title, image_name, image_url, detail) VALUES (?, ?, ?, ?) WHERE id = ?",
+    [title, image_name, image_url,detail, id],
+    (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        res.send(result);
+      }
+    }
+  )
 });
 
 /*

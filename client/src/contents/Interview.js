@@ -1,9 +1,14 @@
-import { React, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './Interview.css';
 import data from '../data/datanews.js';
+import {WebContext} from "../App";
+
 
 
 function Interview(props) {
+  const { Test2 } = useContext(WebContext);
+  const [test2, setTest2] = Test2;
+  
   function Name_list(){
     const [visible, setVisible] = useState(false);
     const Scholar = ({idScholar,title,detail,date}) => {
@@ -53,12 +58,14 @@ function Interview(props) {
     }
   return (
     <div className="interview">
+
         <div className="header d-flex">
             <div className="icon-calendar-check">
                 <i className="bi bi-calendar-check"></i>
             </div>
             <h4>การสัมภาษณ์</h4>
         </div>
+        
 
       <div className="row-top-interview">
         <form className="d-flex">

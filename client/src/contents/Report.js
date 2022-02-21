@@ -1,8 +1,13 @@
-import { React, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './Report.css';
 import data from '../data/datanews.js';
+import { WebContext } from '../App';
 
 function Report(props) {
+
+  const { Test1 } = useContext(WebContext);
+  const [test1, setTest1] = Test1;
+
   function Report_list(){
     const [visible, setVisible] = useState(false);
     const Scholar = ({idScholar,title,detail,date}) => {
@@ -41,8 +46,35 @@ function Report(props) {
         }</section> 
       );
     }
+
+/*
+   function  handleChange (e) {
+      console.log(e.target.value);
+      this.setState({message: e.target.value}, this.handleSubmit);
+  }*/
   return (
     <div className="report">
+
+      {/* TEST USECONTEXT */} 
+      <center>
+        <div>
+          <h1>{test1}</h1>
+          <input onChange={(e) => setTest1(e.target.value)} />
+        </div>
+      </center>
+
+
+
+
+
+
+
+
+
+
+
+
+
         <div className="header d-flex">
             <div className="icon-files">
                 <i className="bi bi-files"></i>

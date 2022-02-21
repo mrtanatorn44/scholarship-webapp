@@ -172,7 +172,6 @@ html, body {
   background: #A62639;
   font-family: 'Prompt', sans-serif;
   color: white;
-  position: fixed;
   bottom: 0;
 }
 .main .column-right .row-bottom h5{
@@ -180,13 +179,13 @@ html, body {
   font-size: calc(0.8vw + 0.8vh);;
 }
 .main .column-right .row-bottom .ku_src_logo{
-  width: calc(1.4vw * 1.4vh);
-  height: calc(1.8vw * 1.8vh);
+  width: calc(1.4vw + 1.4vh);
+  height: calc(1.8vw + 1.8vh);
   margin: 1vh;
 }
 .main .column-right .row-bottom .ku_eng_src_logo{
-  width: calc(2.2vw * 2.2vh);
-  height: calc(1.8vw * 1.8vh);
+  width: calc(2.2vw + 2.2vh);
+  height: calc(1.8vw + 1.8vh);
   margin: 1vh 1vh 1vh 0;
 }
 
