@@ -11,15 +11,13 @@ function InterviewSchedule(props) {
       <form>
         <div className="detail1">
           <p>สัมภาษณ์ ณ วันที่</p>
-          <input type="text" placeholder="31 กุมภาพันธ์ 2565"></input>
+          <input type="text" placeholder="31 กุมภาพันธ์ 2565"/>
         </div>
-        <br></br>
 
         <div className="detail2">
           <p>เวลา</p>
-          <input type="text" placeholder="28:39"></input>
+          <input type="text" placeholder="28:39"/>
         </div>
-        <br></br>
                 
         <div className="detail3">
           <p>รายชื่อกรรมการที่จะทำการสัมภาษณ์</p>
@@ -29,24 +27,21 @@ function InterviewSchedule(props) {
             <option value="people3">เสี่ยโอ</option>
           </select>
         </div>
-        <br></br>
 	
         <div className="detail4">
           <p>ช่องทางการสัมภาษณ์</p>
-          <input type="text" placeholder="Zoom meeting"></input>
+          <input type="text" placeholder="Zoom meeting"/>
         </div>
 
       </form>
     </div>
     <div className="fotter-confirm d-flex">
       <div className="confirm"> 
-        <button type = "button">
-          <p>ยืนยัน</p>
-        </button>    
-        </div>
+        <button type = "button">ยืนยัน</button>    
+      </div>
     </div>
   </div>
-  );
+  )
 }
 
 export default InterviewSchedule;

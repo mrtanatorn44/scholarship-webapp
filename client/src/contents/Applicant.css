@@ -107,7 +107,7 @@
 .schlorshipcheck .checklist {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 55vh;
+    height: 56.5vh;
 }
 
 .schlorshipcheck .checklist .scholar-checklist{
@@ -183,3 +183,12 @@
 
 }
 
+/*------------------------------Phone-------------------------*/
+@media screen and (max-width: 1024px){
+    .scholar-checklist .button-Interview  {
+     margin-left: calc(23vw + 23vh);
+    }
+    .scholar-checklist .button-Interview  p {
+    padding-left: calc(0.4vw + 0.4vh);
+    }
+}

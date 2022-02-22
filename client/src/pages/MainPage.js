@@ -6,9 +6,9 @@ import './MainPage.css';
 
 // CONTENTS
 import Announcement            from '../contents/Announcement.js';
-import ScholarshipList         from '../contents/ScholarshipList.js';
-import ScholarshipCheck        from '../contents/ScholarshipCheck.js';
-import ScholarshipStatus       from '../contents/ScholarshipStatus.js';
+import Scholarship        from '../contents/Scholarship.js';
+import Applicant        from '../contents/Applicant.js';
+import Status       from '../contents/Status.js';
 import Profile                 from '../contents/Profile.js';
 import Interview               from '../contents/Interview.js';
 import Report                  from '../contents/Report.js';
@@ -30,8 +30,8 @@ import InterviewSchedule       from '../sub-contents/InterviewSchedule.js';
 import InterviewScheduleCreate from '../sub-contents/InterviewScheduleCreate.js';
 import InterviewScheduleEdit   from '../sub-contents/InterviewScheduleEdit.js';
 // MODEL
-import ConfirmModal   from '../modal/ConfirmModal.js';
-import AlertModal   from '../modal/AlertModal.js';
+import ConfirmModal   from '../modals/ConfirmModal.js';
+import AlertModal   from '../modals/AlertModal.js';
 // IMAGE
 import ku_eng_src_logo    from "../images/engsrc.png";
 import ku_src_logo        from "../images/ku.png";
@@ -56,7 +56,7 @@ function MainPage() {
   // Check user login
   useEffect(() => {
     var isSignedIn;
-    var currentUser;
+    var currentUser; 
 
     async function fetchGoogleAuth() {
       if (window.gapi) {
@@ -174,11 +174,11 @@ function MainPage() {
   function contentRender() {
     switch (content) {
       case 'ScholarshipList':
-        return <ScholarshipList sendContent={getContent}/>
+        return <Scholarship sendContent={getContent}/>
       case 'ScholarshipStatus':
-        return <ScholarshipStatus/>
+        return <Status/>
       case 'ScholarshipCheck':
-        return <ScholarshipCheck sendContent={getContent}/>
+        return <Applicant sendContent={getContent}/>
       case 'Profile':
         return <Profile sendContent={getContent}/>
       case 'ScholarshipListRegister':
@@ -206,9 +206,11 @@ function MainPage() {
       case 'InterviewSchedule':
         return <InterviewSchedule/>
       case 'ReportInspect':
-        return <ReportInspect/>
+        return <ReportInspect sendContent={getContent}/>
       case 'AnnouncementEdit':
         return <AnnouncementEdit/>
+      case 'AnnouncementEdit':
+        return <Report/>
       default:
         return <Announcement/>
     }
@@ -219,7 +221,7 @@ function MainPage() {
       /*---------- STUDENT ----------*/
       if (user.role === 'student') {
         return (
-          <ul className="navs-link">
+          <ul className="side-link">
             <li className="announcement d-flex" 
               style={{
                 background: 
@@ -259,7 +261,7 @@ function MainPage() {
               <p>สถานะทุนปัจจุบัน</p>
             </li>
 
-            <li className="profile d-flex"
+            <li className="profils d-flex"
               style={{
                 background:
                   (content==='Profile')
@@ -278,7 +280,7 @@ function MainPage() {
       /*---------- INTERVIEWER ----------*/
       else if (user.role === 'interviewer') {
         return (
-          <ul className="navs-link">
+          <ul className="side-link">
             <li className="announcement d-flex" 
               style={{
                 background: 
@@ -323,7 +325,7 @@ function MainPage() {
       /*---------- ADMIN ----------*/
       else if (user.role === 'admin') {
         return (
-          <ul className="navs-link">
+          <ul className="side-link">
             <li className="d-flex" 
               style={{
                 background: 
@@ -415,18 +417,18 @@ function MainPage() {
 
         {/*-----------------------LEFT NAV BAR---------------------*/}
 
-        <div className="column-left d-flex flex-column"> 
+        <div className="side-link-left d-flex flex-column"> 
           <div className="row-top">
             <div className="user-show">
               <div className='user-profile'>
                 <img 
                   src={user.imgUrl} 
                   alt="user profile"
-                  className="user-image"
+                  className="img-circle"
                 />
               </div>
               <div className='user-info'>
-                <p className="user-email">
+                <p className="user-email"> 
                   {user.name}
                 </p>
                 <p className="user-name">
@@ -448,9 +450,9 @@ function MainPage() {
 
           {/*-----------------------HEADER---------------------*/}
 
-          <div className="row-top d-flex">
-            <h5>ระบบขอทุน นิสิตวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขต ศรีราชา</h5>
-            <div className="icon-button d-flex">
+          <div className="header-page d-flex">
+            <h5 >ระบบขอทุน นิสิตวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขต ศรีราชา</h5>
+            <div className="logout-button d-flex">
               <Login/>
             </div>
           </div>
@@ -463,7 +465,7 @@ function MainPage() {
           
           {/*-----------------------FOOTER---------------------*/}
 
-          <div className="row-bottom d-flex ">
+          <div className="footer-page d-flex ">
             <img src={ku_src_logo} className="ku_src_logo" alt="eng src"/>
             <img src={ku_eng_src_logo} className="ku_eng_src_logo" alt="eng src"/>
             <h5>

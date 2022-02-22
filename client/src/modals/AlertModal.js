@@ -1,14 +1,19 @@
 import React, {useState} from 'react';
 import './AlertModal.css';
 
-function AlertModel() {
+function AlertModel(props) {
 
   const [showModal, setShowModal] = useState(false);
   return (
     <div class="modal">
       <div class="modal-content" >
         <div class="modal-body">
-          <center class = "icon"><i class="bi bi-clock"></i></center><br></br>
+        <button className="image-modal-button-close" onClick={() => props.sendConfirm(false)}>
+          <i class="x-button bi bi-x"></i>
+        </button>
+          <center class = "icon">
+            <i class="bi bi-clock"></i>
+          </center><br></br>
           <center>วันที่ 30 กุมภาพันธ์ 2570</center><br></br>
           <center>เวลา : 12.00 น.</center><br></br>
           <center>รหัส Meeting : qweasd</center><br></br>
@@ -20,3 +25,4 @@ function AlertModel() {
 }
 
 export default AlertModel;
+ 

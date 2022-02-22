@@ -135,3 +135,10 @@
     cursor: pointer;
     border-radius: 12px;
 }
+/*----------------------Phone---------------------*/
+@media screen and (max-width: 1024px){
+.scholarshipListRegister .save  {
+     margin-left: calc(33vw + 33vh);
+    }
+
+}

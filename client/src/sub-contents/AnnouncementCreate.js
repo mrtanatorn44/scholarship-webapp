@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './AnnouncementCreate.css';
-import ConfirmSaveModal from '../modal/ConfirmModal.js';
-import ConfirmCancelModal from '../modal/ConfirmModal.js';
+import ConfirmSaveModal from '../modals/ConfirmModal.js';
+import ConfirmCancelModal from '../modals/ConfirmModal.js';
 import announce_empty        from "../images/announce_empty.png";
 
 import Axios from 'axios';
@@ -83,85 +83,45 @@ function AnnouncementCreate(props) {
       <div className="header d-flex">
         <div className="column-left d-flex">
           <div className="icon-plus">
-            <i className="bi bi-plus-lg"></i>
+            <i className="bi bi-plus-lg"/>
           </div>
           <h4>เพิ่มข่าวสาร</h4>
         </div>
-  
         <div className="column-right d-flex">
           <button className="save-button" onClick={() => (setShowModalSave(true))}>
-            <i className="bi bi-save"></i>
+            <i className="bi bi-save"/>
           </button>
-          {
-            showModalSave && 
-            <ConfirmSaveModal 
-              sendConfirm={getConfirmSave}
-            />
-          }
-          <button className="cancel-button" 
-            onClick={
-              () => (setShowModalCancel(true))
-            }
-          >
-            <i className="bi bi-x"></i>
+          { showModalSave && <ConfirmSaveModal sendConfirm={getConfirmSave}/> }
+          <button className="cancel-button" onClick={() => (setShowModalCancel(true))}>
+            <i className="bi bi-x"/>
           </button>
-          {
-            showModalCancel && 
-            <ConfirmCancelModal 
-              sendConfirm={getConfirmCancel}
-            />
-          }
+          { showModalCancel && <ConfirmCancelModal sendConfirm={getConfirmCancel}/> }
         </div>
       </div>
       <div className="center d-flex">
         <form>
           <div className="topic d-flex">
-            <input 
-              type="text" 
-              placeholder="หัวข้อข่าว" 
-              onChange={
-                (event) => {
-                  setForm({
-                    ...form,
-                    title: event.target.value,
-                  })
-                }
-              }
-            ></input>
+            <input type="text" placeholder="หัวข้อข่าว" onChange={(event) => {setForm({ ...form, title: event.target.value })}}/>
           </div>
-          <br></br>
           <div className="detail">
-            <input 
-              type="text" 
-              placeholder="รายละเอียดข่าวสาร" 
-              onChange={
-                (event) => {
-                  setForm({...form,
-                    detail: event.target.value,
-                  })
-                }
-              }
-            ></input>
+            <input type="text" placeholder="รายละเอียดข่าวสาร" onChange={(event) => {setForm({ ...form, detail: event.target.value })}}/>
           </div>
-          <br></br>
           <div className="add-row-bottom d-flex">
             <div className="date">
               <input type="text" placeholder="วัน/เดือนปี ที่ลงข่าว"></input>
             </div>
             <div className="insertbutton d-flex">
-
               <input class="insert"  type="file" name="file" id="file"  onChange={(file) => onHandleUpload(file)}/>
               <label for="file">
-                <i class="bi bi-card-image"></i>
+                <i class="bi bi-card-image"/>
               </label>
               <p>{ form.image_name===""? "เพิ่มรูปภาพ": form.image_name }</p>
-              
             </div>
           </div>
         </form>
       </div> 
     </div>
-  );
+  )
 }
 
 export default AnnouncementCreate;

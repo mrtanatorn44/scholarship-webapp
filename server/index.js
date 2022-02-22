@@ -198,9 +198,13 @@ app.post("/getAnnounce",(req ,res)=>{
 
 app.post("/EditAnnounce",(req ,res)=>{
   const id = req.body.id;
+  const title = req.body.title;
+  const image_name = req.body.image_name;
+  const image = req.body.image;
+  const detail = req.body.detail;
   dbCon.query(
     "UPDATE announce SET (title, image_name, image_url, detail) VALUES (?, ?, ?, ?) WHERE id = ?",
-    [title, image_name, image_url,detail, id],
+    [title, image_name, image,detail, id],
     (err, result) => {
       if(err){
         console.log(err);

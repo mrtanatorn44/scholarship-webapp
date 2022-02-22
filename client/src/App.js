@@ -12,12 +12,14 @@ function App() {
 
   const [test1, setTest1] = useState('TEST1');
   const [test2, setTest2] = useState('TEST2');
+  const [scholarShipCreate, StudentScholarshipCreate] = useState();
   const [editAnnounceID, setEditAnnounceID] = useState(-1);
 
   const webValue = { 
 		Test1: [test1, setTest1], 
 		Test2: [test2, setTest2],
-    EditAnnounceID: [editAnnounceID, setEditAnnounceID]
+    EditAnnounceID: [editAnnounceID, setEditAnnounceID],
+    ScholarShipCreate: [scholarShipCreate, StudentScholarshipCreate]
 	}
   
   return (

@@ -33,7 +33,7 @@
 .schlorshipstatus .scholarnews {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 60vh;
+    height: 73vh;
 }
 .schlorshipstatus .scholarnews .scholar {
     background-color: rgba(240, 240, 240, 0.4);

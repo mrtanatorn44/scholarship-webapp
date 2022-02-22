@@ -99,7 +99,7 @@
 .interview .scholarnews {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 55vh;
+    height: 58vh;
 }
 
 
@@ -179,4 +179,17 @@
     background-color: #03A96B;
     
 }
+/*------------------------Phone-------------------------*/
+/*-----------------icon-width 1024 px ------------------*/
 
+@media screen and (max-width: 1024px){
+    .scholar-Interview .button-Interview  {
+     margin-left: calc(26vw + 26vh);
+    }
+    .scholar-Interview .button-Interview .button-clock p{
+        padding-left: 5px;
+    }
+    .scholar-Interview .button-Interview .button-search p{
+        padding-left: 15px;
+    }
+}

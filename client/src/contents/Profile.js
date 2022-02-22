@@ -2,17 +2,16 @@ import React from 'react';
 import './Profile.css';
 
 function Profile(props) {
+
   return(
     <div className="profile">    
       <div className="row-top-profile">
         <div className="form-profile">
           <form className="d-flex ">
-
             <div className="img-profile">
               <img src="https://i.pinimg.com/564x/e6/c9/78/e6c9783ef31e29427d42939766031372.jpg"/>
               <p>สภาพเป็นแฟนกัน</p>
             </div>
-
             <div className="data-profile d-flex">
               <div className="column-left-profile "> 
                 <div className="name-profile">
@@ -24,7 +23,6 @@ function Profile(props) {
                   <input placeholder="ภาคปกติ" required></input>
                 </div>
               </div>
-
               <div className="column-center-profile">
                 <div className="code-profile">
                   <label >รหัสนิสิต</label><br></br>
@@ -35,14 +33,12 @@ function Profile(props) {
                   <input placeholder="GMMTV" required></input>
                 </div>
               </div>
-
               <div className="column-right-profile">
                 <div className="grade-profile">
                   <label >นิสิตชั้นปีที่</label><br></br>
                   <input placeholder="5" required></input>
                 </div>
               </div>
-
             </div>
           </form>
           <div className="botton-edit">
@@ -51,8 +47,6 @@ function Profile(props) {
           </button>
         </div>
         </div>
-        
-       
       </div>
       <div className="row-bottom-profile">
         <div className="drop-scholaship">

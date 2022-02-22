@@ -2,7 +2,11 @@ import React from 'react';
 import './ScholarshipEdit.css';
 
 function ScholarshipEdit() {
-  return <div></div>;
+  return (
+    <div>
+
+    </div>
+  )
 }
 
 

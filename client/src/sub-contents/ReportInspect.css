@@ -8,14 +8,19 @@
     
     overflow-x: hidden;
 }
+.reportinspect .header{
+    width: 40%;
+    font-family: 'Prompt', sans-serif;
+    margin: auto;
+}
 /*------------fotter-button----------*/
 .reportinspect .fotter-button{
     width: 100%;
     height: 20%;
 }
 .reportinspect .button{
-    width: 50%;
-    margin-left: calc(28vw + 28vh);
+    width: 40%;
+    margin: auto;
 }
 /*------------dowload---------------*/
 .reportinspect .dowload p, .back p{
@@ -40,3 +45,11 @@
 .reportinspect .back {
     background-color: #DD4A48;
 }
+/*--------------------phone---------------*/
+/*-----------------icon--1024 px-----------*/
+@media screen and (max-width: 1024px){
+    .reportinspect .fotter-button  {
+         margin-right: calc(20vw + 20vh);
+        }
+    
+    }

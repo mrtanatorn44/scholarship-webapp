@@ -178,3 +178,25 @@
 
 
 
+@media screen and (max-width: 1024px){
+    /*-------------------bottom--------------------*/
+    .announcementCreate .add-row-bottom .insert + label{
+        border-radius: 10px;
+        width: calc(2.2vw + 2.2vh);
+        height: calc(2.2vw + 2.2vh);
+        border-style: hidden;
+        background-color: #03A96B;
+        color: white;
+        text-align: center;
+        font-size: calc(1.5vw + 1.5vh);
+        margin-left: calc(26.5vw + 26.5vh);
+        cursor:pointer;
+    }
+
+    .announcementCreate .center .detail input{
+        width: 100%;
+        height: calc(21vw + 21vh);
+        font-size: calc(0.5vw + 0.5vh);
+        
+    }
+}
