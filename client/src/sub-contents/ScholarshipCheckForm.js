@@ -2,21 +2,25 @@ import { React, useState, useEffect } from 'react';
 import './ScholarshipCheckForm.css';
 
 function ScholarshipCheckForm() {
+
+  
   return (
-    <div className="scholarshipCheckForm">
-      <div className="header d-flex">
-        <div className="icon-three-dots">
+    <div className="frame-content">
+      <div className="head-content d-flex">
+        <div className="icons">
           <i className="bi bi-three-dots"></i>
         </div>
-        <h4>ตรวจสอบข้อมูล</h4>
+        <div class="topic">
+               <h4>ตรวจสอบข้อมูล</h4>
+        </div>
       </div>
-      <div className="forms-list">
-        <center>
+      <div className="frame-subcontent3">
+        <div class="name">
           <h5>ตรวจสอบข้อมูล</h5>
-        </center>
-        <form className="form-profile">
+        </div>
+        <form className="scholarChek-form">
           <div>
-            <label>ชื่อ - นามสกุล (ภาษาไทย)</label>
+            <label>ชื่อ - นามสกุล (ภาษาไทย)</label><br></br>
             <input placeholder="ชื่อภาษาไทย" required></input>
           </div>
           
@@ -32,12 +36,12 @@ function ScholarshipCheckForm() {
             </select>
           </div>
           <div>
-            <label>อายุ</label>
+            <label>อายุ</label><br></br>
             <input placeholder="อายุ" required></input>
           </div>
           
           <div>
-            <label>รหัสนิสิต</label>
+            <label>รหัสนิสิต</label><br></br>
             <input placeholder="รหัสนิสิต" required></input>
           </div>
           
@@ -61,31 +65,31 @@ function ScholarshipCheckForm() {
             </select>
           </div>
           <div>
-            <label>คะแนนเฉลี่ยนสะสม(GPA)</label>
+            <label>คะแนนเฉลี่ยนสะสม(GPA)</label><br></br>
             <input placeholder = "คะแนนเฉลี่ยสะสม(GPA)" required></input>
           </div>
           
           <div>
-            <label>ที่อยู่ปัจจุบัน(ที่ติดต่อได้สะดวก)</label>
+            <label>ที่อยู่ปัจจุบัน(ที่ติดต่อได้สะดวก)</label><br></br>
             <input placeholder = "ที่อยู่ปัจจุบัน" required></input>
           </div>
           
           <div>
-            <label>เบอร์โทรศัพท์</label>
+            <label>เบอร์โทรศัพท์</label><br></br>
             <input placeholder = "เบอร์โทรศัพท์" required></input>
           </div>
-          <div class="topic-fam" >
+         
             <h5>ประวัติครอบครัว</h5>
-          </div>
+           
           <div>
-            <label>ชื่อ-นามสกุล(บิดา)</label>
+            <label>ชื่อ-นามสกุล(บิดา)</label><br></br>
             <input placeholder = "ชื่อ-นามสกุล(บิดา)" required></input>
           </div>
           
 
-          <div class="scholar-check d-flex">
+          <div class="profile-fam d-flex">
             <div class="fam1-edit">
-              <label>อายุ</label>
+              <label>อายุ</label><br></br>
               <input className = "halfbar" placeholder="อายุ" required></input>
             </div>
             <div class="fam2-edit">
@@ -98,41 +102,41 @@ function ScholarshipCheckForm() {
             </div>
           </div>
 
-          <div class="scholar-check d-flex">
+          <div class="profile-fam d-flex">
             <div class="fam1-edit">
-              <label>อาชีพ</label>
+              <label>อาชีพ</label><br></br>
               <input placeholder = "อาชีพ" required></input>
             </div>
             <div class="fam2-edit">
-              <label>เบอร์โทรศัพท์</label>
+              <label>เบอร์โทรศัพท์</label><br></br>
               <input placeholder = "เบอร์โทรศัพท์" required></input>
             </div>
           </div>
 
-          <div class="scholar-check d-flex">
+          <div class="profile-fam  d-flex">
             <div class="fam1-edit">
-              <label>รายได้ต่อเดือน</label>
+              <label>รายได้ต่อเดือน</label><br></br>
               <input className = "halfbar" placeholder="ระบุรายได้ต่อเดือน" required></input>
             </div>
             <div class="fam2-edit">
-              <label>สถานที่ประกอบอาชีพ</label>
+              <label>สถานที่ประกอบอาชีพ</label><br></br>
               <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" required></input>
             </div>
           </div>
           
           <div>
-            <label>ที่อยู่ของบิดา</label>
+            <label>ที่อยู่ของบิดา</label><br></br>
             <input placeholder = "ที่อยู่ของบิดา" required></input>
           </div>
           
           <div>
-            <label>ชื่อ-นามสกุล(มารดา)</label>
+            <label>ชื่อ-นามสกุล(มารดา)</label><br></br>
             <input placeholder = "ชื่อ-นามสกุล(มารดา)" required></input>
           </div>
           
-          <div class="scholar-check d-flex">
+          <div class="profile-fam  d-flex">
             <div class="fam1-edit">
-              <label>อายุ</label>
+              <label>อายุ</label><br></br>
               <input className = "halfbar" placeholder="อายุ" required></input>
             </div>
             <div class="fam2-edit">
@@ -145,31 +149,31 @@ function ScholarshipCheckForm() {
             </div>
           </div>
 
-          <div class="scholar-check d-flex">
+          <div class="profile-fam d-flex">
             <div class="fam1-edit">
-              <label>อาชีพ</label>
+              <label>อาชีพ</label><br></br>
               <input placeholder = "อาชีพ" required></input>
             </div>
             <div class="fam2-edit">
-              <label>เบอร์โทรศัพท์</label>
+              <label>เบอร์โทรศัพท์</label><br></br>
               <input placeholder = "เบอร์โทรศัพท์" required></input>
             </div>
           </div>
 
-          <div class="scholar-check d-flex">
+          <div class="profile-fam d-flex">
             <div class="fam1-edit">
-              <label>รายได้ต่อเดือน</label>
+              <label>รายได้ต่อเดือน</label><br></br>
               <input className = "halfbar" placeholder="ระบุรายได้ต่อเดือน" required></input>
             </div>
             <div class="fam2-edit">
-              <label>สถานที่ประกอบอาชีพ</label>
+              <label>สถานที่ประกอบอาชีพ</label><br></br>
               <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" required></input>
             </div>
           </div>
 
           
           <div>
-            <label>ที่อยู่ของมารดา</label>
+            <label>ที่อยู่ของมารดา</label><br></br>
             <input placeholder = "ที่อยู่ของมารดา" required></input>
           </div>
           
@@ -186,49 +190,49 @@ function ScholarshipCheckForm() {
             <p>พี่น้องร่วมบิดา มารดาและระดับการศึกษาหรืออาชีพ เรียงตามลำดับดังนี้(รวมนิสิตผู้สมัครด้วย) </p>
           </div>
           <div>
-            <label>ชื่อ-นามสกุล</label>
+            <label>ชื่อ-นามสกุล</label><br></br>
             <input placeholder = "ชื่อ-นามสกุล" required></input>
           </div>
           
           <div>
-            <label>ระดับการศึกษา</label>
+            <label>ระดับการศึกษา</label><br></br>
             <input placeholder = "ระดับการศึกษา" required></input>
           </div>
           
           <div>
-            <label>อาชีพ</label>
+            <label>อาชีพ</label><br></br>
             <input placeholder = "อาชีพ" required></input>
           </div>
           
           <div>
-            <label>สถานที่ประกอบอาชีพ/สถานศึกษา</label>
+            <label>สถานที่ประกอบอาชีพ/สถานศึกษา</label><br></br>
             <input placeholder = "สถานที่ประกอบอาชีพ/สถานศึกษา" required></input>
           </div>
           <div class="topic-doc">
             <h5>เอกสารที่นิสิตต้อง Upload</h5>
           </div>
           <div>
-            <label>สำเนาบัตรประชาชน</label>
+            <label>สำเนาบัตรประชาชน</label><br></br>
             <input type="file" placeholder = "สำเนาบัตรประชาชน" required></input>
           </div>
           
           <div>
-            <label>แบบจิตอาสา กยศ.</label>
+            <label>แบบจิตอาสา กยศ.</label><br></br>
             <input type="file" placeholder = "แบบจิตอาสา กยศ." required></input>
           </div>
           
           <div>
-            <label>ใบแจ้งหนี้ค่าลงทะเบียน</label>
+            <label>ใบแจ้งหนี้ค่าลงทะเบียน</label><br></br>
             <input type="file" placeholder = "ใบแจ้งหนี้ค่าลงทะเบียน" required></input>
           </div>
           
           <div>
-            <label>ใบลงทะเบียน</label>
+            <label>ใบลงทะเบียน</label><br></br>
             <input type="file" placeholder = "ใบลงทะเบียน" required></input>
           </div>
           
           <div>
-            <label>ใบเกรด(GPA)</label>
+            <label>ใบเกรด(GPA)</label><br></br>
             <input type="file" placeholder = "ใบเกรด(GPA)" required></input>
           </div>
         </form>
@@ -248,15 +252,15 @@ function ScholarshipCheckForm() {
 
           <div className="form-note">
             <div className="note">
-              <label>หมายเหตุ</label>
-              <input></input>
+              <label>หมายเหตุ</label><br></br>
+              <input placeholder = "มันไม่ถูกต้อง!!!"></input>
             </div>
           </div>
         </form>
       </div>
-      <div className="footer">
-        <div className="save d-flex">
-          <button>บันทึก</button>
+      <div className="checkForm-footer">
+        <div className="btn-confirm-scholarCheck d-flex">
+          <button className="btn-confirm">บันทึก</button>
         </div>
       </div>
   

@@ -54,6 +54,6 @@ const [showModal, setShowModal] = useState(false);
             
         );
 
-    }
+    }}
 
 export default Scholarshipstatus;

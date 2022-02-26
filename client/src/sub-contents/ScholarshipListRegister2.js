@@ -3,12 +3,14 @@ import './ScholarshipListRegister2.css';
 
 function ScholarshipListRegister2() {
   return (
-    <div className="scholarshipListRegister">
-        <div className="header d-flex">
-            <div className="icon-three-dots">
+    <div className="frame-content">
+        <div className="head-content d-flex">
+            <div className="icons">
                 <i className="bi bi-three-dots"></i>
             </div>
-            <h4>ใบสมัครทุนการศึกษา</h4>
+            <div class="topic">
+              <h4>ใบสมัครทุนการศึกษา</h4>
+            </div>
         </div>
         <div className="forms-list">
         <center>

@@ -1,8 +1,9 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import Login from "../components/Login.js"
 import Axios from 'axios';
-import './MainPage.css';
+import './MainPage.css'
+import { WebContext } from '../App';
 
 // CONTENTS
 import Announcement            from '../contents/Announcement.js';
@@ -20,7 +21,7 @@ import InterviewRate           from '../sub-contents/InterviewRate.js';
 import ScholarshipListRegister from '../sub-contents/ScholarshipListRegister.js';
 import ScholarshipEdit         from '../sub-contents/ScholarshipEdit.js';
 import ProfileEdit             from '../sub-contents/ProfileEdit.js';
-import ProfileCreate           from '../sub-contents/ProfileEdit.js';
+import ProfileCreate           from '../sub-contents/ProfileCreate';
 import AnnouncementCreate      from '../sub-contents/AnnouncementCreate.js';
 import AnnouncementEdit        from '../sub-contents/AnnouncementEdit.js';
 import ScholarshipListCreate   from '../sub-contents/ScholarshipListCreate.js';
@@ -36,169 +37,49 @@ import AlertModal   from '../modals/AlertModal.js';
 import ku_eng_src_logo    from "../images/engsrc.png";
 import ku_src_logo        from "../images/ku.png";
 
-
-
 function MainPage() {
   
-  const navigate = useNavigate();
+  const { User, Content } = useContext(WebContext)
+  const [user, setUser] = User;
+  const [content, setContent] = Content;
 
-  const [content, setContent] = useState("Announcement");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState({
-    imgUrl: ku_eng_src_logo,
-    email : 'before using.',
-    name  : 'Please Log-in',
-    fname : '',
-    lname : '',
-    role  : ''
-  });
-
-  // Check user login
-  useEffect(() => {
-    var isSignedIn;
-    var currentUser; 
-
-    async function fetchGoogleAuth() {
-      if (window.gapi) {
-        // LOAD authenticate
-        await window.gapi.load('auth2', function() {
-          // INIT authenticate
-          window.gapi.auth2.init({
-            client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID
-          }).then( 
-            // LISTEN authenticate
-            async function() {
-              window.gapi.auth2.getAuthInstance().isSignedIn.listen(fetchLogin);
-              // FETCH isSignedIn & currentUser
-              fetchLogin(await window.gapi.auth2.getAuthInstance().isSignedIn.get(),
-                         await window.gapi.auth2.getAuthInstance().currentUser.get());
-              function fetchLogin(authIsSignedIn, authCurrentUser) {
-                isSignedIn = authIsSignedIn;
-                currentUser = authCurrentUser;
-              }
-              
-              // ASSIGN value to userState
-              if (isSignedIn && !isLoggedIn) {
-                // console.log(currentUser.profileObj);
-                const lName = currentUser.profileObj.familyName.charAt(0).toUpperCase() + 
-                              currentUser.profileObj.familyName.slice(1).toLowerCase();
-                setUser({
-                  ...user,
-                  imgUrl: currentUser.profileObj.imageUrl,
-                  email : currentUser.profileObj.email,
-                  name  : currentUser.profileObj.givenName + ' ' + lName,
-                  fname : currentUser.profileObj.givenName,
-                  lname : lName
-                });
-                setIsLoggedIn(true);
-              } else if (!isLoggedIn) { 
-                alert('Some thing went wrong, please re-login.')
-              }
-            }
-          );
-        });
-      } else {
-        alert('Google API is not working, please contact admin.')
-      }
+  function checkRole(targetRole, targetContent) {
+    if (user.role === targetRole || user.role === 'admin') { 
+      setContent(targetContent);
+    } else {
+      alert('You dont have permission for [' + user.role + ']\n as \'' + targetContent + '\', require \'' + targetRole + '\'');
     }
-    fetchGoogleAuth();
-    console.log('fetchAuth')
-
-  }, [])
-
-  useEffect(() => {
-
-    if (isLoggedIn === false) {
-      return;
-    }
-
-    // GET user from DB by email from G-API
-    Axios.post("http://localhost:5000/getUser", {
-      email : user.email
-    }).then(
-      (response) => {
-        if (response.data.length !== 0) {
-          const data = response.data[0];
-          const dbRole = data.role;
-          setUser({
-            ...user,
-            role  : dbRole
-          })
-          //alert('Welcome back, ' + dbRole + ' - ' + user.name);
-        } else {
-          setUser({
-            ...user,
-            role  : 'student'
-          })
-          Axios.put("http://localhost:5000/addUser", {
-            email : user.email, 
-            fname : user.fname, 
-            lname : user.lname, 
-            role  : 'student'
-          }).then(
-            (response) => {
-              setContent('StudentAnnouncement')
-              alert('Welcome for the first time.')
-            }
-          );
-        }
-      }
-    );
-    console.log('fetchUser')
-  }, [isLoggedIn])
-
-  // GET PROPS DATA FROM METHOD
-  function getContent(data) {
-    contentPermission(data[0],data[1]);
   }
-  
-  // CHECK PERMISSION BEFORE RENDER CONTENT
-  function contentPermission(targetRole, targetContent) {
-    Axios.post("http://localhost:5000/getUser", {
-      email : user.email
-    }).then(
-      (response) => {
-        if (response.data.length !== 0) {
-          const data = response.data[0];
-          if (data.role === targetRole || data.role === 'admin') {
-            setContent(targetContent);
-          } else {
-            alert('You dont have permission [' + data.role + ']\n[' +
-              targetContent + '] required => [' + targetRole + ']');
-          }
-        }
-      }
-    );
-  }
-  // RENDER CONTENT
   function contentRender() {
     switch (content) {
-      case 'ScholarshipList':
-        return <Scholarship sendContent={getContent}/>
-      case 'ScholarshipStatus':
+      case 'Scholarship':
+        return <Scholarship/>
+      case 'Status':
         return <Status/>
-      case 'ScholarshipCheck':
-        return <Applicant sendContent={getContent}/>
+      case 'Applicant':
+        return <Applicant/>
       case 'Profile':
-        return <Profile sendContent={getContent}/>
+        return <Profile/>
       case 'ScholarshipListRegister':
         return <ScholarshipListRegister/>
       case 'ProfileEdit':
         return <ProfileEdit/>
+      case 'ProfileCreate':
+          return <ProfileCreate/>
       case 'Interview':
-        return <Interview sendContent={getContent}/>
+        return <Interview/>
       case 'InterviewRate':
         return <InterviewRate/>
       case 'Announcement' :
-        return <Announcement sendContent={getContent} />
+        return <Announcement/>
       case 'Report' :
-        return <Report sendContent={getContent}/>
+        return <Report/>
       case 'RoleSetting' :
         return <RoleSetting/>
       case 'AnnouncementCreate':
-        return <AnnouncementCreate sendContent={getContent}/>
+        return <AnnouncementCreate/>
       case 'ScholarshipListCreate':
-        return <ScholarshipListCreate sendContent={getContent}/>
+        return <ScholarshipListCreate/>
       case 'ScholarshipCheckForm':
         return <ScholarshipCheckForm/>
       case 'ProfileCheck':
@@ -206,217 +87,92 @@ function MainPage() {
       case 'InterviewSchedule':
         return <InterviewSchedule/>
       case 'ReportInspect':
-        return <ReportInspect sendContent={getContent}/>
+        return <ReportInspect/>
       case 'AnnouncementEdit':
         return <AnnouncementEdit/>
       case 'AnnouncementEdit':
         return <Report/>
+      case 'ScholarshipListCreate':
+        return <ScholarshipListCreate/>
       default:
         return <Announcement/>
     }
   }
-  // RENDER BUTTON TO CONTROL CONTENT
+
   function contentButtonRender() {
-    if (isLoggedIn) {
-      /*---------- STUDENT ----------*/
-      if (user.role === 'student') {
+    switch (user.role) {
+      case 'student':
+        const studentContent = [
+          {icon: 'bi bi-megaphone', content: 'Announcement' , text: 'ประกาศข่าวสาร'},
+          {icon: 'bi bi-card-list', content: 'Scholarship'  , text: 'ทุนที่เปิดให้ลงทะเบียน'},
+          {icon: 'bi bi-grid-3x3' , content: 'Status'       , text: 'สถานะทุนปัจจุบัน'},
+          {icon: 'bi bi-person'   , content: 'Profile'      , text: 'ข้อมูลส่วนตัว'}
+        ]
         return (
-          <ul className="side-link">
-            <li className="announcement d-flex" 
-              style={{
-                background: 
-                  (content==='Announcement')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('student','Announcement')}
-            >
-              <i className="bi bi-megaphone"></i>
-              <p>ประกาศข่าวสาร</p>
-            </li>
-
-            <li className="scholarshipList d-flex"
-              style={{
-                background: 
-                  (content==='ScholarshipList')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('student','ScholarshipList')}
-            >
-              <i className="bi bi-card-list"></i>
-              <p>ทุนที่เปิดให้ลงทะเบียน</p>
-            </li>   
-
-            <li className="scholarshipStatus d-flex"
-              style={{
-                background: 
-                  (content==='ScholarshipStatus')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('student','ScholarshipStatus')}
-            >
-              <i className="bi bi-grid-3x3"></i>
-              <p>สถานะทุนปัจจุบัน</p>
-            </li>
-
-            <li className="profils d-flex"
-              style={{
-                background:
-                  (content==='Profile')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('student','Profile')}
-            >
-              <i className="bi bi-person"></i>
-              <p>ข้อมูลส่วนตัว</p>
-            </li>
-
-          </ul>
+          <ul className="side-link"> {
+            studentContent.map((item, index) => (
+              <li className="d-flex" key={index}
+                style={{ background: (content===item.content)? '#505356': '#74787C' }}
+                onClick={() => checkRole( user.role, item.content )}>
+                <i className={item.icon}></i>
+                <p>{item.text}</p>
+              </li>
+            ))
+          } </ul>
         )
-      } 
-      /*---------- INTERVIEWER ----------*/
-      else if (user.role === 'interviewer') {
+        break;
+      case 'interviewer': 
+        const interviewerContent = [
+          {icon: 'bi bi-megaphone'      , content: 'Announcement' , text: 'ประกาศข่าวสาร'},
+          {icon: 'bi bi-card-list'      , content: 'Scholarship'  , text: 'ทุนที่เปิดให้ลงทะเบียน'},
+          {icon: 'bi bi-calendar-check' , content: 'Interview'    , text: 'การสัมภาษณ์'},
+        ]
         return (
-          <ul className="side-link">
-            <li className="announcement d-flex" 
-              style={{
-                background: 
-                  (content==='Announcement')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('interviewer','Announcement')}
-            >
-              <i className="bi bi-megaphone"></i>
-              <p>ประกาศข่าวสาร</p>
-            </li>
-
-            <li className="ScholarshipList d-flex"
-              style={{
-                background: 
-                  (content==='ScholarshipList')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('interviewer','ScholarshipList')}
-            >
-              <i className="bi bi-card-list"></i>
-              <p>ทุนที่เปิดให้ลงทะเบียน</p>
-            </li>   
-
-            <li className="interview-link d-flex"
-              style={{
-                background: 
-                  (content==='Interview')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('interviewer','Interview')}
-            >
-              <i className="bi bi-calendar-check"></i>
-              <p>การสัมภาษณ์</p>
-            </li>
-          </ul>
+          <ul className="side-link"> {
+            interviewerContent.map((item, index) => (
+              <li className="d-flex" key={index}
+                style={{ background: (content===item.content)? '#505356': '#74787C' }}
+                onClick={() => checkRole( user.role, item.content )}>
+                <i className={item.icon}></i>
+                <p>{item.text}</p>
+              </li>
+            ))
+          } </ul>
         )
-      } 
-      /*---------- ADMIN ----------*/
-      else if (user.role === 'admin') {
+        break;
+      case 'admin':
+        const adminContent = [
+          {icon: 'bi bi-megaphone'      , content: 'Announcement' , text: 'ประกาศข่าวสาร'},
+          {icon: 'bi bi-card-list'      , content: 'Scholarship'  , text: 'ทุนที่เปิดให้ลงทะเบียน'},
+          {icon: 'bi bi-files'          , content: 'Report'       , text: 'รายงานทุน'},
+          {icon: 'bi bi-search'         , content: 'Applicant'    , text: 'ตรวจสอบข้อมูล'},
+          {icon: 'bi bi-three-dots'     , content: 'RoleSetting'  , text: 'กำหนดสิทธิ์การเข้าถึง'},
+          {icon: 'bi bi-calendar-check' , content: 'Interview'    , text: 'การสัมภาษณ์'}
+        ]
         return (
-          <ul className="side-link">
-            <li className="d-flex" 
-              style={{
-                background: 
-                  (content==='Announcement')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('admin','Announcement')}
-            >
-              <i className="bi bi-megaphone"></i>
-              <p>ประกาศข่าวสาร</p>
-            </li>
-
-            <li className="current d-flex"
-              style={{
-                background: 
-                  (content==='ScholarshipList')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('admin','ScholarshipList')}
-            >
-              <i className="bi bi-card-list"></i>
-              <p>ทุนที่เปิดให้ลงทะเบียน</p>
-            </li>   
-
-            <li className="d-flex"
-              style={{
-                background: 
-                  (content==='Report')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('admin','Report')}
-            >
-              <i className="bi bi-files"></i>
-              <p>รายงานทุน</p>
-            </li>
-
-            <li className="d-flex"
-              style={{
-                background: 
-                  (content==='ScholarshipCheck')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('admin','ScholarshipCheck')}
-            >
-              <i className="bi bi-search"></i>
-              <p>ตรวจสอบข้อมูล</p>
-            </li>
-
-
-            <li className="d-flex"
-              style={{
-                background: 
-                  (content==='RoleSetting')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('admin','RoleSetting')}
-            >
-              <i className="bi bi-three-dots"></i>
-              <p>กำหนดสิทธิ์การเข้าถึง</p>
-            </li>
-
-            <li className="interview-link d-flex"
-              style={{
-                background: 
-                  (content==='Interview')
-                    ? '#505356'
-                    : '#74787C'
-              }}
-              onClick={() => contentPermission('admin','Interview')}
-            >
-              <i className="bi bi-calendar-check"></i>
-              <p>การสัมภาษณ์</p>
-            </li>
-          </ul>
+          <ul className="side-link"> {
+            adminContent.map((item, index) => (
+              <li className="d-flex" key={index}
+                style={{ background: (content===item.content)? '#505356': '#74787C' }}
+                onClick={() => checkRole( user.role, item.content )}>
+                <i className={item.icon}></i>
+                <p>{item.text}</p>
+              </li>
+            ))
+          } </ul>
         )
-      }
+        break;
+      default:
+        return ( <ul className="side-link"></ul> )
+        break;
     }
-    
   }
- 
+
   return (
     <div className='main'>
       <div className="d-flex">      
 
-        {/*-----------------------LEFT NAV BAR---------------------*/}
-
+        {/*-----------------------SIDE NAV BAR---------------------*/}
         <div className="side-link-left d-flex flex-column"> 
           <div className="row-top">
             <div className="user-show">

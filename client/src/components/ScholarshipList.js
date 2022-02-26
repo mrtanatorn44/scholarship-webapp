@@ -1,9 +1,13 @@
-import { React, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import data from '../data/datanews.js';
+import { WebContext } from '../App';
 
 
 function ScholarshipList(props) {
+
+  const { Content } = useContext(WebContext)
+  const [content, setContent] = Content;
 
   const [Scholar, setScholar] = useState(
     data.map((x) => ({
@@ -28,7 +32,7 @@ function ScholarshipList(props) {
             <h3>{scholar.date}</h3>
           </div>
 
-          <div className='bottom'>
+          <div className='scholar-bottom'>
             <div className='user-panel'>
               <h3 onClick={() => checkState(index)}>
                 {!scholar.check ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)"}
@@ -37,7 +41,7 @@ function ScholarshipList(props) {
           </div> 
           {scholar.check && <h3>{scholar.detail}</h3>} 
         </div>
-        <button className = "button" onClick = {() => props.sendContent(['student','ScholarshipListRegister'])}>
+        <button className = "button-big" type="button" onClick={ () => setContent('ScholarshipListRegister') }>
           ลงทะเบียน
         </button>
       </div>

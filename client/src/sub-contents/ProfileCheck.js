@@ -4,40 +4,40 @@ import './ProfileCheck.css';
 
 function ProfileCheck(props) {
   return(
-    <div className="profileCheck">    
-      <div className="row-top-profile">
-        <div className="form-profile">
+    <div className="frame-content">    
+      <div className="profile-row-top">
+        <div className="profile-form ">
           <form className="d-flex ">
-            <div className="img-profile">
+            <div className="profile-img">
               <img src="https://i.pinimg.com/564x/e6/c9/78/e6c9783ef31e29427d42939766031372.jpg"/>
               <p>สภาพเป็นแฟนกัน</p>
             </div>
 
-            <div className="data-profile d-flex">
-              <div className="column-left-profile "> 
-                <div className="name-profile">
+            <div className="profile-data d-flex">
+              <div className="profile-column-left"> 
+                <div className="profile-name">
                   <label>ชื่อ - นามสกุล(ภาษาไทย)</label><br></br>
                   <input placeholder="" required></input> 
                 </div>
-                <div className="sector-profile">
+                <div className="profile-sector">
                   <label >ภาคการเรียนการสอน</label><br></br>
                   <input placeholder="" required></input>
                 </div>
               </div>
 
-              <div className="column-center-profile">
-                <div className="code-profile">
+              <div className="profile-column-center">
+                <div className="profile-code">
                   <label >รหัสนิสิต</label><br></br>
                   <input className="d-flex" placeholder="" required></input>
                 </div>
-                <div className="branch-profile">
+                <div className="profile-branch">
                   <label >สาขา</label><br></br>
                   <input placeholder="" required></input>
                 </div>
               </div>
 
-              <div className="column-right-profile">
-                <div className="grade-profile">
+              <div className="profile-column-right">
+                <div className="profile-grade">
                   <label >นิสิตชั้นปีที่</label><br></br>
                   <input placeholder="" required/>
                 </div>
@@ -48,9 +48,9 @@ function ProfileCheck(props) {
         </div>
       </div>
 
-      <div className="row-bottom-profile">
+      <div className="profile-row-bottom">
         <div className="drop-scholaship">
-          <label>ประเภทของทุน</label>
+          <label>ประเภทของทุน</label><br></br>
           <select>
             <option value="study">    ทุนเรียนดี       </option>
             <option value="activity"> ทุนกิจกรรมเด่น   </option>

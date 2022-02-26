@@ -3,11 +3,13 @@ import './InterviewSchedule.css';
 
 function InterviewSchedule(props) {
   return (
-    <div className="interviewschedule">
-      <div className="header d-flex">
-        <h4>กำหนดวันเวลาสัมภาษณ์</h4>
+    <div className="frame-content">
+      <div className="head-content d-flex">
+        <div class="topic">
+          <h4>กำหนดวันเวลาสัมภาษณ์</h4>
+        </div>
       </div>
-    <div className="center d-flex">
+    <div className="interviewSchedule-center d-flex">
       <form>
         <div className="detail1">
           <p>สัมภาษณ์ ณ วันที่</p>
@@ -35,12 +37,12 @@ function InterviewSchedule(props) {
 
       </form>
     </div>
-    <div className="fotter-confirm d-flex">
+    <div className="interviewSchedule-fotter d-flex">
       <div className="confirm"> 
         <button type = "button">ยืนยัน</button>    
       </div>
     </div>
-  </div>
+  </div>/*กูนอนอยู่นะ ไม่ได้คุยกับใคร */
   )
 }
 

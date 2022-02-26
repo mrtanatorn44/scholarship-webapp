@@ -3,19 +3,20 @@ import './ScholarshipListRegister.css';
 
 function ScholarshipListRegister(props) {
   return (
-    <div className="scholarshipListRegister">
-        <div className="header d-flex">
-            <div className="icon-three-dots">
+    <div className="frame-content">
+        <div className="head-content d-flex">
+            <div className="icons">
                 <i className="bi bi-three-dots"></i>
             </div>
-            <h4>กรอกประวัติแรกเข้า</h4>
+            <div class="topic">
+              <h4>กรอกประวัติแรกเข้า</h4>
+            </div>
         </div>
-        <div className="forms-list">
-          
-        <center>
+        <div className="frame-subcontent3"> 
+        <div class="name">
           <h5>กรอกประวัติแรกเข้า</h5>
-        </center>
-        <form className="form-profile">
+        </div>
+        <form className="scholarReg-form">
           <div>
             <label>ชื่อ-นามสกุล(ภาษาไทย)</label><br></br>
             <input placeholder="ชื่อภาษาไทย" required></input>
@@ -240,9 +241,9 @@ function ScholarshipListRegister(props) {
           </div>
         </form>
       </div>
-      <div className="footer">
-        <div className="save d-flex">
-          <button>บันทึก</button>
+      <div className="register-footer">
+        <div className="btn-confirm-scholarLisRig d-flex">
+          <button className="btn-confirm">บันทึก</button>
         </div>
       </div>
     </div> 

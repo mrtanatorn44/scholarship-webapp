@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
-import './AnnouncementCreate.css';
-import ConfirmSaveModal from '../modals/ConfirmModal.js';
-import ConfirmCancelModal from '../modals/ConfirmModal.js';
-import announce_empty        from "../images/announce_empty.png";
-
+import React, { useState, useContext } from 'react';
+import { WebContext } from '../App';
 import Axios from 'axios';
 
+import './AnnouncementCreate.css';
+import announce_empty        from "../images/announce_empty.png";
+
+import ConfirmSaveModal from '../modals/ConfirmModal.js';
+import ConfirmCancelModal from '../modals/ConfirmModal.js';
+import AlertModal from '../modals/AlertModal.js';
+
 function AnnouncementCreate(props) {
+  const { Content, EditAnnounceID } = useContext(WebContext)
+  const [ content, setContent] = Content;
+
   const [showModalSave, setShowModalSave] = useState(false);
   const [showModalCancel, setShowModalCancel] = useState(false);
+  const [showModalAlert, setShowModalAlert] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
@@ -48,12 +55,10 @@ function AnnouncementCreate(props) {
   function getConfirmSave(data) {
     if (data) {
       const { title, detail, image, image_name } = form;
-      
       if (title == "" || detail == "") {
         alert('title and detail cant be null')
         return;
       }
-      
       Axios.post("http://localhost:5000/addAnnounce", {
         title : title,
         detail : detail,
@@ -61,44 +66,50 @@ function AnnouncementCreate(props) {
         image_name : image_name
       }).then(
         (response) => {
-          console.log('add image done')
+          setShowModalAlert(true);
         }
       );
-      props.sendContent(['admin','Announcement']);
-
     }
     setShowModalSave(false);
-    
   }
-
   function getConfirmCancel(data) {
     if (data) {
-      props.sendContent(['admin','Announcement']);
+      setContent('Announcement');
     } 
     setShowModalCancel(false);
   }
-
+  function getConfirmAlert(isConfirm) {
+    if (isConfirm) {
+      setShowModalAlert(false)
+      setContent('Announcement');
+    }
+  }
   return (
-    <div className="announcementCreate">
-      <div className="header d-flex">
-        <div className="column-left d-flex">
-          <div className="icon-plus">
+    <div className="frame-content">
+      <div className="head-content d-flex">
+        <div  className="announCre-column-left d-flex">
+          <div className="icons">
             <i className="bi bi-plus-lg"/>
           </div>
-          <h4>เพิ่มข่าวสาร</h4>
+          <div className="topic">
+            <h4>เพิ่มข่าวสาร</h4>
+          </div>
         </div>
-        <div className="column-right d-flex">
-          <button className="save-button" onClick={() => (setShowModalSave(true))}>
-            <i className="bi bi-save"/>
-          </button>
-          { showModalSave && <ConfirmSaveModal sendConfirm={getConfirmSave}/> }
-          <button className="cancel-button" onClick={() => (setShowModalCancel(true))}>
-            <i className="bi bi-x"/>
-          </button>
-          { showModalCancel && <ConfirmCancelModal sendConfirm={getConfirmCancel}/> }
+        <div className="announCre-column-right d-flex">
+          <div class="button2-set">
+            <button className="save-button" onClick={() => (setShowModalSave(true))}>
+              <i className="bi bi-save"/>
+            </button>
+            { showModalSave && <ConfirmSaveModal sendConfirm={getConfirmSave}/> }
+            { showModalAlert && <AlertModal text2='บันทึกเรียบร้อย' iconIndex={0} sendConfirm={getConfirmAlert}/>}
+            <button className="cancel-button" onClick={() => (setShowModalCancel(true))}>
+              <i className="bi bi-x"/>
+            </button>
+            { showModalCancel && <ConfirmCancelModal sendConfirm={getConfirmCancel}/> }
+          </div>
         </div>
       </div>
-      <div className="center d-flex">
+      <div className="announCre-center d-flex">
         <form>
           <div className="topic d-flex">
             <input type="text" placeholder="หัวข้อข่าว" onChange={(event) => {setForm({ ...form, title: event.target.value })}}/>
@@ -106,7 +117,7 @@ function AnnouncementCreate(props) {
           <div className="detail">
             <input type="text" placeholder="รายละเอียดข่าวสาร" onChange={(event) => {setForm({ ...form, detail: event.target.value })}}/>
           </div>
-          <div className="add-row-bottom d-flex">
+          <div className="announCre-row-bottom d-flex">
             <div className="date">
               <input type="text" placeholder="วัน/เดือนปี ที่ลงข่าว"></input>
             </div>
@@ -120,7 +131,9 @@ function AnnouncementCreate(props) {
           </div>
         </form>
       </div> 
+   
     </div>
+  
   )
 }
 

@@ -4,22 +4,36 @@ import { Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage.js';
 import MainPage from './pages/MainPage.js';
 
-import './App.css';
+import './App.scss';
 
 const WebContext = React.createContext();
 
 function App() {
 
-  const [test1, setTest1] = useState('TEST1');
-  const [test2, setTest2] = useState('TEST2');
   const [scholarShipCreate, StudentScholarshipCreate] = useState();
+  const [query, setQuery] = useState('');
   const [editAnnounceID, setEditAnnounceID] = useState(-1);
+  const [content, setContent] = useState("Announcement");
+  const [profile, setProfile] = useState('');
+
+  const [user, setUser] = useState({
+    id    : '',
+    imgUrl: '',
+    email : '',
+    name  : '',
+    fname : '',
+    lname : '',
+    role  : '',
+    isLogin: false
+  });
 
   const webValue = { 
-		Test1: [test1, setTest1], 
-		Test2: [test2, setTest2],
     EditAnnounceID: [editAnnounceID, setEditAnnounceID],
-    ScholarShipCreate: [scholarShipCreate, StudentScholarshipCreate]
+    ScholarShipCreate: [scholarShipCreate, StudentScholarshipCreate],
+    User: [user, setUser],
+    Content: [content, setContent],
+    Query: [query, setQuery],
+    Profile: [profile, setProfile]
 	}
   
   return (

@@ -1,22 +1,31 @@
 import React, { useContext, useState, useEffect } from 'react';
-import Axios from 'axios';
-import announce_empty from "../images/announce_empty.png";
-import ImageModal from "../modals/ImageModal.js";
-import ConfirmModal from '../modals/ConfirmModal.js';
 import { WebContext } from '../App.js';
+import Axios from 'axios';
+
+import announce_empty from "../images/announce_empty.png";
+
+import ImageModal from "../modals/ImageModal.js";
+import AlertModal from '../modals/AlertModal.js';
+import ConfirmDeleteModal from '../modals/ConfirmModal.js';
 
 
 
-function NewsList(props) {
+function NewsList() {
 
 // Context
-const { EditAnnounceID } = useContext(WebContext);
+const { User, Content, EditAnnounceID } = useContext(WebContext);
+const [user, setUser] = User;
+const [content, setContent] = Content;
 const [editAnnounceID, setEditAnnounceID] = EditAnnounceID;
 
-const [showModal, setShowModal] = useState(false);
-const [Announce,setAnnounce] = useState([]);
+const [showModalAlert, setShowModalAlert] = useState(false);
+const [alertText, setAlertText] = useState("");
+
+const [showModalDelete, setShowModalDelete] = useState(false);
 const [ShowPopupImage, setShowPopupImage] = useState(false);
 const [PopupImage, setPopupImage] = useState();
+
+const [Announce,setAnnounce] = useState([]);
 
 const [targetDeleteNews, setTargetDeleteNews] = useState();
 
@@ -27,7 +36,7 @@ const [targetDeleteNews, setTargetDeleteNews] = useState();
     } else {
       //alert('FALSE !')
     }
-    setShowModal(false);
+    setShowModalDelete(false);
   }
   
   function _arrayBufferToBase64( buffer ) {
@@ -43,15 +52,14 @@ const [targetDeleteNews, setTargetDeleteNews] = useState();
   const getAnnounce = () =>{
     Axios.get("http://localhost:5000/getAllAnnounce").then((response)=> { 
       var result = response.data;
-      //console.log(result)
       if (result.length === 0) {
-       
-        result = [{ number: 0, 
+        result = [{ 
+          number: 0, 
           title: "ไม่มีประกาศในขณะนี้", 
           image: announce_empty,
-          detail : "ว่าง", date: "0-0-0T00-00-00", isShow: false}]
-          setAnnounce(result)
-          
+          detail : "ว่าง", date: "0-0-0T00-00-00", isShow: false
+        }]
+        setAnnounce(result)
         return;
       }        
       var idx = 0
@@ -73,7 +81,6 @@ const [targetDeleteNews, setTargetDeleteNews] = useState();
         })
       });
       setAnnounce(result)
-      console.log('fetchAnnounce')
     })
   }
   useEffect(() => {
@@ -86,53 +93,65 @@ const [targetDeleteNews, setTargetDeleteNews] = useState();
   }
   
   function onDeleteAnnounce(id) {
-    
     Axios.post("http://localhost:5000/getUser", {
-      //email : user.email
+      email : user.email
     }).then(
       (response) => {
-        if (response.data.length !== 0) {
+        if (response.data.length !== 0)  /*https://www.youtube.com/watch?v=nhPnTtSwRJk*/ /*ขำๆตอนตื่นจากพีม*/{
           const data = response.data[0];
           const dbRole = data.role;
-          if(dbRole !== 'admin') {
-            return;
+          if(dbRole === 'admin') {
+            Axios.post("http://localhost:5000/deleteAnnounce", { id : id }).then((response) => { setAnnounce([]);getAnnounce();})
+            return true;
+          } else {
+            return false;
           }
         }
       }
     )
-    Axios.post("http://localhost:5000/deleteAnnounce", {
-      id : id
-    }).then(
-      (response) => {
-        alert('deleted: ', id)
-        setAnnounce([]);
-        getAnnounce();
-      }
-    )
   }
 
+  function getConfirmDelete(isConfirm) {
+    if (isConfirm) {
+      if (onDeleteAnnounce(targetDeleteNews)) {
+        setAlertText("ลบข่าวเรียบร้อย");
+      } else {
+        setAlertText("แกไม่มีสิทธิ์");
+      }
+      setShowModalAlert(true)
+    }
+    setShowModalDelete(false);
+  }
+  function getConfirmAlert(isConfirm) {
+    if (isConfirm) {
+      setShowModalAlert(false)
+    }
+  }
   return (
     Announce.map((news) => (
       <article className="news" key={news.number}>
+
+        {/*---------- TITLE ----------*/}
         <div className='title'>
           <h2>{news.title}</h2>
           <h3>{news.date_format}</h3>
         </div>
+
+        {/*---------- CONTENT ----------*/}
         { !news.isShow &&
         <div className='content-image'>
           <img  className='news-image' src={news.image} alt='scholarship promote' onClick = {() => onHandleImageClick(news.image) }/> 
         </div> }
-        { news.isShow &&
-        <div className='content'>
-          <h3>{ news.detail }</h3>
-        </div> }
+        { news.isShow && <div className='content'><h3>{ news.detail }</h3></div> }
         { ShowPopupImage && <ImageModal image={ PopupImage } sendConfirm={ (data) => setShowPopupImage(data) }/> }
-        <div className='bottom'>
+
+        {/*---------- BOTTOM ----------*/}
+        <div className='newsList-bottom'>
           <div className='admin-panel'>
-              <button className="btn-delete" onClick={() => { setShowModal(true);setTargetDeleteNews(news.id); }}> ลบ </button>
-              { showModal && <ConfirmModal sendConfirm={getConfirm}/> }
-              <button className="btn-modify" onClick={() => { setEditAnnounceID(news.id) }}> แก้ไข </button>
-              <button className="btn-test" onClick={() => { console.log(Announce[news.number].image_url) }}> TEST </button>
+            <button className="btn-delete" onClick={() => { setShowModalDelete(true);setTargetDeleteNews(news.id); }}> ลบ </button>
+            <button className="btn-modify" onClick={() => { setEditAnnounceID(news.id);setContent("AnnouncementEdit"); }}> แก้ไข </button>
+            { showModalDelete && <ConfirmDeleteModal sendConfirm={getConfirmDelete}/> }
+            { showModalAlert && <AlertModal text2={alertText} iconIndex={0} sendConfirm={getConfirmAlert}/>}
           </div>
           <div className='user-panel'>
             <h3 onClick={() => {

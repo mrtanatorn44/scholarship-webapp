@@ -5,7 +5,7 @@ import { WebContext } from '../App';
 
 
 
-function ApplicantList(props){
+function IntervieweeList(props){
   const { Content } = useContext(WebContext)
   const [content, setContent] = Content;
 
@@ -27,11 +27,11 @@ function ApplicantList(props){
 
   return (
     Aplicants.map((aplicant,index) => (
-      <div className="applicantList" key={index} >
+      <div className="intervieweeList" key={index} >
         <div className='title'>
           <h2>{aplicant.title}</h2>
         </div>
-        <div className="applicantList-right" >
+        <div className="intervieweeList-right" >  
           <button className="button-search d-flex" type="button" onClick={ () => setContent('ScholarshipCheckForm') }>
             <i className="bi bi-search"></i>
             <p>ตรวจสอบเอกสาร</p>
@@ -41,9 +41,18 @@ function ApplicantList(props){
             <i className="bi bi-search"></i>
             <p>ตรวจสอบประวัติ</p>
           </button>  
+
+          <button className="button-search d-flex" type="button" onClick={() => setContent('InterviewRate') }>
+          <i className="bi bi-search"/>
+            <p>การประเมิน</p>
+          </button>
+          <button className="button-clock d-flex"  type="button"onClick={() => setShowModal(true)}>
+            <i className="bi bi-clock"/>
+            <p>เวลาสัมภาษณ์</p>
+          </button>
           {showModal && <AlertModal sendConfirm={getConfirm}/>}  
         </div>
-        <div className='applicantList-bottom'>
+        <div className='intervieweeList-bottom'>
           <h3>{aplicant.date}</h3>
         </div>
       </div>
@@ -51,4 +60,4 @@ function ApplicantList(props){
   )
 }
 
-export default ApplicantList;
+export default IntervieweeList;

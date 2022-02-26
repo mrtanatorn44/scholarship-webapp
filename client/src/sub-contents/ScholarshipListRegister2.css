@@ -1,5 +1,5 @@
 /*-------------scholarshipListRegister----------*/
-.scholarshipListRegister {
+/*.scholarshipListRegister {
     font-family: 'Prompt', sans-serif;
     margin: 5vh auto 5vh auto;
     background-color: white;
@@ -7,9 +7,9 @@
     box-shadow: 0px 0px 5px 0px #949494;
     width:  80%;
     height: 70vh;
-}
+}*/
 /*-------------------header----------------*/
-.scholarshipListRegister .header {
+/*.scholarshipListRegister .header {
     border-bottom: 2px solid #A62639;
     height: 10vh;
 }
@@ -27,9 +27,9 @@
     margin: auto 0 auto 0.5rem;
     font-size: calc(1vw + 1vh);
     font-weight: 500;
-}
+}*/
 /*----------------forms-list-----------------*/
-.scholarshipListRegister .forms-list {
+/*.scholarshipListRegister .forms-list {
     overflow-y: scroll;
     overflow-x: hidden;
     height: 60vh;
@@ -38,15 +38,15 @@
     margin-top: calc(1vw + 1vh); 
     margin-bottom: calc(1vw + 1vh); 
     font-weight: 500;
-}
+}*/
 /*------------------form-profile--------------------*/
-.scholarshipListRegister .form-profile{
+/*.scholarshipListRegister .form-profile{
     margin-left: 20%;
 }
 .scholarshipListRegister .form-profile input{
     width: 80%;
     padding: 9px 20px;
-    /*margin: 8px 0;*/
+    /*margin: 8px 0;
     display: inline-block;
     border: 2px solid #A62639;
     border-radius: 7px;
@@ -65,19 +65,19 @@
     font-weight: 300;
     
     
-} 
+} */
 
-/* footer*/
-.scholarshipListRegister .footer{
+/* footer
+/*.scholarshipListRegister .footer{
     margin-top: calc(1vw + 1vh);
     margin-left: calc(28vw + 28vh);
     margin-bottom: calc(1vw + 1vh);
-}
-.scholarshipListRegister .footer .page{
+}*/
+/*.scholarshipListRegister .footer .page{
     margin-top: calc(0.9vw + 0.9vh);
     font-size: calc(0.7vw + 0.7vh);
-}
-
+}*/
+/*
 .scholarshipListRegister .footer .next{
     background-color: #03A96B;
     border: none;
@@ -89,4 +89,4 @@
     margin: calc(0.8vw + 0.8vh) calc(1.2vw + 1.2vh);
     cursor: pointer;
     border-radius: 12px;
-}
+}*/

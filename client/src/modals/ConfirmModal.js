@@ -10,21 +10,21 @@ function ConfirmModal(props) {
   const sendContent = (props) => {
   }
   const getPermission =()=>{
-      alert('fetching...');
-      Axios.get("http://localhost:5000/product").then((response)=>{
-        alert(response.data);
-      });  
-    }
+    alert('fetching...');
+    Axios.get("http://localhost:5000/product").then((response)=>{
+      alert(response.data);
+    });  
+  }
   */
   return (
     <div className="modal">
-      <div className="modal-confirm" >
+      <div className="modal-content" >
         <div className="modal-head">
           <h3>Are you sure?</h3>
         </div>
-        <div className='button-confirm d-flex'>
-          <button className="button-f" onClick={() => props.sendConfirm(false)}>ยกเลิก</button>
-          <button className="button-t" onClick={() => props.sendConfirm(true)}>ตกลง</button>
+        <div className='set-button d-flex'>
+          <button className="btn-flase" onClick={() => props.sendConfirm(false)}>ยกเลิก</button>
+          <button className="btn-true" onClick={() => props.sendConfirm(true)}>ตกลง</button>
         </div>
       </div>
     </div>

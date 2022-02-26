@@ -2,22 +2,27 @@ import React, {useState} from 'react';
 import './AlertModal.css';
 
 function AlertModel(props) {
+  const icon = ["bi bi-clock"]
+  const iconIndex = props.iconIndex
+  const text1 = props.text1 || '';
+  const text2 = props.text2 || '';
+  const text3 = props.text3 || '';
+  const text4 = props.text4 || '';
 
-  const [showModal, setShowModal] = useState(false);
   return (
     <div class="modal">
       <div class="modal-content" >
         <div class="modal-body">
-        <button className="image-modal-button-close" onClick={() => props.sendConfirm(false)}>
+        <button className="button-close" onClick={() => props.sendConfirm(true)}>
           <i class="x-button bi bi-x"></i>
         </button>
           <center class = "icon">
-            <i class="bi bi-clock"></i>
+            <i class={icon[iconIndex]}></i>
           </center><br></br>
-          <center>วันที่ 30 กุมภาพันธ์ 2570</center><br></br>
-          <center>เวลา : 12.00 น.</center><br></br>
-          <center>รหัส Meeting : qweasd</center><br></br>
-          <center>ลิงค์สัมภาษณ์ : http.//.com</center><br></br>
+          <center>{text1}</center><br></br>
+          <center>{text2}</center><br></br>
+          <center>{text3}</center><br></br>
+          <center>{text4}</center><br></br>
         </div>
       </div>
     </div>

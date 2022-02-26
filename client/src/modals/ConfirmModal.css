@@ -1,4 +1,4 @@
-.modal{
+/*.modal{
     position: fixed;
     background-color: rgba(0,0,0,0.5);
     display: flex;
@@ -7,26 +7,26 @@
     width:  100%;
     height: 100vh;
    
-  }
-.modal .modal-confirm{
+  }*/
+/*.modal .modal-confirm{
     border-radius: 1rem;
     box-shadow: 0px 0px 5px 0px #949494;
     width:  40%;
     height: 40vh;
     background-color: white;
     margin: auto;
-}
-.modal .modal-head{
+}*/
+/*.modal .modal-head{
     margin-top: calc(4vw + 4vh);
     margin-left: calc(8vw + 8vh);
-}
+}*/
 
-.modal .button-confirm {
+/*.modal .button-confirm {
     width: 100%;
     height: 15vh;
 
-}
-.modal .button-confirm .button-f, .button-t{
+}*/
+/*.modal .button-confirm .button-f, .button-t{
     width: 40%;
     height: 10vh;
     font-size: calc(3vh);
@@ -35,15 +35,15 @@
     border-radius: 3rem;
     border:none ;
     margin-top: calc(2vw + 2vh);
-}
-.modal .button-confirm .button-f{
+}*/
+/*.modal .button-confirm .button-f{
     background-color: #C4C4C4;
     margin-left: calc(1.5vw + 1.5vh);
    
 
-}
-.modal .button-confirm .button-t{
+}*/
+/*.modal .button-confirm .button-t{
     background-color:#03a96b;
     margin-left: calc(2vw + 2vh);
 
-}
+}*/

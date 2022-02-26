@@ -1,11 +1,11 @@
-/*
+/* 
     ANNOUNCEMENT
         HEADER
         NEWSLIST
             NEWS
 */
 
-.announcementEdit {
+/*.announcementEdit {
     font-family: 'Prompt', sans-serif;
     margin: 3vh auto 3vh auto;
     background-color: white;
@@ -13,13 +13,13 @@
     box-shadow: 0px 0px 5px 0px #949494;
     width:  90%;
     height: 80vh;
-}
+}*/
 /*---------- HEADER ---------*/
-.announcementEdit .header {
+/*.announcementEdit .header {
     border-bottom: 2px solid #A62639;
     height: 7vh;
 }
-/*----- LEFT ----*/
+/*----- LEFT ----
 .announcementEdit .header .column-left{
     height: 100%;
     width: 50%;
@@ -41,9 +41,9 @@
     font-size: calc(1vw + 1vh);
     font-weight: 500;
     
-}
+}*/
 /*----------------------- RIGHT --------------------------------*/
-.announcementEdit .header .column-right{
+/*.announcementEdit .header .column-right{
     height: 100%;
     width: 50%;
 }
@@ -73,9 +73,9 @@
     margin: auto;
     
 }
-
+*/
 /*--------------- center ----------------*/
-.announcementEdit .center{
+/*.announcementEdit .center{
     width: 95%;
     margin-top: calc(1vw + 1vh);
     margin-left: calc(1vw + 1vh);
@@ -108,9 +108,9 @@
     height: calc(16.5vw + 16.5vh);
     font-size: calc(0.5vw + 0.5vh);
     
-}
+}*/
 /*-------------------bottom--------------------*/
-.announcementEdit .add-row-bottom {
+/*.announcementEdit .add-row-bottom {
     border-top: 2px solid #C4C4C4;
    
     
@@ -121,12 +121,12 @@
     height: calc(2vw + 2vh);
     padding-left: 10px;
     font-size: calc(0.6vw + 0.6vh);
-}
+}*/
 /*------------------------insert image--------------------------------*/
-.announcementEdit .add-row-bottom .insertbutton{
+/* .announcementEdit .add-row-bottom .insertbutton{
     width: 100%;
     margin-top: calc(0.5vw + 0.5vh);
-    /*margin-left: calc(30vw + 30vh);*/
+    /*margin-left: calc(30vw + 30vh);
     
 }
 .announcementEdit .add-row-bottom .insert{
@@ -155,9 +155,9 @@
     margin-left: calc(0.5vw + 0.5vh);
     font-size: calc(0.8vw + 0.8vh);
 }
+*/
 
-
-.modal{
+/*.modal{
     position: fixed;
     background-color: rgba(0,0,0,0.5);
     display: flex;
@@ -172,7 +172,7 @@
     padding: 10px;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
-}
+}*/
 
 
 

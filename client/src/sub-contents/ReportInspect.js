@@ -3,15 +3,16 @@ import './ReportInspect.css';
 
 function ReportInspect(props) {
   return (
-    <div class="reportinspect">
-      <div class="header d-flex">
+    <div class="frame-content">
+      <div class="reportInspect-head d-flex">
         <center>
           <br></br>
-          <h2>รายชื่อผู้ได้รับทุนเรียนดี</h2>
+          <h4>รายชื่อผู้ได้รับทุนเรียนดี</h4>
+
           <h4>ทุนประจำปีการศึกษา 2564 เทอมต้น ประเภททุนที่ 5 สำหรับนิสิตรหัส 62-64</h4>
         </center>
       </div>
-      <div class="row-columns">
+      <div class="reportInspect-columns">
         <center>
           <table border='1'>
             <tr>
@@ -54,7 +55,7 @@ function ReportInspect(props) {
           <h4>โดยบริษัทเสี่ยโอ</h4>
         </center>
       </div>
-      <div class="fotter-button">
+      <div class="reportInspect-foter">
         <div class="button">
           <button class="dowload" type="button" >
             <p>ดาวน์โหลดรายงาน</p>

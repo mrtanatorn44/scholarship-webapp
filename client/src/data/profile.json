@@ -1,0 +1,42 @@
+[
+    {"profile_self":[{
+        "id": "",
+        "flName": "",
+        "Year_of_study":"",
+        "Age":"",
+        "std_id":"",
+        "type_of_study":"",
+        "offset":"",
+        "adress":"",
+        "tel":"",
+        "pic":""
+    }],"profile_father":[{
+        "flName": "",
+        "Age":"",
+        "occupation":"",
+        "income":"",
+        "status":"",
+        "tel":"",
+        "place_of_work":""
+    }],"profile_mother":[{
+        "flName": "",
+        "Age":"",
+        "occupation":"",
+        "income":"",
+        "status":"",
+        "tel":"",
+        "place_of_work":""
+    }]
+        
+    },
+    {
+        "id": "2",
+        "firstName": "Mary",
+        "lastName": "Peterson"
+    },
+    {
+        "id": "3",
+        "firstName": "George",
+        "lastName": "Hansen"
+    }
+]

@@ -1,50 +1,39 @@
-[ALL ------------------ src/contents/all/...     ]
-  LoginPage                       [PAGE]          
-    Login                         [COMPONENT]    
-    AnnouncementLogin             [CONTENT]      
-  MainPage                        [PAGE]
-    Announcement                  [CONTENT]   
-    ScholarshipList               [CONTENT]      
 
-[STUDENT -------------- src/contents/... ]     
-  MainPage                        [PAGE]    
-    ScholarshipStatus             [CONTENT]         [STUDENT 4 - 4.24]  
-    Profile                       [CONTENT]         [STUDENT 5]  
-      ProfileEdit                 [SUB-CONTENT]     [STUDENT 2.2 - 2.3]
-    /-------------SCHOLARSHIP-SUB---------------/  
-      ScholarshipListRegister     [SUB-CONTENT]     [STUDENT 3.1  -3.5]
+[STUDENT]     
+  Announcement (ประกาศข่าวสาร) <- Newslist
+  Scholarship (ทุนที่เปิดให้ลงทะเบียน)
+    ScholarshipRegister     
+  Status (สถานะทุนปัจจุบัน) <- StatusList            
+  Profile (ข้อมูลส่วนตัว)        
+    ProfileEdit               
 
-[INTERVIEWER -------- src/contents/interviewer/...]
-  MainPage                        [PAGE]            
-    Interview                     [CONTENT]         [Interviewer 4]
-      Profile                     [SUB-CONTENT]     [Interviewer 4.3]                  X read only (nisit profile)
-      ScholarshipCheckForm        [SUB-CONTENT]     [Interviewer 4.2.1 - 4.2.4]        X read only 
-      InterviewRate               [SUB-CONTENT]     [Interviewer 4.4]                  X read/write (ประเมิน)
+[INTERVIEWER]
+  Announcement (ประกาศข่าวสาร) <- Newslist
+  Scholarship (ทุนที่เปิดให้ลงทะเบียน)                  
+  Interview (การสัมภาษณ์) <- IntervieweeList      
+    ProfileInspect                   
+    ApplicantForm       
+    InterviewRate  
+    InterviewSchedule            
 
-[ADMIN ------------- src/contents/admin/...]
-  MainPage                        [PAGE] 
-    /-------------ANNOUNCEMENT-SUB-------------/               
-      AnnouncementCreate          [SUB-CONTENT]     [Admin 2.1.2]
-      AnnouncementEdit            [SUB-CONTENT]     [Admin 2.1.3]
-    /----------SCHOLARSHIPLIST-SUB------------/       
-      ScholarshipListCreate       [SUB-CONTENT]     [Admin 3.1 - 3.1.2]
-      ScholarshipListEdit         [SUB-CONTENT]     [Admin 3.2 - 3.2.2]
-    Report                        [CONTENT]         [Admin 4]
-      ReportInspect               [SUB-CONTENT]     [Admin 4.1]
-    ScholarshipCheck              [CONTENT]         [Admin 5]
-      ScholarshipCheckForm        [SUB-CONTENT]     [Admin 5.1 - 5.4.1]                 X read/write                   
-      Profile                     [SUB-CONTENT]     [Admin 5.1.1]                       X only read  (nisit profile)                 
-    RoleSetting                   [CONTENT]         [Admin 6]
-    Interview                     [CONTENT]         [Admin 7]
-      InterviewRate               [SUB-CONTENT]     [Admin 7.3]                         X read only (ประเมิน)
-      InterviewSchedule           [SUB-CONTENT]     [Admin 7.1]                         X read/write only (เวลาสัม)
-    
-
-[MODAL ------------------ src/MODAL/STUDENT/...     ]
-  AlertModal                      [MODAL]           X read only (เวลาสัม)  
-  ConfirmModal                    [MODAL]           
-
-
+[ADMIN]
+  Announcement (ประกาศข่าวสาร) <- Newslist                   
+    AnnouncementCreate         
+    AnnouncementEdit  
+  Scholarship (ทุนที่เปิดให้ลงทะเบียน) <- ScholarshipList        
+    ScholarshipCreate     
+    ScholarshipEdit       
+  Report (รายงานทุน) <- ReportList                      
+    ReportInspect             
+  Applicant (ตรวจสอบข้อมูล) <- ApplicantList   
+    ApplicantForm             
+    ApplicantProfile                                 
+  RoleSetting (กำหนดสิทธ์เข้าถึง)        
+  Interview <- IntervieweeList
+    ProfileInspect
+    ApplicantForm
+    InterviewRate                           
+    InterviewSchedule          
 
 
 

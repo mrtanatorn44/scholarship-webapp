@@ -1,4 +1,7 @@
-.interviewschedule{
+
+
+
+/*.interviewschedule{
     font-family: 'Prompt', sans-serif;
     margin: 3vh auto 3vh auto;
     background-color: white;
@@ -6,23 +9,22 @@
     box-shadow: 0px 0px 5px 0px #949494;
     width:  90%;
     height: 80vh;
-}
+}*/
 /*---------------------input---------------------------*/
-.interviewschedule .center{
+/*.interviewschedule .center{
     overflow-y: scroll;
     overflow-x: hidden;
     width: 95%;
     height: 60vh;
     
-}
-.interviewschedule form{
+}*/
+
+/*.interviewschedule form{
     margin-top: calc(1.5vw + 1.5vh);
     margin-left: calc(3vw + 3vh);
     width: 100%;
-    
-    
-}
-.interviewschedule .center input, .center select{
+}*/
+/*.interviewschedule .center input, .center select{
     padding: calc(0.2vw + 0.2vh) calc(1vw + 1vh);
     display: inline-block;
     border: 1px solid #A62639;
@@ -32,11 +34,11 @@
     font-size: calc(0.66vw + 0.66vh);
     width: 90%;
     height: 5vh; 
-}
+}*/
 
 /*----------------header----------------*/
 
-.interviewschedule .header{
+/*.interviewschedule .header{
     width: 90%;
     height: 7vh;
     border-bottom: 3px solid #C4C4C4; 
@@ -47,15 +49,15 @@
     font-size: calc(0.8vw + 0.8vh);
     font-weight: 600;
     margin-top: calc(1vw + 1vh);
-}
+}*/
 
 /*-------------------------------confirm----------------------------------------*/
 
-.interviewschedule .fotter-confirm {
+/*.interviewschedule .fotter-confirm {
     width: 100%;
     height: 20%;
-}
-.interviewschedule .confirm{
+}*/
+/*.interviewschedule .confirm{
     margin-left: calc(37vw + 37vh);
     
 }
@@ -75,4 +77,4 @@
     margin: calc(0.8vw + 0.8vh) calc(1.2vw + 1.2vh);
     cursor: pointer;
     border-radius: 12px;
-}
+}*/

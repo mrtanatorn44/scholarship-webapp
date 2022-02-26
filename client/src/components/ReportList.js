@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Reports from '../data/datanews.js';
+import { WebContext } from '../App';
 
 function ReportList(props) {
 
+  const { Content } = useContext(WebContext)
+  const [content, setContent] = Content;
+
   return(
     Reports.map((report, index) => (
-      <div className="reportlist d-flex" key={index}>
-        <div className='bottom'>
+      <div className="reportList d-flex" key={index}>
+        <div className='reportList-bottom'>
           <h3>{report.detail}</h3>
         </div>
-        <div className="button-report">
-          <button className="button-search d-flex" type="button" onClick={() => props.sendContent(['admin','ReportInspect'])}>
+        <div className="reportList-right">
+          <button className="button-search d-flex" type="button" onClick={() => setContent('ReportInspect')}>
             <i className="bi bi-search"/>
             <p>ดูรายละเอียด</p>
           </button> 

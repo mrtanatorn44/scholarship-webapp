@@ -1,4 +1,4 @@
-.profile-create {
+/*.profile-create {
     font-family: 'Prompt', sans-serif;
     margin: 3vh auto 3vh auto;
     background-color: white;
@@ -6,9 +6,9 @@
     box-shadow: 0px 0px 5px 0px #949494;
     width:  90%;
     height: 80vh;
-}
+}*/
 /*------------------------------header--------------------------------*/
-.profile-create .header {
+/*.profile-create .header {
     border-bottom: 2px solid #A62639;
     height: 7vh;
 }
@@ -26,30 +26,30 @@
     margin: auto 0 auto 0.5rem;
     font-size: calc(1vw + 1vh);
     font-weight: 500;
-}
+}*/
 
 /*------------------------------ forms-list ---------------------------*/
 
-.profile-create .forms-list {
+/*.profile-create .forms-list {
     overflow-y: scroll;
     overflow-x: hidden;
     height: 65vh;
-}
-.profile-create .forms-list h5{
+}*/
+/*.profile-create .forms-list h5{
     margin-top: calc(1vw + 1vh); 
     margin-bottom: calc(1vw + 1vh); 
     font-weight: 500;
-}
+}*/
 /*------------------------------ forms-profile ---------------------------*/
 
-.profile-create .form-profile{
+/*.profile-create .form-profile-edit{
     width:80%;
     margin-left: 20%;
     margin-bottom: calc(1vw + 1vh); 
 
-}
+}*/
 
-.profile-create .form-profile input{
+/*.profile-create .form-profile-edit input{
     width: 80%;
     padding: 9px 20px;
     display: inline-block;
@@ -59,9 +59,9 @@
     background-color: #f5f5f5;
     font-size: calc(0.66vw + 0.66vh);
     
-} 
+}*/ 
 
-.profile-create .form-profile select{
+/*.profile-create .form-profile-edit select{
     width: 80%;
     border: 2px solid #A62639;
     border-radius: 7px;
@@ -69,49 +69,49 @@
     font-size: calc(0.66vw + 0.66vh);
     
     
-}
+}*/
 /*-------------------- profile-fam-1---------------------*/
-.profile-create .form-profile h5{
+/*.profile-create .form-profile-edit h5{
     margin-left: calc(13vw + 13vh);
     margin-top: calc(1vw + 1vh);
    
-}
+}*/
 
-.profile-create .form-profile .profile-fam {
+/*.profile-create .form-profile .profile-fam {
     width: 80%;
     height: 10vh;
-}
-.profile-create .profile-fam .fam1-edit{
+}*/
+/*.profile-create .profile-fam .fam1-edit{
     width: 50%;
-}
-.profile-create .fam1-edit input{
+}*/
+/*.profile-create .fam1-edit input{
     width: 90%;
-}
-.profile-create .profile-fam .fam2-edit{
+}*/
+/*.profile-create .profile-fam .fam2-edit{
     width: 50%;
-}
-.profile-create .fam2-edit select{
+}*/
+/*.profile-create .fam2-edit select{
     width: 100%;
-}
-.profile-create .fam2-edit input{
+}*/
+/*.profile-create .fam2-edit input{
     width: 100%;
-}
+}*/
 
 
 /*------------------------------ footer ------------------------------*/
-.profile-create  .footer{
+/*.profile-create  .footer{
     width: 100%;
     height: 10vh;
-}
-.profile-create .save{
+}*/
+/*.profile-create .save{
     margin-left: calc(36vw + 36vh);
     margin-bottom: calc(1vw + 1vh);
-}
-.profile-create .save p{
+}*/
+/*.profile-create .save p{
     font-size: calc(0.7vw + 0.7vh);
-}
+}*/
 
-.profile-create .save button {
+/*.profile-create .save button {
     background-color: #03A96B;
     border: none;
     color: white;
@@ -123,7 +123,7 @@
     cursor: pointer;
     border-radius: 12px;
     
-}
+}*/
 
 
 

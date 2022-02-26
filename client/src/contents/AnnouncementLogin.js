@@ -3,14 +3,16 @@ import NewsListlogin from '../components/NewsListlogin';
 
 function AnnouncementLogin() {
   return (
-    <div className="annoucement-login">
-      <div className="header d-flex">
-        <div className="icon-news">
+    <div className="frame-content">
+      <div className="head-content d-flex">
+        <div className="icons">
           <i className="bi bi-megaphone"/>
         </div>
-        <h4>ประกาศข่าวสาร</h4>
+        <div className="topic">
+          <h4>ประกาศข่าวสาร</h4>
+        </div>
       </div>
-      <div className="newslist">
+      <div className="frame-subcontent1">
         <NewsListlogin/>
       </div>
     </div>

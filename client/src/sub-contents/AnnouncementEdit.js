@@ -1,18 +1,25 @@
-import { React, useState, useEffect, useContext } from 'react';
-import './AnnouncementEdit.css';
+import React, { useContext, useState, useEffect } from 'react';
+import { WebContext } from '../App';
 import Axios from 'axios';
-import announce_empty        from "../images/announce_empty.png";
+
+import './AnnouncementEdit.css';
+import announce_empty from "../images/announce_empty.png";
+
 import ConfirmSaveModal from '../modals/ConfirmModal.js';
 import ConfirmCancelModal from '../modals/ConfirmModal.js';
-import { WebContext } from '../App';
+import AlertModal from '../modals/AlertModal.js';
 
 function AnnouncementEdit(props) {
-  const { EditAnnounceID } = useContext(WebContext)
+  const { Content, EditAnnounceID } = useContext(WebContext)
+  const [ content, setContent] = Content;
   const [editAnnounceID, setEditAnnounceID] = EditAnnounceID;
+
   const [showModalSave, setShowModalSave] = useState(false);
   const [showModalCancel, setShowModalCancel] = useState(false);
+  const [showModalAlert, setShowModalAlert] = useState(false);
+
   const [form, setForm] = useState({
-    title: "X",
+    title: "",
     detail: "",
     image: "",
     image_name: ""
@@ -83,63 +90,60 @@ function AnnouncementEdit(props) {
     
   }
 
-  function getConfirmSave(data) {
-    if (data) {
-      const { title, detail, image, image_name } = form;
-      
-      if (title == "" || detail == "") {
-        alert('title and detail cant be null')
-        return;
-      }
-      
-      Axios.post("http://localhost:5000/EditAnnounce", { 
-        id:editAnnounceID,
-        title : title,
-        detail : detail,
-        image : image,
-        image_name : image_name
-      }).then(
-        (response) => {
-          console.log(response);
-          console.log('add image done')
-        }
-      );
-      props.sendContent(['admin','Announcement']);
-
-    }
-    setShowModalSave(false);
-    
+  const onChangenews = (form,id) => {
+    alert(form.title)
+    alert(id)
+    Axios.post("http://localhost:5000/editAnnounce", { 
+      title :form.title,
+      id: id
+    })
   }
 
-  function getConfirmCancel(data) {
-    if (data) {
-      props.sendContent(['admin','Announcement']);
+  function getConfirmSave(isConfirm) {
+    if (isConfirm) {
+      onChangenews(form,editAnnounceID);
+    }
+    setShowModalSave(false);
+  }
+  function getConfirmCancel(isConfirm) {
+    if (isConfirm) {
+      setContent('Announcement');
     } 
     setShowModalCancel(false);
   }
-
+  function getConfirmAlert(isConfirm) {
+    if (isConfirm) {
+      setShowModalAlert(false)
+      setContent('Announcement');
+    }
+  }
   return (
-    <div className="announcementEdit">
-      <div className="header d-flex">
-        <div className="column-left d-flex">
-          <div className="icon-plus">
+    <div className="frame-content">
+      <div className="head-content d-flex">
+        <div className="announEdit-column-left d-flex">
+          <div className="icons">
             <i className="bi bi-plus-lg"/>
           </div>
-          <h4>เพิ่มข่าวสาร</h4>
+          <div className="topic">
+            <h4>แก้ไขข่าวสาร</h4>
+          </div>
         </div>
 
-        <div className="column-right d-flex">
-          <button className="save-button" onClick={() => (setShowModalSave(true))}>
-            <i className="bi bi-save"/>
-          </button>
-          { showModalSave && <ConfirmSaveModal sendConfirm={getConfirmSave}/> }
-          <button className="cancel-button" onClick={() => (setShowModalCancel(true))}>
-            <i className="bi bi-x"/>
-          </button>
-          { showModalCancel && <ConfirmCancelModal sendConfirm={getConfirmCancel}/> }
+        <div className="announEdit-column-right d-flex">
+          <div class="button2-set">
+            <button className="save-button" onClick={() => (setShowModalSave(true))}>
+              <i className="bi bi-save"/>
+            </button>
+            { showModalSave && <ConfirmSaveModal sendConfirm={getConfirmSave}/> }
+            { showModalAlert && <AlertModal text2='บันทึกเรียบร้อย' iconIndex={0} sendConfirm={getConfirmAlert}/>}
+            <button className="cancel-button" onClick={() => (setShowModalCancel(true))}>
+              <i className="bi bi-x"/>
+            </button>
+            { showModalCancel && <ConfirmCancelModal sendConfirm={getConfirmCancel}/> }
+          </div>
         </div>
       </div>
-      <div className="center d-flex">
+      <div className="announEdit-center d-flex">
         <form>
           <div className="topic d-flex">
             <input type="text" placeholder="หัวข้อข่าว" value={form.title} onChange={(e) => { setForm({ ...form, title: e.target.value })}}/>
@@ -147,7 +151,8 @@ function AnnouncementEdit(props) {
           <div className="detail">
             <input type="text" placeholder="รายละเอียดข่าวสาร" value={form.detail} onChange={(e) => {setForm({...form, detail: e.target.value })}}/>
           </div>
-          <div className="add-row-bottom d-flex">
+          <div className="announEdit-row-bottom d-flex">
+           
             <div className="insertbutton d-flex">
               <input class="insert" type="file" name="file" id="file" onChange={(file) => onHandleUpload(file)}/>
               <label for="file"> <i class="bi bi-card-image"/> </label>
@@ -156,8 +161,7 @@ function AnnouncementEdit(props) {
           </div>
         </form>
       </div> 
-      <img src={ "data:image/png;base64," + form.image }/>
-      <img src={ form.image }/>
+        <img src={ "data:image/png;base64," + form.image }/>
     </div>
   );
 }

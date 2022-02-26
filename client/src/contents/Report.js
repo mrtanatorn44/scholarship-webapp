@@ -1,18 +1,19 @@
 import React, { useContext, useState, useEffect } from 'react';
-import './Report.css';
 import Report_list from '../components/ReportList';
 
 function Report(props) {
 
   return (
-    <div className="report">
-      <div className="header d-flex">
-        <div className="icon-files">
+    <div className="frame-content">
+      <div className="head-content d-flex">
+        <div className="icons">
           <i className="bi bi-files"></i>
         </div>
-        <h4>รายงานทุน</h4>
+        <div class="topic">
+          <h4>รายงานทุน</h4>
+        </div>
       </div>
-      <form className="row-top-report d-flex" >
+      <form className="report-row-top d-flex" >
         <div className="report-scholarship">
           <label>ทุนปีการศึกษา</label><br></br>
             <select  name="capital">
@@ -45,7 +46,8 @@ function Report(props) {
           </select>  
         </div>
       </form>
-      <div className="row-center-report">
+      
+      <div className="frame-subcontent2">
         <Report_list/>
       </div>
     </div>

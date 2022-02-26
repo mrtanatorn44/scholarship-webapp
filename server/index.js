@@ -1,7 +1,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
-const fileUpload = require("express-fileupload");
+//const fileUpload = require("express-fileupload");
 //const fileType = require("file-type");
 
 
@@ -41,7 +41,7 @@ app.post("/getUser", (req, res) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   const email = req.body.email;
   dbCon.query(
-    "SELECT email,fname,lname,role FROM user WHERE email = ?",
+    "SELECT email,fname,lname,role,id FROM user WHERE email = ?",
     [email], 
     (err, result) => {
       if (err) {
@@ -53,7 +53,9 @@ app.post("/getUser", (req, res) => {
   );
 });
 
-app.put("/addUser", (req, res) => {
+app.post("/addUser", (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   const email = req.body.email;
   const fname= req.body.fname;
   const lname = req.body.lname;
@@ -72,7 +74,7 @@ app.put("/addUser", (req, res) => {
   );
 });
 
-app.put("/editRole", (req, res) => {
+app.post("/editRole", (req, res) => {
   const role = req.body.role;
   const email = req.body.email;
   dbCon.query(
@@ -83,16 +85,6 @@ app.put("/editRole", (req, res) => {
         console.log(err);
       } else {
         res.send(result);
-        /*
-          []
-
-          {
-            [],
-            [],
-            []
-          }
-        
-        */
       }
     }
   );
@@ -196,18 +188,17 @@ app.post("/getAnnounce",(req ,res)=>{
   )
 });
 
-app.post("/EditAnnounce",(req ,res)=>{
+app.post("/editAnnounce",(req ,res)=>{
   const id = req.body.id;
   const title = req.body.title;
-  const image_name = req.body.image_name;
-  const image = req.body.image;
+  const image_url = req.body.image_url;
   const detail = req.body.detail;
   dbCon.query(
-    "UPDATE announce SET (title, image_name, image_url, detail) VALUES (?, ?, ?, ?) WHERE id = ?",
-    [title, image_name, image,detail, id],
+    "UPDATE announce SET title = ?,detail = ?,image_url = ?  WHERE id = ?",
+    [image, detail, title,id],
     (err, result) => {
       if(err){
-        console.log(err);
+        res.send(err);
       }else{
         res.send(result);
       }
@@ -231,6 +222,41 @@ const fileImg = fs.readFileSync("upload/"+req.file[0].filename)
 })
 */
 
+
+
+//////PROFILE 
+app.post("/addProfile", (req, res) => {
+  const id = req.body.id;
+  const user_id= req.body.user_id;
+  const file_path = req.body.file_path;
+
+  dbCon.query(
+    "INSERT INTO profile (user_id, file_path) VALUES ( ?, ?)",
+    [user_id, file_path], 
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/getProfile", (req, res) => {
+  const user_id = req.body.user_id;
+  dbCon.query(
+    "SELECT * FROM profile WHERE user_id = ?",
+    [user_id],
+    (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        res.send(result);
+        //console.log(result)
+      }
+  });
+});
 
 app.listen(5000, () => {
   console.log(`running at port 5000`);
