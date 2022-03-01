@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../App';
 import Axios from 'axios';
 
-function Profile(props) {
+function Profile() {
 
   const { Content } = useContext(WebContext)
   const [content, setContent] = Content;
@@ -11,11 +11,11 @@ function Profile(props) {
   const [user, setUser] = User;
 
   const[profile,setProfile]=useState({
-    fname:"",
+    name:"",
     age:"",
     std_id:"",
     address:"",
-    tel:"",
+    branch:"",
     yearofstudy:"",
     fieldStudy:""
   })
@@ -31,10 +31,10 @@ function Profile(props) {
   }
   
   function Check(){
-      if(user.id != null){
+      if(profile.name === ""){
         return(
           <button onClick = {() => setContent('ProfileCreate')}>
-              <p>createProfile</p>
+              <p>สร้างโปรไฟล์</p>
           </button>
         )
       }
@@ -49,43 +49,40 @@ function Profile(props) {
   }
   useEffect(()=>{
     getProfile();
+    //setUser([]);
   },[]);
   return(
     <div className="frame-content">   
-            <button onClick = {() => alert(user.id)}>
-              <p>ปุ่มโง่ๆ</p>
-          </button> 
       <div className="profile-row-top">
           <form className="profile-form d-flex ">
             <div className="profile-img">
               <img src="https://i.pinimg.com/564x/e6/c9/78/e6c9783ef31e29427d42939766031372.jpg"/>
-              <p>สภาพเป็นแฟนกัน</p>
             </div>
             <div className="profile-data d-flex">
               <div className="profile-column-left "> 
                 <div className="profile-name">
                   <label>ชื่อ-นามสกุล</label><br></br>
-                  <input placeholder="ภวัตกะนะโนน" value = {profile.fname} required></input> 
+                  <input placeholder="ภวัตกะนะโนน" value = {profile.name} required></input>
                 </div>
                 <div className="profile-sector">
                   <label >ภาคการเรียนการสอน</label><br></br>
-                  <input placeholder="ภาคปกติ" required></input>
+                  <input placeholder="ภาคปกติ" value = {profile.fieldStudy} required></input>
                 </div>
               </div>
               <div className="profile-column-center">
                 <div className="profile-code">
                   <label >รหัสนิสิต</label><br></br>
-                  <input className="d-flex" placeholder="62XXXXX" required></input>
+                  <input className="d-flex" type="number" placeholder="62XXXXX"  value = {profile.std_id} required></input>
                 </div>
                 <div className="profile-branch">
                   <label >สาขา</label><br></br>
-                  <input placeholder="GMMTV" required></input>
+                  <input placeholder="GMMTV" value = {profile.branch} required></input>
                 </div>
               </div>
               <div className="profile-column-right">
                 <div className="profile-grade">
                   <label >นิสิตชั้นปีที่</label><br></br>
-                  <input placeholder="5" required></input>
+                  <input placeholder="5" value = {profile.yearofstudy} required></input>
                 </div>
               </div>
             </div>

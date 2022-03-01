@@ -1,6 +1,5 @@
 import React from "react";
 import Login from "../components/Login.js"
-import './LoginPage.css';
 import ku_eng_src_logo from "../images/engsrc.png";
 import ku_src_logo from "../images/ku.png";
 import AnnouncementLogin from '../contents/AnnouncementLogin.js';
@@ -8,16 +7,15 @@ import AnnouncementLogin from '../contents/AnnouncementLogin.js';
 function LoginPage() {
   
   return (
-    <div className="login">
-      <div className="d-flex">
+    <div className="frame">
 
         {/*---------------------ANNOUNCEMENT----------------------*/}
-        <div className="column-left d-flex flex-column">     
+        <div className="column-left-68">     
           <AnnouncementLogin/>
         </div>
 
         {/*---------------------LOGIN SIDE------------------------*/}
-        <div className="column-right d-flex flex-column">
+        <div className="column-right-32">
           
           {/*------------HEADER-------------*/}
           <div className="row-top ">
@@ -27,19 +25,16 @@ function LoginPage() {
           </div>
 
           {/*----------LOGIN SECTION-----------*/}
-          <center>
             <div className="row-center ">
               <img src={ku_eng_src_logo} className="ku_eng_src_logo" alt="eng src"/>
               <Login/>
             </div>
-          </center>
           
           {/*------------FOOTER-------------*/}
           <div className="row-bottom">
             <img src={ku_src_logo} className="ku_src_logo" alt="eng src"/>
             <p>คณะวิศวกรรมศาสตร์ ศรีราชา<br/>มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตศรีราชา</p>
           </div>
-        </div>
       </div>
     </div>
   );

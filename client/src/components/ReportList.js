@@ -11,7 +11,7 @@ function ReportList(props) {
     Reports.map((report, index) => (
       <div className="reportList d-flex" key={index}>
         <div className='reportList-bottom'>
-          <h3>{report.detail}</h3>
+          <h3>{report.title}</h3>
         </div>
         <div className="reportList-right">
           <button className="button-search d-flex" type="button" onClick={() => setContent('ReportInspect')}>

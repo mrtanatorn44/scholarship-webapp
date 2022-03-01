@@ -49,37 +49,34 @@ const [targetDeleteNews, setTargetDeleteNews] = useState();
     //console.log(binary);
     return binary ;
   }
-  const getAnnounce = () =>{
-    Axios.get("http://localhost:5000/getAllAnnounce").then((response)=> { 
+  const getAnnounce = () => {
+    Axios.get("http://localhost:5000/getAllAnnounce").then((response) => { 
       var result = response.data;
       if (result.length === 0) {
-        result = [{ 
+        var result = [{ 
+          isEmpty: true,
           number: 0, 
           title: "ไม่มีประกาศในขณะนี้", 
           image: announce_empty,
-          detail : "ว่าง", date: "0-0-0T00-00-00", isShow: false
+          toggleContent: false,
+          imageIsEmpty: false
         }]
-        setAnnounce(result)
-        return;
-      }        
-      var idx = 0
-      result.forEach( (res) => {
-        // mysql date_format to human date_format
-        var month_th = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", 
-                            "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
-        
-        var dmy = res.date.split("T")[0].split("-").reverse();
-        // console.log(dmy)
-        var date_tranform = "วันที่ " + (parseInt(dmy[0])) + " " + month_th[parseInt(dmy[1], 10)] + 
-                            " " + (parseInt(dmy[2]) + 543);
-        //console.log(res.image_url)
-        Object.assign(res, {
-          number: idx++,
-          image : "data:image/png;base64," + _arrayBufferToBase64(res.image_url.data), // blob to image
-          isShow: false,
-          date_format: date_tranform
-        })
-      });
+      } else {
+        var idx = 0
+        result.forEach((res) => {
+          var month_th      = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
+          var dmy           = res.date.split("T")[0].split("-").reverse();
+          var date_tranform = "วันที่ " + (parseInt(dmy[0])) + " " + month_th[parseInt(dmy[1], 10)] + " " + (parseInt(dmy[2]) + 543);
+          Object.assign(res, {
+            isEmpty: false,
+            number: idx++,
+            image : "data:image/png;base64," + _arrayBufferToBase64(res.image_url.data), // blob to image
+            imageIsEmpty : res.image_url.data.length==0 ? true : false,
+            toggleContent: res.image_url.data.length==0 ? true : false,
+            date_format: date_tranform
+          });
+        });
+      }
       setAnnounce(result)
     })
   }
@@ -87,7 +84,13 @@ const [targetDeleteNews, setTargetDeleteNews] = useState();
     getAnnounce();
   }, [])
   
-  function onHandleImageClick(image) {
+  const onToggleContentClick = (newsNumber) => {
+    let tempAnnounce=[...Announce];
+    tempAnnounce[newsNumber].toggleContent = !tempAnnounce[newsNumber].toggleContent;
+    setAnnounce(tempAnnounce);
+  }
+
+  const onImageClick = (image) => {
     setPopupImage(image);
     setShowPopupImage(true);
   }
@@ -97,14 +100,17 @@ const [targetDeleteNews, setTargetDeleteNews] = useState();
       email : user.email
     }).then(
       (response) => {
-        if (response.data.length !== 0)  /*https://www.youtube.com/watch?v=nhPnTtSwRJk*/ /*ขำๆตอนตื่นจากพีม*/{
+        if (response.data.length !== 0) {
           const data = response.data[0];
           const dbRole = data.role;
           if(dbRole === 'admin') {
-            Axios.post("http://localhost:5000/deleteAnnounce", { id : id }).then((response) => { setAnnounce([]);getAnnounce();})
-            return true;
+            Axios.post("http://localhost:5000/deleteAnnounce", { id : id }).then((response) => { 
+              setAnnounce([]);
+              getAnnounce();
+              setAlertText("ลบข่าวเรียบร้อย");
+            })
           } else {
-            return false;
+            setAlertText("ไม่มีสิทธิ์");
           }
         }
       }
@@ -113,20 +119,19 @@ const [targetDeleteNews, setTargetDeleteNews] = useState();
 
   function getConfirmDelete(isConfirm) {
     if (isConfirm) {
-      if (onDeleteAnnounce(targetDeleteNews)) {
-        setAlertText("ลบข่าวเรียบร้อย");
-      } else {
-        setAlertText("แกไม่มีสิทธิ์");
-      }
+      onDeleteAnnounce(targetDeleteNews);
+      setShowModalDelete(false);
       setShowModalAlert(true)
     }
     setShowModalDelete(false);
   }
+
   function getConfirmAlert(isConfirm) {
     if (isConfirm) {
       setShowModalAlert(false)
     }
   }
+
   return (
     Announce.map((news) => (
       <article className="news" key={news.number}>
@@ -138,29 +143,50 @@ const [targetDeleteNews, setTargetDeleteNews] = useState();
         </div>
 
         {/*---------- CONTENT ----------*/}
-        { !news.isShow &&
-        <div className='content-image'>
-          <img  className='news-image' src={news.image} alt='scholarship promote' onClick = {() => onHandleImageClick(news.image) }/> 
-        </div> }
-        { news.isShow && <div className='content'><h3>{ news.detail }</h3></div> }
-        { ShowPopupImage && <ImageModal image={ PopupImage } sendConfirm={ (data) => setShowPopupImage(data) }/> }
+        { /* IMAGE */
+          !news.toggleContent && !news.imageIsEmpty &&
+          <div className='content-image'>
+            <img  className='news-image' src={ news.image } alt='scholarship promote' 
+              onClick = {() => onImageClick(news.image) }/> 
+          </div> 
+        }
+        { /* DETAIL */
+          news.toggleContent && 
+          <div  style={{whiteSpace:'pre-line'}} className='content'><h3>{ news.detail }</h3></div> 
+        }
+        
+        { /* MODAL POPUP IMAGE */
+          ShowPopupImage && 
+          <ImageModal image={ PopupImage } sendConfirm={ (data) => setShowPopupImage(data) }/> 
+        }
 
         {/*---------- BOTTOM ----------*/}
         <div className='newsList-bottom'>
+          
           <div className='admin-panel'>
-            <button className="btn-delete" onClick={() => { setShowModalDelete(true);setTargetDeleteNews(news.id); }}> ลบ </button>
-            <button className="btn-modify" onClick={() => { setEditAnnounceID(news.id);setContent("AnnouncementEdit"); }}> แก้ไข </button>
-            { showModalDelete && <ConfirmDeleteModal sendConfirm={getConfirmDelete}/> }
-            { showModalAlert && <AlertModal text2={alertText} iconIndex={0} sendConfirm={getConfirmAlert}/>}
-          </div>
+            { /* ADMIN BUTTON */
+              user.role === 'admin' && !news.isEmpty && <>            
+              <button className="btn-delete" onClick={() => { setShowModalDelete(true);setTargetDeleteNews(news.id); }}> ลบ </button>
+              <button className="btn-modify" onClick={() => { setEditAnnounceID(news.id);setContent("AnnouncementEdit"); }}> แก้ไข </button>
+              </> 
+            }
+            { /* MODAL CONFIRM */
+              showModalDelete && 
+              <ConfirmDeleteModal sendConfirm={getConfirmDelete}/> 
+            }
+            {  /* MODAL ALERT */
+              showModalAlert && 
+              <AlertModal text2={alertText} iconIndex={0} sendConfirm={getConfirmAlert}/> 
+            }
+          </div> 
+
           <div className='user-panel'>
-            <h3 onClick={() => {
-              let tempAnnounce=[...Announce];
-              tempAnnounce[news.number].isShow = !tempAnnounce[news.number].isShow;
-              setAnnounce(tempAnnounce);
-            }}>
-              { !news.isShow ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)" }
-            </h3>
+            { /* USER BUTTON */
+              !news.imageIsEmpty && !news.isEmpty &&
+              <h3 onClick={() => onToggleContentClick(news.number) }>
+                { !news.toggleContent ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)" }
+              </h3> 
+            }
           </div>
         </div>
       </article>

@@ -1,8 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../App';
 import Axios from 'axios';
-
-import './AnnouncementEdit.css';
 import announce_empty from "../images/announce_empty.png";
 
 import ConfirmSaveModal from '../modals/ConfirmModal.js';
@@ -91,10 +89,9 @@ function AnnouncementEdit(props) {
   }
 
   const onChangenews = (form,id) => {
-    alert(form.title)
-    alert(id)
     Axios.post("http://localhost:5000/editAnnounce", { 
       title :form.title,
+      detail : form.detail,
       id: id
     })
   }

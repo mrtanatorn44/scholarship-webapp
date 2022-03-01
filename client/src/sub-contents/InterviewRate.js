@@ -1,8 +1,10 @@
-import { React, useState, useEffect } from 'react';
-import './InterviewRate.css';
+import React, { useState, useContext } from 'react';
+
 import { WebContext } from '../App';
 function InterviewRate(props) {
 
+  const { Content } = useContext(WebContext)
+  const [ content, setContent] = Content;
   const [check,setCheck]=useState();
   const [check1,setCheck1]=useState();
  
@@ -26,17 +28,17 @@ function InterviewRate(props) {
           <div className="interviewrate-score">
             <div className="detail1">
               <p>ประเมินด้าน1</p>
-              <input type="text" placeholder="50.00"/>
+              <input type="number" min="0" max="100" placeholder="50.00"/>
             </div>
             <div className="detail2">
               <br></br>
               <p>ประเมินด้าน2</p>
-              <input type="text" placeholder="70.00"/>
+              <input type="number" min="0" max="100" placeholder="70.00"/>
             </div>
             <div className="detail3">
               <br></br>
               <p>ประเมินด้าน3</p>
-              <input type="text" placeholder="90.00"/>
+              <input type="number" min="0" max="100" placeholder="90.00"/>
             </div>
           </div>
           <div className="interviewrate-complete d-flex">
@@ -80,7 +82,7 @@ function InterviewRate(props) {
       </div>
       <div className="footer">
         <div className="btn-confirm-interviewrate d-flex">
-          <button className="btn-confirm">ยืนยัน</button>
+          <button type="submit"className="btn-confirm" onClick={() => setContent('Interview')}>ยืนยัน</button>
         </div>
       </div>
     </div>

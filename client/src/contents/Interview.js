@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import ApplicantList from '../components/ApplicantList';
 import IntervieweeList from '../components/IntervieweeList';
+import { WebContext } from '../App.js'; 
+
 function Interview(props) {
 
+  const { Query } = useContext(WebContext);
+  const [query, setQuery] = Query;
+
   return (
+
     <div className="frame-content">
       <div className="head-content d-flex">
         <div className="icons">
@@ -28,7 +34,7 @@ function Interview(props) {
           </div>
           <div className="interview-column-right" >
             <div className="interview-search">
-              <input type="text" placeholder="Search" aria-describedby="button-addon2"/>
+              <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
               <button className="btn" type="button" >
                 <i className="bi bi-search"></i>
               </button>

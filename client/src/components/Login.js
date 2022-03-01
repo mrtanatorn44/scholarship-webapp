@@ -3,8 +3,6 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { WebContext } from '../App.js';
 import Axios from 'axios';
-
-import './Login.css';
 import gmail from '../images/gmail.png';
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;

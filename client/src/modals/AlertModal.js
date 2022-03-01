@@ -13,21 +13,26 @@ function AlertModel(props) {
     <div class="modal">
       <div class="modal-content" >
         <div class="modal-body">
-        <button className="button-close" onClick={() => props.sendConfirm(true)}>
-          <i class="x-button bi bi-x"></i>
-        </button>
+          <button className="button-close" onClick={() => props.sendConfirm(true)}>
+            <i class="x-button bi bi-x"></i>
+          </button>
+
+          <div class="icon-clock">
           <center class = "icon">
             <i class={icon[iconIndex]}></i>
-          </center><br></br>
-          <center>{text1}</center><br></br>
-          <center>{text2}</center><br></br>
-          <center>{text3}</center><br></br>
-          <center>{text4}</center><br></br>
+          </center>
+          </div><br></br>
+          <div class="alert-detail">
+            <center>{text1}</center><br></br>
+            <center>{text2}</center><br></br>
+            <center>{text3}</center><br></br>
+            <center>{text4}</center><br></br>
+          </div>
         </div>
       </div>
     </div>
   );
-}
+} 
 
 export default AlertModel;
  

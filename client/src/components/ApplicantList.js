@@ -6,6 +6,10 @@ import { WebContext } from '../App';
 
 
 function ApplicantList(props){
+
+  const { Query } = useContext(WebContext);
+  const [query, setQuery] = Query;
+
   const { Content } = useContext(WebContext)
   const [content, setContent] = Content;
 
@@ -26,7 +30,13 @@ function ApplicantList(props){
 
 
   return (
-    Aplicants.map((aplicant,index) => (
+    Aplicants.filter((aplicant)=>{
+      if(query == ""){
+        return aplicant;
+      }else if(aplicant.title.toLowerCase().includes(query.toLowerCase())){
+        return aplicant;
+      }
+    }).map((aplicant,index) => (
       <div className="applicantList" key={index} >
         <div className='title'>
           <h2>{aplicant.title}</h2>

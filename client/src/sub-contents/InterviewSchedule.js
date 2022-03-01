@@ -1,7 +1,9 @@
-import { React, useState, useEffect } from 'react';
-import './InterviewSchedule.css';
+import React, { useState, useContext } from 'react';
 
+import { WebContext } from '../App';
 function InterviewSchedule(props) {
+  const { Content } = useContext(WebContext)
+  const [ content, setContent] = Content;
   return (
     <div className="frame-content">
       <div className="head-content d-flex">
@@ -13,12 +15,12 @@ function InterviewSchedule(props) {
       <form>
         <div className="detail1">
           <p>สัมภาษณ์ ณ วันที่</p>
-          <input type="text" placeholder="31 กุมภาพันธ์ 2565"/>
+          <input type="date" placeholder="31 กุมภาพันธ์ 2565"/>
         </div>
 
         <div className="detail2">
           <p>เวลา</p>
-          <input type="text" placeholder="28:39"/>
+          <input type="time" placeholder="28:39"/>
         </div>
                 
         <div className="detail3">
@@ -32,17 +34,20 @@ function InterviewSchedule(props) {
 	
         <div className="detail4">
           <p>ช่องทางการสัมภาษณ์</p>
-          <input type="text" placeholder="Zoom meeting"/>
+          <select>
+            <option value="people1">Zoom</option>
+            <option value="people2">MS-TEAM</option>
+          </select>
         </div>
 
       </form>
     </div>
     <div className="interviewSchedule-fotter d-flex">
       <div className="confirm"> 
-        <button type = "button">ยืนยัน</button>    
+        <button type = "button" onClick={() => setContent('Interview')}>ยืนยัน</button>    
       </div>
     </div>
-  </div>/*กูนอนอยู่นะ ไม่ได้คุยกับใคร */
+  </div>
   )
 }
 

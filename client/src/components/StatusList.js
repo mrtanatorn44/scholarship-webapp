@@ -31,7 +31,7 @@ function StatusList(props) {
 						<h2>{scholar.title}</h2>
 						<h3>{scholar.date}</h3>
 					</div>
-					<div className='bottom-scholar'>
+					<div className='scholar-bottom'>
 						<div className='user-panel'>
 							<h3 onClick={() => checkState(index)}>
 								{!scholar.check ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)"}

@@ -1,9 +1,11 @@
-import { React, useState, useEffect } from 'react';
-import './ScholarshipCheckForm.css';
+import React, { useState, useContext } from 'react';
+import { WebContext } from '../App';
 
-function ScholarshipCheckForm() {
+function ScholarshipCheckForm(props) {
 
-  
+  const { Content } = useContext(WebContext)
+  const [ content, setContent] = Content;
+  const [check,setCheck]=useState();
   return (
     <div className="frame-content">
       <div className="head-content d-flex">
@@ -37,12 +39,12 @@ function ScholarshipCheckForm() {
           </div>
           <div>
             <label>อายุ</label><br></br>
-            <input placeholder="อายุ" required></input>
+            <input type="number" min="0" placeholder="อายุ" required></input>
           </div>
           
           <div>
             <label>รหัสนิสิต</label><br></br>
-            <input placeholder="รหัสนิสิต" required></input>
+            <input type="number" placeholder="รหัสนิสิต" required></input>
           </div>
           
           <div>
@@ -66,7 +68,7 @@ function ScholarshipCheckForm() {
           </div>
           <div>
             <label>คะแนนเฉลี่ยนสะสม(GPA)</label><br></br>
-            <input placeholder = "คะแนนเฉลี่ยสะสม(GPA)" required></input>
+            <input type="number" min="0" placeholder = "คะแนนเฉลี่ยสะสม(GPA)" required></input>
           </div>
           
           <div>
@@ -76,7 +78,7 @@ function ScholarshipCheckForm() {
           
           <div>
             <label>เบอร์โทรศัพท์</label><br></br>
-            <input placeholder = "เบอร์โทรศัพท์" required></input>
+            <input type="tel" placeholder = "เบอร์โทรศัพท์" required></input>
           </div>
          
             <h5>ประวัติครอบครัว</h5>
@@ -90,8 +92,8 @@ function ScholarshipCheckForm() {
           <div class="profile-fam d-flex">
             <div class="fam1-edit">
               <label>อายุ</label><br></br>
-              <input className = "halfbar" placeholder="อายุ" required></input>
-            </div>
+              <input className = "halfbar" type="number" min="0"  placeholder="อายุ" required></input>
+            </div> 
             <div class="fam2-edit">
               <label>สถานะภาพ</label>
               <select className="form-select form-select-lg mb-3" required>
@@ -109,14 +111,14 @@ function ScholarshipCheckForm() {
             </div>
             <div class="fam2-edit">
               <label>เบอร์โทรศัพท์</label><br></br>
-              <input placeholder = "เบอร์โทรศัพท์" required></input>
+              <input type="tel" placeholder = "เบอร์โทรศัพท์" required></input>
             </div>
           </div>
 
           <div class="profile-fam  d-flex">
             <div class="fam1-edit">
               <label>รายได้ต่อเดือน</label><br></br>
-              <input className = "halfbar" placeholder="ระบุรายได้ต่อเดือน" required></input>
+              <input className = "halfbar" type="number" min="0" placeholder="ระบุรายได้ต่อเดือน" required></input>
             </div>
             <div class="fam2-edit">
               <label>สถานที่ประกอบอาชีพ</label><br></br>
@@ -128,7 +130,7 @@ function ScholarshipCheckForm() {
             <label>ที่อยู่ของบิดา</label><br></br>
             <input placeholder = "ที่อยู่ของบิดา" required></input>
           </div>
-          
+          <br></br>
           <div>
             <label>ชื่อ-นามสกุล(มารดา)</label><br></br>
             <input placeholder = "ชื่อ-นามสกุล(มารดา)" required></input>
@@ -137,7 +139,7 @@ function ScholarshipCheckForm() {
           <div class="profile-fam  d-flex">
             <div class="fam1-edit">
               <label>อายุ</label><br></br>
-              <input className = "halfbar" placeholder="อายุ" required></input>
+              <input className = "halfbar" type="number" min="0" placeholder="อายุ" required></input>
             </div>
             <div class="fam2-edit">
               <label>สถานะภาพ</label>
@@ -156,14 +158,14 @@ function ScholarshipCheckForm() {
             </div>
             <div class="fam2-edit">
               <label>เบอร์โทรศัพท์</label><br></br>
-              <input placeholder = "เบอร์โทรศัพท์" required></input>
+              <input type="tel" placeholder = "เบอร์โทรศัพท์" required></input>
             </div>
           </div>
 
           <div class="profile-fam d-flex">
             <div class="fam1-edit">
               <label>รายได้ต่อเดือน</label><br></br>
-              <input className = "halfbar" placeholder="ระบุรายได้ต่อเดือน" required></input>
+              <input className = "halfbar" type="number" min="0" placeholder="ระบุรายได้ต่อเดือน" required></input>
             </div>
             <div class="fam2-edit">
               <label>สถานที่ประกอบอาชีพ</label><br></br>
@@ -240,12 +242,12 @@ function ScholarshipCheckForm() {
         <form>
           <div className="form-checks d-flex">
             <div className="form-check-true">
-              <input type="radio" id="check1"></input>
+              <input type="radio" name="check" value="Pass" onChange={e=>setCheck(e.targer.value)}></input>
               <label for="check1">สมบูรณ์</label>
             </div>
             
             <div className="form-check-false">
-              <input type="radio" id="check2"></input>
+              <input type="radio" name="check" value="Notpass" onChange={e=>setCheck(e.targer.value)}></input>
               <label for="check2">ไม่สมบูรณ์</label>
             </div> 
           </div>

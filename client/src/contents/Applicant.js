@@ -1,7 +1,11 @@
-import { React, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import ApplicantList from '../components/ApplicantList';
+import { WebContext } from '../App.js'; 
 
-function Applicant(props) {
+function Applicant() {
+
+  const { Query } = useContext(WebContext);
+  const [query, setQuery] = Query;
 
   return (
     <div className="frame-content">
@@ -27,7 +31,7 @@ function Applicant(props) {
           </div>
           <div className="applicant-column-right" >
             <div className="applicant-search">
-              <input type="text" placeholder="Search" aria-describedby="button-addon2"/>
+              <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
               <button className="btn " type="button" >
                 <i className="bi bi-search"></i>
               </button>

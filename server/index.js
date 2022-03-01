@@ -206,6 +206,8 @@ app.post("/editAnnounce",(req ,res)=>{
   )
 });
 
+
+
 /*
 app.post("/upload", (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -242,6 +244,23 @@ app.post("/addProfile", (req, res) => {
     }
   );
 });
+app.post("/editProfile",(req ,res)=>{
+  const id = req.body.id;
+  const user_id= req.body.user_id;
+  const file_path = req.body.file_path;
+  
+  dbCon.query(
+    "UPDATE profile SET user_id = ?,file_path = ?  WHERE id = ?",
+    [user_id, file_path,id],
+    (err, result) => {
+      if(err){
+        res.send(err);
+      }else{
+        res.send(result);
+      }
+    }
+  )
+});
 
 app.post("/getProfile", (req, res) => {
   const user_id = req.body.user_id;
@@ -261,3 +280,12 @@ app.post("/getProfile", (req, res) => {
 app.listen(5000, () => {
   console.log(`running at port 5000`);
 });
+
+
+
+/*
+
+
+
+
+*/ 

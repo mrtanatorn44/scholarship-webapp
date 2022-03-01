@@ -19,7 +19,7 @@ function ScholarshipList(props) {
   const checkState = (index) => {
     let a=[...Scholar];
     a[index].check=!a[index].check;
-    setScholar(a);
+    setScholar(a); 
   }
   
   return (

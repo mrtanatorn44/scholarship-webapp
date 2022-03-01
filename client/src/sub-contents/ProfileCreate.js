@@ -7,9 +7,11 @@ import Axios from 'axios';
 function ProfileCreate() {
   //usecontext
   const { User } = useContext(WebContext);
+  const { Content } = useContext(WebContext);
   const [user, setUser] = User;
+  const [content, setContent] = Content;
   //
-  const[showModal, setShowModal] = useState(false);
+  const [showModal ,setShowModal] = useState(false);
   const [profile, setProfile]=useState({
     name:"",
     yearofstudy:"",
@@ -19,26 +21,27 @@ function ProfileCreate() {
     branch:"",
     address:"",
     tel:"",
-   })
-  const [profileFamily, setProfileFamily]=useState({
     name_father:"",
     age_father:"",
     career_father:"",
     income_father:"",
-    address__father:"",
-    status__father:"",
+    address_father:"",
+    status_father:"",
     place_of_work_father:"",
     tel_father:"",
     name_mother:"",
     age_mother:"",
     career_mother:"",
     income_mother:"",
-    address__mother:"",
-    status__mother:"",
+    address_mother:"",
+    status_mother:"",
     place_of_work_mother:"",
     tel_mother:"",
     status_marry:""
-  })
+   })
+   
+   
+
   const changeValue = (name,value) => {
     setProfile(profile=> ({
       ...profile,
@@ -48,24 +51,27 @@ function ProfileCreate() {
   }; 
   console.log(user);
   function getConfirm(data){
+    
     if(data){
-
+      setContent('Profile');
+      
     }else{
       
     }
-    //console.log("sdasdasdasd");
-    Axios.post("http://localhost:5000/addProfile",{
+    setShowModal(false);
+  }
+  //console.log("sdasdasdasd");
+    /*Axios.post("http://localhost:5000/addProfile",{
       user_id:user.id,
       file_path:JSON.stringify(profile),
-      file_path_family:JSON.stringify(profileFamily)
+      file_path_family:JSON.stringify(profile)
     }).then(
       (response) => {
         setShowModal(false);
       },(err)=>{
         alert("kkkkkk")
       }
-    );
-  }
+    );*/
 
   
   return (
@@ -76,7 +82,7 @@ function ProfileCreate() {
           <i className="bi bi-list-ul"/>
         </div>
         <div class="topic">
-          <h4>{user.id}</h4>
+          <h4>สร้างโปรไฟล์</h4>
         </div>
       </div>
       <div className="frame-subcontent3">
@@ -84,7 +90,9 @@ function ProfileCreate() {
           <h5>กรอกประวัติแรกเข้า</h5>
         </div>
         <form className="profileEdit-form">  
+          
           <div>
+          <label>ชื่อ-นามสกุล</label><br></br>
             <input placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required/>
           </div>
           <div>
@@ -100,11 +108,12 @@ function ProfileCreate() {
           </div>
           <div>
             <label>อายุ</label><br></br>
-            <input placeholder="อายุ" value = {profile.age} onChange={(e)=>changeValue("age",e.target.value)}  required/>
+            <input type="number" min="0" placeholder="อายุ" value = {profile.age} onChange={(e)=>changeValue("age",e.target.value)}  required/>
           </div>
+          {/*
           <div>
             <label>รหัสนิสิต</label><br></br>
-            <input placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
+            <input type="number" min="0" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
           </div>
           <div>
             <label>ภาคการเรียนการสอน</label>
@@ -119,10 +128,10 @@ function ProfileCreate() {
             <label>สาขา</label>
             <select className="form-select form-select-lg mb-3" value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
                 <option value="0">  เลือก       </option>
-                <option value="5">  คอมพิวเตอร์  </option>
-                <option value="4">  ไฟฟ้า      </option>
-                <option value="4">  เครื่องกล    </option>
-                <option value="4">  หุ่นยนต์     </option>
+                <option value="คอมพิวเตอร์">  คอมพิวเตอร์  </option>
+                <option value="ไฟฟ้า">  ไฟฟ้า      </option>
+                <option value="เครื่องกล">  เครื่องกล    </option>
+                <option value="หุ่นยนต์">  หุ่นยนต์     </option>
             </select>
           </div>
           
@@ -132,27 +141,27 @@ function ProfileCreate() {
           </div>
           <div>
             <label>เบอร์โทรศัพท์</label><br></br>
-            <input placeholder="เบอร์โทรศัพท์" value = {profile.tel} onChange={(e)=>changeValue("tel",e.target.value)} required/>
+            <input type="tel"  placeholder="เบอร์โทรศัพท์" value = {profile.tel} onChange={(e)=>changeValue("tel",e.target.value)} required/>
           </div>
           <div>
             <label>อัพโหลดรูปโปรไฟล์</label><br></br>
-            <input type="file" name="myfile"  required/>
+            <input type="file" name="myfile" />
           </div>
           <div>
             <h5>ประวัติครอบครัว</h5>
           </div>
           <div>
             <label>ชื่อ-นามสกุล(บิดา)</label><br></br>
-            <input placeholder="ชื่อภาษาไทย" value = {profileFamily.name_father} onChange={(e)=>changeValue("name_father",e.target.value)} required/>
+            <input placeholder="ชื่อภาษาไทย" value = {profile.name_father} onChange={(e)=>changeValue("name_father",e.target.value)} required/>
           </div>
           <div class="profile-fam d-flex">
             <div class="fam1-edit">
               <label>อายุ</label><br></br>
-              <input className = "halfbar" placeholder="อายุ" required/>
+              <input className = "halfbar" type="number" min="0" placeholder="อายุ" value = {profile.age_father} onChange={(e)=>changeValue("age_father",e.target.value)} required/>
             </div>
             <div class="fam2-edit">
               <label>สถานะภาพ</label>
-              <select className="form-select form-select-lg mb-3" required>
+              <select className="form-select form-select-lg mb-3" value = {profile.status_father} onChange={(e)=>changeValue("status_father",e.target.value)} required>
                 <option value="0">เลือก</option>
                 <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                 <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -163,42 +172,42 @@ function ProfileCreate() {
           <div class="profile-fam d-flex">
             <div class="fam1-edit">
               <label>อาชีพ</label><br></br>
-              <input className = "halfbar" placeholder="ระบุอาชีพ" required/>
+              <input className = "halfbar" placeholder="ระบุอาชีพ" value = {profile.career_father} onChange={(e)=>changeValue("career_father",e.target.value)} required/>
             </div>
             <div class="fam2-edit">
               <label>เบอร์โทรศัพท์</label><br></br>
-              <input className = "halfbar" placeholder="ระบุเบอร์โทรศัพท์" required/>
+              <input className = "halfbar" type="tel"  placeholder="ระบุเบอร์โทรศัพท์" value = {profile.tel_father} onChange={(e)=>changeValue("tel_father",e.target.value)} required/>
             </div>
           </div>
        
           <div class="profile-fam d-flex">
             <div class="fam1-edit">
               <label>รายได้ต่อเดือน</label><br></br>
-              <input className = "halfbar" placeholder="ระบุรายได้ต่อเดือน" required/>
+              <input className = "halfbar" type="number" min="0" placeholder="ระบุรายได้ต่อเดือน" value = {profile.income_father} onChange={(e)=>changeValue("income_father",e.target.value)} required/>
             </div>
             <div class="fam2-edit">
               <label>สถานที่ประกอบอาชีพ</label><br></br>
-              <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" required/>
+              <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" value = {profile.place_of_work_father} onChange={(e)=>changeValue("place_of_work_father",e.target.value)} required/>
             </div>
           </div>
         
           <div>
             <label>ที่อยู่ของบิดา</label><br></br>
-            <input className = "halfbar" placeholder="ที่อยู่ของบิดา" required/>
+            <input className = "halfbar" placeholder="ที่อยู่ของบิดา" value = {profile.address_father} onChange={(e)=>changeValue("address_father",e.target.value)} required/>
           </div>
 
           <div>
             <label>ชื่อ-นามสกุล(มารดา)</label><br></br>
-            <input className = "halfbar" placeholder="ชื่อ-สกุล(มารดา)" required/>
+            <input className = "halfbar" placeholder="ชื่อ-สกุล(มารดา)" value = {profile.name_mother} onChange={(e)=>changeValue("name_mother",e.target.value)} required/>
           </div>
           <div class="profile-fam d-flex">
             <div class="fam1-edit">
               <label>อายุ</label><br></br>
-              <input className="halfbar" placeholder="อายุ" required/>
+              <input className="halfbar" type="number" min="0" placeholder="อายุ" value = {profile.age_mother} onChange={(e)=>changeValue("age_mother",e.target.value)}  required/>
             </div>
             <div class="fam2-edit">
               <label>สถานะภาพ</label>
-              <select className="form-select form-select-lg mb-3" required>
+              <select className="form-select form-select-lg mb-3" value = {profile.status_mother} onChange={(e)=>changeValue("status_mother",e.target.value)}  required>
                 <option value="0">เลือก</option>
                 <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                 <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -209,41 +218,43 @@ function ProfileCreate() {
           <div class="profile-fam d-flex">
             <div class="fam1-edit">
               <label>อาชีพ</label><br></br>
-              <input className = "halfbar" placeholder="ระบุอาชีพ" required/>
+              <input className = "halfbar" placeholder="ระบุอาชีพ" value = {profile.career_mother} onChange={(e)=>changeValue("career_mother",e.target.value)} required/>
             </div>
             <div class="fam2-edit">
               <label>เบอร์โทรศัพท์</label><br></br>
-              <input className = "halfbar" placeholder="ระบุเบอร์โทรศัพท์" required/>
+              <input className = "halfbar" type="tel"  placeholder="ระบุเบอร์โทรศัพท์" value = {profile.tel_mother} onChange={(e)=>changeValue("tel_mother",e.target.value)} required/>
             </div>
           </div>
 
           <div class="profile-fam d-flex">
             <div class="fam1-edit">
               <label>รายได้ต่อเดือน</label><br></br>
-              <input className = "halfbar" placeholder="ระบุรายได้ต่อเดือน" required/>
+              <input className = "halfbar" type="number" min="0" placeholder="ระบุรายได้ต่อเดือน" value = {profile.income_mother} onChange={(e)=>changeValue("income_mother",e.target.value)} required/>
             </div>
             <div class="fam2-edit">
               <label>สถานที่ประกอบอาชีพ</label>
-              <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" required/>
+              <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" value = {profile.place_of_work_mother} onChange={(e)=>changeValue("place_of_work_mother",e.target.value)} required/>
             </div>
           </div>
           <div>
             <label>ที่อยู่ของมารดา</label><br></br>
-            <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" required/>
+            <input className = "halfbar" placeholder="ที่อยู่มารดา" value = {profile.address_mother} onChange={(e)=>changeValue("address_mother",e.target.value)} required/>
           </div>
           <div>
             <label>สถานะสมรสของบิดา-มารดา</label><br></br>
-            <input className = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" required/>
+            <input className = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" value = {profile.status_marry} onChange={(e)=>changeValue("status_marry",e.target.value)} required/>
           </div>
-
+          */}
+          <div className="profileCre-footer">
+          <div className="btn-confirm-profile d-flex">
+            <button className="btn-confirm" onClick={() => {setShowModal(true)}}>บันทึก</button>
+            
+            </div>
+          </div>
         </form>
+        {showModal && <ConfirmModal sendConfirm={getConfirm}/>} 
       </div>
-      <div className="profileCre-footer">
-        <div className="btn-confirm-profile d-flex">
-          <button className="btn-confirm" onClick={()=> (setShowModal(true))}>บันทึก</button>
-          {showModal && <ConfirmModal sendConfirm={getConfirm}/>}
-        </div>
-      </div>
+      
     </div>
   ) 
 }

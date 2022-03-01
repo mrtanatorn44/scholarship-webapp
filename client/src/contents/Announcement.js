@@ -3,9 +3,9 @@ import NewsList from '../components/NewsList';
 import { WebContext } from '../App';
 
 function Announcement(props) {
-  const { Content } = useContext(WebContext)
+  const { Content, User } = useContext(WebContext)
   const [ content, setContent] = Content;
-
+  const [ user, setUser] = User;
   return (
     <div className="frame-content">   
       <div className="head-content d-flex">
@@ -15,10 +15,11 @@ function Announcement(props) {
         <div className="topic">
           <h4>ประกาศข่าวสาร</h4>
         </div>
+        { user.role === 'admin' &&
         <button  className='button-add d-flex' onClick={() => { setContent('AnnouncementCreate') }}>
           <i className="bi bi-plus-lg"/>
           <p>เพิ่มข่าวสาร</p>
-        </button>
+        </button> }
       </div>
       <div className="frame-subcontent1">
         <NewsList/>

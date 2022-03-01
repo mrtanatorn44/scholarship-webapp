@@ -1,10 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { WebContext } from '../App';
 import Axios from 'axios';
-
-import './AnnouncementCreate.css';
 import announce_empty        from "../images/announce_empty.png";
-
 import ConfirmSaveModal from '../modals/ConfirmModal.js';
 import ConfirmCancelModal from '../modals/ConfirmModal.js';
 import AlertModal from '../modals/AlertModal.js';
@@ -115,12 +112,10 @@ function AnnouncementCreate(props) {
             <input type="text" placeholder="หัวข้อข่าว" onChange={(event) => {setForm({ ...form, title: event.target.value })}}/>
           </div>
           <div className="detail">
-            <input type="text" placeholder="รายละเอียดข่าวสาร" onChange={(event) => {setForm({ ...form, detail: event.target.value })}}/>
+            <textarea type="text" placeholder="รายละเอียดข่าวสาร" onChange={(event) => {setForm({ ...form, detail: event.target.value })}}/>
           </div>
           <div className="announCre-row-bottom d-flex">
-            <div className="date">
-              <input type="text" placeholder="วัน/เดือนปี ที่ลงข่าว"></input>
-            </div>
+ 
             <div className="insertbutton d-flex">
               <input class="insert"  type="file" name="file" id="file"  onChange={(file) => onHandleUpload(file)}/>
               <label for="file">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ScholarshipListRegister2.css';
+
 
 function ScholarshipListRegister2() {
   return (

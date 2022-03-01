@@ -1,5 +1,5 @@
-import { React, useState, useEffect } from 'react';
-import './ScholarshipListCreate.css';
+import React, { useState, useContext } from 'react';
+import { WebContext } from '../App';
 import ConfirmModal from '../modals/ConfirmModal.js';
 import Axios from 'axios';
 import data from '../data/datanews.js';
@@ -60,7 +60,7 @@ const AnnounceForm = (props) => {
       <div className="announce-bottom">
         <div className="contributor">
           <input className="sponsers" type="text" placeholder="ผู้สนับสนุน" onChange={(event) => {setSupporter(event.target.value)}}></input>
-          <input className="amount" type="text" placeholder="จำนวนเงิน" onChange={(event) => {setPrice(event.target.value)}}></input>
+          <input className="amount" type="number" placeholder="จำนวนเงิน" onChange={(event) => {setPrice(event.target.value)}}></input>
         </div>
       </div>
     </form>
@@ -222,7 +222,7 @@ const RateForm = () => {
 
             <input className="file-select-2"
                 key={index}
-                type="text" 
+                type="number" min="0" max="100"
                 name="weigth"
                 value={rateForm.weigth || ""}
                 onChange={(e) => handleInputChangeWeigth(e, index)}
@@ -247,7 +247,8 @@ const RateForm = () => {
 
 function ScholarshipListCreate(props) {
    
-
+  const { Content } = useContext(WebContext)
+  const [ content, setContent] = Content;
 
 
   return (
@@ -273,7 +274,7 @@ function ScholarshipListCreate(props) {
 
         <div class="scholarListCrea-footer">
           <div class="btn-confirm-scholarCre ">
-            <button class="btn-confirm" type="button" >
+            <button class="btn-confirm" type="submit" onClick={() => setContent('Scholarship')}>
               ตกลง
             </button>
           </div>

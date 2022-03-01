@@ -31,25 +31,24 @@ const [showModal, setShowModal] = useState(false);
         const Scholar = ({idScholar,title,detail,date,index,check}) => {
         return(
             <div className = "d-flex">
-            <div className = "scholar">
-                <div className = 'title'>
-                <h2>{title}</h2>
-                <h3>{date}</h3>
-                </div>
-                <div className='bottom'>
-                    <div className='user-panel'>
-                    <h3  onClick={() => checkState(index)}>
-                        {!check ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)"}
-                    </h3>
+                <div className = "scholar-list">
+                    <div className = 'title'>
+                        <h2>{title}</h2>
+                        <h3>{date}</h3>
                     </div>
+                    <div className='scholar-bottom'>
+                        <div className='user-panel'>
+                            <h3  onClick={() => checkState(index)}>
+                                {!check ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)"}
+                            </h3>
+                        </div>
+                    </div>
+                    {check && <h3>{detail}</h3>} 
                 </div>
-
-                {check && <h3>{detail}</h3>} 
-            </div>
-            <button className = "button" onClick = {() => setShowModal(true)}>
-                นัดหมาย
-            </button>
-            {showModal && <AlertModal sendConfirm={getConfirm}/>}
+                <button className = "button-big" onClick = {() => setShowModal(true)}>
+                    นัดหมาย
+                </button>
+                {showModal && <AlertModal sendConfirm={getConfirm}/>}
             </div>
             
         );
