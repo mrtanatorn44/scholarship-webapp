@@ -10,16 +10,19 @@ function Interview(props) {
 
   return (
 
-    <div className="frame-content">
-      <div className="head-content d-flex">
-        <div className="icons">
-          <i className="bi bi-calendar-check"></i>
+    <div className="frame">
+      <div className="header">
+        <div className="left">
+          <div className="icons">
+            <i className="bi bi-calendar-check"></i>
+          </div>
+          <div className="topic">
+          <h4>การสัมภาษณ์</h4>
+          </div>
         </div>
-        <div className="topic">
-        <h4>การสัมภาษณ์</h4>
-        </div>
+        <div className="right"></div>
       </div>
-      
+     
         <form className="interview-row-top d-flex">
           <div className="interview-column-left">
             <div className="interview-left">
@@ -40,12 +43,12 @@ function Interview(props) {
               </button>
             </div>
           </div>
-
         </form>
+        <div className="line-gray"></div>
+        <div className="content5">
+          <IntervieweeList/>
+        </div>
       
-          <div className="frame-subcontent5">
-            <IntervieweeList/>
-          </div>
     </div>
   )
 }

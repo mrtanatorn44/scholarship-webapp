@@ -1,0 +1,31 @@
+function _arrayBufferToBase64( buffer ) {
+  var binary = '';
+  var bytes = new Uint8Array( buffer );
+  var len = bytes.byteLength;
+  for (var i = 0; i < len; i++) {
+      binary += String.fromCharCode( bytes[ i ] );
+  }
+  return binary ;
+}
+
+
+const Test = ({test, setTest}) => {
+  const handleChange= (e) => {
+      const _test = {...test, [e.target.name]: e.target.value}
+      setTest(_test)
+  }
+  return (
+      <div style={{ margin: "200px" }}>
+          <input name="value1" value={test["value1"]} onChange={handleChange}></input>
+          <input name="value2" value={test["value2"]} onChange={handleChange}></input>
+          <button onClick={() => console.log(test)}>Console.Log</button>
+      </div>
+  )
+}
+
+function Test1(props) {
+    const [test, setTest] = useState({value1: "", value2:""});
+    return (
+        <Test test={test} setTest={setTest} />
+    );
+}

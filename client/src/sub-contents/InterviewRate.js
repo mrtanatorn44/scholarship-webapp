@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-
+import ConfirmModal from '../modals/ConfirmModal.js';
 import { WebContext } from '../App';
 function InterviewRate(props) {
 
@@ -7,7 +7,34 @@ function InterviewRate(props) {
   const [ content, setContent] = Content;
   const [check,setCheck]=useState();
   const [check1,setCheck1]=useState();
- 
+  const [showModal ,setShowModal] = useState(false);
+
+  const inputHandler = (e) => {
+    const { value, maxLength } = e.target;
+    if (String(value).length >= maxLength) {
+      e.preventDefault();
+      return;
+    }
+  };
+
+  function getConfirm(data){
+    
+    if(data){
+
+      setContent('Interview');
+      
+    }else{
+      
+    }
+    setShowModal(false);
+  }
+
+  const onFormSumbit = (event) => {
+    event.preventDefault();
+    setShowModal(true);
+  }
+
+
   //const [content, setContent] = Content;
   /*const handlePass=(e)=>{
     console.warn(e.target.value)
@@ -19,29 +46,45 @@ function InterviewRate(props) {
    }*/
   
   return (
-    <div className="frame-content">
-      <div className="interviewrate-head d-flex">
-        <h4>คะแนนการสัมภาษณ์</h4>
+    <div className="frame">
+      <div className="header">
+        <div className="left">
+          <div className="topic">
+            <h4>คะแนนการสัมภาษณ์</h4>
+          </div>
+        </div>
+        <div className="right"></div>
       </div>
+
+      
       <div className="interviewrate-center d-flex">
-        <form>
+        <form onSubmit={(e)=> onFormSumbit(e)}>
           <div className="interviewrate-score">
             <div className="detail1">
               <p>ประเมินด้าน1</p>
-              <input type="number" min="0" max="100" placeholder="50.00"/>
+              <input required type="number" 
+                min="0" max="100" maxlength="3" placeholder="50.00" 
+                onKeyPress={inputHandler}
+                />
             </div>
             <div className="detail2">
               <br></br>
               <p>ประเมินด้าน2</p>
-              <input type="number" min="0" max="100" placeholder="70.00"/>
+              <input type="number" 
+                min="0" max="100"  maxlength="3"  placeholder="70.00" 
+                onKeyPress={inputHandler}
+                required/>
             </div>
             <div className="detail3">
               <br></br>
               <p>ประเมินด้าน3</p>
-              <input type="number" min="0" max="100" placeholder="90.00"/>
+              <input type="number" 
+                min="0" max="100"  maxlength="3" placeholder="90.00" 
+                onKeyPress={inputHandler}
+                required/>
             </div>
           </div>
-          <div className="interviewrate-complete d-flex">
+          <div className="interviewrate-complete ">
 
             <div className="interviewrate-complete1">
               <div className="interviewrate-topic">
@@ -49,13 +92,13 @@ function InterviewRate(props) {
                 <p>ประเมินด้าน xxx</p>
               </div>
 
-              <div className="interviewrate-checks d-flex ">
-                <div className="interviewrate-check-true">
-                  <input type="radio" name="check" value="Pass" onChange={e=>setCheck(e.targer.value)}/>
+              <div className="interviewrate-check">
+                <div className="interviewrate-check-true ">
+                  <input type="radio" name="check" value="Pass" onChange={e=>setCheck(e.targer.value)} required/>
                   <label for="check1">สมบูรณ์</label>
                 </div>
-                <div className="interviewrate-check-false">
-                  <input type="radio" name="check" value="Notpass" onChange={e=>setCheck(e.targer.value)}/>
+                <div className="interviewrate-check-false d-flex">
+                  <input type="radio" name="check" value="Notpass" onChange={e=>setCheck(e.targer.value)} required/>
                   <label for="check2">ไม่สมบูรณ์</label>
                 </div> 
               </div>
@@ -65,25 +108,28 @@ function InterviewRate(props) {
               <div className="interviewrate-topic">
                 <p>ประเมินด้าน 2</p>
               </div>
-              <div className="interviewrate-checks d-flex ">
+              <div className="interviewrate-check d-flex ">
                   <div className="interviewrate-check-true">
-                    <input type="radio" name="check1" value="Pass" onChange={e=>setCheck1(e.targer.value)} />
+                    <input type="radio" name="check1" value="Pass" onChange={e=>setCheck1(e.targer.value)} required/>
                     <label for="check1">สมบูรณ์</label>
                   </div>
                   <div className="interviewrate-check-false">
-                    <input type="radio" name="check1" value="Notpass" onChange={e=>setCheck1(e.targer.value)}/>
+                    <input type="radio" name="check1" value="Notpass" onChange={e=>setCheck1(e.targer.value)} required/>
                     <label for="check2">ไม่สมบูรณ์</label>
                   </div> 
               </div>
             </div>
 
           </div>   
+          <div className="footer">
+            <div className="btn-confirm-interviewrate d-flex">
+              <button className="btn-confirm">
+                ยืนยัน
+              </button>
+            </div>
+          </div>
         </form>
-      </div>
-      <div className="footer">
-        <div className="btn-confirm-interviewrate d-flex">
-          <button type="submit"className="btn-confirm" onClick={() => setContent('Interview')}>ยืนยัน</button>
-        </div>
+        {showModal && <ConfirmModal sendConfirm={getConfirm}/>}
       </div>
     </div>
   );

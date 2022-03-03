@@ -10,7 +10,7 @@ const WebContext = React.createContext();
 
 function App() {
 
-  const [scholarShipCreate, StudentScholarshipCreate] = useState();
+  const [scholarShipCreate, StudentScholarshipCreate] = useState('');
   const [query, setQuery] = useState('');
   const [editAnnounceID, setEditAnnounceID] = useState(-1);
   const [content, setContent] = useState("Announcement");

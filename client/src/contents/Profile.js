@@ -10,53 +10,42 @@ function Profile() {
   const { User } = useContext(WebContext);
   const [user, setUser] = User;
 
-  const[profile,setProfile]=useState({
+  const [profile, setProfile] = useState({
     name:"",
     age:"",
     std_id:"",
     address:"",
     branch:"",
     yearofstudy:"",
-    fieldStudy:""
+    fieldStudy:"",
+    image:""
   })
   
   const getProfile = () =>{
     Axios.post("http://localhost:5000/getProfile",{
       user_id:user.id
-    })
-    .then((response) =>{
-        console.log(response.data[0].file_path);
-        setProfile(JSON.parse(response.data[0].file_path))
+    }).then((response) => {
+      console.log(response)
+      var binaryImage   = ''; // ArrayBuffer to Base64
+      var bytes         = new Uint8Array( response.data[0].picture.data );
+      var len           = bytes.byteLength;
+      for (var i = 0; i < len; i++) binaryImage += String.fromCharCode( bytes[ i ] );
+      // setProfile
+      var res   = JSON.parse(response.data[0].file_path);
+      res.image = "data:image/png;base64," + binaryImage;
+      setProfile(res)
     })
   }
-  
-  function Check(){
-      if(profile.name === ""){
-        return(
-          <button onClick = {() => setContent('ProfileCreate')}>
-              <p>สร้างโปรไฟล์</p>
-          </button>
-        )
-      }
-      else{
-        return(
-          <button onClick = {() => setContent('ProfileEdit')}>
-              <p>แก้ไขข้อมูล</p>
-          </button>
-        )
-
-      }
-  }
-  useEffect(()=>{
+  useEffect(() => {
     getProfile();
-    //setUser([]);
-  },[]);
+  }, [])
+  
   return(
-    <div className="frame-content">   
+    <div className="frame">   
       <div className="profile-row-top">
           <form className="profile-form d-flex ">
             <div className="profile-img">
-              <img src="https://i.pinimg.com/564x/e6/c9/78/e6c9783ef31e29427d42939766031372.jpg"/>
+              <img src={profile.image}/>
             </div>
             <div className="profile-data d-flex">
               <div className="profile-column-left "> 
@@ -89,7 +78,14 @@ function Profile() {
           </form>
           
           <div className="botton-edit">
-            <Check/>
+            { profile.name === ''? 
+              <button onClick = {() => setContent('ProfileCreate')}>
+                <p>สร้างโปรไฟล์</p>
+              </button>:
+              <button onClick = {() => setContent('ProfileEdit')}>
+                <p>แก้ไขข้อมูล</p>
+              </button>
+            }
           </div>
           
         

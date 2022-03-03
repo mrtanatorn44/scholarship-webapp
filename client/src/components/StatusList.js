@@ -16,7 +16,7 @@ function StatusList(props) {
 			// alert('TRUE !')
 			// PUSH DATA TO DATABASE
 			// CLOSE OR SAVE
-			props.sendContent(['admin','ScholarshipStatus']);
+			props.setContent(['admin','ScholarshipStatus']);
 		} else {
 			// alert('FALSE !')
 		}
@@ -31,14 +31,19 @@ function StatusList(props) {
 						<h2>{scholar.title}</h2>
 						<h3>{scholar.date}</h3>
 					</div>
+
+					{scholar.check && <h3>{scholar.detail}</h3>} 
+
 					<div className='scholar-bottom'>
+						<div className='admin-panel'>
+						</div>
 						<div className='user-panel'>
 							<h3 onClick={() => checkState(index)}>
 								{!scholar.check ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)"}
 							</h3>
 						</div>
 					</div>
-					{scholar.check && <h3>{scholar.detail}</h3>} 
+					
 				</div>
 				<button className="button-big" onClick={() => setShowModal(true)}>
 					นัดหมาย

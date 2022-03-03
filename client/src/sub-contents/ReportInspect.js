@@ -8,13 +8,14 @@ function ReportInspect() {
   const [content, setContent] = Content;
   return (
     Test.map((test) => (
-      <div class="frame-content">
-        <div class="reportInspect-head d-flex">
+      <div class="frame">
+        <div class="header">        
           <center>
             <br></br>
             <h4>รายชื่อผู้ได้รับทุนเรียนดี</h4>
             <h4>ทุนประจำปีการศึกษา 2564 เทอมต้น ประเภททุนที่ 5 สำหรับนิสิตรหัส 62-64</h4>
           </center>
+
         </div>
         <div class="reportInspect-columns">
           <center>
@@ -59,7 +60,7 @@ function ReportInspect() {
             <button class="dowload" type="button" >
               <p>ดาวน์โหลดรายงาน</p>
             </button>
-            <button class="back"  type="button" onClick = {() => setContent(['Report'])}>
+            <button class="back" type="button" onClick = {() => setContent(['Report'])}>
               <p>กลับ</p>
             </button>
           </div>

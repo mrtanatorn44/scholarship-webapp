@@ -113,6 +113,7 @@ function MainPage() {
               <li className="d-flex" key={index}
                 style={{ background: (content===item.content)? '#505356': '#74787C' }}
                 onClick={() => checkRole( user.role, item.content )}>
+                
                 <i className={item.icon}></i>
                 <p>{item.text}</p>
               </li>
@@ -168,67 +169,55 @@ function MainPage() {
   }
 
   return (
-    <div className='main'>
-      <div className="d-flex">      
-
-        {/*-----------------------SIDE NAV BAR---------------------*/}
-        <div className="side-link-left d-flex flex-column"> 
-          <div className="row-top">
-            <div className="user-show">
-              <div className='user-profile'>
-                <img 
-                  src={user.imgUrl} 
-                  alt="user profile"
-                  className="img-circle"
-                />
-              </div>
-              <div className='user-info'>
-                <p className="user-email"> 
-                  {user.name}
-                </p>
-                <p className="user-name">
-                  {user.email}
-                </p>
-              </div>
-            </div>    
+    <div className='main-page'>
+      {/*-----------------------SIDE NAV BAR---------------------*/}
+      <div className="sidebar d-flex flex-column"> 
+        <div className="row-top">
+          <div className='user-profile'>
+            <img src={user.imgUrl} alt="user"/>
           </div>
-
+          <div className='user-info'>
+            <p> {user.name} </p>
+            <p> {user.email} </p>
+          </div>
+        </div>
+        <div className="row-bottom">
           {contentButtonRender()}
           <button onClick={() => setUser({...user, role: 'student'})}>show STUDENT</button>
           <button onClick={() => setUser({...user, role: 'interviewer'})}>show INTERVIEWER</button>
           <button onClick={() => setUser({...user, role: 'admin'})}>show ADMIN</button>
-          
+        </div>
+        
+      </div>
+
+      {/*-----------------------RIGHT CONTENT---------------------*/}
+      <div className="column-right">
+
+        {/*-----------------------HEADER---------------------*/}
+
+        <div className="row-top">
+          <p>ระบบขอทุน นิสิตวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขต ศรีราชา</p>
+          <div className="logout-button d-flex">
+            <Login/>
+          </div>
         </div>
 
-        {/*-----------------------RIGHT CONTENT---------------------*/}
-        <div className="column-right d-flex flex-column">
+        {/*-----------------------CONTENT---------------------*/}
 
-          {/*-----------------------HEADER---------------------*/}
+        <div className="row-center ">
+          {contentRender()}
+        </div>
+        
+        {/*-----------------------FOOTER---------------------*/}
 
-          <div className="header-page d-flex">
-            <h5 >ระบบขอทุน นิสิตวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขต ศรีราชา</h5>
-            <div className="logout-button d-flex">
-              <Login/>
-            </div>
-          </div>
-
-          {/*-----------------------CONTENT---------------------*/}
-
-          <div className="row-center ">
-            {contentRender()}
-          </div>
-          
-          {/*-----------------------FOOTER---------------------*/}
-
-          <div className="footer-page d-flex ">
-            <img src={ku_src_logo} className="ku_src_logo" alt="eng src"/>
-            <img src={ku_eng_src_logo} className="ku_eng_src_logo" alt="eng src"/>
-            <h5>
-              คณะวิศวกรรมศาสตร์ ศรีราชา
-              <br></br>
-              มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตศรีราชา
-            </h5>        
-          </div>
+        <div className="footer-page d-flex ">
+          <img src={ku_src_logo} className="ku_src_logo" alt="eng src"/>
+          <img src={ku_eng_src_logo} className="ku_eng_src_logo" alt="eng src"/>
+          <h5>
+            คณะวิศวกรรมศาสตร์ ศรีราชา
+            <br></br>
+            มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตศรีราชา
+          </h5>        
         </div>
       </div>
     </div>

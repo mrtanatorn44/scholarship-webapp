@@ -8,6 +8,9 @@ function ProfileEdit() {
   const { Content } = useContext(WebContext);
   const [user, setUser] = User;
   const [content, setContent] = Content;
+  const [form, setForm] = useState({
+    image:""
+  })
   //
   const[showModal, setShowModal] = useState(false);
   const [profile, setProfile]=useState({
@@ -35,67 +38,115 @@ function ProfileEdit() {
     status_mother:"",
     place_of_work_mother:"",
     tel_mother:"",
-    status_marry:""
+    status_marry:"",
+    image:""
    })
    const getProfile = () =>{
     Axios.post("http://localhost:5000/getProfile",{
       user_id:user.id
     })
     .then((response) =>{
-        console.log(response.data[0].file_path);
-        setProfile(JSON.parse(response.data[0].file_path))
+      var binaryImage   = ''; // ArrayBuffer to Base64
+      var bytes         = new Uint8Array( response.data[0].picture.data );
+      var len           = bytes.byteLength;
+      for (var i = 0; i < len; i++) binaryImage += String.fromCharCode( bytes[ i ] );
+      var res   = JSON.parse(response.data[0].file_path);
+      res.image = "data:image/png;base64," + binaryImage;
+      res.imageData = response.data[0].picture.data;
+      setProfile(res)
     })
+  }
+  function _arrayBufferToBase64( buffer ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+  }
+  function onHandleUpload(e) {
+    var file = e.target.files[0];
+    console.log('file: ', file.name)
+
+    var arrayBuffer;
+    var reader = new FileReader();
+    reader.onload = async function() {
+      arrayBuffer = await new Uint8Array(reader.result);
+      var res = reader.result;
+      var binImage = _arrayBufferToBase64(arrayBuffer);
+      //src={'data:image/jpeg;base64,' + bufferToBase64( data.fileImg.data )}
+      setForm({...form,
+        image:  binImage,
+        image_name: file.name
+      })
+    }
+    reader.readAsArrayBuffer(file); 
+    
   }
   
 
+
+ 
+  
   const changeValue = (name,value) => {
     setProfile(profile=> ({
       ...profile,
       [name]:value
     }))
-    console.log(profile);
   }; 
-  console.log(user);
-  function getConfirm(data){
+
+  function getConfirm(data) {
+    if(form.image===''){
+      form.image = profile.imageData
+      alert(profile.name)
+    }
     if(data){
+      alert(profile.yearofstudy)
+      Axios.post("http://localhost:5000/editProfile",{
+        user_id:user.id,
+        file_path:JSON.stringify(profile),
+        picture: form.image/*===''? profile.imageData:form.image*/,
+        
+      })
       setContent('Profile')
-    }else{
-      
+    }
+     else {
+      setShowModal(false)
     }
     //console.log("sdasdasdasd");
-    Axios.post("http://localhost:5000/editProfile",{
-      user_id:user.id,
-      file_path:JSON.stringify(profile),
-      file_path_family:JSON.stringify(profile)
-    }).then(
-      (response) => {
-        setShowModal(false);
-      },(err)=>{
-        alert("kkkkkk")
-      }
-    );
+    
   }
+  
   useEffect(()=>{
     getProfile();
   },[]);
 
-  
-  return (
+  const onFormSumbit = (event) => {
+    event.preventDefault();
+    setShowModal(true);
+  }
 
-    <div className="frame-content">
-      <div className="head-content d-flex" >
+  return (
+    <div className="frame">
+      <div className="header" >
+      <div className="left ">
         <div className="icons">
           <i className="bi bi-list-ul"/>
         </div>
         <div class="topic">
-          <h4>สร้างโปรไฟล์</h4>
+          <h4>แก้ไขโปรไฟล์</h4>
         </div>
+        </div>
+        <div className="right">
       </div>
-      <div className="frame-subcontent3">
+      </div>
+      <div className="content3">
         <div class="name">
-          <h5>กรอกประวัติแรกเข้า</h5>
+          <h5>แก้ไขข้อมูลส่วนตัว</h5>
         </div>
-        <form className="profileEdit-form">  
+        <form className="profileEdit-form" onSubmit={(e)=> {onFormSumbit(e);}}>  
+          
           <div>
           <label>ชื่อ-นามสกุล</label><br></br>
             <input placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required/>
@@ -115,6 +166,7 @@ function ProfileEdit() {
             <label>อายุ</label><br></br>
             <input type="number" min="0" placeholder="อายุ" value = {profile.age} onChange={(e)=>changeValue("age",e.target.value)}  required/>
           </div>
+          
           <div>
             <label>รหัสนิสิต</label><br></br>
             <input type="number" min="0" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
@@ -149,9 +201,9 @@ function ProfileEdit() {
           </div>
           <div>
             <label>อัพโหลดรูปโปรไฟล์</label><br></br>
-            <input type="file" name="myfile"  required/>
+            <input type="file" name="myfile" onChange={(file) => onHandleUpload(file)}/>
           </div>
-          <div>
+          {/*<div>
             <h5>ประวัติครอบครัว</h5>
           </div>
           <div>
@@ -247,16 +299,19 @@ function ProfileEdit() {
           <div>
             <label>สถานะสมรสของบิดา-มารดา</label><br></br>
             <input className = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" value = {profile.status_marry} onChange={(e)=>changeValue("status_marry",e.target.value)} required/>
+          </div>*/}
+          
+          <div className="profileCre-footer">
+            <div className="">
+            <button className="btn-confirm" >บันทึก</button>
+            </div>
           </div>
-
         </form>
+        
+        {showModal && <ConfirmModal sendConfirm={getConfirm}/>}
+   
       </div>
-      <div className="profileCre-footer">
-        <div className="btn-confirm-profile d-flex">
-          <button className="btn-confirm" onClick={()=> (setShowModal(true))}>บันทึก</button>
-          {showModal && <ConfirmModal sendConfirm={getConfirm}/>}
-        </div>
-      </div>
+      
     </div>
   ) 
 }

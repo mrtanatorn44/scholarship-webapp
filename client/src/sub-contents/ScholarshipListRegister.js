@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-
 import { WebContext } from '../App.js';
 import ConfirmModal from '../modals/ConfirmModal.js';
 import Axios from 'axios';
@@ -55,22 +54,44 @@ function ScholarshipListRegister(props) {
     console.log(profile);
   }; 
   console.log(user);
+
+  function getConfirm(data){
+    if(data){
+      setContent('Profile')
+    }else{
+    }
+    //console.log("sdasdasdasd");
+    Axios.post("http://localhost:5000/editProfile",{
+      user_id:user.id,
+      file_path:JSON.stringify(profile),
+      file_path_family:JSON.stringify(profile)
+    }).then(
+      (response) => {
+        setShowModal(false);
+      },(err)=>{
+        alert("kkkkkk")
+      }
+    );
+  }
   
   useEffect(()=>{
     getProfile();
   },[]);
 
   return (
-    <div className="frame-content">
-        <div className="head-content d-flex">
+    <div className="frame">
+        <div className="header">
+          <dev className="left">
             <div className="icons">
                 <i className="bi bi-three-dots"></i>
             </div>
             <div class="topic">
               <h4>กรอกประวัติแรกเข้า</h4>
             </div>
+          </dev>
+          <dev className="right"/>
         </div>
-        <div className="frame-subcontent3"> 
+        <div className="content3"> 
         <div class="name">
           <h5>กรอกประวัติแรกเข้า</h5>
         </div>
@@ -297,8 +318,8 @@ function ScholarshipListRegister(props) {
       </div>
       <div className="register-footer">
         <div className="btn-confirm-scholarLisRig d-flex">
-          <button className="btn-confirm" >บันทึก</button>
-          
+          <button className="btn-confirm" onClick={()=> (setShowModal(true))}>บันทึก</button>
+          {showModal && <ConfirmModal sendConfirm={getConfirm}/>} 
         </div>
       </div>
     </div> 

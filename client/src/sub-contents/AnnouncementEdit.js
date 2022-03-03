@@ -20,31 +20,27 @@ function AnnouncementEdit(props) {
     title: "",
     detail: "",
     image: "",
-    image_name: ""
+    image_name: "",
+    oldimg:""
   })
 
   function getAnnounce() {
     Axios.post("http://localhost:5000/getAnnounce", {
         id : editAnnounceID
       }).then((response)=> { 
-        var result =  response.data[0];
-        console.log(result)
-        if (result.length === 0) {
-          result = [{ number: 0, 
-            title: "ไม่มีประกาศ", 
-            image: announce_empty,
-            detail : "ว่าง", date: "0-0-0T00-00-00", isShow: false}]
-            setForm(result)
-          return;
-        }  
-        console.log("data:image/png;base64," + _arrayBufferToBase64(result.image_url.data));      
-
+        var result =  response.data[0];   
+        
+        var binaryImage   = ''; // ArrayBuffer to Base64
+        var bytes         = new Uint8Array( response.data[0].image_url.data );
+        var len           = bytes.byteLength;
+        for (var i = 0; i < len; i++) binaryImage += String.fromCharCode( bytes[ i ] );
         setForm(
           {
             ...form,
             title: result.title,
             detail: result.detail,
             image : "data:image/png;base64," + _arrayBufferToBase64(result.image_url.data), // blob to image
+            imageData: result.image_url.data
           }
         )
 
@@ -62,10 +58,11 @@ function AnnouncementEdit(props) {
     for (var i = 0; i < len; i++) {
         binary += String.fromCharCode( bytes[ i ] );
     }
-    return binary;
+    return window.btoa( binary );
   }
 
   function onHandleUpload(e) {
+    console.log("tam");
     var file = e.target.files[0];
     console.log('file: ', file.name)
 
@@ -74,12 +71,12 @@ function AnnouncementEdit(props) {
     reader.onload = async function() {
       arrayBuffer = await new Uint8Array(reader.result);
       var res = reader.result;
+      console.log(reader.result);
       var binImage = _arrayBufferToBase64(arrayBuffer);
       //src={'data:image/jpeg;base64,' + bufferToBase64( data.fileImg.data )}
       console.log(binImage);
       setForm({...form,
         image:  binImage,
-        
         image_name: file.name
       })
       
@@ -89,16 +86,23 @@ function AnnouncementEdit(props) {
   }
 
   const onChangenews = (form,id) => {
+    console.log(form.image);
+    console.log(form.imageData)
     Axios.post("http://localhost:5000/editAnnounce", { 
       title :form.title,
       detail : form.detail,
+      image_url: form.image_name === ''? form.imageData : form.image,
       id: id
+    }).then((response)=>{
+      console.log("OK");
     })
   }
+  
 
   function getConfirmSave(isConfirm) {
     if (isConfirm) {
       onChangenews(form,editAnnounceID);
+      setContent('Announcement');
     }
     setShowModalSave(false);
   }
@@ -115,9 +119,9 @@ function AnnouncementEdit(props) {
     }
   }
   return (
-    <div className="frame-content">
-      <div className="head-content d-flex">
-        <div className="announEdit-column-left d-flex">
+    <div className="frame">
+      <div className="header">
+        <div className="left">
           <div className="icons">
             <i className="bi bi-plus-lg"/>
           </div>
@@ -126,7 +130,7 @@ function AnnouncementEdit(props) {
           </div>
         </div>
 
-        <div className="announEdit-column-right d-flex">
+        <div className="right">
           <div class="button2-set">
             <button className="save-button" onClick={() => (setShowModalSave(true))}>
               <i className="bi bi-save"/>

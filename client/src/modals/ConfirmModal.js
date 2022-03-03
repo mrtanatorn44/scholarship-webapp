@@ -19,9 +19,13 @@ function ConfirmModal(props) {
   return (
     <div className="modal">
       <div className="modal-content" >
+      <center className="icon-exclamation">
+        <i class="bi bi-exclamation-triangle"></i>
+      </center>
         <div className="modal-head">
           <h3>Are you sure?</h3>
         </div>
+        
         <div className='set-button d-flex'>
           <button className="btn-flase" onClick={() => props.sendConfirm(false)}>ยกเลิก</button>
           <button className="btn-true" onClick={() => props.sendConfirm(true)}>ตกลง</button>

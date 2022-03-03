@@ -7,21 +7,26 @@ function Announcement(props) {
   const [ content, setContent] = Content;
   const [ user, setUser] = User;
   return (
-    <div className="frame-content">   
-      <div className="head-content d-flex">
-        <div className="icons">
-          <i className="bi bi-megaphone"/>
+    <div className="frame">   
+      <div className="header">
+        <div className="left ">
+          <div className="icons">
+            <i className="bi bi-megaphone"/>
+          </div>
+          <div className="topic">
+            <h4>ประกาศข่าวสาร</h4>
+          </div>
         </div>
-        <div className="topic">
-          <h4>ประกาศข่าวสาร</h4>
+        <div className="right">
+          { user.role === 'admin' &&
+          <button  className='button-add d-flex' onClick={() => { setContent('AnnouncementCreate') }}>
+            <i className="bi bi-plus-lg"/>
+            <p>เพิ่มข่าวสาร</p>
+          </button> }
         </div>
-        { user.role === 'admin' &&
-        <button  className='button-add d-flex' onClick={() => { setContent('AnnouncementCreate') }}>
-          <i className="bi bi-plus-lg"/>
-          <p>เพิ่มข่าวสาร</p>
-        </button> }
       </div>
-      <div className="frame-subcontent1">
+
+      <div className="content1">
         <NewsList/>
       </div>
     </div>

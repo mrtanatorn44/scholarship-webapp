@@ -4,14 +4,17 @@ import Report_list from '../components/ReportList';
 function Report(props) {
 
   return (
-    <div className="frame-content">
-      <div className="head-content d-flex">
-        <div className="icons">
-          <i className="bi bi-files"></i>
+    <div className="frame">
+      <div className="header d-flex">
+        <div className="left">
+          <div className="icons">
+            <i className="bi bi-files"></i>
+          </div>
+          <div class="topic">
+            <h4>รายงานทุน</h4>
+          </div>
         </div>
-        <div class="topic">
-          <h4>รายงานทุน</h4>
-        </div>
+        <div className="right"></div>
       </div>
       <form className="report-row-top d-flex" >
         <div className="report-scholarship">
@@ -46,8 +49,10 @@ function Report(props) {
           </select>  
         </div>
       </form>
+      <div className="line-gray"></div>
       
-      <div className="frame-subcontent2">
+      
+      <div className="content5">
         <Report_list/>
       </div>
     </div>

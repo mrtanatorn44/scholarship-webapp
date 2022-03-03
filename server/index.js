@@ -195,7 +195,7 @@ app.post("/editAnnounce",(req ,res)=>{
   const detail = req.body.detail;
   dbCon.query(
     "UPDATE announce SET title = ?,detail = ?,image_url = ?  WHERE id = ?",
-    [image, detail, title,id],
+    [title,detail,image_url,id],
     (err, result) => {
       if(err){
         res.send(err);
@@ -228,13 +228,15 @@ const fileImg = fs.readFileSync("upload/"+req.file[0].filename)
 
 //////PROFILE 
 app.post("/addProfile", (req, res) => {
-  const id = req.body.id;
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   const user_id= req.body.user_id;
   const file_path = req.body.file_path;
+  const picture=req.body.picture;
 
   dbCon.query(
-    "INSERT INTO profile (user_id, file_path) VALUES ( ?, ?)",
-    [user_id, file_path], 
+    "INSERT INTO profile (user_id, file_path, picture) VALUES ( ?, ?, ?)",
+    [user_id, file_path, picture], 
     (err, result) => {
       if (err) {
         console.log(err);
@@ -245,13 +247,15 @@ app.post("/addProfile", (req, res) => {
   );
 });
 app.post("/editProfile",(req ,res)=>{
-  const id = req.body.id;
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   const user_id= req.body.user_id;
   const file_path = req.body.file_path;
+  const picture=req.body.picture;
   
   dbCon.query(
-    "UPDATE profile SET user_id = ?,file_path = ?  WHERE id = ?",
-    [user_id, file_path,id],
+    "UPDATE profile SET file_path = ? ,picture = ?  WHERE user_id = ?",
+    [file_path, picture, user_id ],
     (err, result) => {
       if(err){
         res.send(err);
@@ -280,12 +284,3 @@ app.post("/getProfile", (req, res) => {
 app.listen(5000, () => {
   console.log(`running at port 5000`);
 });
-
-
-
-/*
-
-
-
-
-*/ 

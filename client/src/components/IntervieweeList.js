@@ -8,10 +8,11 @@ import Axios from 'axios';
 function IntervieweeList(props){
   const { Query } = useContext(WebContext);
   const [query, setQuery] = Query;
-  const { Content } = useContext(WebContext)
+  const { User, Content } = useContext(WebContext)
+  const [user,setUser] = User;
   const [content, setContent] = Content;
-  const [User,setUser] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  
 
     function getConfirm(data) {
         if (data) {
@@ -25,33 +26,30 @@ function IntervieweeList(props){
         setShowModal(false);
     }
 
-    const getUser = () =>{
-      Axios.get("http://localhost:5000/getUser").then(response => {
-        setUser(response.data)
-        
-      })
-    }
-    useEffect(() => {
-      getUser();
-    }, [])
-
+ //get user
+ const getUser = () =>{
+  Axios.get("http://localhost:5000/getUser").then(response => {
+    //setUser(response.data)
+    
+  })
+}
+useEffect(() => {
+  getUser();
+}, [])
 
   return (
-    User.filter((user)=>{
+    Aplicants.filter((aplicants)=>{
       if(query == ""){
-        return user;
-      }else if(user.email.toLowerCase().includes(query.toLowerCase())){
-        return user;
+        return aplicants;
+      }else if(aplicants.title.toLowerCase().includes(query.toLowerCase())){
+        return aplicants;
       }
-    }).map((user,index) => (
+    }).map((aplicants,index) => (
       <div className="intervieweeList" key={index} >
         <div className='title'>
-          <h2>{user.fname}</h2>
+          <h2>{aplicants.title}</h2>
         </div>
-        <div className="Test">
-          <h2>ทุนเรียนดี</h2>
-        </div>
-        <div className="intervieweeList-right" >  
+        <div className="intervieweeList-right" >
           <button className="button-search d-flex" type="button" onClick={ () => setContent('ScholarshipCheckForm') }>
             <i className="bi bi-search"></i>
             <p>ตรวจสอบเอกสาร</p>
@@ -60,17 +58,21 @@ function IntervieweeList(props){
           <button className="button-search d-flex"  type="button" onClick={ () => setContent('ProfileCheck') }>
             <i className="bi bi-search"></i>
             <p>ตรวจสอบประวัติ</p>
-          </button>  
-
+          </button>       
+            
           <button className="button-search d-flex" type="button" onClick={() => setContent('InterviewRate') }>
-          <i className="bi bi-search"/>
+            <i className="bi bi-search"/>
             <p>การประเมิน</p>
           </button>
+
           <button className="button-clock d-flex"  type="button"onClick={() => setContent('InterviewSchedule') }>
             <i className="bi bi-clock"/>
             <p>เวลาสัมภาษณ์</p>
-          </button>
-          {showModal && <AlertModal sendConfirm={getConfirm}/>}  
+          </button> 
+  
+
+          
+
         </div>
       </div>
     ))

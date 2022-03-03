@@ -5,11 +5,14 @@ function InterviewSchedule(props) {
   const { Content } = useContext(WebContext)
   const [ content, setContent] = Content;
   return (
-    <div className="frame-content">
-      <div className="head-content d-flex">
-        <div class="topic">
-          <h4>กำหนดวันเวลาสัมภาษณ์</h4>
+    <div className="frame">
+      <div className="header">
+        <div class="left">
+           <div class="topic">
+            <h4>กำหนดวันเวลาสัมภาษณ์</h4>
+          </div>
         </div>
+        <div className="right"></div>
       </div>
     <div className="interviewSchedule-center d-flex">
       <form>

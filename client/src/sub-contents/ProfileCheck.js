@@ -4,7 +4,7 @@ import React from 'react';
 
 function ProfileCheck(props) {
   return(
-    <div className="frame-content">    
+    <div className="frame">    
       <div className="profile-row-top">
         <div className="profile-form ">
           <form className="d-flex ">

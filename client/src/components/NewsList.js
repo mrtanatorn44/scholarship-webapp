@@ -12,80 +12,63 @@ import ConfirmDeleteModal from '../modals/ConfirmModal.js';
 
 function NewsList() {
 
-// Context
-const { User, Content, EditAnnounceID } = useContext(WebContext);
-const [user, setUser] = User;
-const [content, setContent] = Content;
-const [editAnnounceID, setEditAnnounceID] = EditAnnounceID;
+  // Context
+  const { User, Content, EditAnnounceID } = useContext(WebContext);
+  const [user, setUser] = User;
+  const [content, setContent] = Content;
+  const [editAnnounceID, setEditAnnounceID] = EditAnnounceID;
 
-const [showModalAlert, setShowModalAlert] = useState(false);
-const [alertText, setAlertText] = useState("");
+  const [showModalAlert, setShowModalAlert] = useState(false);
+  const [alertText, setAlertText] = useState("");
 
-const [showModalDelete, setShowModalDelete] = useState(false);
-const [ShowPopupImage, setShowPopupImage] = useState(false);
-const [PopupImage, setPopupImage] = useState();
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [ShowPopupImage, setShowPopupImage] = useState(false);
+  const [PopupImage, setPopupImage] = useState('');
 
-const [Announce,setAnnounce] = useState([]);
+  const [announce,setAnnounce] = useState([{ 
+    isEmpty: true,
+    number: 0, 
+    title: "ไม่มีประกาศในขณะนี้", 
+    image: announce_empty,
+    toggleContent: false,
+    imageIsEmpty: false
+  }]);
+  const [targetDeleteNews, setTargetDeleteNews] = useState();
 
-const [targetDeleteNews, setTargetDeleteNews] = useState();
-
-  function getConfirm(data) {
-    if (data) {
-      if (targetDeleteNews != null)
-        onDeleteAnnounce(targetDeleteNews);
-    } else {
-      //alert('FALSE !')
-    }
-    setShowModalDelete(false);
-  }
-  
-  function _arrayBufferToBase64( buffer ) {
-    var binary = '';
-    var bytes = new Uint8Array( buffer );
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode( bytes[ i ] );
-    }
-    //console.log(binary);
-    return binary ;
-  }
   const getAnnounce = () => {
     Axios.get("http://localhost:5000/getAllAnnounce").then((response) => { 
       var result = response.data;
-      if (result.length === 0) {
-        var result = [{ 
-          isEmpty: true,
-          number: 0, 
-          title: "ไม่มีประกาศในขณะนี้", 
-          image: announce_empty,
-          toggleContent: false,
-          imageIsEmpty: false
-        }]
-      } else {
-        var idx = 0
-        result.forEach((res) => {
+      if (result.length !== 0) {
+        result.forEach((res, index) => {
           var month_th      = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
           var dmy           = res.date.split("T")[0].split("-").reverse();
           var date_tranform = "วันที่ " + (parseInt(dmy[0])) + " " + month_th[parseInt(dmy[1], 10)] + " " + (parseInt(dmy[2]) + 543);
+          
+          var binaryImage   = ''; // ArrayBuffer to Base64
+          var bytes         = new Uint8Array( res.image_url.data );
+          var len           = bytes.byteLength;
+          for (var i = 0; i < len; i++) { binaryImage += String.fromCharCode( bytes[ i ] ); }
+          
           Object.assign(res, {
-            isEmpty: false,
-            number: idx++,
-            image : "data:image/png;base64," + _arrayBufferToBase64(res.image_url.data), // blob to image
-            imageIsEmpty : res.image_url.data.length==0 ? true : false,
-            toggleContent: res.image_url.data.length==0 ? true : false,
-            date_format: date_tranform
+            isEmpty       : false,
+            number        : index,
+            image         : "data:image/png;base64," + binaryImage, // blob to image
+            imageIsEmpty  : res.image_url.data.length===0 ? true : false,
+            toggleContent : res.image_url.data.length===0 ? true : false,
+            date_format   : date_tranform
           });
         });
       }
-      setAnnounce(result)
+        setAnnounce(result);
     })
   }
+  
   useEffect(() => {
     getAnnounce();
-  }, [])
+  }, []);     
   
   const onToggleContentClick = (newsNumber) => {
-    let tempAnnounce=[...Announce];
+    let tempAnnounce=[...announce];
     tempAnnounce[newsNumber].toggleContent = !tempAnnounce[newsNumber].toggleContent;
     setAnnounce(tempAnnounce);
   }
@@ -133,8 +116,8 @@ const [targetDeleteNews, setTargetDeleteNews] = useState();
   }
 
   return (
-    Announce.map((news) => (
-      <article className="news" key={news.number}>
+    announce.map((news) => (
+      <div className="news" key={news.number}>
 
         {/*---------- TITLE ----------*/}
         <div className='title'>
@@ -189,7 +172,7 @@ const [targetDeleteNews, setTargetDeleteNews] = useState();
             }
           </div>
         </div>
-      </article>
+      </div>
     ))
   )
 }

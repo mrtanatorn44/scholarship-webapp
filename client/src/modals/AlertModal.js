@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './AlertModal.css';
 
 function AlertModel(props) {
-  const icon = ["bi bi-clock"]
+  const icon = ["bi bi-clock"] 
   const iconIndex = props.iconIndex
   const text1 = props.text1 || '';
   const text2 = props.text2 || '';
@@ -13,15 +13,15 @@ function AlertModel(props) {
     <div class="modal">
       <div class="modal-content" >
         <div class="modal-body">
-          <button className="button-close" onClick={() => props.sendConfirm(true)}>
-            <i class="x-button bi bi-x"></i>
-          </button>
-
-          <div class="icon-clock">
-          <center class = "icon">
+          <div className="modal-close">
+            <button className="button-close" onClick={() => props.sendConfirm(true)}>
+              <i class="x-button bi bi-x"></i>
+            </button>
+          </div>
+          <center class = "icon-clock">
             <i class={icon[iconIndex]}></i>
           </center>
-          </div><br></br>
+          <br></br>
           <div class="alert-detail">
             <center>{text1}</center><br></br>
             <center>{text2}</center><br></br>

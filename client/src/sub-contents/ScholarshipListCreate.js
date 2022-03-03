@@ -6,24 +6,18 @@ import data from '../data/datanews.js';
 
 // Component Announce form
 const AnnounceForm = (props) => {
-  const [totalscore, setTotalscore] = useState(0);
-  const [score, setscore] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  
   const [type, setType] = useState("");
   const [stdyears, setstdYears] = useState(0);
   const [detail, setDetail] = useState("");
   const [supporter, setSupporter] = useState("");
   const [price, setPrice] = useState(0);
-
+  const [term, setTerm] = useState(0);
+  const [scholar, setScholar]=useState({
+    
+   })
   
-  function getConfirm(data) {
-    if (data) {
-      props.sendContent(['admin','ScholarshipList']);
-    } else {
-      //alert('FALSE !') 
-    }
-    setShowModal(false);
-  }
+  
   const createSCLS = () => {
     Axios.post("http://localhost:5000/creatSCLS", {
       Type : type,
@@ -37,30 +31,57 @@ const AnnounceForm = (props) => {
   return (
     <form >
       <div className="announce-topic d-flex">
-        <input className="type" type="text" placeholder="ประเภททุน" onChange={(event) => {setType(event.target.value)}}></input>
-        <input className="year"  type="text" placeholder="ประจำปีการศึกษา" onChange={(event) => {setstdYears(event.target.value)}}></input>
+      
+          <div className="type">
+            <select  name="capital" id="capital">
+              <option value="">ประเภททุน</option>
+              <option value="study">ทุนเรียนดี</option>
+              <option value="activity">ทุนกิจกรรมเด่น</option>
+              <option value="property">ทุนขาดคุณทรัพย์</option>
+              <option value="other">ทุนอื่นๆ</option>
+            </select>
+          </div>
           
-        <div className="button2-set d-flex">
+          <div className="year" >
+            <input className="academic"  type="text" placeholder="ประจำปีการศึกษา" onChange={(event) => {setstdYears(event.target.value)}}></input>
+          </div>
+        
+        <div className="term">
+            <select  name="term" id="capital" onChange={(event) => {setTerm(event.target.value)}}>
+              <option value="">ภาคการศึกษา</option>
+              <option value="1">ภาคต้น</option>
+              <option value="2">ภาคปลาย</option>
+            </select>
+          </div>  
+        {/*<div className="button2-set d-flex">
           <button className="save-button " onClick={() => (setShowModal(true), alert('SAVE'))}>
             <i className="bi bi-save"></i>
           </button>
-          {showModal && <ConfirmModal sendConfirm={getConfirm}/>}
+          
           
           <button className="cancel-button" onClick={() => (setShowModal(true), alert('CANCEL'))}>
             <i className="bi bi-x"></i>
           </button>
-          {showModal && <ConfirmModal sendConfirm={getConfirm}/>}
-        </div>
+
+        </div>*/}
       </div>
         
       <div className="announce-center">
-        <input className="detail" type="text" placeholder="คุณสมบัติผู้รับทุน" onChange={(event) => {setDetail(event.target.value)}}></input>
+        <input className="detail" type="text" placeholder="คุณสมบัติของผู้รับทุน" onChange={(event) => {setDetail(event.target.value)}}></input>
       </div>
 
       <div className="announce-bottom">
         <div className="contributor">
+          <input type="number" placeholder="min_student_year" onChange={(event) => {setSupporter(event.target.value)}}></input>
+          <input type="number" placeholder="max_student_year" onChange={(event) => {setPrice(event.target.value)}}></input>
           <input className="sponsers" type="text" placeholder="ผู้สนับสนุน" onChange={(event) => {setSupporter(event.target.value)}}></input>
           <input className="amount" type="number" placeholder="จำนวนเงิน" onChange={(event) => {setPrice(event.target.value)}}></input>
+          <br/><div>
+          <label >วันที่เปิดให้ลงทะเบียน</label>
+          <input type="date" placeholder="วันที่เปิดให้ลงทะเบียน" onChange={(event) => {setSupporter(event.target.value)}}></input>
+          </div>
+          <label >วันที่ปิดการให้ลงทะเบียน</label>
+          <input type="date" placeholder="วันที่ปิดการให้ลงทะเบียน" onChange={(event) => {setPrice(event.target.value)}}></input>
         </div>
       </div>
     </form>
@@ -245,16 +266,25 @@ const RateForm = () => {
   )
 }
 
-function ScholarshipListCreate(props) {
+function ScholarshipListCreate() {
    
   const { Content } = useContext(WebContext)
   const [ content, setContent] = Content;
+  const [showModal, setShowModal] = useState(false);
 
+  function getConfirm(data) {
+    if (data) {
+      setContent("Scholarship")
+    } else {
+      //alert('FALSE !') 
+    }
+    setShowModal(false);
+  }
 
   return (
-    <div className="frame-content">
-      <div className="head-content d-flex">
-        <div  className="scholarListCrea-column-left d-flex">
+    <div className="frame">
+      <div className="header">
+        <div  className="left">
             <div className="icons">  
               <i className="bi bi-plus-lg"></i>
             </div>
@@ -262,11 +292,12 @@ function ScholarshipListCreate(props) {
               <h4>สร้างทุน</h4>
             </div>
         </div>
+        <dev className="right"/>
       </div>
 
-      <div className = 'frame-subcontent1'>
+      <div className = 'content1'>
 
-        <div className="scholarListCrea-center"> <AnnounceForm/> </div>
+        <div className="scholarListCrea-announceForm"> <AnnounceForm/> </div>
         <div className='scholarListCrea-fileForm'> <FileForm/> </div>  
 
         <div className="scholarListCrea-rateForm"> <RateForm/></div> 
@@ -274,9 +305,10 @@ function ScholarshipListCreate(props) {
 
         <div class="scholarListCrea-footer">
           <div class="btn-confirm-scholarCre ">
-            <button class="btn-confirm" type="submit" onClick={() => setContent('Scholarship')}>
+            <button class="btn-confirm" type="submit" onClick={() => setShowModal(true)}>
               ตกลง
             </button>
+            { showModal && <ConfirmModal sendConfirm={getConfirm}/>}
           </div>
         </div>
       </div>

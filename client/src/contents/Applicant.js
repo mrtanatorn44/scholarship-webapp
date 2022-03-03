@@ -8,15 +8,19 @@ function Applicant() {
   const [query, setQuery] = Query;
 
   return (
-    <div className="frame-content">
-      <div className="head-content d-flex">
-        <div className="icons">
-          <i className="bi bi-calendar-check"/>
+    <div className="frame">
+      <div className="header">
+        <div className="left">
+          <div className="icons">
+            <i className="bi bi-calendar-check"/>
+          </div>
+          <div class="topic">
+            <h4>ตรวจสอบข้อมูล</h4>
+          </div>
         </div>
-        <div class="topic">
-           <h4>ตรวจสอบข้อมูล</h4>
-        </div>
+        <div className="right"></div>
       </div>
+      <div className="contents">
         <form className="applicant-row-top d-flex">
           <div className="applicant-column-left">
             <div className="applicant-select">
@@ -38,10 +42,12 @@ function Applicant() {
             </div>
           </div>
         </form>
-     
-        <div className="frame-subcontent5">
+        <div className="line-gray"></div>
+
+        <div className="content5">
           <ApplicantList/>
-      </div>
+        </div>
+      </div> 
     </div>
   )
 }

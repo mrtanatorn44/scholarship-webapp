@@ -3,28 +3,36 @@ import ScholarshipList from '../components/ScholarshipList.js';
 import { WebContext } from '../App';
 
 function Scholarship(props) {
-  const { Content } = useContext(WebContext)
-  const [content, setContent] = Content;
 
+  const { Content, User } = useContext(WebContext)
+  const [ content, setContent] = Content;
+  const [ user, setUser] = User;
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="frame-content">
-      <div className="head-content d-flex">
-         
-          <div className="icons">
-            <i className="bi bi-card-list"></i>
-          </div>  
-          <div className="topic">
-            <h4>ทุนที่เปิดให้ลงทะเบียน</h4>
+    <div className="frame">
+      <div className="header">
+         <div className="left">
+            <div className="icons">
+              <i className="bi bi-card-list"></i>
+            </div>  
+            <div className="topic">
+              <h4>ทุนที่เปิดให้ลงทะเบียน</h4>
+            </div>
           </div>
-        
-          <button className = "button-add d-flex" type = "button" onClick={ () => setContent('ScholarshipListCreate') } >
-            <i className="bi bi-plus-lg"/>
-            <p>สร้างทุน</p>
-          </button>
+          <div className="right">
+
+            { 
+              user.role == 'admin' &&
+              <button className = "button-add d-flex" type = "button" onClick={ () => setContent('ScholarshipListCreate') } >
+                <i className="bi bi-plus-lg"/>
+                <p>สร้างทุน</p>
+              </button> }
+              
+          </div>
+
       </div>
-      <div className="frame-subcontent1">
+      <div className="content1">
         <ScholarshipList/>
       </div>
     </div>

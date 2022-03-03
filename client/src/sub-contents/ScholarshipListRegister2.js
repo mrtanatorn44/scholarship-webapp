@@ -3,14 +3,17 @@ import React, { useState } from 'react';
 
 function ScholarshipListRegister2() {
   return (
-    <div className="frame-content">
-        <div className="head-content d-flex">
+    <div className="frame">
+        <div className="header">
+          <dev className="left">
             <div className="icons">
                 <i className="bi bi-three-dots"></i>
             </div>
             <div class="topic">
               <h4>ใบสมัครทุนการศึกษา</h4>
             </div>
+          </dev>
+          <dev className="right"/>
         </div>
         <div className="forms-list">
         <center>

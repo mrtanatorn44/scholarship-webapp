@@ -1,34 +1,87 @@
-import React, { useState, useContext } from 'react';
-import { WebContext } from '../App';
+import React, { useContext, useState, useEffect } from 'react';
+import ConfirmModal from '../modals/ConfirmModal.js';
+import { WebContext } from '../App.js';
+import Axios from 'axios';
 
 function ScholarshipCheckForm(props) {
 
+  const { User } = useContext(WebContext);
   const { Content } = useContext(WebContext)
   const [ content, setContent] = Content;
+  const [user, setUser] = User;
+
   const [check,setCheck]=useState();
+  const[showModal, setShowModal] = useState(false);
+  const [profile, setProfile]=useState({
+    name:"",
+    yearofstudy:"",
+    age:"",
+    std_id:"",
+    fieldStudy:"",
+    branch:"",
+    address:"",
+    tel:"",
+    name_father:"",
+    age_father:"",
+    career_father:"",
+    income_father:"",
+    address_father:"",
+    status_father:"",
+    place_of_work_father:"",
+    tel_father:"",
+    name_mother:"",
+    age_mother:"",
+    career_mother:"",
+    income_mother:"",
+    address_mother:"",
+    status_mother:"",
+    place_of_work_mother:"",
+    tel_mother:"",
+    status_marry:""
+   })
+   const getProfile = () =>{
+    Axios.post("http://localhost:5000/getProfile",{
+      user_id:user.id
+    })
+    .then((response) =>{
+        console.log(response.data[0].file_path);
+        setProfile(JSON.parse(response.data[0].file_path))
+    })
+  }
+  
+  useEffect(()=>{
+    getProfile();
+  },[]);
+
   return (
-    <div className="frame-content">
-      <div className="head-content d-flex">
-        <div className="icons">
-          <i className="bi bi-three-dots"></i>
+    <div className="frame">
+      {/* ----- Header ----- */}
+      <div className="header">
+        <div className="left">
+          <div className="icons">
+            <i className="bi bi-three-dots"/>
+          </div>
+          <div className="topic">
+            <h4>ตรวจสอบข้อมูล</h4>
+          </div>
         </div>
-        <div class="topic">
-               <h4>ตรวจสอบข้อมูล</h4>
-        </div>
+        <div className="right"/>
       </div>
-      <div className="frame-subcontent3">
-        <div class="name">
+
+      {/* ----- Content ----- */}
+      <div className="content3">
+        <div className="name">
           <h5>ตรวจสอบข้อมูล</h5>
         </div>
         <form className="scholarChek-form">
           <div>
-            <label>ชื่อ - นามสกุล (ภาษาไทย)</label><br></br>
-            <input placeholder="ชื่อภาษาไทย" required></input>
+            <label>ชื่อ - นามสกุล (ภาษาไทย)</label><br/>
+            <input placeholder="ชื่อภาษาไทย" value = {profile.name} required/>
           </div>
           
           <div>
             <label>นิสิตชั้นปีที่</label>
-            <select className="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" value = {profile.yearofstudy} required>
               <option value="0">เลือก</option>
               <option value="5">5</option>
               <option value="4">4</option>
@@ -39,17 +92,17 @@ function ScholarshipCheckForm(props) {
           </div>
           <div>
             <label>อายุ</label><br></br>
-            <input type="number" min="0" placeholder="อายุ" required></input>
+            <input type="number" min="0" placeholder="อายุ" value = {profile.age} required></input>
           </div>
           
           <div>
             <label>รหัสนิสิต</label><br></br>
-            <input type="number" placeholder="รหัสนิสิต" required></input>
+            <input type="number" placeholder="รหัสนิสิต" value = {profile.std_id} required></input>
           </div>
           
           <div>
             <label>ภาคการเรียนการสอน</label>
-            <select className="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" value = {profile.fieldStudy} required>
               <option value="0">เลือก</option>
               <option value="ภาคปกติ">ภาคปกติ</option>
               <option value="ภาคพิเศษ">ภาคพิเศษ</option>
@@ -58,7 +111,7 @@ function ScholarshipCheckForm(props) {
           
           <div>
             <label>สาขา</label>
-            <select className="form-select form-select-lg mb-3" required>
+            <select className="form-select form-select-lg mb-3" value = {profile.branch} required>
                 <option value="0">เลือก</option>
                 <option value="คอมพิวเตอร์">คอมพิวเตอร์</option>
                 <option value="ไฟฟ้า">ไฟฟ้า</option>
@@ -240,17 +293,19 @@ function ScholarshipCheckForm(props) {
         </form>
 
         <form>
-          <div className="form-checks d-flex">
-            <div className="form-check-true">
-              <input type="radio" name="check" value="Pass" onChange={e=>setCheck(e.targer.value)}></input>
-              <label for="check1">สมบูรณ์</label>
+          
+            <div className="form-checks d-flex">
+              <div className="form-check-true">
+                <input type="radio" name="check" value="Pass" onChange={e=>setCheck(e.targer.value)}></input>
+                <label for="check1">สมบูรณ์</label>
+              </div>
+              
+              <div className="form-check-false">
+                <input type="radio" name="check" value="Notpass" onChange={e=>setCheck(e.targer.value)}></input>
+                <label for="check2">ไม่สมบูรณ์</label>
+              </div> 
             </div>
-            
-            <div className="form-check-false">
-              <input type="radio" name="check" value="Notpass" onChange={e=>setCheck(e.targer.value)}></input>
-              <label for="check2">ไม่สมบูรณ์</label>
-            </div> 
-          </div>
+         
 
           <div className="form-note">
             <div className="note">
@@ -262,7 +317,9 @@ function ScholarshipCheckForm(props) {
       </div>
       <div className="checkForm-footer">
         <div className="btn-confirm-scholarCheck d-flex">
-          <button className="btn-confirm">บันทึก</button>
+          <button className="btn-confirm">
+            บันทึก
+            </button>
         </div>
       </div>
   

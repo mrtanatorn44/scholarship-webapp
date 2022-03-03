@@ -10,6 +10,9 @@ function ProfileCreate() {
   const { Content } = useContext(WebContext);
   const [user, setUser] = User;
   const [content, setContent] = Content;
+  const [form, setForm] = useState({
+    image:""
+  })
   //
   const [showModal ,setShowModal] = useState(false);
   const [profile, setProfile]=useState({
@@ -39,7 +42,34 @@ function ProfileCreate() {
     tel_mother:"",
     status_marry:""
    })
-   
+  function _arrayBufferToBase64( buffer ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+  }
+  function onHandleUpload(e) {
+    var file = e.target.files[0];
+    console.log('file: ', file.name)
+
+    var arrayBuffer;
+    var reader = new FileReader();
+    reader.onload = async function() {
+      arrayBuffer = await new Uint8Array(reader.result);
+      var res = reader.result;
+      var binImage = _arrayBufferToBase64(arrayBuffer);
+      //src={'data:image/jpeg;base64,' + bufferToBase64( data.fileImg.data )}
+      setForm({...form,
+        image:  binImage,
+        image_name: file.name
+      })
+    }
+    reader.readAsArrayBuffer(file); 
+    
+  } 
    
 
   const changeValue = (name,value) => {
@@ -53,6 +83,11 @@ function ProfileCreate() {
   function getConfirm(data){
     
     if(data){
+      Axios.post("http://localhost:5000/addProfile",{
+      user_id:user.id,
+      picture:form.image,
+      file_path:JSON.stringify(profile),
+    })
       setContent('Profile');
       
     }else{
@@ -61,44 +96,49 @@ function ProfileCreate() {
     setShowModal(false);
   }
   //console.log("sdasdasdasd");
-    /*Axios.post("http://localhost:5000/addProfile",{
-      user_id:user.id,
-      file_path:JSON.stringify(profile),
-      file_path_family:JSON.stringify(profile)
-    }).then(
-      (response) => {
-        setShowModal(false);
-      },(err)=>{
-        alert("kkkkkk")
-      }
-    );*/
-
+    
+    const onFormSumbit = (event) => {
+      event.preventDefault();
+      setShowModal(true);
+    }
   
+  //type input
+  const inputHandler = (e) => {
+    const { value, maxLength } = e.target;
+    if (String(value).length >= maxLength) {
+      e.preventDefault();
+      return;
+    }
+  };
+
   return (
 
-    <div className="frame-content">
-      <div className="head-content d-flex" >
+    <div className="frame">
+      <div className="header">
+      <div className="left" >
         <div className="icons">
           <i className="bi bi-list-ul"/>
         </div>
         <div class="topic">
           <h4>สร้างโปรไฟล์</h4>
+        </div> 
         </div>
+        <div className="right"></div>
       </div>
-      <div className="frame-subcontent3">
+      <div className="content3">
         <div class="name">
           <h5>กรอกประวัติแรกเข้า</h5>
         </div>
-        <form className="profileEdit-form">  
+        <form className="profileEdit-form" onSubmit={(e)=> onFormSumbit(e)}>  
           
           <div>
           <label>ชื่อ-นามสกุล</label><br></br>
-            <input placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required/>
+            <input  placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required/>
           </div>
           <div>
             <label>นิสิตชั้นปีที่</label>
             <select className="form-select form-select-lg mb-3" value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
-              <option value="0">เลือก</option>
+              <option value="">เลือก</option>
               <option value="5">5</option>
               <option value="4">4</option>
               <option value="3">3</option>
@@ -110,15 +150,15 @@ function ProfileCreate() {
             <label>อายุ</label><br></br>
             <input type="number" min="0" placeholder="อายุ" value = {profile.age} onChange={(e)=>changeValue("age",e.target.value)}  required/>
           </div>
-          {/*
+          
           <div>
             <label>รหัสนิสิต</label><br></br>
-            <input type="number" min="0" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
+            <input type="number" min="0"  maxlength="10" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
           </div>
           <div>
             <label>ภาคการเรียนการสอน</label>
             <select className="form-select form-select-lg mb-3" value = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
-              <option value="0">        เลือก       </option>
+              <option value="">เลือก</option>
               <option value="ภาคปกติ">   ภาคปกติ    </option>
               <option value="ภาคพิเศษ">  ภาคพิเศษ   </option>
             </select>
@@ -127,7 +167,7 @@ function ProfileCreate() {
           <div>
             <label>สาขา</label>
             <select className="form-select form-select-lg mb-3" value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
-                <option value="0">  เลือก       </option>
+                <option value="">เลือก</option>
                 <option value="คอมพิวเตอร์">  คอมพิวเตอร์  </option>
                 <option value="ไฟฟ้า">  ไฟฟ้า      </option>
                 <option value="เครื่องกล">  เครื่องกล    </option>
@@ -145,8 +185,9 @@ function ProfileCreate() {
           </div>
           <div>
             <label>อัพโหลดรูปโปรไฟล์</label><br></br>
-            <input type="file" name="myfile" />
+            <input type="file" name="file" id="file"  onChange={(file) => onHandleUpload(file)} required/>
           </div>
+          {/*
           <div>
             <h5>ประวัติครอบครัว</h5>
           </div>
@@ -162,7 +203,7 @@ function ProfileCreate() {
             <div class="fam2-edit">
               <label>สถานะภาพ</label>
               <select className="form-select form-select-lg mb-3" value = {profile.status_father} onChange={(e)=>changeValue("status_father",e.target.value)} required>
-                <option value="0">เลือก</option>
+                <option value="">เลือก</option>
                 <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                 <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
               </select>
@@ -208,7 +249,7 @@ function ProfileCreate() {
             <div class="fam2-edit">
               <label>สถานะภาพ</label>
               <select className="form-select form-select-lg mb-3" value = {profile.status_mother} onChange={(e)=>changeValue("status_mother",e.target.value)}  required>
-                <option value="0">เลือก</option>
+                <option value="">เลือก</option>
                 <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                 <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
               </select>
@@ -243,16 +284,18 @@ function ProfileCreate() {
           <div>
             <label>สถานะสมรสของบิดา-มารดา</label><br></br>
             <input className = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" value = {profile.status_marry} onChange={(e)=>changeValue("status_marry",e.target.value)} required/>
-          </div>
-          */}
+          </div>*/}
+         
           <div className="profileCre-footer">
-          <div className="btn-confirm-profile d-flex">
-            <button className="btn-confirm" onClick={() => {setShowModal(true)}}>บันทึก</button>
-            
+            <div className="profile-btn-confirm d-flex">
+              <button className="btn-confirm" >บันทึก</button>
+          
             </div>
           </div>
         </form>
-        {showModal && <ConfirmModal sendConfirm={getConfirm}/>} 
+        
+        {showModal && <ConfirmModal sendConfirm={getConfirm}/>}
+   
       </div>
       
     </div>
