@@ -1,2 +1,0 @@
-# scholarship-wepapp
- 

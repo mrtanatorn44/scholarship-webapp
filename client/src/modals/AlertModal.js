@@ -14,7 +14,7 @@ function AlertModel(props) {
       <div class="modal-content" >
         <div class="modal-body">
           <div className="modal-close">
-            <button className="button-close" onClick={() => props.sendConfirm(true)}>
+            <button className="button-close" onClick={() => props.sendConfirm(false)}>
               <i class="x-button bi bi-x"></i>
             </button>
           </div>

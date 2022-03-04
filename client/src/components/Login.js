@@ -3,9 +3,11 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { WebContext } from '../App.js';
 import Axios from 'axios';
-import gmail from '../images/gmail.png';
+import gmail from '../data/images/gmail.png';
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
+
 
 function Login(props) {
   
@@ -14,7 +16,7 @@ function Login(props) {
   const [showlogoutButton, setShowlogoutButton] = useState(false);
 
   // Context
-  const { User } = useContext(WebContext);
+  const { User } = useContext( WebContext );
   const [user, setUser] = User;
 
   // HANDLE USER
@@ -80,6 +82,11 @@ function Login(props) {
     } else {
       navigate('/');
     }
+    /*
+    return (() => {
+      setUser();
+    })
+    */
   }, [user])
 
   // HANDLE LOGIN, LOGOUT 

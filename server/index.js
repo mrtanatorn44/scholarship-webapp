@@ -116,8 +116,6 @@ app.get("/getAllAnnounce", (req, res) => {
       console.log(err);
     }else{
       res.send(result);
-
-      //console.log(result)
     }
   });
 });
@@ -138,22 +136,17 @@ app.get("/getUser", (req, res) => {
 app.post("/addAnnounce", (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
   const title = req.body.title;
-  const image_name = req.body.image_name;
-  const image = req.body.image;
+  const imageName = req.body.imageName;
+  const imageData = req.body.imageData;
   const detail = req.body.detail;
-  //console.log(String(image))
 
   dbCon.query(
-    "INSERT INTO announce (title, image_name, image_url, detail) VALUES (?, ?, ?, ?)",
-    [title, image_name, image, detail],
+    "INSERT INTO announce (title, detail, image_data, image_name) VALUES (?, ?, ?, ?)",
+    [title, detail, imageData, imageName],
     (err, result) => {
-    if(err){
-      console.log(err);
-    }else{
-      res.send(result);
-      //console.log(result)
-    }
+    if (err) { console.log(err) } else { res.send(result) }
   });
 });
 
@@ -226,17 +219,88 @@ const fileImg = fs.readFileSync("upload/"+req.file[0].filename)
 
 
 
-//////PROFILE 
+/* ----- PROFILE ----- */
 app.post("/addProfile", (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  const user_id= req.body.user_id;
-  const file_path = req.body.file_path;
-  const picture=req.body.picture;
+  
+  const id            = req.body.id;
+  const profile_data  = req.body.profile_data;
+  const picture_data  = req.body.picture_data;
+  const picture_name  = req.body.picture_name;
 
   dbCon.query(
-    "INSERT INTO profile (user_id, file_path, picture) VALUES ( ?, ?, ?)",
-    [user_id, file_path, picture], 
+    "INSERT INTO profile (id, profile_data, picture_data, picture_name) VALUES ( ?, ?, ?, ? )",
+    [ id, profile_data, profile_data, picture_name ], 
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result); 
+      }
+    }
+  );
+});
+
+app.post("/editProfile", (req, res)=>{
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+  const id            = req.body.id;
+  const profile_data  = req.body.profile_data;
+  const picture_data  = req.body.picture_data;
+  const picture_name  = req.body.picture_name;
+
+  dbCon.query(
+    "UPDATE profile SET profile_data=?, picture_data=?, picture_name=? WHERE id=?",
+    [ profile_data, picture_data, picture_name, id ],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  )
+});
+
+app.post("/getProfile", (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+  const id = req.body.id;
+
+  dbCon.query(
+    "SELECT * FROM profile WHERE id = ?",
+    [id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+  });
+});
+
+
+/////////////SCHOLARSHIP///////////////////
+
+app.post("/addScholar", (req, res) => {
+  //const sponser_id= req.body.sponser_id;
+  const is_public= req.body.is_public;
+  const type= req.body.type;
+  const detail= req.body.detail;
+  const amount=req.body.amount;
+  const min_student_year=req.body.min_student_year;
+  const max_student_year=req.body.max_student_year;
+  const on_year=req.body.on_year;
+  const on_term=req.body.on_term;
+  const open_date=req.body.open_date;
+  const close_date=req.body.close_date;
+
+  dbCon.query(
+    "INSERT INTO scholarship ( is_public, type, detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date) VALUES (?,?, ?, ?,?, ?, ?,?,?,?)",
+    [ is_public,type,detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date], 
     (err, result) => {
       if (err) {
         console.log(err);
@@ -246,41 +310,12 @@ app.post("/addProfile", (req, res) => {
     }
   );
 });
-app.post("/editProfile",(req ,res)=>{
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  const user_id= req.body.user_id;
-  const file_path = req.body.file_path;
-  const picture=req.body.picture;
-  
-  dbCon.query(
-    "UPDATE profile SET file_path = ? ,picture = ?  WHERE user_id = ?",
-    [file_path, picture, user_id ],
-    (err, result) => {
-      if(err){
-        res.send(err);
-      }else{
-        res.send(result);
-      }
-    }
-  )
-});
 
-app.post("/getProfile", (req, res) => {
-  const user_id = req.body.user_id;
-  dbCon.query(
-    "SELECT * FROM profile WHERE user_id = ?",
-    [user_id],
-    (err, result) => {
-      if(err){
-        console.log(err);
-      }else{
-        res.send(result);
-        //console.log(result)
-      }
-  });
-});
+
+
 
 app.listen(5000, () => {
   console.log(`running at port 5000`);
 });
+
+

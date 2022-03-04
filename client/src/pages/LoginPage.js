@@ -1,8 +1,8 @@
 import React from "react";
 import Login from "../components/Login.js"
-import ku_eng_src_logo from "../images/engsrc.png";
-import ku_src_logo from "../images/ku.png";
-import AnnouncementLogin from '../contents/AnnouncementLogin.js';
+import ku_eng_src_logo from "../data/images/engsrc.png";
+import ku_src_logo from "../data/images/ku.png";
+import AnnouncementLogin from '../contents/AnnouncementLogin/AnnouncementLogin.js';
 
 function LoginPage() {
   

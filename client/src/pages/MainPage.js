@@ -1,40 +1,48 @@
+/* eslint-disable */
+
 import { React, useState, useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import Login from "../components/Login.js"
 import Axios from 'axios';
-import { WebContext } from '../App';
+import { WebContext } from "../context/WebContext.js";
 
 // CONTENTS
-import Announcement            from '../contents/Announcement.js';
-import Scholarship        from '../contents/Scholarship.js';
-import Applicant        from '../contents/Applicant.js';
-import Status       from '../contents/Status.js';
-import Profile                 from '../contents/Profile.js';
-import Interview               from '../contents/Interview.js';
-import Report                  from '../contents/Report.js';
-import RoleSetting             from '../contents/RoleSetting.js';
-// SUB_CONTENTS
-import ProfileCheck            from '../sub-contents/ProfileCheck.js';
-import ScholarshipCheckForm    from '../sub-contents/ScholarshipCheckForm.js';
-import InterviewRate           from '../sub-contents/InterviewRate.js';
-import ScholarshipListRegister from '../sub-contents/ScholarshipListRegister.js';
-import ScholarshipEdit         from '../sub-contents/ScholarshipEdit.js';
-import ProfileEdit             from '../sub-contents/ProfileEdit.js';
-import ProfileCreate           from '../sub-contents/ProfileCreate';
-import AnnouncementCreate      from '../sub-contents/AnnouncementCreate.js';
-import AnnouncementEdit        from '../sub-contents/AnnouncementEdit.js';
-import ScholarshipListCreate   from '../sub-contents/ScholarshipListCreate.js';
-import ScholarshipListEdit     from '../sub-contents/ScholarshipListEdit.js';
-import ReportInspect           from '../sub-contents/ReportInspect.js';
-import InterviewSchedule       from '../sub-contents/InterviewSchedule.js';
-import InterviewScheduleCreate from '../sub-contents/InterviewScheduleCreate.js';
-import InterviewScheduleEdit   from '../sub-contents/InterviewScheduleEdit.js';
-// MODEL
-import ConfirmModal   from '../modals/ConfirmModal.js';
-import AlertModal   from '../modals/AlertModal.js';
+import Announcement            from '../contents/Announcement/Announcement.js';
+import AnnouncementCreate      from '../contents/Announcement/AnnouncementCreate.js';
+import AnnouncementEdit        from '../contents/Announcement/AnnouncementEdit.js';
+
+import Scholarship             from '../contents/Scholarship/Scholarship.js';
+import ScholarshipCheckForm    from '../contents/Applicant/ApplicantCheckForm.js';
+import ScholarshipListRegister from '../contents/Scholarship/ScholarshipRegister.js';
+import ScholarshipListEdit     from '../contents/Scholarship/ScholarshipEdit.js';
+import ScholarshipCreate       from '../contents/Scholarship/ScholarshipCreate.js';
+
+import Member   from '../contents/Newcontents/Member.js';
+import MemberList   from '../contents/Newcontents/MemberList.js';
+
+
+import Applicant               from '../contents/Applicant/Applicant.js';
+
+import Status                  from '../contents/Status/Status.js';
+
+import RoleSetting             from '../contents/RoleSetting/RoleSetting.js';
+
+import Profile                 from '../contents/Profile/Profile.js';
+import ProfileEdit             from '../contents/Profile/ProfileEdit.js';
+import ProfileCreate           from '../contents/Profile/ProfileCreate.js';
+import ProfileCheck            from '../contents/Profile/ProfileCheck.js';
+import FormProfile              from '../contents/Profile/FormProfile.js';
+
+import Report                  from '../contents/Report/Report.js';
+import ReportInspect           from '../contents/Report/ReportInspect.js';
+
+import Interview               from '../contents/Interview/Interview.js';
+import InterviewRate           from '../contents/Interview/InterviewRate.js';
+import InterviewSchedule       from '../contents/Interview/InterviewSchedule.js';
+
 // IMAGE
-import ku_eng_src_logo    from "../images/engsrc.png";
-import ku_src_logo        from "../images/ku.png";
+import ku_eng_src_logo    from "../data/images/engsrc.png";
+import ku_src_logo        from "../data/images/ku.png";
 
 function MainPage() {
   
@@ -53,6 +61,8 @@ function MainPage() {
     switch (content) {
       case 'Scholarship':
         return <Scholarship/>
+      case 'FormProfile':
+        return <FormProfile/>
       case 'Status':
         return <Status/>
       case 'Applicant':
@@ -77,8 +87,8 @@ function MainPage() {
         return <RoleSetting/>
       case 'AnnouncementCreate':
         return <AnnouncementCreate/>
-      case 'ScholarshipListCreate':
-        return <ScholarshipListCreate/>
+      case 'ScholarshipCreate':
+        return <ScholarshipCreate/>
       case 'ScholarshipCheckForm':
         return <ScholarshipCheckForm/>
       case 'ProfileCheck':
@@ -91,8 +101,12 @@ function MainPage() {
         return <AnnouncementEdit/>
       case 'AnnouncementEdit':
         return <Report/>
-      case 'ScholarshipListCreate':
-        return <ScholarshipListCreate/>
+      case 'ScholarshipListEdit':
+        return <ScholarshipListEdit/>
+      case 'Member':
+        return <Member/>
+      case 'MembetList':
+        return <MemberList/> 
       default:
         return <Announcement/>
     }
@@ -145,9 +159,10 @@ function MainPage() {
           {icon: 'bi bi-megaphone'      , content: 'Announcement' , text: 'ประกาศข่าวสาร'},
           {icon: 'bi bi-card-list'      , content: 'Scholarship'  , text: 'ทุนที่เปิดให้ลงทะเบียน'},
           {icon: 'bi bi-files'          , content: 'Report'       , text: 'รายงานทุน'},
-          {icon: 'bi bi-search'         , content: 'Applicant'    , text: 'ตรวจสอบข้อมูล'},
+          {icon: 'bi bi-search'         , content: 'Applicant'    , text: 'ตรวจสอบเอกสาร'},
           {icon: 'bi bi-three-dots'     , content: 'RoleSetting'  , text: 'กำหนดสิทธิ์การเข้าถึง'},
-          {icon: 'bi bi-calendar-check' , content: 'Interview'    , text: 'การสัมภาษณ์'}
+          {icon: 'bi bi-calendar-check' , content: 'Interview'    , text: 'การสัมภาษณ์'},
+          {icon: 'bi bi-calendar-check' , content: 'Member'    , text: 'รายชื่อสมาชิก'}
         ]
         return (
           <ul className="side-link"> {
