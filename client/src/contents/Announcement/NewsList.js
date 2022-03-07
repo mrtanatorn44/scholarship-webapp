@@ -44,7 +44,7 @@ function NewsList() {
         {/*---------- TITLE ----------*/}
         <div className='title'>
           <h2>{news.title}</h2>
-          <h3>{news.date_format}</h3>
+          <h3>{news.dateFormat}</h3>
         </div>
 
         {/*---------- CONTENT ----------*/}

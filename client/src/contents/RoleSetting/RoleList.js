@@ -33,7 +33,6 @@ function RoleList(props){
   const getUser = () =>{
     Axios.get("http://localhost:5000/getUser").then(response => {
       setUser(response.data)
-      
     })
   }
   useEffect(() => {
@@ -54,8 +53,8 @@ function RoleList(props){
       }else if(user.email.toLowerCase().includes(query.toLowerCase())){
         return user;
       }
-    }).map((user) => (
-      <div className="roleList">
+    }).map((user, index) => (
+      <div className="roleList" key={index}>
         <div className="roleList-form">
           <div className="d-flex">
             <div className="name">
@@ -67,7 +66,7 @@ function RoleList(props){
             
             <div className="roleList-right">
               <select id="capital" onChange={(e) => {setShowModal(true);setTarget(e);setAccount(user)}}>
-                { roles.map((role) => <option value={role.value}>{role.title} </option>) }
+                { roles.map((role, idx) => <option key={idx} value={role.value}>{role.title} </option>) }
               </select>
               { showModal && <ConfirmModal sendConfirm={getConfirm}/>}
             </div>

@@ -8,14 +8,17 @@ function InterviewSchedule(props) {
     <div className="frame">
       <div className="header">
         <div class="left">
-           <div class="topic">
+          <div className="icons">
+            <i className="bi bi-clock"/>
+          </div>
+          <div class="topic">
             <h4>กำหนดวันเวลาสัมภาษณ์</h4>
           </div>
         </div>
         <div className="right"></div>
       </div>
-    <div className="interviewSchedule-center d-flex">
-      <form>
+    <div className="content1 d-flex">
+      <form className="interviewSchedule-form ">
         <div className="detail1">
           <p>สัมภาษณ์ ณ วันที่</p>
           <input type="date" placeholder="31 กุมภาพันธ์ 2565"/>

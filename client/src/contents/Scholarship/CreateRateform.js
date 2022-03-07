@@ -2,8 +2,8 @@ import React, { useState, useContext } from 'react';
 import { WebContext } from '../../App';
 
 function RateForm (){
-    const { Scholar } = useContext(WebContext)
-    const [scholar, setScholar] = Scholar;
+  const { ScholarshipForm } = useContext(WebContext)
+  const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
     const [rateForms, setRateforms] = useState([{ id : 1, name : "", weigth : "0" }]);
     const fileAutoFormat =[
       {
@@ -36,7 +36,7 @@ function RateForm (){
     }
   
     return(
-      <form>
+      <>
        
         <div className="rateForm-head">
           <br></br>
@@ -53,7 +53,7 @@ function RateForm (){
           rateForms.map((rateForm, index) => (
             <div key={index}>
               <p className="rateForm-order" >ลำดับที่ {index+1}</p>
-              <input className="file-document"
+              <input className="file-document" required
                   type="text" 
                   name="name"
                   value={rateForm.name || ""}
@@ -88,7 +88,7 @@ function RateForm (){
           </button>
         </div>
         </div>
-      </form>
+      </>
     )
   }
   export default RateForm;

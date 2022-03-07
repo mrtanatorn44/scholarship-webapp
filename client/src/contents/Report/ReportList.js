@@ -9,7 +9,9 @@ function ReportList(props) {
 
   return(
     Reports.map((report, index) => (
+      
       <div className="reportList" key={index}>
+         
         <div className='reportList-bottom'>
           <h3>{report.title}</h3>
         </div>

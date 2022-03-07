@@ -4,26 +4,42 @@ import ConfirmModal from '../../modals/ConfirmModal.js';
 
 import FileForm from './CreateFileform.js';
 import RateForm from './CreateRateform.js';
-import DetailForm from './CreateDetail.js';
+import DetailForm from './CreateDetail.js'; 
+
+// Alert & Image Modal
+import Swal from 'sweetalert2'
 
 import Axios from 'axios';
 function ScholarshipListCreate() {
    
   const { Content } = useContext(WebContext)
-  const [content, setContent] = Content;
+  const [ content , setContent] = Content;
   const [showModal, setShowModal] = useState(false);
   
-  const { Scholar } = useContext(WebContext)
-  const [scholar, setScholar] = Scholar;
-
-
+  const { ScholarshipForm } = useContext(WebContext)
+  const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
   
+  function onHandleSubmitBtn(e) {
+    e.preventDefault();
 
-  function getConfirm(data) {
-    console.log(scholar);
-    if (data) {
-      const {type,detail, amount , min_student_year,max_student_year,on_year,on_term,open_date, close_date}=scholar;
-      Axios.post("http://localhost:5000/addScholar",{
+
+    Swal.fire({
+      title: 'คุณแน่ใจหรือไม่?',
+      text: 'ที่จะบันทึกประกาศนี้!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#03A96B',
+      confirmButtonText: 'Save',
+      cancelButtonColor: '#A62639',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        setContent('Scholarship');
+        Swal.fire('บันทึกแล้ว!','','success')
+        const {type,detail, amount , min_student_year,max_student_year,on_year,on_term,open_date, close_date, sponsor}=scholarshipForm;
+
+        Axios.post("http://localhost:5000/addScholar",{
         is_public       : false,
         type            : type,
         detail          : detail,
@@ -32,16 +48,14 @@ function ScholarshipListCreate() {
         max_student_year: max_student_year,
         on_year         : on_year,
         on_term         : on_term,
-        open_date:open_date,
-        close_date:close_date
+        open_date       : open_date,
+        close_date      : close_date,
+        sponsor         : sponsor
       })
-      setContent("Scholarship")
-    } else {
-      //alert('FALSE !') 
-    }
-    setShowModal(false);
+      }
+    })
   }
-
+  
   return (
     <div className="frame">
       <div className="header">
@@ -53,26 +67,34 @@ function ScholarshipListCreate() {
               <h4>สร้างทุน</h4>
             </div>
         </div>
-        <div className="right"/>
-      </div>
 
-      <div className = 'content1'>
-
-        <div className="scholarListCrea-announceForm"> <DetailForm/> </div>
-        
-        <div className='scholarListCrea-fileForm'> <FileForm/> </div>  
-       
-        <div className="scholarListCrea-rateForm"> <RateForm/> </div> 
-          
-
-        <div className="scholarListCrea-footer">
-          <div className="btn-confirm-scholarCre ">
-            <button className="btn-confirm" type="submit" onClick={() => setShowModal(true)}>
-              ตกลง
-            </button>
-            { showModal && <ConfirmModal sendConfirm={getConfirm}/>}
-          </div>
+        <div className="right">
         </div>
+      </div>
+      <div className = 'content1'>  
+        <form onSubmit={(e) => onHandleSubmitBtn(e)}>
+          <div className="scholarListCrea-announceForm" >
+            <DetailForm/>
+          </div>
+          <div className='scholarListCrea-fileForm'> 
+            <FileForm/> 
+          </div>  
+          <div className="scholarListCrea-rateForm">
+            <RateForm/>
+          </div> 
+
+          {/* ----- FOOTER ------ */}
+          <div className="scholarListCrea-footer">
+            <div className="btn-confirm-scholarCre ">
+              <button className="btn-confirm" type="submit">
+                ตกลง 
+              </button>
+              <button className="btn-confirm">
+                null 
+              </button> 
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   )

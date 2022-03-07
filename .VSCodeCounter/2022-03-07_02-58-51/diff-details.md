@@ -1,0 +1,130 @@
+# Diff Details
+
+Date : 2022-03-07 02:58:51
+
+Directory c:\Users\mrtan\Desktop\Code\html\software-engineer\scholarship-wepapp\client\src
+
+Total : 115 files,  -28734 codes, -938 comments, 71 blanks, all -29601 lines
+
+[summary](results.md) / [details](details.md) / [diff summary](diff.md) / diff details
+
+## Files
+| filename | language | code | comment | blank | total |
+| :--- | :--- | ---: | ---: | ---: | ---: |
+| [client/README.md](/client/README.md) | Markdown | -38 | 0 | -33 | -71 |
+| [client/README.old.md](/client/README.old.md) | Markdown | -1 | 0 | -2 | -3 |
+| [client/package-lock.json](/client/package-lock.json) | JSON | -29,177 | 0 | -1 | -29,178 |
+| [client/package.json](/client/package.json) | JSON | -48 | 0 | -1 | -49 |
+| [client/public/data/scholarship-form/data.json](/client/public/data/scholarship-form/data.json) | JSON | -13 | 0 | 0 | -13 |
+| [client/public/data/scholarship/l2ij35b2l3hj52b4il.json](/client/public/data/scholarship/l2ij35b2l3hj52b4il.json) | JSON | -40 | 0 | 0 | -40 |
+| [client/public/index.html](/client/public/index.html) | HTML | -46 | -26 | -5 | -77 |
+| [client/public/manifest.json](/client/public/manifest.json) | JSON | -25 | 0 | -1 | -26 |
+| [client/src/App.js](/client/src/App.js) | JavaScript | -23 | -17 | -7 | -47 |
+| [client/src/App.scss](/client/src/App.scss) | SCSS | 335 | 1 | 73 | 409 |
+| [client/src/Responsive.scss](/client/src/Responsive.scss) | SCSS | 52 | 1 | 12 | 65 |
+| [client/src/components/ApplicantList.js](/client/src/components/ApplicantList.js) | JavaScript | -40 | -4 | -11 | -55 |
+| [client/src/components/IntervieweeList.js](/client/src/components/IntervieweeList.js) | JavaScript | -48 | -4 | -12 | -64 |
+| [client/src/components/Login.css](/client/src/components/Login.css) | CSS | -23 | -28 | -5 | -56 |
+| [client/src/components/Login.js](/client/src/components/Login.js) | JavaScript | -85 | -2 | -14 | -101 |
+| [client/src/components/LoginGoogle.js](/client/src/components/LoginGoogle.js) | JavaScript | 170 | 3 | 17 | 190 |
+| [client/src/components/NewsList.js](/client/src/components/NewsList.js) | JavaScript | -144 | -7 | -23 | -174 |
+| [client/src/components/NewsListlogin.js](/client/src/components/NewsListlogin.js) | JavaScript | -42 | 0 | -9 | -51 |
+| [client/src/components/ReportList.js](/client/src/components/ReportList.js) | JavaScript | -23 | 0 | -3 | -26 |
+| [client/src/components/RoleList.js](/client/src/components/RoleList.js) | JavaScript | -71 | 0 | -11 | -82 |
+| [client/src/components/ScholarshipList.js](/client/src/components/ScholarshipList.js) | JavaScript | -43 | 0 | -9 | -52 |
+| [client/src/components/Scholarshipstatus.js](/client/src/components/Scholarshipstatus.js) | JavaScript | -44 | -4 | -11 | -59 |
+| [client/src/components/StatusList.js](/client/src/components/StatusList.js) | JavaScript | -44 | -4 | -4 | -52 |
+| [client/src/contents/Announcement.js](/client/src/contents/Announcement.js) | JavaScript | -27 | 0 | -4 | -31 |
+| [client/src/contents/AnnouncementLogin.js](/client/src/contents/AnnouncementLogin.js) | JavaScript | -20 | 0 | -3 | -23 |
+| [client/src/contents/AnnouncementLogin/AnnouncementLogin.js](/client/src/contents/AnnouncementLogin/AnnouncementLogin.js) | JavaScript | 23 | 0 | 4 | 27 |
+| [client/src/contents/AnnouncementLogin/NewsListlogin.js](/client/src/contents/AnnouncementLogin/NewsListlogin.js) | JavaScript | 60 | 0 | 13 | 73 |
+| [client/src/contents/Announcement/Announcement.js](/client/src/contents/Announcement/Announcement.js) | JavaScript | 33 | 0 | 6 | 39 |
+| [client/src/contents/Announcement/AnnouncementCreate.js](/client/src/contents/Announcement/AnnouncementCreate.js) | JavaScript | 176 | 8 | 10 | 194 |
+| [client/src/contents/Announcement/AnnouncementEdit.js](/client/src/contents/Announcement/AnnouncementEdit.js) | JavaScript | 152 | 1 | 20 | 173 |
+| [client/src/contents/Announcement/NewsList.js](/client/src/contents/Announcement/NewsList.js) | JavaScript | 81 | 2 | 13 | 96 |
+| [client/src/contents/Applicant.js](/client/src/contents/Applicant.js) | JavaScript | -41 | 0 | -4 | -45 |
+| [client/src/contents/Applicant/Applicant.js](/client/src/contents/Applicant/Applicant.js) | JavaScript | 50 | 0 | 5 | 55 |
+| [client/src/contents/Applicant/ApplicantCheckForm.js](/client/src/contents/Applicant/ApplicantCheckForm.js) | JavaScript | 291 | 0 | 39 | 330 |
+| [client/src/contents/Applicant/ApplicantList.js](/client/src/contents/Applicant/ApplicantList.js) | JavaScript | 39 | 4 | 14 | 57 |
+| [client/src/contents/Interview.js](/client/src/contents/Interview.js) | JavaScript | -42 | 0 | -5 | -47 |
+| [client/src/contents/Interview/Interview.js](/client/src/contents/Interview/Interview.js) | JavaScript | 49 | 0 | 7 | 56 |
+| [client/src/contents/Interview/InterviewRate.js](/client/src/contents/Interview/InterviewRate.js) | JavaScript | 114 | 9 | 19 | 142 |
+| [client/src/contents/Interview/InterviewSchedule.js](/client/src/contents/Interview/InterviewSchedule.js) | JavaScript | 54 | 0 | 7 | 61 |
+| [client/src/contents/Interview/InterviewScheduleCreate.js](/client/src/contents/Interview/InterviewScheduleCreate.js) | JavaScript | 8 | 0 | 5 | 13 |
+| [client/src/contents/Interview/InterviewScheduleEdit.js](/client/src/contents/Interview/InterviewScheduleEdit.js) | JavaScript | 8 | 0 | 5 | 13 |
+| [client/src/contents/Interview/IntervieweeList.js](/client/src/contents/Interview/IntervieweeList.js) | JavaScript | 61 | 6 | 14 | 81 |
+| [client/src/contents/Newcontents/Member.js](/client/src/contents/Newcontents/Member.js) | JavaScript | 38 | 0 | 11 | 49 |
+| [client/src/contents/Newcontents/MemberList.js](/client/src/contents/Newcontents/MemberList.js) | JavaScript | 45 | 3 | 15 | 63 |
+| [client/src/contents/Profile.js](/client/src/contents/Profile.js) | JavaScript | -83 | 0 | -10 | -93 |
+| [client/src/contents/Profile/FormProfile.js](/client/src/contents/Profile/FormProfile.js) | JavaScript | 151 | 101 | 18 | 270 |
+| [client/src/contents/Profile/Profile.js](/client/src/contents/Profile/Profile.js) | JavaScript | 102 | 1 | 12 | 115 |
+| [client/src/contents/Profile/ProfileCheck.js](/client/src/contents/Profile/ProfileCheck.js) | JavaScript | 68 | 0 | 13 | 81 |
+| [client/src/contents/Profile/ProfileCreate.js](/client/src/contents/Profile/ProfileCreate.js) | JavaScript | 180 | 100 | 15 | 295 |
+| [client/src/contents/Profile/ProfileEdit.js](/client/src/contents/Profile/ProfileEdit.js) | JavaScript | 195 | 98 | 23 | 316 |
+| [client/src/contents/Report.js](/client/src/contents/Report.js) | JavaScript | -53 | 0 | -4 | -57 |
+| [client/src/contents/Report/Report.js](/client/src/contents/Report/Report.js) | JavaScript | 57 | 0 | 5 | 62 |
+| [client/src/contents/Report/ReportInspect.js](/client/src/contents/Report/ReportInspect.js) | JavaScript | 68 | 0 | 9 | 77 |
+| [client/src/contents/Report/ReportList.js](/client/src/contents/Report/ReportList.js) | JavaScript | 23 | 0 | 3 | 26 |
+| [client/src/contents/RoleSetting.js](/client/src/contents/RoleSetting.js) | JavaScript | -31 | 0 | -8 | -39 |
+| [client/src/contents/RoleSetting/RoleList.js](/client/src/contents/RoleSetting/RoleList.js) | JavaScript | 68 | 0 | 12 | 80 |
+| [client/src/contents/RoleSetting/RoleSetting.js](/client/src/contents/RoleSetting/RoleSetting.js) | JavaScript | 35 | 0 | 9 | 44 |
+| [client/src/contents/Scholarship.js](/client/src/contents/Scholarship.js) | JavaScript | -28 | 0 | -7 | -35 |
+| [client/src/contents/Scholarship/CreateDetail.js](/client/src/contents/Scholarship/CreateDetail.js) | JavaScript | 111 | 5 | 21 | 137 |
+| [client/src/contents/Scholarship/CreateFileform.js](/client/src/contents/Scholarship/CreateFileform.js) | JavaScript | 86 | 0 | 9 | 95 |
+| [client/src/contents/Scholarship/CreateRateform.js](/client/src/contents/Scholarship/CreateRateform.js) | JavaScript | 87 | 0 | 7 | 94 |
+| [client/src/contents/Scholarship/Scholarship.js](/client/src/contents/Scholarship/Scholarship.js) | JavaScript | 36 | 0 | 8 | 44 |
+| [client/src/contents/Scholarship/ScholarshipCreate.js](/client/src/contents/Scholarship/ScholarshipCreate.js) | JavaScript | 57 | 14 | 18 | 89 |
+| [client/src/contents/Scholarship/ScholarshipEdit.js](/client/src/contents/Scholarship/ScholarshipEdit.js) | JavaScript | 289 | 13 | 43 | 345 |
+| [client/src/contents/Scholarship/ScholarshipList.js](/client/src/contents/Scholarship/ScholarshipList.js) | JavaScript | 135 | 3 | 25 | 163 |
+| [client/src/contents/Scholarship/ScholarshipRegister.js](/client/src/contents/Scholarship/ScholarshipRegister.js) | JavaScript | 295 | 1 | 33 | 329 |
+| [client/src/contents/Scholarship/test.js](/client/src/contents/Scholarship/test.js) | JavaScript | 7 | 0 | 2 | 9 |
+| [client/src/contents/Status.js](/client/src/contents/Status.js) | JavaScript | -20 | 0 | -3 | -23 |
+| [client/src/contents/Status/Status.js](/client/src/contents/Status/Status.js) | JavaScript | 23 | 0 | 3 | 26 |
+| [client/src/contents/Status/StatusList.js](/client/src/contents/Status/StatusList.js) | JavaScript | 46 | 4 | 9 | 59 |
+| [client/src/context/WebContext.js](/client/src/context/WebContext.js) | JavaScript | 43 | 0 | 8 | 51 |
+| [client/src/controller/Controllers.js](/client/src/controller/Controllers.js) | JavaScript | 22 | 1 | 5 | 28 |
+| [client/src/controller/LoginController.js](/client/src/controller/LoginController.js) | JavaScript | 22 | 0 | 5 | 27 |
+| [client/src/controller/MainController.js](/client/src/controller/MainController.js) | JavaScript | 74 | 2 | 9 | 85 |
+| [client/src/data/test.js](/client/src/data/test.js) | JavaScript | 11 | 0 | 3 | 14 |
+| [client/src/modals/AlertModal.css](/client/src/modals/AlertModal.css) | CSS | -14 | 20 | -2 | 4 |
+| [client/src/modals/AlertModal.js](/client/src/modals/AlertModal.js) | JavaScript | 5 | 0 | 0 | 5 |
+| [client/src/modals/ConfirmModal.js](/client/src/modals/ConfirmModal.js) | JavaScript | 3 | 0 | 1 | 4 |
+| [client/src/pages/LoginPage.css](/client/src/pages/LoginPage.css) | CSS | -62 | -5 | -1 | -68 |
+| [client/src/pages/LoginPage.js](/client/src/pages/LoginPage.js) | JavaScript | -4 | 0 | -4 | -8 |
+| [client/src/pages/MainPage.css](/client/src/pages/MainPage.css) | CSS | -89 | -121 | -26 | -236 |
+| [client/src/pages/MainPage.js](/client/src/pages/MainPage.js) | JavaScript | -75 | -10 | 5 | -80 |
+| [client/src/sub-contents/AnnouncementCreate.css](/client/src/sub-contents/AnnouncementCreate.css) | CSS | -19 | -171 | -12 | -202 |
+| [client/src/sub-contents/AnnouncementCreate.js](/client/src/sub-contents/AnnouncementCreate.js) | JavaScript | -128 | -1 | -12 | -141 |
+| [client/src/sub-contents/AnnouncementEdit.css](/client/src/sub-contents/AnnouncementEdit.css) | CSS | -127 | -29 | -25 | -181 |
+| [client/src/sub-contents/AnnouncementEdit.js](/client/src/sub-contents/AnnouncementEdit.js) | JavaScript | -155 | -1 | -19 | -175 |
+| [client/src/sub-contents/Assessment.js](/client/src/sub-contents/Assessment.js) | JavaScript | 0 | -43 | 0 | -43 |
+| [client/src/sub-contents/InterviewRate.css](/client/src/sub-contents/InterviewRate.css) | CSS | -70 | -14 | -16 | -100 |
+| [client/src/sub-contents/InterviewRate.js](/client/src/sub-contents/InterviewRate.js) | JavaScript | -63 | 0 | -4 | -67 |
+| [client/src/sub-contents/InterviewSchedule.css](/client/src/sub-contents/InterviewSchedule.css) | CSS | -65 | -3 | -10 | -78 |
+| [client/src/sub-contents/InterviewSchedule.js](/client/src/sub-contents/InterviewSchedule.js) | JavaScript | -43 | 0 | -7 | -50 |
+| [client/src/sub-contents/InterviewScheduleCreate.css](/client/src/sub-contents/InterviewScheduleCreate.css) | CSS | 0 | 0 | -1 | -1 |
+| [client/src/sub-contents/InterviewScheduleCreate.js](/client/src/sub-contents/InterviewScheduleCreate.js) | JavaScript | -9 | 0 | -4 | -13 |
+| [client/src/sub-contents/InterviewScheduleEdit.css](/client/src/sub-contents/InterviewScheduleEdit.css) | CSS | 0 | 0 | -1 | -1 |
+| [client/src/sub-contents/InterviewScheduleEdit.js](/client/src/sub-contents/InterviewScheduleEdit.js) | JavaScript | -9 | 0 | -4 | -13 |
+| [client/src/sub-contents/ProfileCheck.css](/client/src/sub-contents/ProfileCheck.css) | CSS | 0 | -145 | -5 | -150 |
+| [client/src/sub-contents/ProfileCheck.js](/client/src/sub-contents/ProfileCheck.js) | JavaScript | -58 | 0 | -9 | -67 |
+| [client/src/sub-contents/ProfileCreate.js](/client/src/sub-contents/ProfileCreate.js) | JavaScript | -207 | 0 | -18 | -225 |
+| [client/src/sub-contents/ProfileEdit.css](/client/src/sub-contents/ProfileEdit.css) | CSS | 0 | -117 | -16 | -133 |
+| [client/src/sub-contents/ProfileEdit.js](/client/src/sub-contents/ProfileEdit.js) | JavaScript | -173 | 0 | -13 | -186 |
+| [client/src/sub-contents/ReportInspect.css](/client/src/sub-contents/ReportInspect.css) | CSS | -47 | -5 | -3 | -55 |
+| [client/src/sub-contents/ReportInspect.js](/client/src/sub-contents/ReportInspect.js) | JavaScript | -69 | 0 | -4 | -73 |
+| [client/src/sub-contents/ScholarshipCheckForm.css](/client/src/sub-contents/ScholarshipCheckForm.css) | CSS | 0 | -193 | -2 | -195 |
+| [client/src/sub-contents/ScholarshipCheckForm.js](/client/src/sub-contents/ScholarshipCheckForm.js) | JavaScript | -236 | 0 | -37 | -273 |
+| [client/src/sub-contents/ScholarshipEdit.css](/client/src/sub-contents/ScholarshipEdit.css) | CSS | 0 | 0 | -1 | -1 |
+| [client/src/sub-contents/ScholarshipEdit.js](/client/src/sub-contents/ScholarshipEdit.js) | JavaScript | -9 | 0 | -5 | -14 |
+| [client/src/sub-contents/ScholarshipListCreate.css](/client/src/sub-contents/ScholarshipListCreate.css) | CSS | -25 | -305 | -22 | -352 |
+| [client/src/sub-contents/ScholarshipListCreate.js](/client/src/sub-contents/ScholarshipListCreate.js) | JavaScript | -252 | -4 | -31 | -287 |
+| [client/src/sub-contents/ScholarshipListEdit.css](/client/src/sub-contents/ScholarshipListEdit.css) | CSS | 0 | 0 | -1 | -1 |
+| [client/src/sub-contents/ScholarshipListEdit.js](/client/src/sub-contents/ScholarshipListEdit.js) | JavaScript | -9 | 0 | -6 | -15 |
+| [client/src/sub-contents/ScholarshipListRegister.css](/client/src/sub-contents/ScholarshipListRegister.css) | CSS | -61 | -70 | -14 | -145 |
+| [client/src/sub-contents/ScholarshipListRegister.js](/client/src/sub-contents/ScholarshipListRegister.js) | JavaScript | -243 | 0 | -11 | -254 |
+| [client/src/sub-contents/ScholarshipListRegister2.css](/client/src/sub-contents/ScholarshipListRegister2.css) | CSS | -80 | -6 | -6 | -92 |
+| [client/src/sub-contents/ScholarshipListRegister2.js](/client/src/sub-contents/ScholarshipListRegister2.js) | JavaScript | -78 | 0 | -6 | -84 |
+| [client/src/sub-contents/test.css](/client/src/sub-contents/test.css) | CSS | -30 | 0 | -3 | -33 |
+
+[summary](results.md) / [details](details.md) / [diff summary](diff.md) / diff details

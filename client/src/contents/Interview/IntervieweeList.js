@@ -50,8 +50,8 @@ useEffect(() => {
           <h2>{aplicants.title}</h2>
         </div>
         <div className="intervieweeList-right" >
-          <button className="button-search d-flex" type="button" onClick={ () => setContent('ScholarshipCheckForm') }>
-            <i className="bi bi-search"></i>
+          <button className="button-hourglass d-flex" type="button" onClick={ () => setContent('ScholarshipCheckForm') }>
+            <i className="bi bi-hourglass"></i>
             <p>ตรวจสอบเอกสาร</p>
           </button>
           
@@ -61,8 +61,8 @@ useEffect(() => {
             <p>ตรวจสอบประวัติ</p>
           </button>       
          
-          <button className="button-search d-flex" type="button" onClick={() => setContent('InterviewRate') }>
-            <i className="bi bi-search"/>
+          <button className="button-bookmark d-flex" type="button" onClick={() => setContent('InterviewRate') }>
+            <i className="bi bi-bookmark-check"></i>
             <p>การประเมิน</p>
           </button>
          

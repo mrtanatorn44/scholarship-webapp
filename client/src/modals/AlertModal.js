@@ -10,19 +10,19 @@ function AlertModel(props) {
   const text4 = props.text4 || '';
 
   return (
-    <div class="modal">
-      <div class="modal-content" >
-        <div class="modal-body">
+    <div className="modal">
+      <div className="modal-content" >
+        <div className="modal-body">
           <div className="modal-close">
             <button className="button-close" onClick={() => props.sendConfirm(false)}>
-              <i class="x-button bi bi-x"></i>
+              <i className="x-button bi bi-x"></i>
             </button>
           </div>
-          <center class = "icon-clock">
-            <i class={icon[iconIndex]}></i>
+          <center className = "icon-clock">
+            <i className={icon[iconIndex]}></i>
           </center>
           <br></br>
-          <div class="alert-detail">
+          <div className="alert-detail">
             <center>{text1}</center><br></br>
             <center>{text2}</center><br></br>
             <center>{text3}</center><br></br>

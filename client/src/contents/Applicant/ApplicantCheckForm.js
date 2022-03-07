@@ -15,7 +15,7 @@ function ScholarshipCheckForm(props) {
     name:"",
     yearofstudy:"",
     age:"",
-    std_id:"",
+    std_id:"", 
     fieldStudy:"",
     branch:"",
     address:"",
@@ -79,8 +79,8 @@ function ScholarshipCheckForm(props) {
           </div>
           
           <div>
-            <label>นิสิตชั้นปีที่</label>
-            <select className="form-select form-select-lg mb-3" value = {profile.yearofstudy} required>
+            <label>นิสิตชั้นปีที่</label><br/>
+            <select className="form-select form-select-lg" value = {profile.yearofstudy} required>
               <option value="0">เลือก</option>
               <option value="5">5</option>
               <option value="4">4</option>
@@ -100,8 +100,8 @@ function ScholarshipCheckForm(props) {
           </div>
           
           <div>
-            <label>ภาคการเรียนการสอน</label>
-            <select className="form-select form-select-lg mb-3" value = {profile.fieldStudy} required>
+            <label>ภาคการเรียนการสอน</label><br/>
+            <select className="form-select form-select-lg" value = {profile.fieldStudy} required>
               <option value="0">เลือก</option>
               <option value="ภาคปกติ">ภาคปกติ</option>
               <option value="ภาคพิเศษ">ภาคพิเศษ</option>
@@ -109,8 +109,8 @@ function ScholarshipCheckForm(props) {
           </div>
           
           <div>
-            <label>สาขา</label>
-            <select className="form-select form-select-lg mb-3" value = {profile.branch} required>
+            <label>สาขา</label><br/>
+            <select className="form-select form-select-lg" value = {profile.branch} required>
                 <option value="0">เลือก</option>
                 <option value="คอมพิวเตอร์">คอมพิวเตอร์</option>
                 <option value="ไฟฟ้า">ไฟฟ้า</option>
@@ -133,14 +133,14 @@ function ScholarshipCheckForm(props) {
             <input type="tel" placeholder = "เบอร์โทรศัพท์" required></input>
           </div>
          
-            <h5>ประวัติครอบครัว</h5>
-           
+          <div class="topic-fam">
+              <p>ประวัติครอบครัว</p>
+            </div>
           <div>
             <label>ชื่อ-นามสกุล(บิดา)</label><br></br>
             <input placeholder = "ชื่อ-นามสกุล(บิดา)" required></input>
           </div>
           
-
           <div class="profile-fam d-flex">
             <div class="fam1-edit">
               <label>อายุ</label><br></br>
@@ -148,7 +148,7 @@ function ScholarshipCheckForm(props) {
             </div> 
             <div class="fam2-edit">
               <label>สถานะภาพ</label>
-              <select className="form-select form-select-lg mb-3" required>
+              <select className="form-select form-select-lg" required>
                 <option value="0">เลือก</option>
                 <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                 <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -182,7 +182,7 @@ function ScholarshipCheckForm(props) {
             <label>ที่อยู่ของบิดา</label><br></br>
             <input placeholder = "ที่อยู่ของบิดา" required></input>
           </div>
-          <br></br>
+        
           <div>
             <label>ชื่อ-นามสกุล(มารดา)</label><br></br>
             <input placeholder = "ชื่อ-นามสกุล(มารดา)" required></input>
@@ -195,7 +195,7 @@ function ScholarshipCheckForm(props) {
             </div>
             <div class="fam2-edit">
               <label>สถานะภาพ</label>
-              <select className="form-select form-select-lg mb-3" required>
+              <select className="form-select form-select-lg" required>
                 <option value="0">เลือก</option>
                 <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                 <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -225,15 +225,14 @@ function ScholarshipCheckForm(props) {
             </div>
           </div>
 
-          
           <div>
             <label>ที่อยู่ของมารดา</label><br></br>
             <input placeholder = "ที่อยู่ของมารดา" required></input>
           </div>
           
           <div>
-            <label>สถานะสมรสบิดา-มารดา</label>
-            <select className="form-select form-select-lg mb-3" required>
+            <label>สถานะสมรสบิดา-มารดา</label><br></br>
+            <select className="form-select form-select-lg" required>
                 <option value="0">เลือก</option>
                 <option value="อยู่ด้วยกัน">อยู่ด้วยกัน</option>
                 <option value="แยกกันอยู่">แยกกันอยู่</option>
@@ -309,7 +308,7 @@ function ScholarshipCheckForm(props) {
           <div className="form-note">
             <div className="note">
               <label>หมายเหตุ</label><br></br>
-              <input placeholder = "มันไม่ถูกต้อง!!!"></input>
+              <textarea placeholder = "มันไม่ถูกต้อง!!!"></textarea>
             </div>
           </div>
         </form>

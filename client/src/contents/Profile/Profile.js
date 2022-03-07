@@ -43,70 +43,70 @@ function Profile() {
   
   return(
     <div className="frame">   
-      <div className="profile-row-top">
-          <form className="profile-form d-flex ">
-            <div className="profile-img">
-              <img src={profile.image}/>
+      <div className="content6">
+        <div className="profile-row-top">
+            <form className="profile-form d-flex ">
+              <div className="profile-img">
+                <img src={profile.image}/>
+              </div>
+              <div className="profile-data d-flex">
+                <div className="profile-column-left "> 
+                  <div className="profile-name">
+                    <label>ชื่อ-นามสกุล</label><br></br>
+                    <input placeholder="ชื่อ-นามสกุล" value = {profile.name} readonly="readonly" ></input>
+                  </div>
+                  <div className="profile-sector">
+                    <label >ภาคการเรียนการสอน</label><br></br>
+                    <input placeholder="ภาคปกติ" value = {profile.fieldStudy} readonly="readonly" ></input>
+                  </div>
+                </div>
+                <div className="profile-column-center">
+                  <div className="profile-code">
+                    <label >รหัสนิสิต</label><br></br>
+                    <input className="d-flex" type="number" placeholder="62XXXXX"  value = {profile.std_id} readonly="readonly" ></input>
+                  </div>
+                  <div className="profile-branch">
+                    <label >สาขา</label><br></br>
+                    <input placeholder="" value = {profile.branch} readonly="readonly"></input>
+                  </div>
+                </div>
+                <div className="profile-column-right">
+                  <div className="profile-grade">
+                    <label >นิสิตชั้นปีที่</label><br></br>
+                    <input placeholder="5" value = {profile.yearofstudy} readonly="readonly" ></input>
+                  </div>
+                </div>
+              </div>
+            </form>
+            
+            <div className="botton-edit">
+              { profile.name === ''? 
+              <div className="botton-edit1">
+                <button onClick = {() => setContent('ProfileCreate')}>
+                    <p>สร้างโปรไฟล์</p>
+                </button>
+              </div> :
+                <div className="botton-edit2">
+                  <button onClick = {() => setContent('ProfileEdit')}>
+                    <p>แก้ไขข้อมูล</p>
+                </button>
+                </div>
+              }
             </div>
-            <div className="profile-data d-flex">
-              <div className="profile-column-left "> 
-                <div className="profile-name">
-                  <label>ชื่อ-นามสกุล</label><br></br>
-                  <input placeholder="ภวัตกะนะโนน" value = {profile.name} readonly="readonly" ></input>
-                </div>
-                <div className="profile-sector">
-                  <label >ภาคการเรียนการสอน</label><br></br>
-                  <input placeholder="ภาคปกติ" value = {profile.fieldStudy} readonly="readonly" ></input>
-                </div>
-              </div>
-              <div className="profile-column-center">
-                <div className="profile-code">
-                  <label >รหัสนิสิต</label><br></br>
-                  <input className="d-flex" type="number" placeholder="62XXXXX"  value = {profile.std_id} readonly="readonly" ></input>
-                </div>
-                <div className="profile-branch">
-                  <label >สาขา</label><br></br>
-                  <input placeholder="GMMTV" value = {profile.branch} readonly="readonly"></input>
-                </div>
-              </div>
-              <div className="profile-column-right">
-                <div className="profile-grade">
-                  <label >นิสิตชั้นปีที่</label><br></br>
-                  <input placeholder="5" value = {profile.yearofstudy} readonly="readonly" ></input>
-                </div>
-              </div>
-            </div>
-          </form>
-          
-          <div className="botton-edit">
-            { profile.name === ''? 
-            <div className="botton-edit1">
-              <button onClick = {() => setContent('ProfileCreate')}>
-                  <p>สร้างโปรไฟล์</p>
-              </button>
-             </div> :
-              <div className="botton-edit2">
-                <button onClick = {() => setContent('ProfileEdit')}>
-                  <p>แก้ไขข้อมูล</p>
-              </button>
-              </div>
-            }
           </div>
-          
-        
-      </div>
-      <div className="profile-row-bottom">
-        <div className="drop-scholaship">
-          <label>ประเภทของทุน</label>
-          <br></br>
-          <select>
-            <option value="study">ทุนเรียนดี</option>
-            <option value="activity">ทุนกิจกรรมเด่น</option>
-            <option value="property">ทุนขาดคุณทรัพย์</option>
-            <option value="other">ทุนอื่นๆ</option>
-          </select>
+          <div className="profile-row-bottom">
+            <div className="drop-scholaship">
+              <label>ประเภทของทุน</label>
+              <br></br>
+              <select>
+                <option value="study">ทุนเรียนดี</option>
+                <option value="activity">ทุนกิจกรรมเด่น</option>
+                <option value="property">ทุนขาดคุณทรัพย์</option>
+                <option value="other">ทุนอื่นๆ</option>
+              </select>
+            </div>
+          </div>
         </div>
-      </div>
     </div>
   )
 }

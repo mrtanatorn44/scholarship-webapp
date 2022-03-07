@@ -49,16 +49,18 @@ function InterviewRate(props) {
     <div className="frame">
       <div className="header">
         <div className="left">
-          <div className="topic">
+          <div className="icons">
+            <i class="bi bi-bookmark-check"></i>
+          </div>
+          <div class="topic">
             <h4>คะแนนการสัมภาษณ์</h4>
           </div>
         </div>
-        <div className="right"></div>
+        <div className="right"></div> 
       </div>
 
-      
-      <div className="interviewrate-center d-flex">
-        <form onSubmit={(e)=> onFormSumbit(e)}>
+      <div className="content1 d-flex">
+        <form className="interviewrate-form" onSubmit={(e)=> onFormSumbit(e)}>
           <div className="interviewrate-score">
             <div className="detail1">
               <p>ประเมินด้าน1</p>

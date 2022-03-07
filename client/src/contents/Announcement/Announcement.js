@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
 import NewsList from './NewsList.js';
-
-
 import { WebContext } from '../../App';
 
 function Announcement(props) {
@@ -20,11 +18,13 @@ function Announcement(props) {
           </div>
         </div>
         <div className="right">
-          { user.role === 'admin' &&
+        { 
+          user.role === 'admin' &&
           <button  className='button-add d-flex' onClick={() => { setContent('AnnouncementCreate') }}>
             <i className="bi bi-plus-lg"/>
             <p>เพิ่มข่าวสาร</p>
-          </button> }
+          </button> 
+        }
         </div>
       </div>
 

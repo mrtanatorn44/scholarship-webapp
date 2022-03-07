@@ -1,13 +1,24 @@
-import React from "react";
-import Login from "../components/Login.js"
+import { React, useState } from "react";
+import Login from "../components/LoginGoogle.js"
 import ku_eng_src_logo from "../data/images/engsrc.png";
 import ku_src_logo from "../data/images/ku.png";
 import AnnouncementLogin from '../contents/AnnouncementLogin/AnnouncementLogin.js';
 
 function LoginPage() {
-  
+  const [loading, setLoading] = useState(true);
+
   return (
     <div className="login-page">
+
+      { 
+        loading && 
+        <div 
+          className='loading-screen'
+          style={{animation: 'fadeOut 1s'}}
+          onAnimationEnd={() => setLoading(false)}
+        ></div>
+      }
+
       {/* ----- Announcement ----- */}
       <div className="column-left">     
         <AnnouncementLogin/>

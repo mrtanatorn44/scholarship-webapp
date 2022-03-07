@@ -16,6 +16,45 @@ body {
   font-family: 'Prompt', sans-serif;
 }
 
+.loading-screen {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  z-index: 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// -------------------------------------------- INPUT WITH BUTTON
+.inputWithButton {
+  position: relative;
+  height: 40px;
+}
+
+
+
+.inputWithButton button {
+  position: absolute;
+  right: 0;
+}
+
 //-------------------- LoginPage.js --------------------
 .login-page {
   display: flex;
@@ -43,10 +82,106 @@ body {
         display: flex;
         .left {
           display: flex;
+          .icons{
+            width: size(1.9);
+            height: size(1.9);
+            margin: auto 0 auto 0.5vw;
+            border-radius: 50%;
+            font-size: size(1.2);
+            color: #fff;
+            text-align: center;
+            background : linear-gradient( #f6c8b1, #DD4A48);
+          } 
+          .topic{
+            margin: auto 0 auto 0.5vw;
+            font-size: size(1);
+            font-weight: 500;
+            margin-top: 1.8vh; 
+          }
         }
         .right {
           display: flex;
         }
+      }
+       /*----- กรอบ ประกาศข่าวสาร กรอบทุนที่เปิดให้ลงทะเบียน ------*/
+       .content1{ 
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 73vh;
+        
+        //--------- Announcement.js AnnouncementLogin.js ----------
+        /*----------- กรอบข่าวสาร -----------*/
+        .news{
+          background-color: rgba(240, 240, 240, 0.4);
+          border: 1px solid gray;
+          border-radius: 10px;
+          margin: 2.5%;
+          /*------ หัวข้อย่อยข้างในข่าวสาร ---------*/
+          .title {
+            height: 7vh;
+            border-bottom: 2px solid #7c7c7c;
+            display: flex;
+            h2{
+              margin: auto 0 auto 1rem;
+              text-align: left;
+              width: 60%;
+              font-size: size(0.9);
+            }
+            h3{
+              margin: auto 1rem auto 0;
+              text-align: right;
+              width: 40%;
+              font-size: size(0.9);
+            }
+          }
+          /*---------- เนื้อหาในข่าวสาร ----------*/
+          .content, .content-image {
+            height: 30vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            transition: transform .5s; /* Animation */
+            /*--------- รูปของข่าวสาร ------------*/
+            .news-image {
+              display:block;
+              margin-left: auto;
+              margin-right: auto;
+              width: auto;
+              height: 30vh;
+              background-color: lightgray;
+              transition: transform .5s; /* Animation */
+            }
+            .news-image:hover {
+              cursor: pointer;
+            }
+          }
+          .content h3{
+            padding: size(1); font-size: size(0.8);
+          }
+          /*----------- bottom ส่วนล่างสุดของกรอบข่าวสาร ------------*/
+
+          .newsLogin-bottom{
+            display: flex;
+            width: 100%;
+            h3{
+              margin: 2% 3% 2% 3%;
+              cursor: pointer;
+              font-size: size(0.8);
+            }
+            .admin-panel {
+              text-align: left;
+              display: flex;
+              width: 60%;
+              margin-top: size(0.4);
+              margin-bottom: size(0.4);
+            }
+            
+
+         
+          }
+        }//สิ้นสุดnews
+        
+
+
       }
     }
   }
@@ -149,23 +284,10 @@ body {
           width   : size(1.9);
           margin  : auto;
           border-radius: 50%;
+         
         }
       }
-      @media (max-width: 480px) {
-        .user-profile {
-          width   : 100%;
-          height  : 100%;
-          float   : left;
-          display : flex;
-          img {
-            height  : size(3.5);
-            width   : size(3.5);
-            margin  : auto;
-            border-radius: 50%;
-          }
-        }
-      }
-
+     
       .user-info {
         margin-top: 3%;
         float: left;
@@ -178,11 +300,7 @@ body {
           margin: auto;
         }
       }
-      @media (max-width: 480px) {
-        .user-info {
-          visibility: hidden;
-        }
-      }
+      
     }
     .row-bottom {
       display: flex;
@@ -220,22 +338,11 @@ body {
             transition: 0.25s transform ease-out;
             transform: scale(0.9);
           }
-          @media (max-width: 480px) {
-            i { 
-              font-size: size(2);
-              background: #28C3D7;
-              height: 100%;
-              width: 100%;
-              padding: 0;
-              margin: 0;
-            }
-            p {
-              visibility: hidden;
-            }
-          }
+          
         }
       }
     }
+
   }
 
   .column-right {
@@ -253,6 +360,10 @@ body {
         margin    : auto;        
         font-size : size(0.8);
       }
+      .logout-button{
+        margin: auto 5% auto 5%;
+      }
+      
     }
 
     .row-center {
@@ -260,381 +371,963 @@ body {
       height: 86vh;
       width: 100%;
       display: flex;
-    }
-  }
-}
+      //---------------------- frame เฟรมใหญ่สีขาวของทุกหน้า ----------------------
+      .frame {
+        font-family : 'Prompt', sans-serif;
+        margin: auto;
+        background-color : white;
+        border-radius : 0.5rem;
+        box-shadow : 0px 0px 5px 0px #949494;
+        width :  70vw;
+        height : 80vh;
+        
+        .header{
+          border-bottom : 2px solid $ku-red;
+          height: 7vh;
+          display: flex;
+          .left{
+            width: 50%;
+            display: flex;
+            //--------------- head-content ส่วนบนสุดของแต่ละ frame ----------------------
+            .icons{
+              width: size(1.9);
+              height: size(1.9);
+              margin: auto 0 auto 0.5vw;
+              border-radius: 50%;
+              font-size: size(1.2);
+              color: #fff;
+              text-align: center;
+              background : linear-gradient( #f6c8b1, #DD4A48);
+            } 
+            .topic{
+              margin: auto 0 auto 0.5vw;
+              font-size: size(1);
+              font-weight: 500;
+              margin-top: 1.8vh; 
+            }
+          }
+          .right{
+            width: 50%; 
+            display: flex;
+            /*----- button-add เพิ่มทุน,เพิ่มข่าว -----*/
+            .button-add{
+              background-color: #F5F5F5;
+              border-radius: size(0.5);
+              width: size(6);
+              height: size(1.5);
+              border-style: hidden;
+              margin: auto 3vw auto auto;
+              margin-top: 1.3vh;
+            }
+            .button-add{ 
+              p{
+                font-size: size(0.8);
+                margin: auto;
+              }
+              .bi{
+                background-color: $ku-green;
+                border-radius: 5px;
+                width: size(1);
+                height: size(1);
+                font-size: size(0.8);
+                color: white;
+                margin: auto;
+                
+              }
+            }
+            /*----- ปุ่ม บันทึก ยกเลิก ที่เพิ่มข่าวสาร -----*/
+            .button2-set{
+              display: flex;
+              margin-left: size(12.8);
+            }
+              .save-button, .cancel-button{
+                border-radius: 4px;
+                width: size(4);
+                height: size(1.5);
+                border-style: hidden;
+                color: white;
+                font-size: size(0.7);
+                display: flex;
+                margin: auto;
+                .bi, p{
+                  margin: auto;
+                }
+              }
+              .save-button {
+                background-color: $ku-green;
+              }
+              .cancel-button {
+                background-color: $ku-red;
+                margin-left: size(0.3) ;
+            }
+          }
+        }
+        //-----------------frame-subcontent ขนาดของเฟรมย่อยแต่ละหน้า ------------------
+       /*----- กรอบ ประกาศข่าวสาร กรอบทุนที่เปิดให้ลงทะเบียน ------*/
+        .content1{ 
+          overflow-y: scroll;
+          overflow-x: hidden;
+          height: 73vh;
+          
+          //--------- Announcement.js AnnouncementLogin.js ----------
+          /*----------- กรอบข่าวสาร -----------*/
+          .news{
+            background-color: rgba(240, 240, 240, 0.4);
+            border: 1px solid gray;
+            border-radius: 10px;
+            margin: 2.5%;
+            /*------ หัวข้อย่อยข้างในข่าวสาร ---------*/
+            .title {
+              height: 7vh;
+              border-bottom: 2px solid #7c7c7c;
+              display: flex;
+              h2{
+                margin: auto 0 auto 1rem;
+                text-align: left;
+                width: 60%;
+                font-size: size(0.9);
+              }
+              h3{
+                margin: auto 1rem auto 0;
+                text-align: right;
+                width: 40%;
+                font-size: size(0.9);
+              }
+            }
+            /*---------- เนื้อหาในข่าวสาร ----------*/
+            .content, .content-image {
+              height: 30vh;
+              overflow-y: auto;
+              overflow-x: hidden;
+              transition: transform .5s; /* Animation */
+              /*--------- รูปของข่าวสาร ------------*/
+              .news-image {
+                display:block;
+                margin-left: auto;
+                margin-right: auto;
+                width: auto;
+                height: 30vh;
+                background-color: lightgray;
+                transition: transform .5s; /* Animation */
+              }
+              .news-image:hover {
+                cursor: pointer;
+              }
+            }
+            .content h3{
+              padding: size(1); font-size: size(0.8);
+            }
+            /*----------- bottom ส่วนล่างสุดของกรอบข่าวสาร ------------*/
 
-//---------------------- frame เฟรมใหญ่สีขาวของทุกหน้า ----------------------
-.frame {
-  font-family: 'Prompt', sans-serif;
-  margin: auto;
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0px 0px 5px 0px #949494;
-  width:  70vw;
-  height: 80vh;
-  
-  .header{
-    border-bottom: 2px solid $ku-red;
-    height: 7vh;
-    display: flex;
-    .left{
-      width: 50%;
-      display: flex;
-    }
-    .right{
-      width: 50%; 
-      display: flex;
-    }
-  }
-}
+            .newsList-bottom, .newsLogin-bottom, .scholar-bottom, .applicantList-bottom, .intervieweeList-bottom{
+              display: flex;
+              width: 100%;
+              h3{
+                margin: 2% 3% 2% 3%;
+                cursor: pointer;
+                font-size: size(0.8);
+              }
+              //------------- Announcement.js ----------------
+              //--------- NewsList.js ----------
+              /*------ปุ่ม ลบ แก้ไข เทส--------*/
+              .admin-panel {
+                text-align: left;
+                display: flex;
+                width: 60%;
+                margin-top: size(0.4);
+                margin-bottom: size(0.4);
 
-//--------------- head-content ส่วนบนสุดของแต่ละ frame ----------------------
-.icons{
-  width: size(1.9);
-  height: size(1.9);
-  margin: auto 0 auto 0.5vw;
-  border-radius: 50%;
-  font-size: size(1.2);
-  color: #fff;
-  text-align: center;
-  background : linear-gradient( #f6c8b1, #DD4A48);
-} 
+                .btn-delete , .btn-modify{
+                  width: size(2);
+                  height: size(1);
+                  border-radius: 3px;
+                  border-style: hidden;
+                  color:white;
+                  margin-left: size(0.3);
+                  font-size: size(0.6);
+                }
+                .btn-delete {
+                  background-color: #DD4A48;
+                }
+                .btn-modify {
+                  background-color: $ku-red;
+                }
+              }
+            }
+          }  
+          //------------------ Scholarship.js --------------------
+          /*---- scholar-list กรอบของทุนต่างๆ ------*/
+          .scholar-list{
+            background-color: rgba(240, 240, 240, 0.4);
+            box-shadow: 0px 0px 5px 0px #949494;
+            border-radius: 10px;
+            margin: 2.5%;
+            width:75%;
+            //height: 14vh;
+            /*------ หัวข้อย่อยข้างในข่าวสาร ---------*/
+            .title {
+              height: 7vh;
+              border-bottom: 2px solid #7c7c7c;
+              display: flex;
+              h2{
+                margin: auto 0 auto 1rem;
+                text-align: left;
+                width: 60%;
+                font-size: size(0.9);
+              }
+              h3{
+                margin: auto 1rem auto 0;
+                text-align: right;
+                width: 40%;
+                font-size: size(0.9);
+              }
+            }
+            /*----------- bottom ส่วนล่างสุดของกรอบข่าวสาร ------------*/
 
-.topic{
-  margin: auto 0 auto 0.5vw;
-  font-size: size(1);
-  font-weight: 500;
-  margin-top: 1.8vh;
-}
+            .newsList-bottom, .newsLogin-bottom, .scholar-bottom, .applicantList-bottom, .intervieweeList-bottom{
+              display: flex;
+              width: 100%;
+              h3{
+                margin: 2% 3% 2% 3%;
+                cursor: pointer;
+                font-size: size(0.8);
+              }
+              //------------- Announcement.js ----------------
+              //--------- NewsList.js ----------
+              /*------ปุ่ม ลบ แก้ไข เทส--------*/
+              .admin-panel {
+                text-align: left;
+                display: flex;
+                width: 60%;
+                margin-top: size(0.4);
+                margin-bottom: size(0.4);
 
-.logout-button{
-  margin: auto 5% auto 5%;
-}
+                .btn-delete , .btn-modify{
+                  width: size(2);
+                  height: size(1);
+                  border-radius: 3px;
+                  border-style: hidden;
+                  color:white;
+                  margin-left: size(0.3);
+                  font-size: size(0.6);
+                }
+                .btn-delete {
+                  background-color: #DD4A48;
+                }
+                .btn-modify {
+                background-color: $ku-red;
+                }
+              
+              }
+            }
+            
+          }//สิ้นสุดscholarList
 
-//-----------------frame-subcontent ขนาดของเฟรมย่อยแต่ละหน้า ------------------
-/*----- กรอบ ประกาศข่าวสาร กรอบทุนที่เปิดให้ลงทะเบียน ------*/
-.content1{ 
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 73vh;
-}
+          /*------- ปุ่มลงทะเบียน,นัดหมายสีเขียว ---------*/
+          .button-big{
+            color: white;
+            font-size: size(0.75);
+            width: 15%;
+            height: 15vh;
+            background-color:$ku-green;
+            margin: 3vh auto 2vh auto;
+            border-radius: 0.5rem;
+            border:none ;
+          } 
+     
 
-/*---------------- กรอบแบบรายงานทุน ------------------*/
-.content2{ 
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 61vh;
-}
+          .announCre-form, .announEdit-form{
+            margin-top: size(1);
+            margin-left: size(1);
+            width: 98%;
+            .topic-input {
+        
+              margin-bottom: size(0.5);
+              font-size: size(0.6);
+              width: 50%;
+              height: size(2);
+            }  
+        
+            input, textarea{
+              border: 2px solid $ku-red;
+              border-radius: 5px;
+              background-color: white;
+              padding-left: 9px;
+              resize: none;
+              font-size: size(0.7);
+            }
+            
+            .detail {
+              textarea{
+                width: 97%;
+                height: size(18);
+                padding-top: 5px;
+                
+              }
+            }
+            .insertbutton{
+              width: 100%;
+              display: flex;
+          
+              .insert{
+                width: 0.1px;
+                height: 0.1px;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                z-index: -1;
+              }
+          
+              label{
+                border-radius: 10px;
+                width: size(2);
+                height: size(2);
+                border-style: hidden;
+                background-color: $ku-green;
+                font-size: size(1.5);
+                cursor:pointer;
+                color: white;
+                text-align: center;
+                margin-top: size(0.5);
+              }
+              
+              p{
+                margin-top: size(1);
+                margin-left: size(0.5);
+              }       
+            }  
+          }
+          //anoucementCreate ส่วนล่างฟอร์ม
+          .preview{
+            width: 95%;
+            margin-top: size(0.5);
+            border-top: 3px solid #C4C4C4; 
+            margin-left: size(1);
+            
+            h4{
+              margin-top: size(0.8);
+              font-size: size(1);
+            }
+          }
+          .news{
+            margin-left: size(1);
+            width: 95%; 
+          }
+        }
 
-/*--------- กรอบกรอกประวัติ กรอบตรวจสอบเอกสาร ----------*/
-.content3{ 
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 67vh;
-}
+        /*---------------- กรอบแบบรายงานทุน ------------------*/
+        .content2{ 
+          overflow-y: scroll;
+          overflow-x: hidden;
+          height: 61vh;
 
-/*------------- กรอบกำหนดสิทธิ์การเข้าถึง -----------------*/
-.content4{ 
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 60vh;
-}
+          
+        }
 
- /*-------- กรอบตรวจสอบข้อมูล กรอบการสัมภาษณ์ -----------*/
-.content5{
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 56vh;
-  
-} 
+        /*--------- กรอบกรอกประวัติ กรอบตรวจสอบเอกสาร ----------*/
+        .content3{ 
+          overflow-y: scroll;
+          overflow-x: hidden;
+          height: 67vh;
 
-//-------------------- footer-page ส่วนล่างสุด "คณะวิศวะฯ" --------------------
-.footer-page{
-  width: 100%;
-  height: 7vh;
-  background: $ku-red;
-  font-family: 'Prompt', sans-serif;
-  color: white;
-  bottom: 0;
+          //----------- ProfileEdit.js  ApplicantCherkform.js  ScholarshipRegister.js -----------//
+          /*--------- ชื่อ นามสกุล ---------*/
+          .profileEdit-form , .scholarChek-form, .scholarReg-form{ 
+            width:80%;
+            margin-left: 20%;
+            margin-bottom: size(1);
+            h5{
+              margin: size(1) 0 size(1.5) size(10) ;
+              font-weight: 600;
+            }
+            p{
+              margin-left: size(0.1);
+              margin-top: size(1);
+              font-weight: 600;
+              font-size: size(0.8); 
+            }
+            label{
+              font-size: size(0.7); 
+            }
+            input{
+              width: 80%;
+              height: 6vh;
+              padding: 9px 10px;
+              display: inline-block;
+              border: 2px solid $ku-red;
+              border-radius: 7px;
+              box-sizing: border-box;
+              background-color: #f5f5f5;
+              font-size: size(0.66); 
+              margin-bottom: size(0.5);
+            }
+            select{
+              width: 80%;
+              height: 6vh;
+              border: 2px solid $ku-red;
+              padding: 9px 10px;
+              border-radius: 7px;
+              background-color: #f5f5f5;
+              font-size: size(0.66);
+              margin-bottom: size(0.5); 
+            }
+            /*.topic-doc h5{ 
+              //margin-left: size(10.3);
+              margin-top: size(1);
+              font-weight: 500;
+            }*/
+          }
+          .profile-fam {
+            width: 80%;
+            height: 10vh;
+            
+            .fam1-edit, .fam2-edit {
+              width: 50%;
+            }
+            .fam1-edit {
+              input{
+                width: 90%;
+                height: 5vh;
+              }
+            }
+            .fam2-edit {
+              select{
+                width: 100%;
+              }
+              input{
+                width: 100%;
+                height: 5vh;
+              }
+            } 
+          }
+        }
 
-  h5{
-    margin: auto 0 auto 0;
-    font-size: size(0.8);;
-  }
+        .line-gray{
+          height: 0.5vh;
+          border-top: 2px solid #C4C4C4; 
+          width: size(42.5);
+          margin: auto auto auto size(1);
+        }
 
-  .ku_src_logo{
-    width: size(1.4);
-    height: size(1.8);
-    margin: 1vh;
-  }
-  .ku_eng_src_logo{
-    width: size(2.2);
-    height: size(1.8);
-    margin: 1vh 1vh 1vh 0;
-  }
+        .rolesSetting-search {
+          margin-top: size(0.7);
+          width: size(42.5);
+          height: 10%;
+          margin-left: size(1);
+        
+          input{
+            width: 95%;
+            height: 100%;
+            border:none;
+            outline:none;
+            padding: size(0.3) size(0.5);
+            display: inline-block;
+            border-radius: 14px;
+            box-sizing: border-box;
+            background-color: #f5f5f5;
+            font-size: size(0.66); 
+          }
+          button{
+            background-color: #f5f5f5;
+            width: 5%;
+            height: 100%;
+            display: inline-block;
+            border-radius: 14px;
+            box-sizing: border-box;
+            font-size: size(0.66);
+          }
+          .search-role{
+            border-radius: 14px; 
+            text-align: right;
+            border: 1px solid $ku-red;
+            width: 100%; 
+            background-color: #f5f5f5; 
+          }
+        }
 
-}
+        /*------------- กรอบกำหนดสิทธิ์การเข้าถึง -----------------*/
+        .content4{ 
+          overflow-y: scroll;
+          overflow-x: hidden;
+          height: 60vh;
 
+          .roleList {
+            background-color: white;
+            border-radius: 10px;
+            width: size(42.5);
+            margin: size(0.5) auto auto size(1);
+            border: 1px solid $ku-red;
+            border-top: 4px solid $ku-red;
+            width: 96.5%;
+             /*-------------- rolelist กำหนดสิทธิ์ผู้ใช้แต่ละ email ---------------*/
+            .roleList-form{
+              width: 100%;
+              .name, .role{
+                font-size: size(0.8);
+                margin-top: size(0.5);
+              }
+              .name{
+                width: 50%;
+                margin-left: size(0.5);
+                
+              }
+              .role{
+                width: 10%; 
+              }
 
-//------------- Announcement.js ----------------
-//--------- NewsList.js ----------
-/*------ปุ่ม ลบ แก้ไข เทส--------*/
-.admin-panel {
-  text-align: left;
-  display: flex;
-  width: 60%;
-  margin-top: size(0.4);
+              /*----------- roleList-right ส่วน form choose -------------*/
+              .roleList-right{
+                width: 40%; 
+                select {
+                  margin-top: size(0.5);
+                  margin-left: size(2.5);
+                  width: 80%;
+                  padding: size(0.2) size(0.5);
+                  display: inline-block;
+                  border: 1px solid $ku-red;
+                  border-radius: 7px;
+                  box-sizing: border-box;
+                  background-color: #f5f5f5;
+                  font-size: size(0.66);
+                }
+              }
 
-  .btn-delete , .btn-modify{
-    width: size(2);
-    height: size(1);
-    border-radius: 3px;
-    border-style: hidden;
-    color:white;
-    margin-left: size(0.3);
-    font-size: size(0.6);
-  }
-  .btn-delete {
-    background-color: #DD4A48;
-  }
-  .btn-modify {
-  background-color: $ku-red;
-  }
- 
-}
+              .memberList-right {
+                width: 100%;
+               
+                button{
+                  background-color: #F5F5F5;
+                  border-radius: 5px;
+                  border-style: hidden;
+                  width: 30%; 
+                  height: 6vh;
+                  
+                }
+                p {
+                  padding-left: 13px;
+                  padding-top: 11px;
+                  font-size: size(0.7);  
+                }
+                .button-checklist{
+                  margin:size(0.5);
+                  margin-left: size(19);
+                  .bi{
+                    margin-top: size(0.2);
+                    border-radius: 10px;
+                    width: size(1.7);
+                    height: size(1.7);
+                    font-size: size(1.1);
+                    color: white;
+                    box-shadow: 0px 0px 2px 0px #949494;
+                    background-color: $ku-green; 
+                    }
+                }
+               
+              }
+            }
+          }  
+        
 
-/*----- button-add เพิ่มทุน,เพิ่มข่าว -----*/
-.button-add{
-  background-color: #F5F5F5;
-  border-radius: size(0.5);
-  width: size(6);
-  height: size(1.5);
-  border-style: hidden;
-  margin: auto 3vw auto auto;
-  margin-top: 1.3vh;
-}
-.button-add{ 
-  p{
-    font-size: size(0.8);
-    margin: auto;
-  }
-  .bi{
-    background-color: $ku-green;
-    border-radius: 5px;
-    width: size(1);
-    height: size(1);
-    font-size: size(0.8);
-    color: white;
-    margin: auto;
-    
-  }
-}
-//--------- Announcement.js AnnouncementLogin.js ----------
-/*----------- กรอบข่าวสาร -----------*/
-.news{
-  background-color: rgba(240, 240, 240, 0.4);
-  border: 1px solid gray;
-  border-radius: 10px;
-  margin: 2.5%;
+        }//สิ้นสุดcontent4
 
-}
+        .report-row-top {
+          height: 11vh;
+          margin-top: size(0.7);
+         
+          select{
+            padding: size(0.2) size(0.5);
+            display: inline-block;
+            border: 1px solid $ku-red;
+            border-radius: 7px;
+            box-sizing: border-box;
+            background-color: #f5f5f5;
+            font-size: size(0.66);
+          }
+          label{
+            font-size: size(0.8);
+          }
+          .report-scholarship, .report-term, .report-type, .report-sponcer {
+            margin-left: size(1);
+            width: 15%;
+            select{
+              width: 100%;
+            }
+            
+          }  
+              
+        }
 
-/*------ หัวข้อย่อยข้างในข่าวสาร ---------*/
-.title {
-  height: 7vh;
-  border-bottom: 2px solid #7c7c7c;
-  display: flex;
-  h2{
-    margin: auto 0 auto 1rem;
-    text-align: left;
-    width: 60%;
-    font-size: size(0.9);
-  }
-  h3{
-    margin: auto 1rem auto 0;
-    text-align: right;
-    width: 40%;
-    font-size: size(0.9);
-  }
+         //------------------------ Applicant.js Interview.js -----------------------
+        /*-------- row-top-check ส่วน from ด้านบนหน้า Applicant  ----------*/
+        /*-------- row-top-interview  ส่วน from ด้านบนหน้า Interview -------*/
+        .applicant-row-top, .interview-row-top  {
+          width: 100%;
+          height: 11vh;
+          margin-top: size(0.7);
+          /*------- ส่วน from ประเภทของทุนหน้า Applicant Interview  -------*/
+          .applicant-column-left, .interview-column-left{
+            width: 50%;
+            margin-left: size(1);
+            .applicant-select, .interview-left{
+              label{
+                font-size: size(0.8);
+              }
+              select{
+                width: 60%;
+                padding: size(0.2) size(0.5);
+                display: inline-block;
+                border: 1px solid $ku-red;
+                border-radius: 7px;
+                box-sizing: border-box;
+                background-color: #f5f5f5;
+                font-size: size(0.66);
+              }
+            }
+          }
+          .applicant-column-right, .interview-column-right {
+            width: 50%;
+            .applicant-search, .interview-search{
+              background-color: hsl(0, 0%, 96%);
+              text-align: right;
+              width: 87%;
+              height: size(1.6);
+              border: 1px solid $ku-red;
+              border-radius: 14px; 
+              margin-top: size(1.2); 
+              margin-left: size(1.4);
+            
+              input{
+                width: 90%;
+                height: 100%;
+                border:none;
+                outline:none;
+                padding: size(0.6) size(0.8);
+                display: inline-block;
+                border-radius: 14px;
+                box-sizing: border-box;
+                background-color: #f5f5f5;
+                font-size: size(0.66);
+                
+              }
+              button{
+                background-color: #f5f5f5;
+                width: 10%;
+                height: 95%;
+                display: inline-block;
+                border-radius: 14px;
+                box-sizing: border-box;
+                font-size: size(0.66);
+                
+              }
+              
+            }
+            
+            
+          }
+          
+        }
+        
+        /*-------- กรอบตรวจสอบข้อมูล กรอบการสัมภาษณ์ -----------*/
+        .content5{
+          overflow-y: scroll;
+          overflow-x: hidden;
+          height: 56vh;
+          //-------------------- scholar-Interview ------------------------
+          .applicantList, .intervieweeList, .reportList  {
+            background-color: white;
+            border-radius: 10px;
+            width: size(42.5);
+            margin: size(0.5) auto auto size(1);
+            border: 1px solid $ku-red;
+            border-top: 4px solid $ku-red;
+             //--------------- reportList.js applicantList.js intervieweeList.js ---------------
+            /*----------- reportList-right ปุ่มขวาหน้ารายงานทุน -----------*/
+            /*------- applicantList-right ปุ่มขวาหน้าตรวจสอบข้อมูล การสัมภาษณ์ --------*/
+            .reportList-right, .applicantList-right, .intervieweeList-right {
+              width: 100%;
+              button{
+                background-color: #F5F5F5;
+                border-radius: 5px;
+                border-style: hidden;
+                width: 20%; 
+                height: 6vh;
+              }
+              p {
+                padding-left: 13px;
+                padding-top: 11px;
+                font-size: size(0.7);  
+              }
+              .button-search , .button-clock, .button-hourglass, .button-bookmark    {
+                margin:size(0.5);
+                margin-left: size(32);
+                .bi{
+                  margin-top: size(0.2);
+                  border-radius: 10px;
+                  width: size(1.7);
+                  height: size(1.7);
+                  font-size: size(1.1);
+                  color: white;
+                  box-shadow: 0px 0px 2px 0px #949494;
+                 
+                }
+              }
+              .button-hourglass .bi{
+                background-color: $ku-green; 
+              
+              }
+              .button-search .bi{
+                background-color: #28C3D7;
+               
+              }
+              .button-bookmark  .bi{
+                //background-color: #ff9500; 
+                background-color: #fba42a; 
+              }
+              .button-clock .bi{
+                //background-color: #ffbe26;
+                //background-color: #fb4c21;
+                background-color: #f14646;
+                
+              }
+             
+            }
+            
+          }
+            /*----------- bottom ส่วนล่างสุดของกรอบข่าวสาร ------------*/
+            .reportList-bottom{
+              width: 40%;
+              h3 {
+                margin-left: size(1);
+                margin-top: size(0.5);
+                font-size: size(0.8);
+              }
+            }
+           
+        }//สิ้นสุดcontent5
+         
+        /*-------- ข้อมูลส่วนตัว -----------*/
+        .content6{
+          overflow-y: scroll;
+          overflow-x: hidden;
+          height: 80vh;
+          
+          //------------------ Profile.js -----------------
+          /*----- row-top-profile ------*/
+          .profile-row-top {
+            height: size(14);
+            border-bottom: 3px solid #C4C4C4;
+          }
 
-}
+          /*------ img และ form profile ทั้งหมด ----*/
+          .profile-form {
+            width: 100%;
+            input {
+              padding: size(0.2) size(0.5);
+              display: inline-block;
+              border: 1px solid $ku-red;
+              border-radius: 7px;
+              box-sizing: border-box;
+              background-color: #f5f5f5;
+              font-size: size(0.66);
+              margin-bottom: size(0.5);
+            }
+            label{
+              font-size: size(0.8);
 
-/*---------- เนื้อหาในข่าวสาร ----------*/
-.content, .content-image {
-  height: 30vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  transition: transform .5s; /* Animation */
-}
-.content h3{
-  padding: size(1); font-size: size(0.8);
-}
-/*--------- รูปของข่าวสาร ------------*/
-.news-image {
-  display:block;
-  margin-left: auto;
-  margin-right: auto;
-  width: auto;
-  height: 30vh;
-  background-color: lightgray;
-  transition: transform .5s; /* Animation */
-}
-.news-image:hover {
-  cursor: pointer;
-}
+            }
+            .profile-img{
+              width: 20%;
+              
+              margin: size(1.5) auto auto size(1.5);
+              text-align: center;
+              p {
+                margin-top: size(0.3);
+              }
+              img{
+                border-radius: 50%;
+                width: size(6) ;
+                height : size(7.5); 
+              }
+            }
+            .profile-data {
+              margin-top: size(2);
+              width: 80%; 
+              /*------ ส่วนซ้าย form โปรไฟล์ -------*/
+              .profile-column-left {
+                width: 40%; 
+                input {
+                  width: 90%;
+                }
+              }
+              /*------ ส่วนกลาง form โปรไฟล์ -------*/
+              .profile-column-center{
+                width: 40%;
+                input{
+                  width: 90%;
+                }
+                .profile-branch input{
+                  width: 127%;
+                }
+              }
+              /*------- ส่วนขวา form โปรไฟล์ -------*/
+              .profile-column-right{
+                width: 20%; 
+                .profile-grade input{
+                  width: 55%;
+                }
+              }    
+            }
+          } 
+          /*------ row-bottom-profile --------*/
+          .profile-row-bottom{
+            margin-left: size(1.5);
+            margin-top: size(0.5);
+            .drop-scholaship{
+              width:100%;
+              height: 13vh;
+              select{
+                margin-top: size(0.2);
+                width: 35%;
+                padding: size(0.2) size(0.5);
+                display: inline-block;
+                border: 1px solid $ku-red;
+                border-radius: 7px;
+                box-sizing: border-box;
+                background-color: white;
+                font-size: size(0.66);
+                }
+              } 
+            }
+          /*-------- ปุ่ม "สร้างโปรไฟล์" --------*/
+          .botton-edit{
+            button {
+              border: none;
+              color: white;
+              width: size(7);
+              height: size(1.5);  
+              text-align: center;
+              text-decoration: none;
+              cursor: pointer;
+              border-radius: 50px;
+            }
+            p {
+              font-size: size(0.8);
+              margin: 3px;
+            }
+            .botton-edit1 {
+              margin-left: size(34.5);
+              button {
+                background-color: $ku-green; 
+              }
+            } 
+            .botton-edit2 {
+              margin-left: size(36.5);
+              button{
+                background-color: #C07A7A; 
+              }
+            }
+          }  
+        }//สิ้นสุด content6
+      }//สิ้นสุด frame
+    }//สิ้นสุด row-center
+  }//สิ้นสุด column-right
 
-/*---------- รายละเอียดเพิ่มเติม ---------*/
-.news-user-panel{
-  width: 100%;
-  text-align: right;
-  float: right;
-}
-.user-panel {
-  width: 100%;
-  text-align: right;
-  float: right;
-  
-}
-
-/*----- ปุ่ม บันทึก ยกเลิก ที่เพิ่มข่าวสาร -----*/
-.button2-set{
-  display: flex;
-  margin-left: size(12.8);
-}
-.save-button, .cancel-button{
-  border-radius: 4px;
-  width: size(4);
-  height: size(1.5);
-  border-style: hidden;
-  color: white;
-  font-size: size(0.7);
-  display: flex;
-  margin: auto;
-  .bi, p{
-    margin: auto;
-  }
-}
-.save-button {
-  background-color: $ku-green;
-}
-.cancel-button {
-  background-color: $ku-red;
-  margin-left: size(0.3) ;
-}
-
-.announCre-center, .announEdit-center{
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 73vh;
-  
-  form{
-    margin-top: size(1);
-    margin-left: size(1);
-    width: 98%;
-  }
-
-  input, textarea{
-    border: 2px solid $ku-red;
-    border-radius: 5px;
-    background-color: white;
-    font-weight: 300;
-    padding-left: 9px;
-    resize: none;
-  }
-  
-  .topic-input {
-    margin-bottom: size(0.5);
-    font-size: size(0.6);
-    width: 50%;
-    height: size(2);
-  }  
-  .detail textarea{
-    width: 97%;
-    height: size(17);
-    font-size: size(0.8);
-  }
-  .insertbutton{
+  //-------------------- footer-page ส่วนล่างสุด "คณะวิศวะฯ" --------------------
+  .footer-page{
     width: 100%;
-    display: flex;
+    height: 7vh;
+    background: $ku-red;
+    font-family: 'Prompt', sans-serif;
+    color: white;
+    bottom: 0;
 
-    .insert{
-      width: 0.1px;
-      height: 0.1px;
-      opacity: 0;
-      overflow: hidden;
-      position: absolute;
-      z-index: -1;
+    h5{
+      margin: auto 0 auto 0;
+      font-size: size(0.8);;
     }
 
-    label{
-      border-radius: 10px;
-      width: size(2);
-      height: size(2);
-      border-style: hidden;
-      background-color: $ku-green;
-      font-size: size(1.5);
-      cursor:pointer;
-      color: white;
-      text-align: center;
-      margin-top: size(0.5);
+    .ku_src_logo{
+      width: size(1.4);
+      height: size(1.8);
+      margin: 1vh;
     }
-    
-    p{
-      margin-top: size(1);
-      margin-left: size(0.5);
-    } 
-    
+    .ku_eng_src_logo{
+      width: size(2.2);
+      height: size(1.8);
+      margin: 1vh 1vh 1vh 0;
+    }
   }
+}//สิ้นสุด MainPage.js
   
-  .preview{
-    width: 95%;
-    margin-top: size(0.5);
-    border-top: 3px solid #C4C4C4; 
-    margin-left: size(1);
-    
-    h4{
-      margin-top: size(0.8);
-      font-size: size(1);
-    }
-  }
-  .news{
-    margin-left: size(1);
-    width: 95%; 
-  }
+
+
+
+
+
+
+@media (max-width: 480px) {
+  .main-page {
+    .sidebar {
+      .row-top {
+        .user-profile {
+          width   : 100%;
+          height  : 100%;
+          float   : left;
+          display : flex;
+          img {
+            height  : size(3.5);
+            width   : size(3.5);
+            margin  : auto;
+            border-radius: 50%;
+          }
+        }
+        .user-info {
+          visibility: hidden;
+        }
+        
+      }
+      .row-bottom {
+        ul {
+          li{
+            i { 
+              font-size: size(3);
+              //background: #28C3D7;
+              height: 100%;
+              width: 100%;
+              padding: 0;
+              margin: 0 0 0 4vw;
+            }
+            p {
+              visibility: hidden;
+            }
+          }
+        }
+      }
+    } 
+  } 
 }
 
-/*----------- bottom ส่วนล่างสุดของกรอบข่าวสาร ------------*/
 
-.newsList-bottom, .newsLogin-bottom, .scholar-bottom, .applicantList-bottom, .intervieweeList-bottom{
-  display: flex;
-  width: 100%;
-  h3{
-    margin: 2% 3% 2% 3%;
-    cursor: pointer;
-    font-size: size(0.8);
-   }
-}
 
-.reportList-bottom{
-  width: 40%;
-  h3 {
-    margin-left: size(1);
-    margin-top: size(0.5);
-    font-size: size(0.8);
-  }
-}
+
+
+
+
+
+
+  
+
+
+
+//เหลือข้างใน
 
 //------------------ Interview.js -------------------
 //------ InterviewRate.js ----------
-.interviewrate-center {
-  width: 100%;
-  height: 75%;
-  form{
-    width: 90%;  
-    margin-top: size(1.5);
-    margin-left: size(3);
-  }
+
+.interviewrate-form{
+  width: 90%;  
+  margin-top: size(1.5);
+  margin-left: size(3);
 }
 /*------------ ช่องประเมิน -----------*/
 .interviewrate-score input {
@@ -681,12 +1374,11 @@ body {
 }
 
 //-------- InterviewSchedule.js -------
-.interviewSchedule-center {
-  form {
-    margin-top: size(1.5);
-    margin-left: size(3);
-    width: 100%;
-  }
+.interviewSchedule-form  {
+  margin-top: size(1.5);
+  margin-left: size(3);
+  width: 100%;
+  
 
   input, select {
     padding: size(0.2) size(1);
@@ -695,166 +1387,14 @@ body {
     border-radius: 7px;
     box-sizing: border-box;
     background-color: #f5f5f5;
-    font-size: size(0.66);
+    font-size: size(0.77);
     width: 90%;
     height: 5vh; 
   }
 }
 
 
-//------------------ Profile.js -----------------
-/*----- row-top-profile ------*/
-.profile-row-top {
-  height: size(14);
-  border-bottom: 3px solid #C4C4C4;
-}
 
-/*------ img และ form profile ทั้งหมด ----*/
-.profile-form {
-  margin-left: size(1);
-  input
-  {
-    padding: size(0.2) size(1);
-    display: inline-block;
-    border: 1px solid $ku-red;
-    border-radius: 7px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    font-size: size(0.66);
-  }
-}
-.profile-img{
-  margin-left: size(1);
-  margin-top: size(1.5);
-  text-align: center;
-  p {
-    margin-top: size(0.3);
-  }
-  img{
-    border-radius: 50%;
-    width: size(6) ;
-    height : size(7.5); 
-  }
-}
-
-.profile-data {
-  margin-top: size(2);
-}
-
-/*------ ส่วนซ้าย form โปรไฟล์ -------*/
-.profile-column-left {
-  margin-left: size(1);
-  input {
-    width: 120%;
-  }
-}
-/*------ ส่วนกลาง form โปรไฟล์ -------*/
-.profile-column-center{
-  margin-left: size(3);
-  input{
-    width: 120%;
-  }
-}
-/*------- ส่วนขวา form โปรไฟล์ -------*/
-.profile-column-right{
-  margin-left: size(3.5);
-}
-.profile-grade input{
-  width: 67%;
-}
-.profile-branch input{
-  width: 200%;
-}
-
-/*-------- ปุ่ม "สร้างโปรไฟล์" --------*/
-.botton-edit{
-  button {
-    border: none;
-    color: white;
-    width: size(7);
-    height: size(1.5);  
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border-radius: 50px;
-  }
-  p {
-    font-size: size(0.8);
-    margin: 3px;
-  }
-  .botton-edit1 {
-    margin-left: size(34.5);
-    button {
-      background-color: $ku-green; 
-    }
-  } 
-  .botton-edit2 {
-    margin-left: size(36.5);
-    button{
-      background-color: #C07A7A; 
-    }
-  }
-}
-/*------ row-bottom-profile --------*/
-.profile-row-bottom
-{
-  margin-left: size(1.5);
-  margin-top: size(0.5);
-}
-.drop-scholaship
-{
-  width:100%;
-  height: 13vh;
-  select{
-    margin-top: size(0.2);
-    width: 35%;
-    padding: size(0.2) size(0.5);
-    display: inline-block;
-    border: 1px solid $ku-red;
-    border-radius: 7px;
-    box-sizing: border-box;
-    background-color: white;
-    font-size: size(0.66);
-    
-  }
-}
-
-//------------------- Report.js ------------------
-/*------------- 4 select ด้านบนของหน้ารายงานทุน ------------*/
-.line-gray{
-  height: 0.5vh;
-  border-top: 2px solid #C4C4C4; 
-  width: 95%;
-  margin-left: size(1.1);
-}
-
-.report-row-top {
-  height: 11vh;
-  margin-top: size(0.7);
- 
-  select{
-    padding: size(0.2) size(0.5);
-    display: inline-block;
-    border: 1px solid $ku-red;
-    border-radius: 7px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    font-size: size(0.66);
-  }
-  label{
-    font-size: size(0.8);
-  }
-  
-}
-
-.report-scholarship, .report-term, .report-type, .report-sponcer {
-  margin-left: size(1);
-  width: 15%;
-  select{
-    width: 100%;
-  }
-  
-}
 //------------ ReportInspect.js -------------
 .reportInspect-head {
   width: 40%;
@@ -901,103 +1441,7 @@ body {
 }
 
 
-//--------------- RoleSetting.js ----------------
-.rolesSetting-search {
-  margin-top: size(0.7);
-  width: 95%;
-  height: 10%;
-  margin-left: size(1);
 
-  input{
-    width: 95%;
-    height: 100%;
-    border:none;
-    outline:none;
-    padding: size(0.3) size(0.5);
-    display: inline-block;
-    border-radius: 14px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    font-size: size(0.66); 
-  }
-  button{
-    background-color: #f5f5f5;
-    width: 5%;
-    height: 100%;
-    display: inline-block;
-    border-radius: 14px;
-    box-sizing: border-box;
-    font-size: size(0.66);
-  }
-  .search-role{
-    border-radius: 14px; 
-    text-align: right;
-    border: 1px solid $ku-red;
-    width: 100%; 
-    background-color: #f5f5f5; 
-  }
-}
-
-
-/*-------------- rolelist กำหนดสิทธิ์ผู้ใช้แต่ละ email ---------------*/
-.roleList{
-  width: 100%;
-  
-  .name, .role{
-    font-size: size(0.8);
-    margin-top: size(0.5);
-  }
-  .name{
-    margin-left: size(0.5);
-  }
-}
-
-.roleList-form{
-  /*background-color: white;
-  border-radius: 10px;
-  width: 96.5%;
-  height: size(3);
-  margin: size(0.5) auto auto size(1.1);
-  border: 1px solid $ku-red;
-  border-top: 4px solid $ku-red;*/
-
-  .name{
-    width: 50%; 
-  }
-  .role{
-    width: 15%; 
-  }
-  
-}
-
-/*----------- roleList-right ส่วน form choose -------------*/
-.roleList-right{
-  width: 50%; 
-  select {
-    margin-top: size(0.5);
-    margin-left: size(2.5);
-    width: 80%;
-    padding: size(0.2) size(0.5);
-    display: inline-block;
-    border: 1px solid $ku-red;
-    border-radius: 7px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    font-size: size(0.66);
-  }
-}
-
-
-//------------------ Scholarship.js --------------------
-/*---- scholar-list กรอบของทุนต่างๆ ------*/
-.scholar-list{
-  background-color: rgba(240, 240, 240, 0.4);
-  box-shadow: 0px 0px 5px 0px #949494;
-  border-radius: 10px;
-  margin: 2.5%;
-  width:75%;
-  //height: 14vh; 
-}
 
 //--------- ScholarshipCreate.js ----------
 /*---ส่วนของหน้าสร้างทุนทั้งหมด-----*/
@@ -1135,7 +1579,7 @@ body {
 
 }
 //--------- CreateDetail.js --------
-/*----------- const AnnounceForm -------------*/
+/*---- const AnnounceForm -----*/
 .announce-topic{
   height: 5.5vh;
   width: 100%;
@@ -1149,13 +1593,28 @@ body {
       width: 100%;
       height: 100%;
     }
+
+    .input-button {
+      position: relative;
+      height: 100%;
+      input{
+        width: 100%;
+        height: 100%;
+      }
+      button {
+        position: absolute;
+        right: 7.5px;
+        top : 7.5px;
+        border: none;
+      }
+    }
   }
 
   .year, .term{
     margin-left: size(0.4);
   }
 }
-
+//
 .announce-center .detail{
   width: 100%;
   height: size(13);
@@ -1204,227 +1663,7 @@ body {
 
 
 
-/*------- ปุ่มลงทะเบียน,นัดหมายสีเขียว ---------*/
-.button-big{
-  color: white;
-  font-size: size(0.75);
-  width: 15%;
-  height: 15vh;
-  background-color:$ku-green;
-  margin: 3vh auto 2vh auto;
-  border-radius: 0.5rem;
-  border:none ;
-}
 
-
-
-
-//--------------- reportList.js applicantList.js intervieweeList.js ---------------
-/*----------- reportList-right ปุ่มขวาหน้ารายงานทุน -----------*/
-/*------- applicantList-right ปุ่มขวาหน้าตรวจสอบข้อมูล การสัมภาษณ์ --------*/
-.reportList-right, .applicantList-right, .intervieweeList-right {
-  width: 100%;
-  button{
-    background-color: #F5F5F5;
-    border-radius: 5px;
-    border-style: hidden;
-    width: 20%; 
-    height: 6vh;
-  }
-  p {
-    padding-left: 13px;
-    padding-top: 11px;
-    font-size: size(0.7);  
-  }
-}
-.applicantList-right, .intervieweeList-right, .reportList-right{
-  margin-left: size(32);
-
-  .button-search , .button-clock{
-    margin:size(0.5);
-  }
-  
-}
-
-.button-search, .button-clock {
-  .bi{
-    margin-top: size(0.2);
-    border-radius: 10px;
-    width: size(1.7);
-    height: size(1.7);
-    font-size: size(1.1);
-    color: white;
-    box-shadow: 0px 0px 2px 0px #949494;
-    background-color: #28C3D7;
-   
-  }
-  
-}
-.button-clock .bi{
-  background-color: $ku-green;
-
-}
-
-
-//------------------------ Applicant.js Interview.js -----------------------
-/*-------- row-top-check ส่วน from ด้านบนหน้า Applicant  ----------*/
-/*-------- row-top-interview  ส่วน from ด้านบนหน้า Interview -------*/
-.applicant-row-top, .interview-row-top  {
-  width: 100%;
-  height: 11vh;
-  margin-top: size(0.7);
-
-}
-
-/*------- ส่วน from ประเภทของทุนหน้า Applicant Interview  -------*/
-.applicant-column-left, .interview-column-left{
-  width: 50%;
-  margin-left: size(1);
-}
-
-.applicant-select, .interview-left{
-  
-  label{
-    font-size: size(0.8);
-  
-  }
-  select{
-    width: 60%;
-    padding: size(0.2) size(0.5);
-    display: inline-block;
-    border: 1px solid $ku-red;
-    border-radius: 7px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    font-size: size(0.66);
-  
-  }
-
-}
-/*--------- ส่วน from search หน้า Applicant Interview  --------*/
-.applicant-column-right, .interview-column-right {
-  width: 50%;
-  
-}
-.applicant-search, .interview-search{
-  background-color: hsl(0, 0%, 96%);
-  text-align: right;
-  width: 87%;
-  height: size(1.6);
-  border: 1px solid $ku-red;
-  border-radius: 14px; 
-  margin-top: size(1.2); 
-  margin-left: size(1.4);
-
-  input{
-    width: 90%;
-    height: 100%;
-    border:none;
-    outline:none;
-    padding: size(0.6) size(0.8);
-    display: inline-block;
-    border-radius: 14px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    font-size: size(0.66);
-    
-  }
-  button{
-    background-color: #f5f5f5;
-    width: 10%;
-    height: 95%;
-    display: inline-block;
-    border-radius: 14px;
-    box-sizing: border-box;
-    font-size: size(0.66);
-    
-  }
-  
-}
-//-------------------- scholar-Interview ------------------------
-.roleList, .applicantList, .intervieweeList, .reportList  {
-  background-color: white;
-  border-radius: 10px;
-  width: 95%;
-  margin: size(0.5) auto auto size(1.1);
-  border: 1px solid $ku-red;
-  border-top: 4px solid $ku-red;
-}
-
-
-
-
-
-//----------- ProfileEdit.js  ApplicantCherkform.js  ScholarshipRegister.js -----------//
-
-/*--------- ชื่อ นามสกุล ---------*/
-
-.profileEdit-form , .scholarChek-form, .scholarReg-form { 
-  width:80%;
-  margin-left: 20%;
-  margin-bottom: size(1); 
-  
-  h5{
-    margin-left: size(10);
-    margin-top: size(1);
-    font-weight: 500;
-  }
-  p{
-    margin-left: size(0.1);
-    margin-top: size(1);
-    font-weight: 500;
-    font-size: size(0.81); 
-  }
-  input{
-    width: 80%;
-    padding: 9px 20px;
-    display: inline-block;
-    border: 2px solid $ku-red;
-    border-radius: 7px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    font-size: size(0.66); 
-  }
-  select{
-    width: 80%;
-    border: 2px solid $ku-red;
-    border-radius: 7px;
-    background-color: #f5f5f5;
-    font-size: size(0.66); 
-  }
-  .topic-doc h5{ 
-    margin-left: size(10.3);
-    margin-top: size(1);
-    font-weight: 500;
-  }
-  
-}
-.profile-fam {
-  width: 80%;
-  height: 10vh;
-  
-  .fam1-edit, .fam2-edit {
-    width: 50%;
-  }
-  .fam1-edit {
-  input{
-    width: 90%;
-    height: 5vh;
-  }
-
-}
-  .fam2-edit{
-    select{
-      width: 100%;
-    }
-    input{
-      width: 100%;
-      height: 5vh;
-    }
-
-  } 
-
-}
 //----IntervieweeList.js ApplicantList.js----------
 /*--------- ScholarshipCheckForm -----------*/
 .form-checks {
@@ -1463,7 +1702,7 @@ body {
 .form-note {
   width: 100%;
   height: 35vh;
-  margin-top: size(2);
+  margin-top: size(1);
   .note{
     margin-left: size(9);
 
@@ -1471,16 +1710,18 @@ body {
       font-size: size(0.77);
       font-weight: 500;
     }
-    input{
+    textarea{
       width: 80%;
       height: 30vh;
       margin: 8px 0;
+      padding: 9px 10px;
       display: inline-block;
       border: 2px solid $ku-red;
       border-radius: 7px;
       box-sizing: border-box;
       background-color: #f5f5f5;
-      font-size: size(0.77);   
+      font-size: size(0.66);
+      resize: none;   
     } 
   }
   
@@ -1596,3 +1837,10 @@ body {
   color: $ku-green;
 }
 
+
+
+//modal
+.swal2-container{
+	font-family: 'Prompt', sans-serif;
+
+}

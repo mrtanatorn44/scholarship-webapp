@@ -133,19 +133,19 @@ function AnnouncementEdit(props) {
         <div className="right">
           <div class="button2-set">
             <button className="save-button" onClick={() => (setShowModalSave(true))}>
-              <i className="bi bi-save"/>
+              <i className="bi bi-save"/><p>บันทึก</p>
             </button>
             { showModalSave && <ConfirmSaveModal sendConfirm={getConfirmSave}/> }
             { showModalAlert && <AlertModal text2='บันทึกเรียบร้อย' iconIndex={0} sendConfirm={getConfirmAlert}/>}
             <button className="cancel-button" onClick={() => (setShowModalCancel(true))}>
-              <i className="bi bi-x"/>
+              <i className="bi bi-x"/><p>ยกเลิก</p> 
             </button>
             { showModalCancel && <ConfirmCancelModal sendConfirm={getConfirmCancel}/> }
           </div>
         </div>
       </div>
-      <div className="announEdit-center d-flex">
-        <form>
+      <div className="content1 d-flex">
+        <form className="announEdit-form">
           <div className="topic-input d-flex">
             <input type="text" placeholder="หัวข้อข่าว" value={form.title} onChange={(e) => { setForm({ ...form, title: e.target.value })}}/>
           </div>

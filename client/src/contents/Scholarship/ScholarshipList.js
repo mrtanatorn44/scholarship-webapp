@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import data from '../../data/datanews.js';
 import { WebContext } from '../../App';
 import Axios from 'axios';
 
@@ -9,52 +8,104 @@ import Axios from 'axios';
 import ImageModal from "../../modals/ImageModal.js";
 import AlertModal from '../../modals/AlertModal.js';
 import ConfirmDeleteModal from '../../modals/ConfirmModal.js';
+import Swal from 'sweetalert2';
+import Lightbox from 'react-image-lightbox';
 function ScholarshipList(props) {
 
-  const { User, Content } = useContext(WebContext)
+  const { User, Content ,EditScholarshipID } = useContext(WebContext)
 
   const [user,setUser] = User;
   const [content, setContent] = Content;
 
-  const [Scholarna, setScholarna] = useState([{
-    Type :'',
-    createDate :'',
-    Detail:'',
-    organName :'',
-    Amount:'',
-    check:false
+  const [editScholarshipID,setEditScholarshipID]= EditScholarshipID;
+  const [Check, setCheck] = useState(false)
+  
+
+  const [Scholar, setScholar] = useState([{
+    id : '',
+    is_public       : false,
+    type            : '',
+    detail          : '',
+    amount          : '',
+    min_student_year: '',
+    max_student_year: '',
+    on_year         : '',
+    on_term         : '',
+    open_date       : '',
+    close_date      : '',
+    check           :false
   }])
 
-  const [Scholar, setScholar] = useState(
-    data.map((x) => ({
-      ...x,
-      check:false
-    }))
-  )
-  /*
   const getScholar = () => {
     Axios.get("http://localhost:5000/getAllScholarship").then((response) => { 
-      var result = response.data;
-      if (result.length !== 0) {
-        result.forEach((res, index) => {
-          var month_th      = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
-          var dmy           = res.date.split("T")[0].split("-").reverse();
-          var date_tranform = "วันที่ " + (parseInt(dmy[0])) + " " + month_th[parseInt(dmy[1], 10)] + " " + (parseInt(dmy[2]) + 543);
-          
-          Object.assign(res, {
-            Type          : res.Type.data,
-            createDate    : date_tranform,
-            Detail        : 
-            organName     : 
-            Amount        : 
-          });
-        });
+            var result = response.data;
+            if (result.length === 0) {
+              result = [{ 
+                id : '',
+                is_public       : false,
+                type            : '',
+                detail          : '',
+                amount          : '',
+                min_student_year: '',
+                max_student_year: '',
+                on_year         : '',
+                on_term         : '',
+                open_date       : '',
+                close_date      : '',
+                check           :false,
+              }]
+            } else {
+              result.forEach((res, index) => {
+                Object.assign(res, {
+                  id                : res.id,
+                  is_public         : res.is_public,
+                  type              : res.type,
+                  detail            : res.detail,
+                  amount            : res.amount,
+                  min_student_year  : res.min_student_year,
+                  max_student_year  : res.max_student_year,
+                  on_year           : res.on_year,
+                  on_term           : res.on_term,
+                  open_date         : res.open_date,
+                  close_date        : res.close_date,
+                  check             :false
+                });
+              });
+            }
+            setScholar(result);
+          })
+    }
+    //console.log(Scholarna);
+    
+  
+  const onHandleDeleteScholarBtn = (scholarID) => {
+    Swal.fire({
+      title: 'คุณแน่ใจหรือไม่?',
+      text: "ที่จะลบประกาศนี้!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#03A96B',
+      confirmButtonText: 'Delete',
+      cancelButtonColor: '#A62639',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (user.role === 'admin') {
+          Axios.post("http://localhost:5000/deleteScholarship", { id : scholarID }).then((response) => { 
+            setScholar([]);
+            Swal.fire('ลบประกาศเรียบร้อย!','','success')
+          })
+        }
       }
-        setScholarna(result);
     })
   }
-   */
 
+  
+  
+  
+ 
+  
+  
 
 
   const checkState = (index) => {
@@ -70,31 +121,38 @@ function ScholarshipList(props) {
       
     })
   }
+
   useEffect(() => {
     getUser();
+    getScholar();
   }, [])
+  
   
   return (
     Scholar.map((scholar, index) => (
-      <div className = "d-flex">
-        <div className = "scholar-list">
-
+      <div className="d-flex" key={index}>
+        <div className="scholar-list">
           <div className = 'title'>
-            <h2>{scholar.title}</h2>
-            <h3>{scholar.date}</h3>
+            <h2>{scholar.type}</h2>
+            <h2>ทุนประจำปีการศึกษา {scholar.on_year } {scholar.on_term}</h2>
           </div>
+          <div className="test">
 
+            <p>{scholar.open_date} - {scholar.close_date}</p>
+            <p>สำหรับนิสิตปี{scholar.min_student_year}-{scholar.max_student_year}</p>
+          </div>
           <div className='scholar-bottom'>
             <div className='admin-panel'>
               {
                 user.role === 'admin' &&
                 <>
                   <div className="btn-admin">
-                    <button className="btn-delete" > ลบ </button>
-                    <button className="btn-modify" onClick={ () => setContent('ScholarshipListEdit') } > แก้ไข </button>
+                    <button className="btn-delete" onClick={() => { onHandleDeleteScholarBtn(scholar.id); }} > ลบ </button>
+                    <button className="btn-modify" onClick={ () =>{ setEditScholarshipID(scholar.id);setContent('ScholarshipListEdit') }} > แก้ไข </button>
                   </div>
                 </>
               }
+              
             </div> 
             <div className='user-panel'>
               <h3 onClick={() => checkState(index)}>
@@ -102,9 +160,9 @@ function ScholarshipList(props) {
               </h3>  
             </div>
           </div> 
-          {scholar.check && <h3>{scholar.detail}</h3>} 
+            {scholar.check  && <h4>{scholar.detail}</h4>} 
         </div>
-        <button className = "button-big" type="button" onClick={ () => setContent('ScholarshipListRegister') }>
+        <button className = "button-big" item="button" onClick={ () => {setContent('ScholarshipListRegister')}}>
           ลงทะเบียน
         </button>
       </div>

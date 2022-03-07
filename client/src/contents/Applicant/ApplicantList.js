@@ -36,8 +36,8 @@ function ApplicantList(props){
           <h3>{applicants.title}</h3>
         </div>
         <div className="applicantList-right" >
-          <button className="button-search d-flex " type="button" onClick={ () => setContent('ScholarshipCheckForm') }>
-            <i className="bi bi-search"></i>
+          <button className="button-hourglass d-flex " type="button" onClick={ () => setContent('ScholarshipCheckForm') }>
+            <i class="bi bi-hourglass"></i>
             <p>ตรวจสอบเอกสาร</p>
           </button>
           <button className="button-search d-flex"  type="button" onClick={ () => setContent('ProfileCheck') }>

@@ -90,25 +90,6 @@ app.post("/editRole", (req, res) => {
   );
 });
 
-app.post("/ScholarshipCreate", (req,res) => {
-  const Type = req.body.type;
-  const createDate = req.body.create_date;
-  const Detail = req.body.detail;
-  const organName = req.body.organization_name;
-  const Amount= req.body.amount;
-  dbCon.query(
-    "INSERT INTO scholarship (type, create_date, detail, amount) VALUES (?, ?, ?, ?), INSERT INTO sponser (organization_name) VALUES (?)",
-    [Type,createDate, Detail, organName, Amount],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    }
-  );
-});
-
 app.get("/getAllAnnounce", (req, res) => {
   dbCon.query(
     "SELECT * FROM announce ORDER BY date DESC;", (err, result) => {
@@ -234,7 +215,7 @@ app.post("/addProfile", (req, res) => {
     [ id, profile_data, profile_data, picture_name ], 
     (err, result) => {
       if (err) {
-        console.log(err);
+        res.send(err);
       } else {
         res.send(result); 
       }
@@ -256,7 +237,7 @@ app.post("/editProfile", (req, res)=>{
     [ profile_data, picture_data, picture_name, id ],
     (err, result) => {
       if (err) {
-        console.log(err);
+        res.send(err);
       } else {
         res.send(result);
       }
@@ -275,7 +256,7 @@ app.post("/getProfile", (req, res) => {
     [id],
     (err, result) => {
       if (err) {
-        console.log(err);
+        res.send(err);
       } else {
         res.send(result);
       }
@@ -286,7 +267,7 @@ app.post("/getProfile", (req, res) => {
 /////////////SCHOLARSHIP///////////////////
 
 app.post("/addScholar", (req, res) => {
-  //const sponser_id= req.body.sponser_id;
+  
   const is_public= req.body.is_public;
   const type= req.body.type;
   const detail= req.body.detail;
@@ -297,10 +278,40 @@ app.post("/addScholar", (req, res) => {
   const on_term=req.body.on_term;
   const open_date=req.body.open_date;
   const close_date=req.body.close_date;
+  const sponsor = req.body.sponsor;
 
   dbCon.query(
-    "INSERT INTO scholarship ( is_public, type, detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date) VALUES (?,?, ?, ?,?, ?, ?,?,?,?)",
-    [ is_public,type,detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date], 
+    "INSERT INTO scholarship ( is_public, type, detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date, sponsor) VALUES (?,?, ?, ?,?, ?, ?,?,?,?,?)",
+    [ is_public,type,detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date,sponsor], 
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+
+app.get("/getTypeScholar", (req, res) => {
+  dbCon.query(
+    "SELECT DISTINCT type FROM scholarship",
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.get("/getAllScholarship", (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  dbCon.query(
+    "SELECT * FROM scholarship;", 
     (err, result) => {
       if (err) {
         console.log(err);
@@ -311,6 +322,76 @@ app.post("/addScholar", (req, res) => {
   );
 });
 
+//get sposor
+app.get("/getSponsor", (req, res) => {
+  dbCon.query(
+    "SELECT DISTINCT sponsor FROM scholarship",
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/deleteScholarship", (req, res) => {
+  const id = req.body.id;
+  dbCon.query(
+    "DELETE FROM scholarship WHERE id = ?",
+    [id],
+    (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        res.send(result);
+      }
+    }
+  )
+});
+
+app.post("/getScholarship",(req ,res)=>{
+  const id = req.body.id;
+  dbCon.query(
+    "SELECT * FROM scholarship WHERE id = ?",
+    [id],
+    (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        res.send(result);
+        //console.log(result)
+      }
+    }
+  )
+});
+
+
+app.post("/editScholar",(req ,res)=>{
+  const is_public= req.body.is_public;
+  const type= req.body.type;
+  const detail= req.body.detail;
+  const amount=req.body.amount;
+  const min_student_year=req.body.min_student_year;
+  const max_student_year=req.body.max_student_year;
+  const on_year=req.body.on_year;
+  const on_term=req.body.on_term;
+  const open_date=req.body.open_date;
+  const close_date=req.body.close_date;
+  const sponsor = req.body.sponsor;
+  dbCon.query(
+    "UPDATE scholarship SET is_public = ?,type = ?,detail = ?,amount = ?,min_student_year = ?,max_student_year = ?,on_year = ?,on_term = ?,open_date = ?,close_date = ?,sponsor = ?   WHERE id = ?",
+    [is_public,type,detail,amount,min_student_year,max_student_year,on_year,on_term,open_date,close_date,sponsor,id],
+    (err, result) => {
+      if(err){
+        res.send(err);
+      }else{
+        res.send(result);
+      }
+    }
+  )
+});
 
 
 

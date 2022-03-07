@@ -14,12 +14,12 @@ function Applicant() {
           <div className="icons">
             <i className="bi bi-calendar-check"/>
           </div>
-          <div class="topic">
+          <div className="topic">
             <h4>ตรวจสอบข้อมูล</h4>
           </div>
         </div>
         <div className="right"></div>
-      </div>
+      </div> 
       <div className="contents">
         <form className="applicant-row-top d-flex">
           <div className="applicant-column-left">
@@ -45,6 +45,7 @@ function Applicant() {
         <div className="line-gray"></div>
 
         <div className="content5">
+        
           <ApplicantList/>
         </div>
       </div> 

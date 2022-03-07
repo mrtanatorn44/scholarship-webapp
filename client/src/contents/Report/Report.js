@@ -10,7 +10,7 @@ function Report(props) {
           <div className="icons">
             <i className="bi bi-files"></i>
           </div>
-          <div class="topic">
+          <div className="topic">
             <h4>รายงานทุน</h4>
           </div>
         </div>
@@ -47,12 +47,13 @@ function Report(props) {
           <select  name="capital" id="capital">
             <option value="study">ผู้สนับสนุน</option>
           </select>  
-        </div>
+        </div> 
+        
       </form>
       <div className="line-gray"></div>
       
-      
       <div className="content5">
+     
         <Report_list/>
       </div>
     </div>

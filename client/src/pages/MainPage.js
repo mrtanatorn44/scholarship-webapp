@@ -2,7 +2,7 @@
 
 import { React, useState, useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
-import Login from "../components/Login.js"
+import Login from "../components/LoginGoogle.js"
 import Axios from 'axios';
 import { WebContext } from "../context/WebContext.js";
 
@@ -43,7 +43,7 @@ import InterviewSchedule       from '../contents/Interview/InterviewSchedule.js'
 // IMAGE
 import ku_eng_src_logo    from "../data/images/engsrc.png";
 import ku_src_logo        from "../data/images/ku.png";
-
+import loading_gif from '../data/images/announce_loading.gif';
 function MainPage() {
   
   const { User, Content } = useContext(WebContext)
@@ -182,9 +182,20 @@ function MainPage() {
         break;
     }
   }
+  const [loading, setLoading] = useState(true);
 
   return (
-    <div className='main-page'>
+    <div className='main-page' >
+
+      { 
+        loading && 
+        <div 
+          className='loading-screen'
+          style={user.isLogin ? {animation: 'fadeOut 1s'}:{} }
+          onAnimationEnd={() => setLoading(false)}
+        ></div>
+      }
+
       {/*-----------------------SIDE NAV BAR---------------------*/}
       <div className="sidebar d-flex flex-column"> 
         <div className="row-top">

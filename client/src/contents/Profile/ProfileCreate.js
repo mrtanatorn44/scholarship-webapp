@@ -113,25 +113,24 @@ function ProfileCreate() {
         <div className="icons">
           <i className="bi bi-list-ul"/>
         </div>
-        <div class="topic">
+        <div className="topic">
           <h4>สร้างโปรไฟล์</h4>
         </div> 
         </div>
         <div className="right"></div>
       </div>
       <div className="content3">
-        
         <form className="profileEdit-form" onSubmit={(e)=> onFormSumbit(e)}>  
-          <div class="name">
+          <div className="name">
             <h5>กรอกประวัติแรกเข้า</h5>
           </div>
           <div>
-          <label>ชื่อ-นามสกุล</label><br></br>
-            <input  placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required/>
+          <label>ชื่อ-นามสกุล (ภาษาไทย)</label><br></br>
+            <input   placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required/>
           </div>
           <div>
             <label>นิสิตชั้นปีที่</label>
-            <select className="form-select form-select-lg mb-3" value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
+            <select className="form-select form-select-lg" value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
               <option value="">เลือก</option>
               <option value="5">5</option>
               <option value="4">4</option>
@@ -147,11 +146,11 @@ function ProfileCreate() {
           
           <div>
             <label>รหัสนิสิต</label><br></br>
-            <input type="number" min="0"  maxlength="10" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
+            <input type="number" min="0"  maxLength="10" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
           </div>
           <div>
             <label>ภาคการเรียนการสอน</label>
-            <select className="form-select form-select-lg mb-3" value = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
+            <select className="form-select form-select-lg" value = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
               <option value="">เลือก</option>
               <option value="ภาคปกติ">   ภาคปกติ    </option>
               <option value="ภาคพิเศษ">  ภาคพิเศษ   </option>
@@ -160,7 +159,7 @@ function ProfileCreate() {
           
           <div>
             <label>สาขา</label>
-            <select className="form-select form-select-lg mb-3" value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
+            <select className="form-select form-select-lg" value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
                 <option value="">เลือก</option>
                 <option value="คอมพิวเตอร์">  คอมพิวเตอร์  </option>
                 <option value="ไฟฟ้า">  ไฟฟ้า      </option>
@@ -278,13 +277,13 @@ function ProfileCreate() {
           <div>
             <label>สถานะสมรสของบิดา-มารดา</label><br></br>
             <input className = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" value = {profile.status_marry} onChange={(e)=>changeValue("status_marry",e.target.value)} required/>
-          </div>*/}
-         
+          </div>
+        <button className="btn-confirm" >บันทึก</button>*/}
         </form>
       </div>
       <div className="profileCre-footer">
         <div className="btn-confirm-profile d-flex">
-          <button className="btn-confirm" >บันทึก</button>
+          <button className="btn-confirm" onClick={()=> (setShowModal(true))}>บันทึก</button>          
           {showModal && <ConfirmModal sendConfirm={getConfirm}/>}
         </div>
       </div>

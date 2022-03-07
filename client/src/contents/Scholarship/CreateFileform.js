@@ -2,8 +2,8 @@ import React, { useState, useContext } from 'react';
 import { WebContext } from '../../App';
 
 function FileForm (){
-    const { Scholar } = useContext(WebContext)
-    const [scholar, setScholar] = Scholar;
+    const { ScholarshipForm } = useContext(WebContext)
+    const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
     const [files, setFiles] = useState([{ id : 1, name : "", format :"" }]);
     const fileAutoFormat =[
       {
@@ -38,7 +38,7 @@ function FileForm (){
   
     return (
       
-      <form>
+      <>
        
         <div className="fileForm-head">
           <h4>เอกสารประกอบการยื่นทุน</h4>
@@ -55,8 +55,8 @@ function FileForm (){
             { 
               files.map((file, index) => (
                 <div key={index}>
-                  <p className="fileForm-order" >ลำดับที่ {index+1}</p>
-                  <input className="file-document" 
+                  <p className="fileForm-order">ลำดับที่ {index+1}</p>
+                  <input className="file-document"  required
                     type="text" 
                     name="name"
                     value={file.name || ""}
@@ -88,7 +88,7 @@ function FileForm (){
             </button>
           </div>
         </div>
-      </form>
+      </>
     );
   }
 

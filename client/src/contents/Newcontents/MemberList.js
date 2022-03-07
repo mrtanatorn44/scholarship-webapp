@@ -39,17 +39,19 @@ function MemberList(props){
         }else if(user.fname.toLowerCase().includes(query.toLowerCase())){
           return user;
         }
-      }).map((user) => (
-        <div className="roleList">
+      }).map((user, index) => (
+        <div className="roleList" key={index}>
           <div className="roleList-form">
             <div className="d-flex">
               <div className="name">
                 <p>Name : {user.fname} {user.lname}</p>
               </div>
-              <div className="role">
-              </div>
-              <div className="roleList-right">
-                <button onClick={() => { setEditProfileID(user.id);setContent("FormProfile"); }}> ข้อมูลสมาชิก</button>
+              
+              <div className="memberList-right">
+                <button className="button-checklist d-flex" type="button" onClick={() => { setEditProfileID(user.id);setContent("FormProfile"); }}> 
+                  <i class="bi bi-card-checklist"></i>
+                  <p>ข้อมูลสมาชิก</p>
+                </button>
               </div>
             </div>
           </div>

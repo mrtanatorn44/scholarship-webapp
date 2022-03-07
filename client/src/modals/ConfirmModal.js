@@ -20,7 +20,7 @@ function ConfirmModal(props) {
     <div className="modal">
       <div className="modal-content" >
       <center className="icon-exclamation">
-        <i class="bi bi-exclamation-triangle"></i>
+        <i className="bi bi-exclamation-triangle"></i>
       </center>
         <div className="modal-head">
           <h3>Are you sure?</h3>

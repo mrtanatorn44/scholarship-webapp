@@ -90,7 +90,6 @@ function ProfileEdit() {
       ...profile,
       [name]:value
     })
-    console.log(profile)
   }; 
 
   function getConfirm(data) {

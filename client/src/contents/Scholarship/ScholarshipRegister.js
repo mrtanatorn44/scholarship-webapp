@@ -97,13 +97,13 @@ function ScholarshipListRegister(props) {
               <h5>กรอกประวัติแรกเข้า</h5>
             </div>
             <div>
-              <label>ชื่อ-นามสกุล(ภาษาไทย)</label><br></br>
+              <label>ชื่อ-นามสกุล (ภาษาไทย)</label><br></br>
               <input placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required></input>
             </div>
-            <br></br>
+            
             <div>
               <label>นิสิตชั้นปีที่</label><br></br>
-              <select className="form-select form-select-lg mb-3" value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
+              <select className="form-select form-select-lg" value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
                 <option value="0">เลือก</option>
                 <option value="5">5</option>
                 <option value="4">4</option>
@@ -116,15 +116,15 @@ function ScholarshipListRegister(props) {
               <label>อายุ</label><br></br>
               <input type="number" min="0" placeholder="อายุ" value = {profile.age} onChange={(e)=>changeValue("age",e.target.value)} required></input>
             </div>
-            <br></br>
+            
             <div>
               <label>รหัสนิสิต</label><br></br>
               <input type="number" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required></input>
             </div>
-            <br></br>
+            
             <div>
               <label>ภาคการเรียนการสอน</label><br></br>
-              <select className="form-select form-select-lg mb-3" value = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
+              <select className="form-select form-select-lg" value = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
                 <option value="0">เลือก</option>
                 <option value="ภาคปกติ">ภาคปกติ</option>
                 <option value="ภาคพิเศษ">ภาคพิเศษ</option>
@@ -133,7 +133,7 @@ function ScholarshipListRegister(props) {
             
             <div>
               <label>สาขา</label><br></br>
-              <select className="form-select form-select-lg mb-3" value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
+              <select className="form-select form-select-lg" value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
                   <option value="0">เลือก</option>
                   <option value="5">คอมพิวเตอร์</option>
                   <option value="4">ไฟฟ้า</option>
@@ -146,35 +146,32 @@ function ScholarshipListRegister(props) {
               <label>คะแนนเฉลี่ยนสะสม(GPA)</label><br></br>
               <input type="number" min="0" placeholder = "คะแนนเฉลี่ยสะสม(GPA)"  required></input>
             </div>
-            <br></br>
+   
             <div>
               <label>ที่อยู่ปัจจุบัน(ที่ติดต่อได้สะดวก)</label><br></br>
               <input placeholder = "ที่อยู่ปัจจุบัน"  value = {profile.address} onChange={(e)=>changeValue("address",e.target.value)} required></input>
             </div>
-            <br></br>
             <div>
               <label>เบอร์โทรศัพท์</label><br></br>
               <input type="tel" placeholder = "เบอร์โทรศัพท์" value = {profile.tel} onChange={(e)=>changeValue("tel",e.target.value)} required></input>
             </div>
-            <br></br>
-
             <div class="topic-fam">
-              <h5>ประวัติครอบครัว</h5>
+              <p>ประวัติครอบครัว</p>
             </div>
 
             <div>
               <label>ชื่อ-นามสกุล(บิดา)</label><br></br>
               <input placeholder = "ชื่อภาษาไทย" value = {profile.name_father} onChange={(e)=>changeValue("name_father",e.target.value)} required></input>
             </div> 
-            <br></br>
             <div class="profile-fam d-flex">
               <div class="fam1-edit">
                 <label>อายุ</label><br></br>
                 <input className = "halfbar" type="number" min="0" placeholder="อายุ" value = {profile.age_father} onChange={(e)=>changeValue("age_father",e.target.value)} required></input>
               </div>
+
               <div class="fam2-edit">
                 <label>สถานะภาพ</label><br></br>
-                <select className="form-select form-select-lg mb-3" value = {profile.status__father} onChange={(e)=>changeValue("status__father",e.target.value)} required>
+                <select className="form-select form-select-lg" value = {profile.status__father} onChange={(e)=>changeValue("status__father",e.target.value)} required>
                   <option value="0">เลือก</option>
                   <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                   <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -203,17 +200,17 @@ function ScholarshipListRegister(props) {
                 <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" value = {profile.place_of_work_father} required></input>
               </div>
             </div>
-            <br></br>
+        
             <div>
               <label>ที่อยู่ของบิดา</label><br></br>
               <input placeholder="ที่อยู่ของบิดา" value = {profile.address_father} required></input>
             </div>
-            <br></br>
+         
             <div>
               <label>ชื่อ-นามสกุล(มาราดา)</label><br></br>
               <input placeholder = "ชื่อภาษาไทย" value = {profile.name_mother} required></input>
             </div>
-            <br></br>
+      
             <div class="profile-fam d-flex">
               <div class="fam1-edit">
                 <label>อายุ</label><br></br>
@@ -221,7 +218,7 @@ function ScholarshipListRegister(props) {
               </div>
               <div class="fam2-edit">
                 <label>สถานะภาพ</label><br></br>
-                <select className="form-select form-select-lg mb-3" value = {profile.status_mother} required>
+                <select className="form-select form-select-lg" value = {profile.status_mother} required>
                   <option value="0">เลือก</option>
                   <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                   <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -250,15 +247,15 @@ function ScholarshipListRegister(props) {
                 <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" value = {profile.place_of_work_mother} required></input>
               </div>
             </div>
-            <br></br>
+        
             <div>
               <label>ที่อยู่ของมารดา</label><br></br>
               <input placeholder="ที่อยู่ของมารดา" value = {profile.address_mother} required></input>
             </div>
-            <br></br>
+
             <div>
             <label>สถานะสมรสบิดา-มารดา</label><br></br>
-              <select className="form-select form-select-lg mb-3" value = {profile.status_marry} required>
+              <select className="form-select form-select-lg" value = {profile.status_marry} required>
                   <option value="0">เลือก</option>
                   <option value="แยกกันอยู่">แยกกันอยู่</option>
                   <option value="หย่าร้าง">หย่าร้าง</option>
@@ -272,50 +269,52 @@ function ScholarshipListRegister(props) {
               <label>ชื่อ-นามสกุล</label><br></br>
               <input placeholder="ชื่อ-นามสกุล" required></input>
             </div>
-            <br></br>
+        
             <div>
               <label>ระดับการศึกษา</label><br></br>
               <input placeholder="ระดับการศึกษา" required></input>
             </div>
-            <br></br>
+        
             <div>
               <label>อาชีพ</label><br></br>
               <input placeholder="อาชีพ" required></input>
             </div>
-            <br></br>
+      
             <div>
               <label>สถานที่ประกอบอาชีพ/สถานศึกษา</label><br></br>
               <input placeholder="สถานที่ประกอบอาชีพ/สถานศึกษา" required></input>
             </div>
             <div class="topic-doc">
-              <h5>เอกสารที่นิสิตต้อง Upload</h5>
+              <p>เอกสารที่นิสิตต้อง Upload</p>
             </div>
+
             <div>
               <label>สำเนาบัตรประชาชน</label><br></br>
               <input type="file" placeholder = "สำเนาบัตรประชาชน" required></input>
             </div>
-            <br></br>
+    
             <div>
               <label>แบบจิตอาสา กยศ.</label><br></br>
               <input type="file" placeholder = "แบบจิตอาสา กยศ." required></input>
             </div>
-            <br></br>
+  
             <div>
               <label>ใบแจ้งหนี้ค่าลงทะเบียน</label><br></br>
               <input type="file" placeholder = "ใบแจ้งหนี้ค่าลงทะเบียน" required></input>
             </div>
-            <br></br>
+      
             <div>
               <label>ใบลงทะเบียน</label><br></br>
               <input type="file" placeholder = "ใบลงทะเบียน" required></input>
             </div>
-            <br></br>
+      
             <div>
               <label>ใบเกรด(GPA)</label><br></br>
               <input type="file" placeholder = "ใบเกรด(GPA)" required></input>
             </div>
           </form>
         </div>
+
         <div className="register-footer">
           <div className="btn-confirm-scholarLisRig d-flex">
             <button className="btn-confirm" onClick={()=> (setShowModal(true))}>บันทึก</button>

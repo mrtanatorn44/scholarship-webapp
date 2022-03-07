@@ -16,7 +16,7 @@ function RoleSetting() {
           <div className="icons">
             <i className="bi bi-three-dots"></i>
           </div>
-          <div class="topic">
+          <div className="topic">
           <h4>กำหนดสิทธิ์การเข้าถึง</h4>
           </div>
         </div>
@@ -32,7 +32,7 @@ function RoleSetting() {
       </div>
       <div className="line-gray"></div>
       
-        <div class="content4">
+        <div className="content4">
           <RoleList/>
         </div>
     </div>

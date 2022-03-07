@@ -21,7 +21,7 @@ function Member() {
           <div className="icons">
             <i className="bi bi-three-dots"></i>
           </div>
-          <div class="topic">
+          <div className="topic">
           <h4>รายชื่อสมาชิก</h4>
           </div>
         </div>
@@ -38,7 +38,7 @@ function Member() {
       </div>
       <div className="line-gray"></div>
       
-        <div class="content4">
+        <div className="content4">
           <MemberList/>
         </div>
     </div>
