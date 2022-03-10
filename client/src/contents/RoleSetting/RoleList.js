@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Axios from 'axios';
-import ConfirmModal from '../../modals/ConfirmModal.js'
+//import ConfirmModal from '../../modals/ConfirmModal.js'
 import { WebContext } from '../../App.js';
 
 
@@ -68,7 +68,7 @@ function RoleList(props){
               <select id="capital" onChange={(e) => {setShowModal(true);setTarget(e);setAccount(user)}}>
                 { roles.map((role, idx) => <option key={idx} value={role.value}>{role.title} </option>) }
               </select>
-              { showModal && <ConfirmModal sendConfirm={getConfirm}/>}
+              { /*showModal && <ConfirmModal sendConfirm={getConfirm}/>*/}
             </div>
           </div>
         </div>

@@ -2,40 +2,28 @@ import React, { useState, useContext } from 'react';
 import { WebContext } from '../../App';
 
 function FileForm (){
-    const { ScholarshipForm } = useContext(WebContext)
-    const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
-    const [files, setFiles] = useState([{ id : 1, name : "", format :"" }]);
-    const fileAutoFormat =[
-      {
-        title: 'สำเนาบัตรประชาชน',
-        name: 'ID_62303xxx',
-        type: 'pdf'
-      },
-      {
-        title: 'ทะเบียนบ้าน',
-        name: 'ทะเบียนบ้าน',
-        type: 'pdf'
-      },
-      {
-        title: 'เกรดเฉลี่ยสะสม',
-        name: 'GPA_6230XXXX',
-        type: 'pdf'
-      }
-    ]
+    const { FileForm } = useContext(WebContext)
+    const [fileForm, setFileForm] = FileForm;
+    //console.log(fileForm);
+    const [files, setFiles] = useState([{ id : 1, label : "", type :"" , typeInput : 0 , typeAdd: "" }]);
+    console.log(files);
+    const [fileFormat,setFileFormat] = useState([
+      {label: 'เลือกเอกสาร'      ,value: ''},
+      {label: 'เพิ่มประเภทเอกสาร' ,value: '0'},
+      {label: 'สำเนาบัตรประชาชน' ,value: '1'},
+      {label: 'ทะเบียนบ้าน'      ,value: '2'},
+      {label: 'เกรดเฉลี่ยสะสม'    ,value: '3'}
+    ])
+
     const delFile = (file) => {
       const id= file.id;
       setFiles(files.filter(file => file.id !== id));
-      setFiles([...file])   
+      setFiles([...files])   
     }
     const addFile = () => {
-      setFiles([...files, { id : files.length+1, name : "", format :"" }])
+      setFiles([...files, { id : files.length+1, label : "", type :"" ,typeInput : 0 , typeAdd: ""}])
     }
-    const handleInputChange = (e, index) => {
-      let tempFiles = [...files];
-      tempFiles[index][e.target.name] = e.target.value;
-      setFiles(tempFiles);
-    }
-  
+    
     return (
       
       <>
@@ -48,35 +36,66 @@ function FileForm (){
            
             <p className='topics' > หัวข้อ</p>
             <p className='typefile'>&nbsp;&nbsp;นามสกุลไฟล์</p>
-            <p className='document'>&nbsp;&nbsp;ระบบอัตโนมัติ</p>
           </div>
   
           <div className="fileForm-detail">
             { 
-              files.map((file, index) => (
+              files.map((item, index) => (
                 <div key={index}>
                   <p className="fileForm-order">ลำดับที่ {index+1}</p>
-                  <input className="file-document"  required
-                    type="text" 
-                    name="name"
-                    value={file.name || ""}
-                    onChange={(e) => handleInputChange(e, index)}
-                  />
-                  <select className="file-select-1">
+                  
+                  { 
+                    (item.typeInput === 0 || item.typeInput === undefined ) &&
+                    <select required onChange={(e) => {
+                      if (e.target.value === '0') { // add option
+                        
+                        setFiles([...files, { typeInput : 1 , typeAdd: ""}])
+                      } else { // Aselected
+                        setFiles([ ...files , {label: e.target.selectedOptions[0].text} ])
+                        //console('item',files)
+                      } 
+                    }}>
+                      {
+                        fileFormat.map((item, index) => (
+                          <option key={index} value={item.value}> {item.label} </option>
+                        ))
+                      }
+                    </select>
+                  }
+                  { 
+                    item.typeInput === 1 &&
+                    <div className='input-button'>
+                      <input onChange={(e) => setFiles({...files , typeAdd: e.target.value })} type='text' placeholder=''/>
+                      { 
+                        item.typeAdd !== '' &&
+                        <button onClick={() => {
+                          var tempTypeList = fileFormat;
+                          tempTypeList.unshift({ label: fileForm.typeAdd, value: fileForm.typeAdd })
+                          setFileFormat(tempTypeList);
+                          setFiles({...files , label : fileForm.typeAdd, typeAdd: '', typeInput: 0})
+                      }}>
+                        Add
+                        </button>
+                      }
+                  { 
+                    fileForm.typeAdd === '' &&
+                    <button onClick={() => setFiles({...files, typeInput: 0 })}>
+                      X
+                    </button>
+                  }
+                  </div>
+                }
+
+                  
+                  
+                  <select className="item-select-1" onChange={(e) => setFiles([...files, { type : e.target.value}])}>
                     <option value="type_file1">PDF</option>
                     <option value="type_file2">JPG</option>
                   </select>
-                  <select className="file-select-2">
-                    {
-                      fileAutoFormat.map((format, formatIdx) =>
-                        <option key={formatIdx}>{format.title}</option>
-                      )
-                    }
-                  </select>
-                  <button className="btn-delete-circle" type="button" onClick={() => delFile(file)}>
+                  
+                  <button className="btn-delete-circle" type="button" onClick={() => delFile(item)}>
                     <i className="bi bi-dash"></i>
                   </button>
-                
                   
                 </div>
               )) 

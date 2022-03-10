@@ -108,81 +108,81 @@ function AnnouncementCreate(props) {
           <div className="topic"><h4>เพิ่มข่าวสาร</h4></div>
         </div>
         <div className="right">
-          <div className="button2-set">
-            <button className="save-button" form='announce-form' type='submit'>
+          <div className="button-set">
+            <button className="button-1 green1" form='announce-form' type='submit'>
               <i className="bi bi-save"/> 
               <p>บันทึก</p>
             </button>
-            <button className="cancel-button" onClick={onHandleCancelBtn}>
+            <button className="button-1 red1" onClick={onHandleCancelBtn}>
               <i className="bi bi-x"/> 
               <p>ยกเลิก</p> 
             </button>
           </div>
         </div>
       </div>
-
-      {/* ----- Content ----- */}
-      <div className="content1">
-
-        {/* ----- Form ------ */}
-        <form className="announCre-form" id='announce-form' onSubmit={(e) => onHandleSubmitBtn(e)}>
-          <div className="topic-input d-flex">
-            <input required type="text" placeholder="หัวข้อข่าว" onChange={(e) => setForm({ ...form, title: e.target.value })}/>
-          </div>
-          <div className="detail">
-            <textarea required type="text" placeholder="รายละเอียดข่าวสาร" onChange={(e) => setForm({ ...form, detail: e.target.value })}/>
-          </div>
-          <div className="insertbutton">
-            <label>
-              <input className="insert" type="file" accept="image/jpeg, image/png" name="file" id="file" onChange={(file) => onHandleUpload(file)} onClick={(e) => e.target.value=''}/>
-              <i className="bi bi-card-image"/>
-            </label>
-            <p> {form.imageName===""? "เพิ่มรูปภาพ": form.imageName } </p>
-            { form.imageName!=='' && <button className="cancel-button" onClick={() => setForm({...form, imageSrc: '', imageData: '', imageName: ''})}><i className="bi bi-x"/></button> }
-          </div>
-        </form>
-
-        {/* ----- Preview ----- */} 
-        <div className="preview">
-          <h4>Preview</h4>
-        </div>
-        <div className="news">
-          {/*---------- TITLE ----------*/}
-          <div className='title'>
-            <h2>{form.title}</h2>
-            <h3>{date_tranform}</h3>
-          </div>
-          {/*---------- CONTENT ----------*/}
-          { /* IMAGE */
-            !form.toggleContent && form.imageName!=='' &&
-            <div className='content-image'>
-              <img  className='news-image' src={ 'data:image/jpeg;base64,' + form.image } alt='scholarship promote' 
-                onClick = {() => { form.imageModal = true; setForm({...form}); }}/> 
-            </div> 
-          }
-          { /* DETAIL */
-            form.toggleContent && 
-            <div style={{whiteSpace:'pre-line'}} className='content'><h3>{ form.detail }</h3></div> 
-          }
-          { /* MODAL POPUP IMAGE */
-            form.imageModal && 
-            <Lightbox mainSrc={ 'data:image/jpeg;base64,' + form.image } onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
-          }
-          {/*---------- BOTTOM ----------*/}
-          <div className='newsList-bottom'>
-            <div className='admin-panel'>
+      <div className="contents">
+        {/* ----- Content ----- */}
+        <div className="content1">
+          {/* ----- Form ------ */}
+          <form className="form1" id='announce-form' onSubmit={(e) => onHandleSubmitBtn(e)}>
+            <div className="heading">
+              <input required type="text" placeholder="หัวข้อข่าว" onChange={(e) => setForm({ ...form, title: e.target.value })}/>
             </div>
-            <div className='user-panel'>
-              { /* USER BUTTON */
-                form.imageName!=='' &&
-                <h3 onClick={() => setForm({...form, toggleContent: !form.toggleContent}) }>
-                  { !form.toggleContent ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)" }
-                </h3> 
-              }
+            <div className="detail">
+              <textarea required type="text" placeholder="รายละเอียดข่าวสาร" onChange={(e) => setForm({ ...form, detail: e.target.value })}/>
+            </div>
+            <div className="insertbutton">
+              <label>
+                <input className="insert" type="file" accept="image/jpeg, image/png" name="file" id="file" onChange={(file) => onHandleUpload(file)} onClick={(e) => e.target.value=''}/>
+                <i className="bi bi-card-image"/>
+              </label>
+              <p> {form.imageName===""? "เพิ่มรูปภาพ": form.imageName } </p>
+              { form.imageName!=='' && <button className="cancel-button" onClick={() => setForm({...form, imageSrc: '', imageData: '', imageName: ''})}><i className="bi bi-x"/></button> }
+            </div>
+          </form>
+          {/* ----- Preview ----- */} 
+          <div className="preview">
+            <h4>Preview</h4>
+          </div>
+          <div className="news">
+            {/*---------- TITLE ----------*/}
+            <div className='title'>
+              <h2>{form.title}</h2>
+              <h3>{date_tranform}</h3>
+            </div>
+            {/*---------- CONTENT ----------*/}
+            { /* IMAGE */
+              !form.toggleContent && form.imageName!=='' &&
+              <div className='content-image'>
+                <img  className='news-image' src={ 'data:image/jpeg;base64,' + form.image } alt='scholarship promote' 
+                  onClick = {() => { form.imageModal = true; setForm({...form}); }}/> 
+              </div> 
+            }
+            { /* DETAIL */
+              form.toggleContent && 
+              <div style={{whiteSpace:'pre-line'}} className='content'><h3>{ form.detail }</h3></div> 
+            }
+            { /* MODAL POPUP IMAGE */
+              form.imageModal && 
+              <Lightbox mainSrc={ 'data:image/jpeg;base64,' + form.image } onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
+            }
+            {/*---------- BOTTOM ----------*/}
+            <div className='newsList-bottom'>
+              <div className='admin-panel'>
+              </div>
+              <div className='user-panel'>
+                { /* USER BUTTON */
+                  form.imageName!=='' &&
+                  <h3 onClick={() => setForm({...form, toggleContent: !form.toggleContent}) }>
+                    { !form.toggleContent ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)" }
+                  </h3> 
+                }
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </div>  
+        
     </div>
   )
 }

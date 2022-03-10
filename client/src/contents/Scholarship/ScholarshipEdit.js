@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { WebContext } from '../../App';
-import ConfirmModal from '../../modals/ConfirmModal.js';
+//import ConfirmModal from '../../modals/ConfirmModal.js';
 
 import FileForm from './CreateFileform.js';
 import RateForm from './CreateRateform.js';
@@ -11,16 +11,20 @@ import Swal from 'sweetalert2'
 import Lightbox from 'react-image-lightbox';
 
 import Axios from 'axios';
-function ScholarshipListCreate() {
+function ScholarshipEdit() {
    
-  const {EditScholarshipID, Content } = useContext(WebContext)
+  const { Content } = useContext(WebContext)
   const [ content , setContent] = Content;
   const [showModal, setShowModal] = useState(false);
   
   const { ScholarshipForm } = useContext(WebContext)
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
-  const [editScholarshipID, setEditScholarshipID]= EditScholarshipID;
-  const onHandleSubmitBtn = () => {
+  const {type,detail, amount , min_student_year,max_student_year,on_year,on_term,open_date, close_date, sponsor}=scholarshipForm;
+  
+  function onHandleSubmitBtn(e,id) {
+    e.preventDefault();
+
+
     Swal.fire({
       title: 'คุณแน่ใจหรือไม่?',
       text: 'ที่จะบันทึกประกาศนี้!',
@@ -34,47 +38,7 @@ function ScholarshipListCreate() {
       if (result.isConfirmed) {
         setContent('Scholarship');
         Swal.fire('บันทึกแล้ว!','','success')
-      }
-    })
-  }
-  /*
-  function onHandleSubmitBtn(e) {
-    e.preventDefault();
-    Swal.fire({
-      title: 'คุณแน่ใจหรือไม่?',
-      text: 'ที่จะบันทึกประกาศนี้!',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#03A96B',
-      confirmButtonText: 'Save',
-      cancelButtonColor: '#A62639',
-      cancelButtonText: 'Cancel'
-    }).then((result) => {
-      if (result.isConfirmed && user.role === 'admin') {
-        Axios.post("http://localhost:5000/addAnnounce", {
-          title       : form.title,
-          detail      : form.detail,
-          imageData   : form.image,
-          imageName   : form.imageName
-        }).then((response) => {
-          setAnnounce([]);
-          setContent('Announcement');
-          Swal.fire('Success!', 'บันทึกประกาศเรียบร้อย', 'success')
-        });
-      }
-    })
-  }
-  
-  */
-  
-
-  function getConfirm(data) {
-    console.log(scholarshipForm);
-    if (data) {
-      console.log();
-      const {type,detail, amount , min_student_year,max_student_year,on_year,on_term,open_date, close_date, sponsor}=scholarshipForm;
-
-      Axios.post("http://localhost:5000/editScholar",{
+        Axios.post("http://localhost:5000/editScholar",{
         is_public       : false,
         type            : type,
         detail          : detail,
@@ -85,24 +49,13 @@ function ScholarshipListCreate() {
         on_term         : on_term,
         open_date       : open_date,
         close_date      : close_date,
-        sponsor         : sponsor
+        sponsor         : sponsor,
+        id : id
       })
-      
- 
-      setContent("Scholarship")
-      
-    } else {
-      //alert('FALSE !') 
-    }
-    setShowModal(false);
-  }
- 
-  const onFormSumbit = (e) => {
-    e.preventDefault();
-    setShowModal(true);
+      }
+    })
   }
   
-
   return (
     <div className="frame">
       <div className="header">
@@ -115,37 +68,31 @@ function ScholarshipListCreate() {
             </div>
         </div>
 
-        <div className="right"/>
-      
+        <div className="right">
+        </div>
       </div>
-      
-        <div className = 'content1'>
+      <div className = 'contents'> 
+        <div className = 'content1'>  
+          <form onSubmit={(e) => onHandleSubmitBtn(e,scholarshipForm.id)}>
+            <div className="scholarListCrea-announceForm" >
+              <EditDetailForm/>
+            </div> 
 
-          <div className="scholarListCrea-announceForm"> <EditDetailForm/> </div>
-          
-          <div className='scholarListCrea-fileForm'> <FileForm/> </div>  
-        
-          <div className="scholarListCrea-rateForm"> <RateForm/> </div> 
-            
-          <form onSubmit={(e)=> onFormSumbit(e)}> 
-          <div className="scholarListCrea-footer">
-            <div className="btn-confirm-scholarCre ">
-              <button className="btn-confirm" type="submit" onClick={() => onHandleSubmitBtn()}>
-                คกลง 
-              </button>
-              
-              <button className="btn-confirm">
-                ตกลง 
-              </button> 
-              
+            {/* ----- FOOTER ------ */}
+            <div className="footer1">
+              <div className="btn-confirm-scholarCre ">
+                <button className="btn-confirm green1" type="submit">
+                  ตกลง 
+                </button>
+              </div>
             </div>
-          </div>
           </form>
         </div>
-      
-      { showModal && <ConfirmModal sendConfirm={getConfirm}/>}
+      </div>
     </div>
   )
 }
 
-export default ScholarshipListCreate;
+export default ScholarshipEdit;
+
+//

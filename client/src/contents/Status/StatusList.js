@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import User from '../../data/datanews.js';
-import AlertModal from '../../modals/AlertModal.js';
+//import AlertModal from '../../modals/AlertModal.js';
 
 function StatusList(props) {
 	const [scholar, setState] = useState(User.map((x)=>({...x,check:false})));
@@ -50,7 +50,7 @@ function StatusList(props) {
 				<button className="button-big" onClick={() => setShowModal(true)}>
 					นัดหมาย
 				</button>
-				{ showModal && <AlertModal sendConfirm={getConfirm}/> }
+				{/* showModal && <AlertModal sendConfirm={getConfirm}/> */}
 			</div>
 		))
 	)

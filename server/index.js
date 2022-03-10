@@ -369,6 +369,7 @@ app.post("/getScholarship",(req ,res)=>{
 
 
 app.post("/editScholar",(req ,res)=>{
+  const id = req.body.id;
   const is_public= req.body.is_public;
   const type= req.body.type;
   const detail= req.body.detail;
@@ -381,8 +382,8 @@ app.post("/editScholar",(req ,res)=>{
   const close_date=req.body.close_date;
   const sponsor = req.body.sponsor;
   dbCon.query(
-    "UPDATE scholarship SET is_public = ?,type = ?,detail = ?,amount = ?,min_student_year = ?,max_student_year = ?,on_year = ?,on_term = ?,open_date = ?,close_date = ?,sponsor = ?   WHERE id = ?",
-    [is_public,type,detail,amount,min_student_year,max_student_year,on_year,on_term,open_date,close_date,sponsor,id],
+    "UPDATE scholarship SET id=?,is_public = ?,type = ?,detail = ?,amount = ?,min_student_year = ?,max_student_year = ?,on_year = ?,on_term = ?,open_date = ?,close_date = ?,sponsor = ?   WHERE id = ?",
+    [id,is_public,type,detail,amount,min_student_year,max_student_year,on_year,on_term,open_date,close_date,sponsor,id],
     (err, result) => {
       if(err){
         res.send(err);

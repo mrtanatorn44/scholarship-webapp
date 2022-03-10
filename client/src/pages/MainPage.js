@@ -14,7 +14,7 @@ import AnnouncementEdit        from '../contents/Announcement/AnnouncementEdit.j
 import Scholarship             from '../contents/Scholarship/Scholarship.js';
 import ScholarshipCheckForm    from '../contents/Applicant/ApplicantCheckForm.js';
 import ScholarshipListRegister from '../contents/Scholarship/ScholarshipRegister.js';
-import ScholarshipListEdit     from '../contents/Scholarship/ScholarshipEdit.js';
+import ScholarshipEdit         from '../contents/Scholarship/ScholarshipEdit.js';
 import ScholarshipCreate       from '../contents/Scholarship/ScholarshipCreate.js';
 
 import Member   from '../contents/Newcontents/Member.js';
@@ -101,16 +101,18 @@ function MainPage() {
         return <AnnouncementEdit/>
       case 'AnnouncementEdit':
         return <Report/>
-      case 'ScholarshipListEdit':
-        return <ScholarshipListEdit/>
+      case 'ScholarshipEdit':
+        return <ScholarshipEdit/>
       case 'Member':
         return <Member/>
       case 'MembetList':
         return <MemberList/> 
+       
       default:
         return <Announcement/>
     }
   }
+  
 
   function contentButtonRender() {
     switch (user.role) {
@@ -186,15 +188,15 @@ function MainPage() {
 
   return (
     <div className='main-page' >
-
       { 
         loading && 
         <div 
           className='loading-screen'
-          style={user.isLogin ? {animation: 'fadeOut 1s'}:{} }
+          style={user.isLogin ? {animation: 'fadeOut 0.5s'}:{} }
           onAnimationEnd={() => setLoading(false)}
-        ></div>
+        ><p><i className="bi bi-arrow-clockwise"></i></p></div>
       }
+      
 
       {/*-----------------------SIDE NAV BAR---------------------*/}
       <div className="sidebar d-flex flex-column"> 
@@ -231,7 +233,7 @@ function MainPage() {
         {/*-----------------------CONTENT---------------------*/}
 
         <div className="row-center ">
-          {contentRender()}
+          { user.isLogin && contentRender()}
         </div>
         
         {/*-----------------------FOOTER---------------------*/}

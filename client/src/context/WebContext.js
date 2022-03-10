@@ -8,6 +8,7 @@ function WebContextProvider ({ children }) {
   const [announce,setAnnounce]                        = useState([]);  
   const [query, setQuery]                             = useState('');
 
+  const [fileForm, setFileForm]                       = useState([])
   const [editProfileID, setEditProfileID]             = useState(-1);
   const [editAnnounceID, setEditAnnounceID]           = useState();
   const [editScholarshipID,setEditScholarshipID]      = useState();
@@ -27,6 +28,10 @@ function WebContextProvider ({ children }) {
     isLogin: false
   });
 
+  
+  
+  
+
   const GlobalValue = { 
 
     EditScholarshipID    :[editScholarshipID,setEditScholarshipID],
@@ -39,7 +44,8 @@ function WebContextProvider ({ children }) {
     Profile             : [profile, setProfile],
     ScholarshipForm     : [scholarshipForm, setScholarshipForm],
     ScholarshipList     : [scholarshipList, setScholarshipList],
-    Sponsor             : [sponsor,setSponsor]
+    Sponsor             : [sponsor,setSponsor],
+    FileForm            : [fileForm, setFileForm]
 	}
 
   return (

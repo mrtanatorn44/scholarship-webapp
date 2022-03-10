@@ -27,10 +27,11 @@ function Announcement(props) {
         }
         </div>
       </div>
-
-      <div className="content1">
-        <NewsList/>
-      </div>
+      <div className="contents">
+        <div className="content1">
+          <NewsList/>
+        </div>
+      </div>  
     </div>
   )
 }

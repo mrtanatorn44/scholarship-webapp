@@ -15,10 +15,11 @@ function AnnouncementLogin() {
         </div>
         <div className='right'></div>
       </div>
-
-      <div className="content1">
-        <NewsListlogin/>
-      </div>
+      <div className="contents">
+        <div className="content1">
+          <NewsListlogin/>
+        </div>
+      </div>  
     </div>
   );
 }

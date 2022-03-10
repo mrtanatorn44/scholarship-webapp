@@ -15,6 +15,7 @@ function NewsList() {
   const [announce,setAnnounce] = Announce;
   const [editAnnounceID, setEditAnnounceID] = EditAnnounceID;
 
+
   const onHandleDeleteAnnounceBtn = (newsID) => {
     Swal.fire({
       title: 'คุณแน่ใจหรือไม่?',
@@ -66,14 +67,14 @@ function NewsList() {
         }
 
         {/*---------- BOTTOM ----------*/}
-        <div className='newsList-bottom'>
+        <div className='bottom1'>
           
           <div className='admin-panel'>
             { /* ADMIN BUTTON */
               user.role === 'admin' && !news.isEmpty && 
               <>            
-              <button className="btn-delete" onClick={() => { onHandleDeleteAnnounceBtn(news.id); }}> ลบ </button>
-              <button className="btn-modify" onClick={() => { setEditAnnounceID(news.id);setContent("AnnouncementEdit"); }}> แก้ไข </button>
+              <button className="button-admin red2" onClick={() => { onHandleDeleteAnnounceBtn(news.id); }}> ลบ </button>
+              <button className="button-admin red1" onClick={() => { setEditAnnounceID(news.id);setContent("AnnouncementEdit"); }}> แก้ไข </button>
               </> 
             }
           </div> 

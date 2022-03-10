@@ -21,7 +21,6 @@ function Scholarship(props) {
             </div>
           </div>
           <div className="right">
-
             { 
               user.role == 'admin' &&
               <button className = "button-add d-flex" type = "button" onClick={ () => setContent('ScholarshipCreate') } >
@@ -33,11 +32,14 @@ function Scholarship(props) {
           </div>
 
       </div>
-      <div className="content1">
-        <ScholarshipList/>
-      </div>
+      <div className="contents">
+        <div className="content1">
+          <ScholarshipList/>
+        </div>
+      </div> 
     </div>
   )
 }
 
 export default Scholarship;
+//

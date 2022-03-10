@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App.js';
 import Axios from 'axios';
 
-import ImageModal from "../../modals/ImageModal.js";
+//import ImageModal from "../../modals/ImageModal.js";
 
 import announce_empty from "../../data/images/announce_empty.png";
 
@@ -45,8 +45,8 @@ function NewsListlogin(props) {
           <div  style={{whiteSpace:'pre-line'}} className='content'><h3>{ news.detail }</h3></div> 
         }
         { /* MODAL POPUP IMAGE */
-          ShowPopupImage && 
-          <ImageModal image={ PopupImage } sendConfirm={ (data) => setShowPopupImage(data) }/> 
+          //ShowPopupImage && 
+          //<ImageModal image={ PopupImage } sendConfirm={ (data) => setShowPopupImage(data) }/> 
         }
 
         {/*---------- BOTTOM ----------*/}

@@ -9,7 +9,7 @@ function Applicant() {
 
   return (
     <div className="frame">
-      <div className="header">
+      <div className="header ">
         <div className="left">
           <div className="icons">
             <i className="bi bi-calendar-check"/>
@@ -21,8 +21,8 @@ function Applicant() {
         <div className="right"></div>
       </div> 
       <div className="contents">
-        <form className="applicant-row-top d-flex">
-          <div className="applicant-column-left">
+        <form className="form4">
+          <div className="column-left">
             <div className="applicant-select">
               <label>ประเภทของทุน</label><br></br>
               <select  name="capital" id="capital">
@@ -33,19 +33,17 @@ function Applicant() {
               </select>  
             </div>
           </div>
-          <div className="applicant-column-right" >
-            <div className="applicant-search">
+          <div className="column-right" >
+            <div className="search1">
               <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
-              <button className="btn " type="button" >
+              <button className="btn" type="button" >
                 <i className="bi bi-search"></i>
               </button>
             </div>
           </div>
         </form>
         <div className="line-gray"></div>
-
         <div className="content5">
-        
           <ApplicantList/>
         </div>
       </div> 

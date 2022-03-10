@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Applicants from '../../data/datanews.js';
-import AlertModal from '../../modals/AlertModal.js';
+//import AlertModal from '../../modals/AlertModal.js';
 import { WebContext } from '../../App';
 
 
@@ -31,22 +31,27 @@ function ApplicantList(props){
 
   return (
     Applicants.map((applicants, index) => (
-      <div className="applicantList " key={index}>
-        <div className='applicantList-bottom'>
-          <h3>{applicants.title}</h3>
+      <div className="container1" key={index}>
+        <div className='title'>
+          <h2>{applicants.title}</h2>
         </div>
-        <div className="applicantList-right" >
-          <button className="button-hourglass d-flex " type="button" onClick={ () => setContent('ScholarshipCheckForm') }>
-            <i class="bi bi-hourglass"></i>
-            <p>ตรวจสอบเอกสาร</p>
-          </button>
-          <button className="button-search d-flex"  type="button" onClick={ () => setContent('ProfileCheck') }>
-            <i className="bi bi-search"></i>
-            <p>ตรวจสอบประวัติ</p>
-          </button>  
-          
+        <div className='information'>
+          <div className='left'>
+            <h3>{applicants.title}</h3>
+          </div>
+          <div className="right" >
+            <button className="button-2 d-flex" type="button" onClick={ () => setContent('ScholarshipCheckForm') }>
+              <i className="bi bi-hourglass"></i>
+              <p>ตรวจสอบเอกสาร</p>
+            </button>
+            <button className="button-2 d-flex"  type="button" onClick={ () => setContent('ProfileCheck') }>
+              <i className="bi bi-search"></i>
+              <p>ตรวจสอบประวัติ</p>
+            </button>  
+            
 
-          {showModal && <AlertModal sendConfirm={getConfirm}/>}  
+            {/*showModal && <AlertModal sendConfirm={getConfirm}/>*/}  
+          </div>
         </div>
       </div>
     ))

@@ -11,7 +11,6 @@ function DetailForm () {
   
   const { ScholarshipForm } = useContext(WebContext)
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
-  
   // type schorlar
   const [typeList,setTypeList] = useState([
     {label: 'เลือกประเภททุน', value: ""},
@@ -21,73 +20,48 @@ function DetailForm () {
     {label: 'ทุนขาดคุณทรัพย์', value: '3'}
   ])
 
-
   var dataTypeList = ['ทุนเรียนดี', 'ทุนกิจกรรมเด่น', 'ทุนขาดคุณทรัพย์']
 
   // type sponsor
   
-  const [sponsorList,setSponsorList] = useState([]);
+  const [sponsorList,setSponsorList] = useState([
+    {label: 'เลือกผู้สนับสนุน', value: ""},
+    {label: 'เพิ่มผู้สนับสนุน...',     value: '0'}
+  ]);
   
-  const onHandleTypeChange = (e) => {
-    if (!e) {
-      e = {
-        value: '',
-      };
-    }
-    if (e.value !== null)
-      setScholarshipForm({...scholarshipForm, type: e.label}) 
-  }
-
-  const onHandleSponsor = (e) => {
-    if (!e) {
-      e = {
-        value: '',
-      };
-    }
-    if (e.value !== null)
-      setScholarshipForm({...scholarshipForm, sponsor: e.label})
-       
-  }
-
-  const getTypeScholar = () =>{
+  const getType = () =>{
     Axios.get("http://localhost:5000/getTypeScholar").then(response => {
       var tempTypeList = typeList;
-      var result = response.data
+      var result = response.data;
       result.forEach((res, index) => {  
         var data = res.type;
         if (data !== '' && !dataTypeList.includes(data)) {
           tempTypeList.push({ label: data, value: data })
         }
       })
-      setTypeList(tempTypeList);
+      setTypeList([...typeList]);
     })
   }
 
   const getSponsor = () =>{
     Axios.get("http://localhost:5000/getSponsor").then(response => {
-      var dummySponsorList = sponsorList;
-      // [{},{},{}]
+      var tempSponsorList = sponsorList;
       var result = response.data
       result.forEach((res, index) => {  
         var data = res.sponsor;
         if (data !== '') {
-          dummySponsorList.push({ label: data, value: data })
+          tempSponsorList.push({ label: data, value: data })
         }
       })
-      setSponsorList(dummySponsorList);
+      setSponsorList([...sponsorList])
     })
   }
-  
-  
 
   useEffect(() => {
-    setScholarshipForm([]);
-    getTypeScholar();
     getSponsor();
+    getType();
   }, [])
-  
-  //console.log(typeList);
-  
+
   return (   
     <>
       <div className="announce-topic ">
@@ -159,15 +133,48 @@ function DetailForm () {
           <div className="max">
             <input type="number" min="0" placeholder="max_student_year" required onChange={(event) => {setScholarshipForm({...scholarshipForm , max_student_year: event.target.value })}}></input>
           </div>
-          <div className="sponsers" >
-            <CreatableSelect required
-              placeholder={"ผู้สนับสนุน"}
-              isClearable
-              //onChange={(opt, meta) => console.log(opt, meta)}
-              onChange={(e) => onHandleSponsor(e)}
-              options={sponsorList}
-            />
-          </div>
+          <div className="type">
+          { /* ----- SELECT INPUT ----- */
+            (scholarshipForm.sponsorInput === 0 || scholarshipForm.sponsorInput === undefined ) &&
+            <select required onChange={(e) => {
+              if (e.target.value === '0') {
+                setScholarshipForm({ ...scholarshipForm , sponsorAdd: '', sponsorInput: 1 })
+              } else {
+                setScholarshipForm({ ...scholarshipForm , sponsor: e.target.selectedOptions[0].text })
+              } 
+            }}>
+              {
+                sponsorList.map((item, index) => (
+                  <option key={index} value={item.value}> {item.label} </option>
+                ))
+              }
+            </select>
+          }
+          { /* ----- NORMAL INPUT ----- */
+            scholarshipForm.sponsorInput === 1 &&
+            <div className='input-button'>
+              <input onChange={(e) => setScholarshipForm({...scholarshipForm , sponsorAdd: e.target.value })} type='text' placeholder='ผู้สนับสนุน'/>
+              { 
+                scholarshipForm.sponsorAdd !== '' &&
+                <button onClick={() => {
+                  var tempTypeList = sponsorList;
+                  tempTypeList.unshift({ label: scholarshipForm.sponsorAdd, value: scholarshipForm.sponsorAdd })
+                  setSponsorList(tempTypeList);
+                  setScholarshipForm({...scholarshipForm , sponsor : scholarshipForm.sponsorAdd, sponsorAdd: '', sponsorInput: 0})
+                }}>
+                  Add
+                </button>
+              }
+              { 
+                scholarshipForm.sponsorAdd === '' &&
+                <button onClick={() => setScholarshipForm({...scholarshipForm , sponsorInput: 1 })}>
+                  X
+                </button>
+              }
+            </div>
+          
+          }
+        </div>
           <div className="amount">
             <input type="number" min="0"  placeholder="จำนวนเงิน" required onChange={(event) => {setScholarshipForm({...scholarshipForm ,amount: event.target.value })}}></input>
           </div>

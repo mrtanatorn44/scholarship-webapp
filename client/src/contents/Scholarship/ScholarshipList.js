@@ -5,9 +5,9 @@ import Axios from 'axios';
 
 /* eslint-disable */
 
-import ImageModal from "../../modals/ImageModal.js";
-import AlertModal from '../../modals/AlertModal.js';
-import ConfirmDeleteModal from '../../modals/ConfirmModal.js';
+//import ImageModal from "../../modals/ImageModal.js";
+//import AlertModal from '../../modals/AlertModal.js';
+//import ConfirmDeleteModal from '../../modals/ConfirmModal.js';
 import Swal from 'sweetalert2';
 import Lightbox from 'react-image-lightbox';
 function ScholarshipList(props) {
@@ -134,22 +134,22 @@ function ScholarshipList(props) {
         <div className="scholar-list">
           <div className = 'title'>
             <h2>{scholar.type}</h2>
-            <h2>ทุนประจำปีการศึกษา {scholar.on_year } {scholar.on_term}</h2>
+            <h3>ทุนประจำปีการศึกษา {scholar.on_year } {scholar.on_term}</h3>
           </div>
           <div className="test">
 
             <p>{scholar.open_date} - {scholar.close_date}</p>
             <p>สำหรับนิสิตปี{scholar.min_student_year}-{scholar.max_student_year}</p>
           </div>
-          <div className='scholar-bottom'>
+          <div className='bottom1'>
             <div className='admin-panel'>
               {
                 user.role === 'admin' &&
                 <>
-                  <div className="btn-admin">
-                    <button className="btn-delete" onClick={() => { onHandleDeleteScholarBtn(scholar.id); }} > ลบ </button>
-                    <button className="btn-modify" onClick={ () =>{ setEditScholarshipID(scholar.id);setContent('ScholarshipListEdit') }} > แก้ไข </button>
-                  </div>
+              
+                  <button className="button-admin red2" onClick={() => { onHandleDeleteScholarBtn(scholar.id); }} > ลบ </button>
+                  <button className="button-admin red1" onClick={ () =>{ setEditScholarshipID(scholar.id);setContent('ScholarshipEdit') }} > แก้ไข </button>
+                  
                 </>
               }
               
@@ -171,3 +171,5 @@ function ScholarshipList(props) {
 }   
 
 export default ScholarshipList;
+
+//

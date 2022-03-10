@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { WebContext } from '../../App';
-import ConfirmModal from '../../modals/ConfirmModal.js';
+//import ConfirmModal from '../../modals/ConfirmModal.js';
 
 import FileForm from './CreateFileform.js';
 import RateForm from './CreateRateform.js';
@@ -71,33 +71,37 @@ function ScholarshipListCreate() {
         <div className="right">
         </div>
       </div>
-      <div className = 'content1'>  
-        <form onSubmit={(e) => onHandleSubmitBtn(e)}>
-          <div className="scholarListCrea-announceForm" >
-            <DetailForm/>
-          </div>
-          <div className='scholarListCrea-fileForm'> 
-            <FileForm/> 
-          </div>  
-          <div className="scholarListCrea-rateForm">
-            <RateForm/>
-          </div> 
-
-          {/* ----- FOOTER ------ */}
-          <div className="scholarListCrea-footer">
-            <div className="btn-confirm-scholarCre ">
-              <button className="btn-confirm" type="submit">
-                ตกลง 
-              </button>
-              <button className="btn-confirm">
-                null 
-              </button> 
+      <div className = 'contents'> 
+        <div className = 'content1'>  
+          <form onSubmit={(e) => onHandleSubmitBtn(e)}>
+            <div className="scholarListCrea-announceForm" >
+              <DetailForm/>
             </div>
-          </div>
-        </form>
+            <div className='scholarListCrea-fileForm'> 
+              <FileForm/> 
+            </div>  
+            <div className="scholarListCrea-rateForm">
+              <RateForm/>
+            </div> 
+
+            {/* ----- FOOTER ------ */}
+            <div className="footer1">
+              <div className="confirm">
+                <button className="button-confirm green1" type="submit">
+                  ตกลง 
+                </button>
+                <button className="button-confirm green1">
+                  null 
+                </button> 
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   )
 }
 
 export default ScholarshipListCreate;
+
+//

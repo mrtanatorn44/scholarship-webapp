@@ -1,172 +1,191 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { WebContext } from '../../App';
 import Axios from 'axios';
-import announce_empty from "../../data/images/announce_empty.png";
 
-import ConfirmSaveModal from '../../modals/ConfirmModal.js';
-import ConfirmCancelModal from '../../modals/ConfirmModal.js';
-import AlertModal from '../../modals/AlertModal.js';
+// Alert & Image Modal
+import Swal from 'sweetalert2'
+import Lightbox from 'react-image-lightbox';
 
 function AnnouncementEdit(props) {
-  const { Content, EditAnnounceID } = useContext(WebContext)
-  const [ content, setContent] = Content;
-  const [editAnnounceID, setEditAnnounceID] = EditAnnounceID;
-
-  const [showModalSave, setShowModalSave] = useState(false);
-  const [showModalCancel, setShowModalCancel] = useState(false);
-  const [showModalAlert, setShowModalAlert] = useState(false);
+  const { User, Content, Announce } = useContext(WebContext)
+  const         [ user, setUser ] = User;
+  const   [ content, setContent ] = Content;
+  const [ announce, setAnnounce ] = Announce;
+  
+  var month_th      = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
+  var today         = new Date();
+  var date_tranform = "วันที่ " + (today.getDate()) + " " + month_th[today.getMonth() + 1] + " " + (today.getFullYear() + 543);
 
   const [form, setForm] = useState({
-    title: "",
-    detail: "",
-    image: "",
-    image_name: "",
-    oldimg:""
+    title         : '',
+    detail        : '',
+    dateFormat    : '',
+    image         : '',
+    imageName     : '',
+    imageModal    : false,
+    toggleContent : true,
   })
-
-  function getAnnounce() {
-    Axios.post("http://localhost:5000/getAnnounce", {
-        id : editAnnounceID
-      }).then((response)=> { 
-        var result =  response.data[0];   
-        
-        var binaryImage   = ''; // ArrayBuffer to Base64
-        var bytes         = new Uint8Array( response.data[0].image_url.data );
-        var len           = bytes.byteLength;
-        for (var i = 0; i < len; i++) binaryImage += String.fromCharCode( bytes[ i ] );
-        setForm(
-          {
-            ...form,
-            title: result.title,
-            detail: result.detail,
-            image : "data:image/png;base64," + _arrayBufferToBase64(result.image_url.data), // blob to image
-            imageData: result.image_url.data
-          }
-        )
-
-      }
-    )
-  }
-  useEffect(() => {
-    getAnnounce();
-  }, [])
 
   function _arrayBufferToBase64( buffer ) {
     var binary = '';
     var bytes = new Uint8Array( buffer );
     var len = bytes.byteLength;
     for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode( bytes[ i ] );
+      binary += String.fromCharCode( bytes[ i ] );
     }
     return window.btoa( binary );
   }
 
   function onHandleUpload(e) {
-    console.log("tam");
     var file = e.target.files[0];
-    console.log('file: ', file.name)
-
-    var arrayBuffer;
-    var reader = new FileReader();
-    reader.onload = async function() {
-      arrayBuffer = await new Uint8Array(reader.result);
-      var res = reader.result;
-      console.log(reader.result);
-      var binImage = _arrayBufferToBase64(arrayBuffer);
-      //src={'data:image/jpeg;base64,' + bufferToBase64( data.fileImg.data )}
-      console.log(binImage);
-      setForm({...form,
-        image:  binImage,
-        image_name: file.name
-      })
-      
+    if (file.size <= 1048576) {
+      var arrayBuffer;
+      var reader = new FileReader();
+      reader.onload = async function() {
+        arrayBuffer = reader.result;
+        var binImage = _arrayBufferToBase64(arrayBuffer);
+        setForm({
+          ...form,
+          image     : binImage,
+          imageName : file.name,
+        })
+      }
+      reader.readAsArrayBuffer(file); 
+    } else {
+      Swal.fire('Limit Image Size!', 'รูปต้องมีขนาดไม่เกิน 1Mb', 'warning')
     }
-    reader.readAsArrayBuffer(file); 
-    
   }
 
-  const onChangenews = (form,id) => {
-    console.log(form.image);
-    console.log(form.imageData)
-    Axios.post("http://localhost:5000/editAnnounce", { 
-      title :form.title,
-      detail : form.detail,
-      image_url: form.image_name === ''? form.imageData : form.image,
-      id: id
-    }).then((response)=>{
-      console.log("OK");
+  function onHandleSubmitBtn(e) {
+    e.preventDefault();
+    Swal.fire({
+      title: 'คุณแน่ใจหรือไม่?',
+      text: 'ที่จะบันทึกประกาศนี้!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#03A96B',
+      confirmButtonText: 'Save',
+      cancelButtonColor: '#A62639',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed && user.role === 'admin') {
+        Axios.post("http://localhost:5000/addAnnounce", {
+          title       : form.title,
+          detail      : form.detail,
+          imageData   : form.image,
+          imageName   : form.imageName
+        }).then((response) => {
+          setAnnounce([]);
+          setContent('Announcement');
+          Swal.fire('Success!', 'บันทึกประกาศเรียบร้อย', 'success')
+        });
+      }
+    })
+  }
+
+  function onHandleCancelBtn() {
+    Swal.fire({
+      title : 'Leave this Page?',
+      text  : "ข้อมูลจะไม่ถูกบันทึก",
+      icon  : 'warning',
+      showCancelButton    : true,
+      confirmButtonColor  : '#03A96B',
+      confirmButtonText   : 'Leave',
+      cancelButtonColor   : '#A62639',
+      cancelButtonText    : 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setContent('Announcement');
+      }
     })
   }
   
-
-  function getConfirmSave(isConfirm) {
-    if (isConfirm) {
-      onChangenews(form,editAnnounceID);
-      setContent('Announcement');
-    }
-    setShowModalSave(false);
-  }
-  function getConfirmCancel(isConfirm) {
-    if (isConfirm) {
-      setContent('Announcement');
-    } 
-    setShowModalCancel(false);
-  }
-  function getConfirmAlert(isConfirm) {
-    if (isConfirm) {
-      setShowModalAlert(false)
-      setContent('Announcement');
-    }
-  }
   return (
     <div className="frame">
       <div className="header">
-        <div className="left">
-          <div className="icons">
-            <i className="bi bi-plus-lg"/>
+        <div  className="left">
+          <div className="icons"><i className="bi bi-plus-lg"/></div>
+          <div className="topic"><h4>เพิ่มข่าวสาร</h4></div>
+        </div>
+        <div className="right">
+          <div className="button-set">
+            <button className="button-1 green1" form='announce-form' type='submit'>
+              <i className="bi bi-save"/> 
+              <p>บันทึก</p>
+            </button>
+            <button className="button-1 red1" onClick={onHandleCancelBtn}>
+              <i className="bi bi-x"/> 
+              <p>ยกเลิก</p> 
+            </button>
+          </div> 
+        </div>
+      </div>
+
+      <div className="contents">
+        {/* ----- Content ----- */}
+        <div className="content1">
+          {/* ----- Form ------ */}
+          <form className="form1" id='announce-form' onSubmit={(e) => onHandleSubmitBtn(e)}>
+            <div className="heading">
+              <input required type="text" placeholder="หัวข้อข่าว" onChange={(e) => setForm({ ...form, title: e.target.value })}/>
+            </div>
+            <div className="detail">
+              <textarea required type="text" placeholder="รายละเอียดข่าวสาร" onChange={(e) => setForm({ ...form, detail: e.target.value })}/>
+            </div>
+            <div className="insertbutton">
+              <label>
+                <input className="insert" type="file" accept="image/jpeg, image/png" name="file" id="file" onChange={(file) => onHandleUpload(file)} onClick={(e) => e.target.value=''}/>
+                <i className="bi bi-card-image"/>
+              </label>
+              <p> {form.imageName===""? "เพิ่มรูปภาพ": form.imageName } </p>
+              { form.imageName!=='' && <button className="cancel-button" onClick={() => setForm({...form, imageSrc: '', imageData: '', imageName: ''})}><i className="bi bi-x"/></button> }
+            </div>
+          </form>
+          {/* ----- Preview ----- */} 
+          <div className="preview">
+            <h4>Preview</h4>
           </div>
-          <div className="topic">
-            <h4>แก้ไขข่าวสาร</h4>
+          <div className="news">
+            {/*---------- TITLE ----------*/}
+            <div className='title'>
+              <h2>{form.title}</h2>
+              <h3>{date_tranform}</h3>
+            </div>
+            {/*---------- CONTENT ----------*/}
+            { /* IMAGE */
+              !form.toggleContent && form.imageName!=='' &&
+              <div className='content-image'>
+                <img  className='news-image' src={ 'data:image/jpeg;base64,' + form.image } alt='scholarship promote' 
+                  onClick = {() => { form.imageModal = true; setForm({...form}); }}/> 
+              </div> 
+            }
+            { /* DETAIL */
+              form.toggleContent && 
+              <div style={{whiteSpace:'pre-line'}} className='content'><h3>{ form.detail }</h3></div> 
+            }
+            { /* MODAL POPUP IMAGE */
+              form.imageModal && 
+              <Lightbox mainSrc={ 'data:image/jpeg;base64,' + form.image } onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
+            }
+            {/*---------- BOTTOM ----------*/}
+            <div className='newsList-bottom'>
+              <div className='admin-panel'>
+              </div>
+              <div className='user-panel'>
+                { /* USER BUTTON */
+                  form.imageName!=='' &&
+                  <h3 onClick={() => setForm({...form, toggleContent: !form.toggleContent}) }>
+                    { !form.toggleContent ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)" }
+                  </h3> 
+                }
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="right">
-          <div class="button2-set">
-            <button className="save-button" onClick={() => (setShowModalSave(true))}>
-              <i className="bi bi-save"/><p>บันทึก</p>
-            </button>
-            { showModalSave && <ConfirmSaveModal sendConfirm={getConfirmSave}/> }
-            { showModalAlert && <AlertModal text2='บันทึกเรียบร้อย' iconIndex={0} sendConfirm={getConfirmAlert}/>}
-            <button className="cancel-button" onClick={() => (setShowModalCancel(true))}>
-              <i className="bi bi-x"/><p>ยกเลิก</p> 
-            </button>
-            { showModalCancel && <ConfirmCancelModal sendConfirm={getConfirmCancel}/> }
-          </div>
-        </div>
-      </div>
-      <div className="content1 d-flex">
-        <form className="announEdit-form">
-          <div className="topic-input d-flex">
-            <input type="text" placeholder="หัวข้อข่าว" value={form.title} onChange={(e) => { setForm({ ...form, title: e.target.value })}}/>
-          </div>
-          <div className="detail">
-            <textarea type="text" placeholder="รายละเอียดข่าวสาร" value={form.detail} onChange={(e) => {setForm({...form, detail: e.target.value })}}/>
-          </div>  
-            <div className="insertbutton">
-            
-              <input class="insert" type="file" name="file" id="file" onChange={(file) => onHandleUpload(file)}/>
-              <label for="file"> 
-              <i class="bi bi-card-image"/> 
-              </label>
-            
-              <p>{ form.image_name===""? "เพิ่มรูปภาพ": form.image_name }</p>
-              { form.image_name!=='' && <button className="cancel-button" onClick={() => setForm({...form, image: '', image_name: ''})}><i className="bi bi-x"/></button> }
-          </div>
-        </form>
-      </div> 
-        <img src={ "data:image/png;base64," + form.image }/>
+      </div>  
     </div>
-  );
+  )
 }
 
 export default AnnouncementEdit;

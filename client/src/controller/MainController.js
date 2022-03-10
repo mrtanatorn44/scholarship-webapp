@@ -4,15 +4,15 @@ import Axios from 'axios';
 import announce_empty from "../data/images/announce_empty.png";
 
 function Main() {
-  const     { Content, Announce } = useContext(WebContext);
+  const     { ScholarshipForm, Content, Announce } = useContext(WebContext);
   const   [ content, setContent ] = Content;
   const [ announce, setAnnounce ] = Announce;
-  
+  const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
   // Handle 'Content' localStorage
   useEffect(() => {
     if (content === '') {
       const localContent = localStorage.getItem('content');
-      if (localContent === '') {
+      if (localContent === '' || localContent === undefined) {
         setContent('Announcement');
       } else {
         setContent(localContent);
@@ -20,6 +20,21 @@ function Main() {
     }
     localStorage.setItem('content', content);
   }, [content])
+
+  // Handle 'scholarshipForm' localStorage
+  useEffect(() => {
+    if (scholarshipForm === '') {
+      const localContent = localStorage.getItem('scholarshipForm');
+      console.log('local', localContent)
+      if (localContent === '' || localContent === undefined) {
+        setScholarshipForm([]);
+      } else {
+        console.log(JSON.parse(localContent))
+        setScholarshipForm([JSON.parse(localContent)]);
+      }
+    }
+    localStorage.setItem('scholarshipForm', JSON.stringify(scholarshipForm));
+  }, [scholarshipForm])
 
   const arrayBufferToBase64 = (arrayBuffer) => {
     var CHUNK_SIZE = 8*1024;
