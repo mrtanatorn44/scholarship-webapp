@@ -1,33 +1,18 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext, useState, useEffect } from 'react';
 import Axios from 'axios';
-//import ConfirmModal from '../../modals/ConfirmModal.js'
 import { WebContext } from '../../App.js';
-
+import Swal from 'sweetalert2';
 
 function RoleList(props){
 
   const { Query } = useContext(WebContext);
   const [query, setQuery] = Query;
-  const [showModal ,setShowModal] = useState(false);
   const [User,setUser] = useState([]);
   const roles = [{ title: 'Plese Choose Role', value: '-' },{ title: 'Student', value: 'student' }, { title: 'Interviewer', value: 'interviewer' }, { title: 'Admin', value: 'admin' }];
   const [target, setTarget] = useState();
   const [account, setAccount] = useState([]);
-
-
-  function getConfirm(data){
-    if(data){
-      if(target.target.value === account.role){
-        alert("You have this role")
-      }else{
-        onRoleChange(account,target);
-      }
-    }
-    else{
-
-    }
-    setShowModal(false);
-  }
 
 
   const getUser = () =>{
@@ -35,6 +20,31 @@ function RoleList(props){
       setUser(response.data)
     })
   }
+  
+  function onHandleSubmitBtn(e) {
+    e.preventDefault();
+    
+    Swal.fire({
+      title: 'คุณแน่ใจหรือไม่?',
+      text: 'ที่จะบันทึกประกาศนี้!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#03A96B',
+      confirmButtonText: 'Save',
+      cancelButtonColor: '#A62639',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if(target.target.value === account.role){
+          alert("You have this role")
+        }else{
+          onRoleChange(account,target);
+          Swal.fire('บันทึกแล้ว!','','success')
+        }
+      }
+    })
+  }
+  
   useEffect(() => {
     getUser();
   }, [])
@@ -45,18 +55,14 @@ function RoleList(props){
         role:role.target.value
       }).then(() => { setUser([]);getUser();});
   }
+
   return(
-    
-    User.filter( user => {
-      if(query === ''){
-        return user;
-      }else if(user.email.toLowerCase().includes(query.toLowerCase())){
-        return user;
-      }
+    User.filter((user) => {
+      return user.email.toLowerCase().includes(query.toLowerCase())
     }).map((user, index) => (
-      <div className="roleList" key={index}>
-        <div className="roleList-form">
-          <div className="d-flex">
+      <div className="container1 list2 d-flex" key={index}>
+        
+          
             <div className="name">
               <p>Email : {user.email}</p>
             </div>
@@ -64,14 +70,14 @@ function RoleList(props){
               <p>{user.role}</p>
             </div>
             
-            <div className="roleList-right">
-              <select id="capital" onChange={(e) => {setShowModal(true);setTarget(e);setAccount(user)}}>
+            <div className="roleList">
+              <select id="capital" onChange={(e) => {onHandleSubmitBtn(e);setTarget(e);setAccount(user)}}>
                 { roles.map((role, idx) => <option key={idx} value={role.value}>{role.title} </option>) }
               </select>
               { /*showModal && <ConfirmModal sendConfirm={getConfirm}/>*/}
             </div>
-          </div>
-        </div>
+          
+       
       </div>
     ))
   )

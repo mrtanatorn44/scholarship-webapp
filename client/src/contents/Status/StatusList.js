@@ -1,6 +1,7 @@
+/*eslint no-unused-vars:*/
+
 import { React, useState, useEffect } from 'react';
 import User from '../../data/datanews.js';
-//import AlertModal from '../../modals/AlertModal.js';
 
 function StatusList(props) {
 	const [scholar, setState] = useState(User.map((x)=>({...x,check:false})));
@@ -25,17 +26,15 @@ function StatusList(props) {
 
 	return(
 		scholar.map((scholar, index) => (
-			<div className="d-flex">
+			<div className="d-flex" key={index}>
 				<div className="scholar-list">
+
 					<div className='title'>
 						<h2>{scholar.title}</h2>
 						<h3>{scholar.date}</h3>
-						
 					</div>
 
-					
-
-					<div className='scholar-bottom'>
+					<div className='bottom1'>
 						<div className='admin-panel'>
 						</div>
 						<div className='user-panel'>
@@ -44,6 +43,7 @@ function StatusList(props) {
 							</h3>
 						</div>
 					</div>
+
 					{scholar.check && <h3>{scholar.detail}</h3>} 
 					
 				</div>

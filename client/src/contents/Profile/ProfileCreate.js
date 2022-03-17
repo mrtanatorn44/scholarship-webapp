@@ -1,8 +1,10 @@
+/*eslint no-unused-vars:*/
 
 import React, { useContext, useState, useEffect } from 'react';
-//import ConfirmModal from '../../modals/ConfirmModal.js';
 import { WebContext } from '../../App.js';
 import Axios from 'axios';
+
+import Swal from 'sweetalert2'
 
 function ProfileCreate() {
   //usecontext
@@ -11,10 +13,10 @@ function ProfileCreate() {
   const [user, setUser] = User;
   const [content, setContent] = Content;
   const [form, setForm] = useState({
-    image:""
+    imageData:"",
+    imageName :""
   })
   //
-  const [showModal ,setShowModal] = useState(false);
   const [profile, setProfile]=useState({
     name:"",
     yearofstudy:"",
@@ -53,20 +55,21 @@ function ProfileCreate() {
   }
   function onHandleUpload(e) {
     var file = e.target.files[0];
-    console.log('file: ', file.name)
-
-    var arrayBuffer;
-    var reader = new FileReader();
-    reader.onload = async function() {
-      arrayBuffer = await new Uint8Array(reader.result);
-      var res = reader.result;
-      var binImage = _arrayBufferToBase64(arrayBuffer);
-      setForm({...form,
-        image     :  binImage,
-        imageName : file.name
-      })
+    if (file.size <= 1048576) {
+      var arrayBuffer;
+      var reader = new FileReader();
+      reader.onload = async function() {
+        arrayBuffer = reader.result;
+        setForm({
+          ...form,
+          imageData : _arrayBufferToBase64(arrayBuffer),
+          imageName : file.name,
+        })
+      }
+      reader.readAsArrayBuffer(file); 
+    } else {
+      Swal.fire('Limit Image Size!', 'รูปต้องมีขนาดไม่เกิน 1Mb', 'warning')
     }
-    reader.readAsArrayBuffer(file); 
   } 
 
   const changeValue = (name,value) => {
@@ -76,35 +79,35 @@ function ProfileCreate() {
     }))
   }; 
   
-  function getConfirm(data){
-    if( data) {
-      Axios.post("http://localhost:5000/addProfile",{
+  function onHandleSubmitBtn(e) {
+    e.preventDefault();
+    console.log('work')
+
+    Swal.fire({
+      title: 'คุณแน่ใจหรือไม่?',
+      text: 'ที่จะบันทึกประกาศนี้!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#03A96B',
+      confirmButtonText: 'Save',
+      cancelButtonColor: '#A62639',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        setContent('Profile');
+        Swal.fire('บันทึกแล้ว!','','success')
+
+        Axios.post("http://localhost:5000/addProfile",{
         id            : user.id,
         profile_data  : JSON.stringify(profile),
-        picture_data  : form.image,
+        picture_data  : form.imageData,
         picture_name  : form.imageName
       })
-      setContent('Profile');
-    } else {
-    }
-    setShowModal(false);
-  }
-  //console.log("sdasdasdasd");
-    
-  const onFormSumbit = (event) => {
-    event.preventDefault();
-    setShowModal(true);
+      }
+    })
   }
   
-  //type input
-  const inputHandler = (e) => {
-    const { value, maxLength } = e.target;
-    if (String(value).length >= maxLength) {
-      e.preventDefault();
-      return;
-    }
-  };
-
   return (
 
     <div className="frame">
@@ -121,7 +124,7 @@ function ProfileCreate() {
       </div>
       <div className="contents" >
         <div className="content3">
-          <form className="form2" onSubmit={(e)=> onFormSumbit(e)}>  
+          <form className="form2" onSubmit={(e) => onHandleSubmitBtn(e)}>  
             <div className="name">
               <h5>กรอกประวัติแรกเข้า</h5>
             </div>
@@ -130,8 +133,8 @@ function ProfileCreate() {
               <input   placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required/>
             </div>
             <div>
-              <label>นิสิตชั้นปีที่</label>
-              <select className="form-select form-select-lg" value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
+              <label>นิสิตชั้นปีที่</label><br></br>
+              <select  value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
                 <option value="">เลือก</option>
                 <option value="5">5</option>
                 <option value="4">4</option>
@@ -150,8 +153,8 @@ function ProfileCreate() {
               <input type="number" min="0"  maxLength="10" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
             </div>
             <div>
-              <label>ภาคการเรียนการสอน</label>
-              <select className="form-select form-select-lg" value = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
+              <label>ภาคการเรียนการสอน</label><br></br>
+              <select  value = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
                 <option value="">เลือก</option>
                 <option value="ภาคปกติ">   ภาคปกติ    </option>
                 <option value="ภาคพิเศษ">  ภาคพิเศษ   </option>
@@ -159,8 +162,8 @@ function ProfileCreate() {
             </div>
             
             <div>
-              <label>สาขา</label>
-              <select className="form-select form-select-lg" value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
+              <label>สาขา</label><br></br>
+              <select  value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
                   <option value="">เลือก</option>
                   <option value="คอมพิวเตอร์">  คอมพิวเตอร์  </option>
                   <option value="ไฟฟ้า">  ไฟฟ้า      </option>
@@ -278,16 +281,16 @@ function ProfileCreate() {
             <div>
               <label>สถานะสมรสของบิดา-มารดา</label><br></br>
               <input className = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" value = {profile.status_marry} onChange={(e)=>changeValue("status_marry",e.target.value)} required/>
-            </div>
-          <button className="btn-confirm" >บันทึก</button>*/}
-          </form>
-        </div>
-        <div className="footer1">
-          <div className="confirm">
-            <button className="button-confirm green1" onClick={()=> (setShowModal(true))}>บันทึก</button>          
-            {/*showModal && <ConfirmModal sendConfirm={getConfirm}/>*/}
-          </div>
-        </div>
+            </div>*/}
+              </form>
+            </div>    
+            <div className="footer1">
+              <div className="confirm">
+                <button className="button-confirm green1" type='submit'>
+                  ตกลง 
+                </button>  
+              </div>     
+             </div>
       </div>
     </div>
   ) 

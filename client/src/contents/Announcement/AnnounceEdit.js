@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { WebContext } from '../../App';
 import Axios from 'axios';
 
@@ -6,15 +6,11 @@ import Axios from 'axios';
 import Swal from 'sweetalert2'
 import Lightbox from 'react-image-lightbox';
 
-function AnnouncementEdit(props) {
+function AnnounceEdit(props) {
   const { User, Content, Announce } = useContext(WebContext)
   const         [ user, setUser ] = User;
   const   [ content, setContent ] = Content;
   const [ announce, setAnnounce ] = Announce;
-  
-  var month_th      = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
-  var today         = new Date();
-  var date_tranform = "วันที่ " + (today.getDate()) + " " + month_th[today.getMonth() + 1] + " " + (today.getFullYear() + 543);
 
   const [form, setForm] = useState({
     title         : '',
@@ -25,6 +21,47 @@ function AnnouncementEdit(props) {
     imageModal    : false,
     toggleContent : true,
   })
+
+  /*
+  date: "2022-03-09T00:41:17.000Z"
+  dateFormat: "วันที่ 9 มีนาคม 2565"
+  detail: "test\ns\nets\nets\net\nsetset"
+  id: 225
+  image: "data:image/png;base64,/9j/4QAWRXhpZgAATU0AKgAAAAg
+  imageIsEmpty: false
+  imageModal: false
+  image_data: {type: 'Buffer', data: Array(144092)}
+  image_name: "58649 (1).jpg"
+  isEmpty: false
+  number: 0
+  title: "ดเ้ดเ้ด"
+  toggleContent: false
+  */
+  function getAnnounceTarget() {
+    var announceID = parseInt(localStorage.getItem('announceEditID_target'));
+    var announceTarget = announce.filter(obj => {
+      return obj.id === announceID;
+    })
+    if (announceTarget.length === 0) { // Check announce is not null
+      Swal.fire('Error!','Something went wrong, please try again!','warning');
+      console.log('Announce ID : ', announceID);
+      setContent('Announcement');
+      return;
+    }
+    setForm({
+      ...form, 
+      id          : announceTarget[0].id,
+      title       : announceTarget[0].title,
+      detail      : announceTarget[0].detail,
+      imageSrc    : announceTarget[0].imageSrc,
+      imageName   : announceTarget[0].imageName,
+      imageData   : announceTarget[0].imageData,
+      dateFormat  : announceTarget[0].dateFormat,
+    })
+  }
+  useEffect(() => {
+    getAnnounceTarget();
+  }, [])
 
   function _arrayBufferToBase64( buffer ) {
     var binary = '';
@@ -43,10 +80,10 @@ function AnnouncementEdit(props) {
       var reader = new FileReader();
       reader.onload = async function() {
         arrayBuffer = reader.result;
-        var binImage = _arrayBufferToBase64(arrayBuffer);
         setForm({
           ...form,
-          image     : binImage,
+          imageSrc  : 'data:image/jpeg;base64,' + _arrayBufferToBase64(arrayBuffer),
+          imageData :  _arrayBufferToBase64(arrayBuffer),
           imageName : file.name,
         })
       }
@@ -69,14 +106,22 @@ function AnnouncementEdit(props) {
       cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed && user.role === 'admin') {
-        Axios.post("http://localhost:5000/addAnnounce", {
+        Axios.post("http://localhost:5000/editAnnounce", {
+          id          : form.id,
           title       : form.title,
           detail      : form.detail,
-          imageData   : form.image,
+          imageData   : form.imageName === '' ? '' : form.imageData,
           imageName   : form.imageName
         }).then((response) => {
+          if (response.data.errno) { // Check if Backend return error
+            console.log(response.data)
+            Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+            return;
+          }
+          // if not error do thing
           setAnnounce([]);
           setContent('Announcement');
+          localStorage.setItem('announceEditID_target', '')
           Swal.fire('Success!', 'บันทึกประกาศเรียบร้อย', 'success')
         });
       }
@@ -95,6 +140,7 @@ function AnnouncementEdit(props) {
       cancelButtonText    : 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
+        localStorage.setItem('announceEditID_target', '')
         setContent('Announcement');
       }
     })
@@ -127,10 +173,10 @@ function AnnouncementEdit(props) {
           {/* ----- Form ------ */}
           <form className="form1" id='announce-form' onSubmit={(e) => onHandleSubmitBtn(e)}>
             <div className="heading">
-              <input required type="text" placeholder="หัวข้อข่าว" onChange={(e) => setForm({ ...form, title: e.target.value })}/>
+              <input required type="text" defaultValue={form.title} placeholder="หัวข้อข่าว" onChange={(e) => setForm({ ...form, title: e.target.value })}/>
             </div>
             <div className="detail">
-              <textarea required type="text" placeholder="รายละเอียดข่าวสาร" onChange={(e) => setForm({ ...form, detail: e.target.value })}/>
+              <textarea required type="text" defaultValue={form.detail} placeholder="รายละเอียดข่าวสาร" onChange={(e) => setForm({ ...form, detail: e.target.value })}/>
             </div>
             <div className="insertbutton">
               <label>
@@ -138,7 +184,13 @@ function AnnouncementEdit(props) {
                 <i className="bi bi-card-image"/>
               </label>
               <p> {form.imageName===""? "เพิ่มรูปภาพ": form.imageName } </p>
-              { form.imageName!=='' && <button className="cancel-button" onClick={() => setForm({...form, imageSrc: '', imageData: '', imageName: ''})}><i className="bi bi-x"/></button> }
+              { /* DELETE IMAGE BTN */
+                form.imageName!=='' && 
+                <button className="button-admin red1" onClick={() => setForm({...form, imageSrc: '', imageData: '', imageName: ''})}>
+                  <i className="bi bi-x"/>
+                 
+                </button> 
+              }
             </div>
           </form>
           {/* ----- Preview ----- */} 
@@ -149,13 +201,13 @@ function AnnouncementEdit(props) {
             {/*---------- TITLE ----------*/}
             <div className='title'>
               <h2>{form.title}</h2>
-              <h3>{date_tranform}</h3>
+              <h3>{form.dateFormat}</h3>
             </div>
             {/*---------- CONTENT ----------*/}
             { /* IMAGE */
               !form.toggleContent && form.imageName!=='' &&
               <div className='content-image'>
-                <img  className='news-image' src={ 'data:image/jpeg;base64,' + form.image } alt='scholarship promote' 
+                <img className='news-image' src={form.imageSrc} alt='scholarship promote' 
                   onClick = {() => { form.imageModal = true; setForm({...form}); }}/> 
               </div> 
             }
@@ -165,10 +217,10 @@ function AnnouncementEdit(props) {
             }
             { /* MODAL POPUP IMAGE */
               form.imageModal && 
-              <Lightbox mainSrc={ 'data:image/jpeg;base64,' + form.image } onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
-            }
+              <Lightbox mainSrc={form.imageSrc} onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
+            } 
             {/*---------- BOTTOM ----------*/}
-            <div className='newsList-bottom'>
+            <div className='bottom1'>
               <div className='admin-panel'>
               </div>
               <div className='user-panel'>
@@ -188,4 +240,4 @@ function AnnouncementEdit(props) {
   )
 }
 
-export default AnnouncementEdit;
+export default AnnounceEdit;

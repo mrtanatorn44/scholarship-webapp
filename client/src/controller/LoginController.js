@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+/*eslint no-unused-vars:*/
+import { useContext, useEffect } from 'react'
 import { WebContext } from '../context/WebContext';
-import { useNavigate, Navigate } from 'react-router-dom';
-import Axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const navigate = useNavigate();
@@ -11,9 +11,11 @@ function Login() {
   useEffect(() => { 
     if (localStorage.getItem('isSignedIn') === 'true') {
       navigate('/main');
+      // console.log(user.isLogin)
     } else  {
       navigate('/');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   return null;

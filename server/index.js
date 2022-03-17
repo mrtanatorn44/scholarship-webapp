@@ -114,15 +114,14 @@ app.get("/getUser", (req, res) => {
   });
 });
 
+/* ----- Announcement ----- */
 app.post("/addAnnounce", (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
   const title = req.body.title;
   const imageName = req.body.imageName;
   const imageData = req.body.imageData;
   const detail = req.body.detail;
-
   dbCon.query(
     "INSERT INTO announce (title, detail, image_data, image_name) VALUES (?, ?, ?, ?)",
     [title, detail, imageData, imageName],
@@ -156,20 +155,22 @@ app.post("/getAnnounce",(req ,res)=>{
         console.log(err);
       }else{
         res.send(result);
-        //console.log(result)
       }
     }
   )
 });
 
 app.post("/editAnnounce",(req ,res)=>{
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   const id = req.body.id;
   const title = req.body.title;
-  const image_url = req.body.image_url;
   const detail = req.body.detail;
+  const imageName = req.body.imageName;
+  const imageData = req.body.imageData;
   dbCon.query(
-    "UPDATE announce SET title = ?,detail = ?,image_url = ?  WHERE id = ?",
-    [title,detail,image_url,id],
+    "UPDATE announce SET title=?, detail=?, image_data=?, image_name=? WHERE id=?",
+    [title, detail, imageData, imageName, id],
     (err, result) => {
       if(err){
         res.send(err);
@@ -204,15 +205,13 @@ const fileImg = fs.readFileSync("upload/"+req.file[0].filename)
 app.post("/addProfile", (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  
   const id            = req.body.id;
   const profile_data  = req.body.profile_data;
   const picture_data  = req.body.picture_data;
   const picture_name  = req.body.picture_name;
-
   dbCon.query(
     "INSERT INTO profile (id, profile_data, picture_data, picture_name) VALUES ( ?, ?, ?, ? )",
-    [ id, profile_data, profile_data, picture_name ], 
+    [ id, profile_data, picture_data, picture_name ], 
     (err, result) => {
       if (err) {
         res.send(err);
@@ -226,12 +225,10 @@ app.post("/addProfile", (req, res) => {
 app.post("/editProfile", (req, res)=>{
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
   const id            = req.body.id;
   const profile_data  = req.body.profile_data;
   const picture_data  = req.body.picture_data;
   const picture_name  = req.body.picture_name;
-
   dbCon.query(
     "UPDATE profile SET profile_data=?, picture_data=?, picture_name=? WHERE id=?",
     [ profile_data, picture_data, picture_name, id ],
@@ -248,9 +245,7 @@ app.post("/editProfile", (req, res)=>{
 app.post("/getProfile", (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
   const id = req.body.id;
-
   dbCon.query(
     "SELECT * FROM profile WHERE id = ?",
     [id],
@@ -279,10 +274,11 @@ app.post("/addScholar", (req, res) => {
   const open_date=req.body.open_date;
   const close_date=req.body.close_date;
   const sponsor = req.body.sponsor;
+  const required = req.body.required;
 
   dbCon.query(
-    "INSERT INTO scholarship ( is_public, type, detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date, sponsor) VALUES (?,?, ?, ?,?, ?, ?,?,?,?,?)",
-    [ is_public,type,detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date,sponsor], 
+    "INSERT INTO scholarship ( is_public, type, detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date, sponsor, required) VALUES (?,?, ?, ?,?, ?, ?,?,?,?,?, ?)",
+    [ is_public,type,detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date,sponsor,required], 
     (err, result) => {
       if (err) {
         res.send(err);

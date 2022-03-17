@@ -1,8 +1,8 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App.js';
 import Axios from 'axios';
-
-
 
 function ProfileCheck(props) {
   const { Content  } = useContext(WebContext)
@@ -11,61 +11,54 @@ function ProfileCheck(props) {
   return(
     <div className="frame">
       <div className="contents">
-        <div className="content6">   
-          <div className="profile-row-top">
-            <div className="profile-form ">
-              <form className="d-flex">
-                <div className="profile-img">
-                  <img src="https://i.pinimg.com/564x/e6/c9/78/e6c9783ef31e29427d42939766031372.jpg"/>
-                  <p>สภาพเป็นแฟนกัน</p>
-                </div>
-
-                <div className="profile-data d-flex">
-                  <div className="profile-column-left"> 
-                    <div className="profile-name">
-                      <label>ชื่อ - นามสกุล(ภาษาไทย)</label><br></br>
-                      <input placeholder="" required></input> 
-                    </div>
-                    <div className="profile-sector">
-                      <label >ภาคการเรียนการสอน</label><br></br>
-                      <input placeholder="" required></input>
-                    </div>
-                  </div>
-
-                  <div className="profile-column-center">
-                    <div className="profile-code">
-                      <label >รหัสนิสิต</label><br></br>
-                      <input className="d-flex" placeholder="" required></input>
-                    </div>
-                    <div className="profile-branch">
-                      <label >สาขา</label><br></br>
-                      <input placeholder="" required></input>
-                    </div>
-                  </div>
-
-                  <div className="profile-column-right">
-                    <div className="profile-grade">
-                      <label >นิสิตชั้นปีที่</label><br></br>
-                      <input placeholder="" required/>
-                    </div>
-                  </div>
-
-                </div>
-              </form>
-              <div className="botton-edit">
-                
-                <div className="botton-edit1">
-                  <button onClick = {() => setContent('FormProfile')}>
-                      <p>ดูข้อมูล</p>
-                  </button>
-                </div> 
-                
+        <div className="profile">   
+          <div className="top">
+            <form className="form">
+              <div className="img-circle">
+                <img src="https://i.pinimg.com/564x/e6/c9/78/e6c9783ef31e29427d42939766031372.jpg" alt='profile'/>
+                <p>สภาพเป็นแฟนกัน</p>
               </div>
+              <div className="data">
+                <div className="left"> 
+                  <div className="name">
+                    <label>ชื่อ - นามสกุล(ภาษาไทย)</label><br></br>
+                    <input placeholder="" required></input> 
+                  </div>
+                  <div className="profile-sector">
+                    <label >ภาคการเรียนการสอน</label><br></br>
+                    <input placeholder="" required></input>
+                  </div>
+                </div>
+                <div className="center">
+                  <div className="code">
+                    <label >รหัสนิสิต</label><br></br>
+                    <input className="d-flex" placeholder="" required></input>
+                  </div>
+                  <div className="branch">
+                    <label >สาขา</label><br></br>
+                    <input placeholder="" required></input>
+                  </div>
+                </div>
+                <div className="right">
+                  <div className="grade">
+                    <label >นิสิตชั้นปีที่</label><br></br>
+                    <input placeholder="" required/>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div>
+              <div className="button-profile">
+                <button className="button-3 red3" onClick = {() => setContent('FormProfile')}>
+                   <p>ดูข้อมูล</p>
+                </button>
+              </div>             
             </div>
+            
           </div>
 
-          <div className="profile-row-bottom">
-            <div className="drop-scholaship">
+          <div className="bottom">
+            <div className="dropdown">
               <label>ประเภทของทุน</label><br></br>
               <select>
                 <option value="study">    ทุนเรียนดี       </option>

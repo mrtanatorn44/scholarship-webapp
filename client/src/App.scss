@@ -14,55 +14,13 @@ body {
   width: 100%;
   height: 100%;
   font-family: 'Prompt', sans-serif;
+  overflow-y: hidden;
+ 
 }
 
 /* ----- Sweet Alert ----- */
 .swal2-container{
 	font-family: 'Prompt', sans-serif;
-}
-
-/* ----- Loading Screen ----- */
-.loading-screen {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  background-color: black;
-  z-index: 1;
-  display: flex;
-  p {
-    margin: auto;
-    font-size: size(3);
-    color: white;
-    display: flex;
-    animation: rotate 0.5s linear infinite;
-    i {
-      margin-top: size(0.3);
-    }
-  }
-  @media (max-width: 480px) {
-    p {
-      margin: auto;
-      font-size: size(3);
-      color: white;
-      display: flex;
-      animation: rotate 2s linear infinite;
-      i {
-        margin-top: size(0.3);
-      }
-    }
-  }
-  @keyframes rotate {
-    100% { transform: rotate(360deg); }
-  }
-  @keyframes fadeIn {
-    0%    { opacity: 0; }
-    100%  { opacity: 1; }
-  }
-  @keyframes fadeOut {
-    0%    { opacity: 1; }
-    100%  { opacity: 0; }
-  }
-  
 }
 
 /* ----- Input with Button ----- */
@@ -84,6 +42,7 @@ body {
   border: none;
   padding: 0.25vw 0.5vw 0.25vw 0.25vw;
   font-size: size(0.75);
+
 }
 .logo-button {
   width: size(2);;
@@ -98,7 +57,13 @@ body {
   border: none;
   text-decoration: none;
   font-size: 3.5vh;
-  
+  i {
+    transition: 0.25s font-size ease-out;
+  }
+  &:hover i {
+    font-size: size(1);
+    transition: 0.25s font-size ease-out;
+  }
 }
 
 
@@ -127,6 +92,7 @@ body {
       height: 80vh;
       .header {
         display: flex;
+    
         .left {
           display: flex;
         }
@@ -182,10 +148,32 @@ body {
   } 
 }
 
+
+/*select{
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 7px;
+  border: 1px solid $ku-red;
+  background-color: #f5f5f5;
+  font-size: size(0.7);
+}
+textarea{
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 7px;
+  border: 2px solid $ku-red;
+  font-size: size(0.7);
+  background-color: #f5f5f5;
+  resize: none; 
+
+}*/
+
 //-------------------- MainPage.js ---------------------
 .main-page {
   display: flex;
   font-family: 'Prompt', sans-serif;
+
+  
 
   .sidebar {
     width: 17%;
@@ -209,7 +197,6 @@ body {
           width   : size(1.9);
           margin  : auto;
           border-radius: 50%;
-         
         }
       }
      
@@ -275,19 +262,23 @@ body {
     height  : 100vh;
     display : flex;
     flex-direction: column;
+   
+
     .row-top {
       width   : 100%;
       height  : 7vh;
       color   : white;
       display : flex;
       background-color: $ku-red;
-
+      text-align: center;
       p {
+        width: 70%;
         margin    : auto;        
         font-size : size(0.8);
       }
       .logout-button{
-        margin: auto 5% auto 5%;
+        width: 10%;
+        margin: auto;
       }
       
     }
@@ -297,9 +288,12 @@ body {
       height: 86vh;
       width: 100%;
       display: flex;
+     
+
       .frame {
         font-family : 'Prompt', sans-serif;
         margin: auto;
+        margin-left: size(5);
         background-color : white;
         border-radius : 0.5rem;
         box-shadow : 0px 0px 5px 0px #949494;
@@ -309,7 +303,7 @@ body {
           border-bottom : 2px solid $ku-red;
           height: 7vh;
           display: flex;
-
+        
           .left{
             width: 50%;
             display: flex;
@@ -355,6 +349,17 @@ body {
 
   
 }// MainPage.js
+
+input, select, textarea{
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 7px;
+  border: 1px solid $ku-red;
+  background-color: #f5f5f5;
+  font-size: size(0.7);
+  resize: none; 
+
+}
 
 
 .icons{
@@ -442,6 +447,7 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
   transition: transform .5s; /* Animation */
+ 
   /*--------- รูปของข่าวสาร ------------*/
   .news-image {
     display:block;
@@ -449,12 +455,16 @@ body {
     margin-right: auto;
     width: auto;
     height: 30vh;
-    background-color: lightgray;
+    background-color: lightgrey;
     transition: transform .5s; /* Animation */
   }
   .news-image:hover {
     cursor: pointer;
   }
+}
+.content h3{
+  padding: size(1); 
+  font-size: size(0.8);
 }
 
 .admin-panel {
@@ -463,10 +473,11 @@ body {
   width: 60%;
   margin-top: size(0.4);
   margin-bottom: size(0.4);
+  margin: auto;
   
 }
 .user-panel{
-  width: 40%;
+  width: 100%;
   text-align: right;
   margin-top: size(0.4);
   margin-bottom: size(0.4);
@@ -506,7 +517,7 @@ body {
   margin-left: size(0.1);
 }
 .insertbutton{
-  width: 100%;
+  width: 97%;
   display: flex;
 
   .insert{
@@ -530,7 +541,12 @@ body {
     margin-top: size(0.5);
   }
   p{
+    width: 88%;
     margin: size(1) auto auto size(0.5) ;
+    
+  }
+  .button-admin{
+    margin: auto;
   }      
 }
 
@@ -542,9 +558,13 @@ body {
 .red2{
   background-color: #DD4A48;
 }
+.red3{
+  background-color: #C07A7A; 
+}
 .green1 {
   background-color: $ku-green;
 }
+
 
 //ปุ่ม บันทึก ยกเลิก AnnouncementCreate
  .button-set{
@@ -563,24 +583,22 @@ body {
     display: flex;
     margin-bottom: size(0.5);
   }  
-  input, textarea{
+  input{
     border: 2px solid $ku-red;
-    border-radius: 5px;
-    background-color: white;
     padding-left: 9px;
-    resize: none;
-    font-size: size(0.7);
+    
   }
   .detail {
     textarea{
       width: 97%;
       height: size(18);
-      padding-top: 5px;
+      border: 2px solid $ku-red;
+      //padding-top: 9px;
       
     }
   }
 }
-
+//แบบฟอร์มกรอกประวัติแรกเข้าและอื่นๆ
 .form2{ 
   width:80%;
   margin-left: 20%;
@@ -597,27 +615,12 @@ body {
   label{
     font-size: size(0.7); 
   }
-  input{
+  input, select{
     width: 80%;
     height: 6vh;
-    padding: 9px 10px;
-    display: inline-block;
     border: 2px solid $ku-red;
-    border-radius: 7px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    font-size: size(0.66); 
     margin-bottom: size(0.5);
-  }
-  select{
-    width: 80%;
-    height: 6vh;
-    border: 2px solid $ku-red;
-    padding: 9px 10px;
-    border-radius: 7px;
-    background-color: #f5f5f5;
-    font-size: size(0.66);
-    margin-bottom: size(0.5); 
+    padding: 9px 10px; 
   }
   
   .profile-fam {
@@ -644,39 +647,21 @@ body {
     } 
   }
 }
+//aplicantCheckform
 .form3{
-  .form-checks {
+  
+  .check {
     margin-left: size(9);
-  }
-  .radio1{
-    margin-top: size(0.5);
-    width: 20%;
-    
-    label{
-      margin-left: size(0.5);
+    .true, .false{
+      width: 20%;
     }
   }
-  
-
-  /*--------- สมบูรณ์ ---------*/
-  .form-check-true{
-    width: 20%;
-    accent-color:  $ku-green;
-    display: flex;
-  }
-
-  /*--------- ไม่สมบูรณ์ ---------*/
-  .form-check-false{
-    width: 20%;
-    accent-color:  $ku-red;
-    display: flex;
-  }
-
+ 
   /*--------- หมายเหตุ ---------*/
   .form-note {
     width: 100%;
     height: 35vh;
-    margin-top: size(1);
+    margin-top: size(1); 
     .note{
       margin-left: size(9);
 
@@ -689,13 +674,7 @@ body {
         height: 30vh;
         margin: 8px 0;
         padding: 9px 10px;
-        display: inline-block;
         border: 2px solid $ku-red;
-        border-radius: 7px;
-        box-sizing: border-box;
-        background-color: #f5f5f5;
-        font-size: size(0.66);
-        resize: none;   
       } 
     }
   }
@@ -709,12 +688,7 @@ body {
   
   select{
     padding: size(0.2) size(0.5);
-    display: inline-block;
-    border: 1px solid $ku-red;
-    border-radius: 7px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    font-size: size(0.66);
+    font-size: size(0.7);
   }
   label{
     font-size: size(0.8);
@@ -732,22 +706,89 @@ body {
   }      
 }
 
-//scholar-Interview 
-.container1  {
+.form5 {
+  width: 100%;
+  margin-top: size(1.5);
+  margin-left: size(3);
+
+  input, select {
+    width: 90%;
+    height: 5vh; 
+    padding-left:size(0.5);
+    font-size: size(0.75);
+  }
+  
+}
+
+//interviewrate
+.form6{
+  width: 100%;  
+  margin-top: size(1.5);
+  margin-left: size(3);
+  .score {
+    input {
+      width: 90%;
+      height: 5vh; 
+      padding-left:size(0.5);
+    }
+  }
+
+.complete-set{
+  display: flex;
+  width: 100%;
+  margin-top: size(1);
+  
+  .complete1, .complete2 {
+    width: 50%;
+    .check{
+      .true , .false {
+        width: 30%;
+        input {
+          width: 10%;
+        }
+       
+      }
+     
+    } 
+  }
+
+} 
+
+}
+
+//ติ๊กสมบูรณ์
+.check{
+  display: flex;
+  .true , .false {
+    label{
+      margin-left: size(0.5);
+   }
+  }
+  .true{
+    accent-color:  $ku-green;
+  }
+  .false{
+    accent-color:  $ku-red;
+  }
+}
+//กรอบแดง
+.container1 {
   background-color: white;
   border-radius: 10px;
   width: size(42.5);
   margin: size(0.5) auto auto size(1);
   border: 1px solid $ku-red;
   border-top: 4px solid $ku-red;
+}
 
-
+//scholar-Interview 
+.list1 {
   .information{
     display: flex;
     width: 100%;
    
     .left{
-      width: 50%;
+      width: 75%;
       h3{
         margin: 2% 3% 2% 3%;
         cursor: pointer;
@@ -755,23 +796,320 @@ body {
       }
      
     }
+    .detail{
+      width: 75%;
+    }
     .right {
-      width: 50%;
+      width: 25%;
+      display: grid;
 
     } 
   }
 }
 
 
+.detailForm, .editDetailForm{
+  width: 95%;
+  height: 94%;
+  margin-left: size(1);
+  margin-top: size(0.8); 
+  input, select, textarea{
+    padding: size(0.2) size(0.5);
+    
+  }
+
+  .top{
+    height: 5.5vh;
+    width: 100%;
+    display: flex;
+    margin-top: size(1);
+    .type, .year, .term{
+      height: 100%;
+      width: 25%;
+      select, input{
+        width: 100%;
+        height: 100%;
+      }
+
+      .input-button {
+        position: relative;
+        height: 100%;
+        input{
+          width: 100%;
+          height: 100%;
+        }
+        button {
+          position: absolute;
+          right: 7.5px;
+          top : 7.5px;
+          border: none;
+        }
+      }
+    }
+    .year, .term{
+      margin-left: size(0.4);
+    }
+  }
+  .center{
+    .detail{
+      width: 100%;
+      height: size(13);
+      margin-top: size(1);
+    
+    }
+  }
+  .bottom{
+    width: 100%; 
+    height: size(7.5);
+    margin-top: size(1);
+    border-bottom: 2px solid #C4C4C4;
+
+    .bottom-1, .bottom-2{
+      display: flex;
+      height: 5.5vh;
+
+      .min, .max, .type, .amount{
+        width: 25%;
+        input, select {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .max, .type, .amount{
+        margin-left: size(0.5);
+      }
+      
+    }
+
+    .bottom-2{
+      font-size: size(0.7);
+      margin-top: size(1);
+      .date-1, .date-2{
+        width: 37%;
+        input{
+          font-size: size(0.6);
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .date-2{
+        margin-left: size(0.4);
+      }
+    } 
+
+  }
+}//EnddetailForm
+
+
+.profile{
+  .top {
+    height: size(14);
+    border-bottom: 3px solid #C4C4C4;
+
+    .form{
+      width: 100%;
+      display: flex;
+      input {
+        padding: size(0.2) size(0.5);
+        margin-bottom: size(0.5);
+      }
+
+   
+      .data {
+        margin-top: size(2);
+        width: 80%;
+        display: flex; 
+
+        .left {
+          width: 40%; 
+          input {
+            width: 90%;
+          }
+        }
+        
+        .center{
+          width: 40%;
+          input{
+            width: 90%;
+          }
+          .branch {
+            input{
+              width: 127%;
+            }
+          }
+        }
+       
+        .right{
+          width: 20%; 
+          .grade {
+            input{
+              width: 55%;
+            }
+          }
+        }    
+      }
+    }
+    .button-profile {
+      margin-left: size(34.5);
+    }
+  }
+  .bottom{
+    margin-left: size(1.5);
+    margin-top: size(0.5);
+    .dropdown{
+      width:100%;
+      height: 13vh;
+      select{
+        width: 35%;
+        margin-top: size(0.2);
+        padding: size(0.2) size(0.5);
+        
+        }
+      } 
+    }
+}
+
+//รูปวงกลม
+.img-circle{
+  width: 20%;
+        
+  margin: size(1.5) auto auto size(1.5);
+  text-align: center;
+  p {
+    margin-top: size(0.3);
+  }
+  img{
+    border-radius: 50%;
+    width: size(6) ;
+    height : size(7.5); 
+  }
+}
+
+.fileForm ,.rateForm{
+  width: 95%;
+  margin-left: size(1);
+  h4{
+    font-size: size(0.9);
+    font-weight: 600;
+  } 
+  .subject{
+    
+    input, select{
+    padding: size(0.2) size(0.5);
+    }
+    .setSubject{
+      width: 100%;
+      height: 3vh;
+      display: flex;
+      .topics{
+        margin-left: size(3.2);
+      }
+
+    
+    }
+    .detail {
+      width: 100%;
+      margin-top: size(1);
+      
+      .order{
+        width: 7%;
+        font-size: size(0.7);
+        font-weight: 600;
+        margin-top: size(0.5);
+      }
+      .set-select {
+        width: 93%;
+        height: 5.5vh;
+        
+        .select-1{
+          width: 44.5%;
+          //height: 5.5vh
+        }
+        .input-1{
+          width: 44.5%;
+          //height: 5.5vh;
+          .document{
+            width: 90%;
+          }
+        }
+        .select-2{
+          width: 44.5%;
+          height: 5.5vh;
+        
+        }
+      }
+     
+      .file-document, .select-1, .select-2{
+        width: 27.2%;
+        height: 5.5vh;
+      
+        
+      }
+      .select-2 {
+        margin-left: size(0.5);
+      }
+  
+      .button-circle  {
+        margin-left: size(1);
+      }
+      
+    }
+    .button-add2{
+      width: 97.5%;
+      //margin-left: size(1);
+      height: 7vh;
+      margin-top: size(1);
+      border-bottom: 2px solid #C4C4C4; 
+      .button-circle{
+        float: right;
+        margin: auto;
+      }
+    }
+
+  }
+
+} //EndfileForm,rateForm
+.fileForm {
+  .topics{
+    width: 42%;
+  }
+  .typefile{
+    width: 30%;
+  } 
+}
+.rateForm {
+  .topics{
+    width: 29%;
+  }
+  .typefile{
+    width: 28%;
+  }
+  .weigth{
+    width: 30%;
+  }  
+}
+
+
+
+.button-circle{
+  width: size(1.7);
+  height: size(1.7);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 69px;
+  border-style: hidden;
+  color:white;
+}
+
 
 .button-2{
   margin:size(0.5);
-  margin-left: size(12);
   background-color: #F5F5F5;
   border-radius: 5px;
   border-style: hidden;
-  width: 40%; 
+  width: 80%; 
   height: 6vh;
+  //text-align: right;
+  float : right; 
   p {
     padding-left: 13px;
     padding-top: 11px;
@@ -804,11 +1142,26 @@ body {
     //background-color: #ff9500; 
     background-color: #fba42a; 
   }
- 
+ .bi-card-checklist{
+  background-color: $ku-green;
+ }
 }
 
+.button-3{
+  border: none;
+  color: white;
+  width: size(7);
+  height: size(1.5);  
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 50px;
 
-
+  p {
+    font-size: size(0.8);
+    margin: 3px;
+  }
+}
 
 
 
@@ -836,12 +1189,9 @@ body {
     height: 100%;
     border:none;
     outline:none;
-    padding: size(0.6) size(0.8);
-    display: inline-block;
+    padding: size(0.7) size(0.8);
     border-radius: 14px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    font-size: size(0.66);
+   
     
   }
   button{
@@ -851,21 +1201,44 @@ body {
     display: inline-block;
     border-radius: 14px;
     box-sizing: border-box;
-    font-size: size(0.66);
+    font-size: size(0.7);
     
   } 
 }
 
 
 
-.confirm{ 
-  float: right;
-  display: flex;
-      
-}  
+ 
 .footer1{
-  width: 93%;
+  width: 95%;
   height: 10vh; 
+  .confirm{ 
+    float: right;
+    display: flex;
+        
+  } 
+   
+}
+//footer หน้าสร้่างทุน
+.footer2{
+  width: 95%;
+  height: 10vh;
+
+  .confirm{
+    margin-top: size(1);
+    float: right;
+    display: flex;
+  }
+}
+.footer3{
+  width: 96.5%;
+  height: 10vh; 
+  .confirm{ 
+    float: right;
+    display: flex;
+    margin-top: size(1);
+        
+  } 
    
 }
 
@@ -921,8 +1294,6 @@ body {
 }
 
 
-
-
  // ปุ่มลงทะเบียน,นัดหมายสีเขียว 
 .button-big{
   color: white;
@@ -937,6 +1308,118 @@ body {
     background-color:$ku-red;
   }
 } 
+//roloSettin g &member
+.search2 {
+  margin-top: size(0.7);
+  width: size(42.5);
+  height: 10%;
+  margin-left: size(1);
+  input{
+    width: 95%;
+    height: 100%;
+    border:none;
+    outline:none;
+    padding: size(0.3) size(0.5);
+    border-radius: 14px;
+  }
+  button{
+    background-color: #f5f5f5;
+    width: 5%;
+    height: 100%;
+    display: inline-block;
+    border-radius: 14px;
+    box-sizing: border-box;
+    font-size: size(0.66);
+  }
+  .button-search{
+    border-radius: 14px; 
+    text-align: right;
+    border: 1px solid $ku-red;
+    width: 100%; 
+    background-color: #f5f5f5; 
+  }
+}
+.line-gray{
+  height: 0.5vh;
+  border-top: 2px solid #C4C4C4; 
+  width: size(42.5);
+  margin: auto auto auto size(1);
+}
+.list2{
+   //rolelist กำหนดสิทธิ์ผู้ใช้แต่ละ email
+  .list-form{
+    width: 100%;   
+  }
+  .name, .role{
+    font-size: size(0.8);
+    margin-top: size(0.5);
+  }
+  .name{
+    width: 50%;
+    margin-left: size(0.5); 
+  }
+  .role{
+    width: 10%; 
+  }
+  .right{
+    width: 50%;
+    .button-2{
+      width: 40%;
+    }
+  }
+}
+//rolesetting only
+.roleList{
+  width: 40%; 
+  select {
+    width: 80%;
+    margin: size(0.5) auto auto size(2.5);
+    padding: size(0.2) size(0.5);
+  }
+}
+ //reportinspect
+ .reportInspect-head {
+  width: 40%;
+  margin: auto;
+}
+.reportInspect-columns {
+  table {
+    width: 90%;
+    height: 100%;
+    margin-top: size(1);
+    margin-bottom: size(1);
+  }
+}
+.reportInspect-fotter {
+  width: 100%;
+  height: 20%;
+  /*-------- ปุ่ม ดาวน์โหลด กลับ ---------- */
+  .button { 
+    width: 40%;
+    margin: auto;
+  }
+  .dowload p, .back p {
+    font-size: size(0.7);
+  }
+  .dowload, .back {
+    height: 5vh;
+    border: none;
+    color: white;
+    padding: size(0.3) size(1.5) ;
+    text-align: center;
+    text-decoration: none;
+    font-size: size(0.5);
+    margin: size(0.8) size(0.8);
+    cursor: pointer;
+    border-radius: 12px;
+  }
+  .dowload {
+    background-color: $ku-green;
+  }
+  .back {
+    background-color: #DD4A48;
+  }
+}
 
 /*
 @media (max-width: 480px) {
@@ -983,38 +1466,11 @@ body {
 */
 
 
-
-
-
-
-
-
-
-  
-
-
-
 //เหลือข้างใน
 
 //InterviewRate.js
 
-
-
- 
-
-
-
-
-
-
-
-
-
-
 .btn-confirm-interviewrate, .btn-confirm-interviewSchedule  {
   margin: size(1) auto size(1) auto; 
-  
+
 }
-
-
-

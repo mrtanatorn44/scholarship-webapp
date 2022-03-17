@@ -8,8 +8,8 @@ import { WebContext } from "../context/WebContext.js";
 
 // CONTENTS
 import Announcement            from '../contents/Announcement/Announcement.js';
-import AnnouncementCreate      from '../contents/Announcement/AnnouncementCreate.js';
-import AnnouncementEdit        from '../contents/Announcement/AnnouncementEdit.js';
+import AnnouncementCreate      from '../contents/Announcement/AnnounceCreate.js';
+import AnnouncementEdit        from '../contents/Announcement/AnnounceEdit.js';
 
 import Scholarship             from '../contents/Scholarship/Scholarship.js';
 import ScholarshipCheckForm    from '../contents/Applicant/ApplicantCheckForm.js';
@@ -43,7 +43,7 @@ import InterviewSchedule       from '../contents/Interview/InterviewSchedule.js'
 // IMAGE
 import ku_eng_src_logo    from "../data/images/engsrc.png";
 import ku_src_logo        from "../data/images/ku.png";
-import loading_gif from '../data/images/announce_loading.gif';
+
 function MainPage() {
   
   const { User, Content } = useContext(WebContext)
@@ -184,25 +184,16 @@ function MainPage() {
         break;
     }
   }
-  const [loading, setLoading] = useState(true);
 
   return (
     <div className='main-page' >
-      { 
-        loading && 
-        <div 
-          className='loading-screen'
-          style={user.isLogin ? {animation: 'fadeOut 0.5s'}:{} }
-          onAnimationEnd={() => setLoading(false)}
-        ><p><i className="bi bi-arrow-clockwise"></i></p></div>
-      }
-      
 
       {/*-----------------------SIDE NAV BAR---------------------*/}
       <div className="sidebar d-flex flex-column"> 
         <div className="row-top">
           <div className='user-profile'>
-            <img src={user.imgUrl} alt="user"/>
+            { user.isLogin && user.imgUrl &&
+            <img src={user.imgUrl} alt="user"/> }
           </div>
           <div className='user-info'>
             <p> {user.name} </p>
@@ -226,7 +217,9 @@ function MainPage() {
         <div className="row-top">
           <p>ระบบขอทุน นิสิตวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขต ศรีราชา</p>
           <div className="logout-button d-flex">
-            <Login/>
+            <div style={{visibility: user.isLogin ? 'visible' : 'hidden'}}>
+              <Login/>
+            </div>
           </div>
         </div>
 

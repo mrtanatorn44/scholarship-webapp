@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import Login from "../components/LoginGoogle.js"
+import LoginGoogle from "../components/LoginGoogle.js"
 import ku_eng_src_logo from "../data/images/engsrc.png";
 import ku_src_logo from "../data/images/ku.png";
 import AnnouncementLogin from '../contents/AnnouncementLogin/AnnouncementLogin.js';
@@ -37,7 +37,7 @@ function LoginPage() {
         {/*----------LOGIN SECTION-----------*/}
         <div className="row-center">
           <img src={ku_eng_src_logo} className="ku_eng_src_logo" alt="eng src"/>
-          <Login/>
+          <LoginGoogle/>
         </div>
         
         {/*------------FOOTER-------------*/}

@@ -1,11 +1,14 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext } from 'react';
-import NewsList from './NewsList.js';
+import NewsList from './AnnounceList.js';
 import { WebContext } from '../../App';
 
 function Announcement(props) {
   const { Content, User } = useContext(WebContext)
   const [ content, setContent] = Content;
   const [ user, setUser] = User;
+  
   return (
     <div className="frame">   
       <div className="header">

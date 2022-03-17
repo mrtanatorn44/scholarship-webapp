@@ -1,3 +1,5 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext, useEffect, useState } from 'react'
 import { WebContext } from '../context/WebContext';
 import Axios from 'axios';
@@ -8,6 +10,7 @@ function Main() {
   const   [ content, setContent ] = Content;
   const [ announce, setAnnounce ] = Announce;
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
+
   // Handle 'Content' localStorage
   useEffect(() => {
     if (content === '') {
@@ -19,22 +22,8 @@ function Main() {
       }
     }
     localStorage.setItem('content', content);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content])
-
-  // Handle 'scholarshipForm' localStorage
-  useEffect(() => {
-    if (scholarshipForm === '') {
-      const localContent = localStorage.getItem('scholarshipForm');
-      console.log('local', localContent)
-      if (localContent === '' || localContent === undefined) {
-        setScholarshipForm([]);
-      } else {
-        console.log(JSON.parse(localContent))
-        setScholarshipForm([JSON.parse(localContent)]);
-      }
-    }
-    localStorage.setItem('scholarshipForm', JSON.stringify(scholarshipForm));
-  }, [scholarshipForm])
 
   const arrayBufferToBase64 = (arrayBuffer) => {
     var CHUNK_SIZE = 8*1024;
@@ -45,8 +34,10 @@ function Main() {
       base64 += String.fromCharCode.apply(null, arrayBuffer.slice(i, i+CHUNK_SIZE));
     return base64;
   }
+
   // Get Announce
   useEffect(() => {
+
     if (announce.length === 0) {
       console.log('Loading Announce...')
       var start = new Date().getTime();
@@ -54,37 +45,41 @@ function Main() {
         var result = response.data;
         if (result.length === 0) {
           result = [{ 
-            isEmpty: true,
-            number: 0, 
-            title: "ไม่มีประกาศในขณะนี้", 
-            image: announce_empty,
-            imageIsEmpty: false,
-            imageModal: false,
-            toggleContent: false,
+            title         : "ไม่มีประกาศในขณะนี้", 
+            isEmpty       : true,
+            imageSrc      : announce_empty,
+            imageIsEmpty  : false,
+            imageModal    : false,
+            toggleContent : false,
           }]
         } else {
           var month_th      = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]
           result.forEach((res, index) => {
             var dmy           = res.date.split("T")[0].split("-").reverse();
-            var binaryImage   = arrayBufferToBase64(res.image_data.data);
+            //console.log('idx:', index, 'size:', parseInt(JSON.stringify(res.image_data.data).length / 3.24 / 1024), 'KB', res )
+            // Assign Usage Value
             Object.assign(res, {
-              isEmpty       : false,
-              number        : index,
-              image         : "data:image/png;base64," + binaryImage, // blob to image
+              imageSrc      : 'data:image/jpeg;base64,' + arrayBufferToBase64(res.image_data.data),
+              imageData     : arrayBufferToBase64(res.image_data.data),
+              imageName     : res.image_name,
               imageIsEmpty  : res.image_data.data.length===0 ? true : false,
               imageModal: false,
               toggleContent : res.image_data.data.length===0 ? true : false,
               dateFormat   : "วันที่ " + (parseInt(dmy[0])) + " " + month_th[parseInt(dmy[1], 10)] + " " + (parseInt(dmy[2]) + 543)
             });
+            // Delete Un-used Value
+            delete res.date;
+            delete res.image_data;
+            delete res.image_name;
           });
         }
         setAnnounce(result);
         var end = new Date().getTime();
         var time = end - start;
         console.log('Loading Announce done', time, 'ms')
-
       })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [announce])
 
   return null;

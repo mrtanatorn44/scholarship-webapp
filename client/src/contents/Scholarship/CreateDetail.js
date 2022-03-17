@@ -1,11 +1,10 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App';
 import CreatableSelect from 'react-select/creatable';
 
 import Axios from 'axios';
-
-// Alert
-import Swal from 'sweetalert2'
 
 function DetailForm () {
   
@@ -60,11 +59,12 @@ function DetailForm () {
   useEffect(() => {
     getSponsor();
     getType();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (   
     <>
-      <div className="announce-topic ">
+      <div className="top">
         <div className="type">
           { /* ----- SELECT INPUT ----- */
             (scholarshipForm.typeInput === 0 || scholarshipForm.typeInput === undefined ) &&
@@ -121,11 +121,11 @@ function DetailForm () {
         </div>
       </div>
 
-      <div className="announce-center">
+      <div className="center">
         <textarea className="detail" type="text" required placeholder="คุณสมบัติของผู้รับทุน" onChange={(event) => {setScholarshipForm({...scholarshipForm , detail: event.target.value })}}></textarea>
       </div>
   
-      <div className="announce-bottom">
+      <div className="bottom">
         <div className="bottom-1">
           <div className="min">
             <input type="number" min="0" placeholder="min_student_year" required onChange={(event) => {setScholarshipForm({...scholarshipForm , min_student_year: event.target.value })}}></input>
@@ -180,11 +180,11 @@ function DetailForm () {
           </div>
         </div>
         <div className="bottom-2">
-          <div className="date1">
+          <div className="date-1">
             <label >วันที่เปิดให้ลงทะเบียน</label>
             <input type="date" placeholder="วันที่เปิดให้ลงทะเบียน" required onChange={(event) => {setScholarshipForm({...scholarshipForm ,open_date: event.target.value })}}></input>
           </div>
-          <div className="date2">
+          <div className="date-2">
             <label>วันที่ปิดการให้ลงทะเบียน</label>
             <input type="date" placeholder="วันที่ปิดการให้ลงทะเบียน" required onChange={(event) => {setScholarshipForm({...scholarshipForm ,close_date: event.target.value })}}></input>
           </div>

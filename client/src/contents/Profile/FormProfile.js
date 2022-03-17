@@ -1,3 +1,4 @@
+/*eslint no-unused-vars:*/
 
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App.js';
@@ -13,7 +14,7 @@ function FormProfile() {
   const [form, setForm] = useState({
     image:""
   })
-  //
+  
   const [showModal ,setShowModal] = useState(false);
   const [profile, setProfile]=useState({
     name:"",
@@ -85,6 +86,7 @@ function FormProfile() {
   };
   useEffect(() => {
     getProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -112,8 +114,8 @@ function FormProfile() {
               <input  placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required/>
             </div>
             <div>
-              <label>นิสิตชั้นปีที่</label>
-              <select className="form-select form-select-lg mb-3" value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
+              <label>นิสิตชั้นปีที่</label><br></br>
+              <select  value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
                 <option value="">เลือก</option>
                 <option value="5">5</option>
                 <option value="4">4</option>
@@ -132,8 +134,8 @@ function FormProfile() {
               <input type="number" min="0"  maxlength="10" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
             </div>
             <div>
-              <label>ภาคการเรียนการสอน</label>
-              <select className="form-select form-select-lg mb-3" value = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
+              <label>ภาคการเรียนการสอน</label><br></br>
+              <select  value = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
                 <option value="">เลือก</option>
                 <option value="ภาคปกติ">   ภาคปกติ    </option>
                 <option value="ภาคพิเศษ">  ภาคพิเศษ   </option>
@@ -141,8 +143,8 @@ function FormProfile() {
             </div>
             
             <div>
-              <label>สาขา</label>
-              <select className="form-select form-select-lg mb-3" value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
+              <label>สาขา</label><br></br>
+              <select value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
                   <option value="">เลือก</option>
                   <option value="คอมพิวเตอร์">  คอมพิวเตอร์  </option>
                   <option value="ไฟฟ้า">  ไฟฟ้า      </option>

@@ -1,16 +1,11 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App';
-import CreatableSelect from 'react-select/creatable';
-
 import Axios from 'axios';
 
 // Alert
 import Swal from 'sweetalert2'
-
-//Modal
-//import ConfirmSaveModal from '../../modals/ConfirmModal.js';
-//import ConfirmCancelModal from '../../modals/ConfirmModal.js';
-//import AlertModal from '../../modals/AlertModal.js';
 
 
 function EditDetailForm () {
@@ -19,10 +14,7 @@ function EditDetailForm () {
   const [ content, setContent] = Content;
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
   const [editScholarshipID, setEditScholarshipID]= EditScholarshipID;
-
-  const [showModalSave, setShowModalSave] = useState(false);
-  const [showModalCancel, setShowModalCancel] = useState(false);
-  const [showModalAlert, setShowModalAlert] = useState(false);
+  var executed = false;
 
   var dataTypeList = ['ทุนเรียนดี', 'ทุนกิจกรรมเด่น', 'ทุนขาดคุณทรัพย์']
   
@@ -33,12 +25,12 @@ function EditDetailForm () {
   ]);
   // type schorlar
   const [typeList,setTypeList] = useState([
-    {label: 'เลือกประเภททุน', value: ""},
     {label: 'เพิ่มทุน...',     value: '0'},
     {label: 'ทุนเรียนดี',      value: '1'},
     {label: 'ทุนกิจกรรมเด่น',  value: '2'},
     {label: 'ทุนขาดคุณทรัพย์', value: '3'}
   ])
+  const [typeList1,setTypeList1] = useState([])
 
   const {type,detail, amount , min_student_year,max_student_year,on_year,on_term,open_date, close_date, sponsor}=scholarshipForm;
   const [Scholar, setScholar] = useState({
@@ -55,43 +47,10 @@ function EditDetailForm () {
     close_date      : '',
     sponsor          :''
   })
-  /*
-  function getConfirmSave(isConfirm) {
-  if (isConfirm) {
-    onChangescholar(scholarshipForm,editScholarshipID);
-    setContent('Announcement');
-  }
-  setShowModalSave(false);
-}
-function getConfirmCancel(isConfirm) {
-  if (isConfirm) {
-    setContent('Announcement');
-  } 
-  setShowModalCancel(false);
-}
-function getConfirmAlert(isConfirm) {
-  if (isConfirm) {
-    setShowModalAlert(false)
-    setContent('Announcement');
-  }
-}
-  const onChangescholar = (Scholar,id) => {
-    Axios.post("http://localhost:5000/editScholar", { 
-      detail : Scholar.detail,
-      amount:Scholar.amount,
-      id: id
-    }).then((response)=>{
-      console.log("OK");
-    })
-  }
-      <button className="save-button" onClick={() => (setShowModalSave(true))}>
-            <i className="bi bi-save"/><p>บันทึก</p>
-          </button>
+  var number = '3';
 
-          { showModalSave && <ConfirmSaveModal sendConfirm={getConfirmSave}/> }
-  */ 
-  //changeScholar
-  
+ 
+
   const onHandleTypeChange = (e) => {
     if (!e) {
       e = {
@@ -113,94 +72,126 @@ function getConfirmAlert(isConfirm) {
        
   }
 
- //getScholar
- function getscholarshipForm() {
-  Axios.post("http://localhost:5000/getScholarship", {
-      id : editScholarshipID
-    }).then((response)=> {       
-      var result =  response.data[0];
-      setScholarshipForm(
-        {
-          ...scholarshipForm,
-            id: result.id,
-            is_public : result.is_public,
-            type: result.type,
-            detail :result.detail,
-            amount  : result.amount,
-            on_year : result.on_year,
-            on_term : result.on_term,
-            max_student_year:result.max_student_year,
-            min_student_year : result.min_student_year,
-            open_date : result.open_date,
-            close_date : result.close_date,
-            sponsor : result.sponsor,
-        }) 
+  //getScholar
+  function getScholarshipForm() {
+    Axios.post("http://localhost:5000/getScholarship", {
+        id : editScholarshipID
+      }).then((response)=> {       
+        var result =  response.data[0];
+        setScholarshipForm(
+          {
+            ...scholarshipForm,
+              id : result.id,
+              is_public : result.is_public,
+              type: result.type,
+              detail :result.detail,
+              amount  : result.amount,
+              on_year : result.on_year,
+              on_term : result.on_term,
+              max_student_year:result.max_student_year,
+              min_student_year : result.min_student_year,
+              open_date : result.open_date.split("T")[0],
+              close_date : result.close_date.split("T")[0],
+              sponsor : result.sponsor,
+          }) 
+          
+      }
+    )
+  }
+  //getType
+  const getTypeScholar = () =>{
+    Axios.get("http://localhost:5000/getTypeScholar").then(response => {
+      var tempTypeList = typeList;
+      var result = response.data
+      result.forEach((res, index) => {  
+        var data = res.type;
+        if (data !== '' && !dataTypeList.includes(data) ) {
+          tempTypeList.push({ label: data, value: data })
+        }
+      })
+      setTypeList(tempTypeList);
+    })
+  }
+  /*
+  const getScholarLabel = () =>{
+    console.log(typeList);
+    console.log('lag');
+    if (!executed) {
+          executed = true;
+          typeList.forEach((res) => {
+          var data = res.label
+          console.log(data);
+          if(data !== scholarshipForm.type )
+            typeList1.push({ label: data, value: data })
+          });
+          console.log(typeList1);
+      }
+  }*/
+  /*
+  function Showop(executed) {
+
+    if(!executed){
+      return <option value={scholarshipForm.type}> {scholarshipForm.type} </option>
     }
-  )
-}
-console.log(scholarshipForm);
-//getType
-const getTypeScholar = () =>{
-  Axios.get("http://localhost:5000/getTypeScholar").then(response => {
-    var tempTypeList = typeList;
-    var result = response.data
-    result.forEach((res, index) => {  
-      var data = res.type;
-      if (data !== '' && !dataTypeList.includes(data)) {
-        tempTypeList.push({ label: data, value: data })
-      }
+    else{
+      return
+      typeList.map((item, index) => (
+        <option key={index} value={item.value}> {item.label} </option>
+      ))
+    }
+  }
+*/
+
+  //getSponser
+  const getSponsor = () =>{
+    Axios.get("http://localhost:5000/getSponsor").then(response => {
+      var dummySponsorList = sponsorList;
+      // [{},{},{}]
+      var result = response.data
+      result.forEach((res, index) => {  
+        var data = res.sponsor;
+        if (data !== '') {
+          dummySponsorList.push({ label: data, value: data })
+        }
+      })
+      setSponsorList(dummySponsorList);
     })
-    setTypeList(tempTypeList);
-  })
-}
+  }
 
-//getSponser
-const getSponsor = () =>{
-  Axios.get("http://localhost:5000/getSponsor").then(response => {
-    var dummySponsorList = sponsorList;
-    // [{},{},{}]
-    var result = response.data
-    result.forEach((res, index) => {  
-      var data = res.sponsor;
-      if (data !== '') {
-        dummySponsorList.push({ label: data, value: data })
-      }
-    })
-    setSponsorList(dummySponsorList);
-  })
-}
+  useEffect(() => {
+    getTypeScholar();
+    getSponsor();
+    getScholarshipForm();
+    //getScholarLabel();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-useEffect(() => {
-  getTypeScholar();
-  getSponsor();
-  getscholarshipForm();
-}, [])
-
-console.log(scholarshipForm);
   return (   
     <>
-      <div className="announce-topic ">
+      <div className="top">
         <div className="type">
           { /* ----- SELECT INPUT ----- */
             (scholarshipForm.typeInput === 0 || scholarshipForm.typeInput === undefined ) &&
-            <select required onChange={(e) => {
+            <select value = {scholarshipForm.type} onChange={(e) => {
               if (e.target.value === '0') {
                 setScholarshipForm({ ...scholarshipForm , typeAdd: '', typeInput: 1 })
               } else {
                 setScholarshipForm({ ...scholarshipForm , type: e.target.selectedOptions[0].text })
-              } 
-            }}>
+              }
+            }} >
+            
               {
                 typeList.map((item, index) => (
                   <option key={index} value={item.value}> {item.label} </option>
                 ))
               }
+            
             </select>
           }
           { /* ----- NORMAL INPUT ----- */
             scholarshipForm.typeInput === 1 &&
             <div className='input-button'>
-              <input value={scholarshipForm.type} onChange={(e) => setScholarshipForm({...scholarshipForm , typeAdd: e.target.value })} type='text' placeholder='ทุนที่ต้องการ'/>
+              <input  onChange={(e) => setScholarshipForm({...scholarshipForm , typeAdd: e.target.value })} type='text' placeholder='ทุนที่ต้องการ'/>
               { 
                 scholarshipForm.typeAdd !== '' &&
                 <button onClick={() => {
@@ -236,11 +227,11 @@ console.log(scholarshipForm);
         </div>
       </div>
 
-      <div className="announce-center">
+      <div className="center">
         <textarea className="detail" type="text" required placeholder="คุณสมบัติของผู้รับทุน" value={scholarshipForm.detail} onChange={(event) => {setScholarshipForm({...scholarshipForm ,detail: event.target.value })}}></textarea>
       </div>
   
-      <div className="announce-bottom">
+      <div className="bottom">
         <div className="bottom-1">
           <div className="min">
             <input type="number" min="0" placeholder="min_student_year" required value={scholarshipForm.min_student_year} onChange={(event) => {setScholarshipForm({...scholarshipForm , min_student_year: event.target.value })}}></input>
@@ -251,7 +242,7 @@ console.log(scholarshipForm);
           <div className="type">
           { /* ----- SELECT INPUT ----- */
             (scholarshipForm.sponsorInput === 0 || scholarshipForm.sponsorInput === undefined ) &&
-            <select required onChange={(e) => {
+            <select value={scholarshipForm.sponsor} required onChange={(e) => {
               if (e.target.value === '0') {
                 setScholarshipForm({ ...scholarshipForm , sponsorAdd: '', sponsorInput: 1 })
               } else {
@@ -268,7 +259,7 @@ console.log(scholarshipForm);
           { /* ----- NORMAL INPUT ----- */
             scholarshipForm.sponsorInput === 1 &&
             <div className='input-button'>
-              <input onChange={(e) => setScholarshipForm({...scholarshipForm , sponsorAdd: e.target.value })} type='text' placeholder='ผู้สนับสนุน' value={scholarshipForm.sponsor}/>
+              <input onChange={(e) => setScholarshipForm({...scholarshipForm , sponsorAdd: e.target.value })} type='text'  placeholder='ผู้สนับสนุน'/>
               { 
                 scholarshipForm.sponsorAdd !== '' &&
                 <button onClick={() => {
@@ -295,13 +286,13 @@ console.log(scholarshipForm);
           </div>
         </div>
         <div className="bottom-2">
-          <div className="date1">
+          <div className="date-1">
             <label >วันที่เปิดให้ลงทะเบียน</label>
-            <input type="date" placeholder="วันที่เปิดให้ลงทะเบียน" value={scholarshipForm.open_date} required  onChange={(event) => {setScholarshipForm({...scholarshipForm ,open_date: event.target.value })}}></input>
+            <input type="date" value={scholarshipForm.open_date}   onChange={(event) => {setScholarshipForm({...scholarshipForm ,open_date: event.target.value })}}></input>
           </div>
-          <div className="date2">
+          <div className="date-2">
             <label>วันที่ปิดการให้ลงทะเบียน</label>
-            <input type="date" placeholder="วันที่ปิดการให้ลงทะเบียน" value={scholarshipForm.close_date} required  onChange={(event) => {setScholarshipForm({...scholarshipForm ,close_date: event.target.value })}}></input>
+            <input type="date" value={scholarshipForm.close_date}  onChange={(event) => {setScholarshipForm({...scholarshipForm ,close_date: event.target.value })}}></input>
           </div>
         </div>
       </div>

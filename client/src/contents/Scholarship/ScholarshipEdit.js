@@ -1,30 +1,24 @@
+/*eslint no-unused-vars:*/
+
 import React, { useState, useContext } from 'react';
+import Axios from 'axios';
 import { WebContext } from '../../App';
-//import ConfirmModal from '../../modals/ConfirmModal.js';
 
 import FileForm from './CreateFileform.js';
-import RateForm from './CreateRateform.js';
+import EditRateForm from './EditRateform.js';
 import EditDetailForm from './EditDetail.js'; 
 
 // Alert & Image Modal
 import Swal from 'sweetalert2'
-import Lightbox from 'react-image-lightbox';
 
-import Axios from 'axios';
 function ScholarshipEdit() {
    
-  const { Content } = useContext(WebContext)
+  const { Content, ScholarshipForm } = useContext(WebContext)
   const [ content , setContent] = Content;
-  const [showModal, setShowModal] = useState(false);
-  
-  const { ScholarshipForm } = useContext(WebContext)
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
-  const {type,detail, amount , min_student_year,max_student_year,on_year,on_term,open_date, close_date, sponsor}=scholarshipForm;
-  
-  function onHandleSubmitBtn(e,id) {
+
+  function onFormSubmit(e,id) {
     e.preventDefault();
-
-
     Swal.fire({
       title: 'คุณแน่ใจหรือไม่?',
       text: 'ที่จะบันทึกประกาศนี้!',
@@ -36,22 +30,23 @@ function ScholarshipEdit() {
       cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
-        setContent('Scholarship');
-        Swal.fire('บันทึกแล้ว!','','success')
         Axios.post("http://localhost:5000/editScholar",{
-        is_public       : false,
-        type            : type,
-        detail          : detail,
-        amount          : amount,
-        min_student_year: min_student_year,
-        max_student_year: max_student_year,
-        on_year         : on_year,
-        on_term         : on_term,
-        open_date       : open_date,
-        close_date      : close_date,
-        sponsor         : sponsor,
-        id : id
-      })
+          id              : scholarshipForm.id,
+          is_public       : scholarshipForm.false,
+          type            : scholarshipForm.type,
+          detail          : scholarshipForm.detail,
+          amount          : scholarshipForm.amount,
+          min_student_year: scholarshipForm.min_student_year,
+          max_student_year: scholarshipForm.max_student_year,
+          on_year         : scholarshipForm.on_year,
+          on_term         : scholarshipForm.on_term,
+          open_date       : scholarshipForm.open_date,
+          close_date      : scholarshipForm.close_date,
+          sponsor         : scholarshipForm.sponsor,
+        }).then((resoense) => {
+          setContent('Scholarship');
+          Swal.fire('บันทึกแล้ว!','','success')
+        })
       }
     })
   }
@@ -59,35 +54,39 @@ function ScholarshipEdit() {
   return (
     <div className="frame">
       <div className="header">
-        <div  className="left">
-            <div className="icons">  
-              <i className="bi bi-plus-lg"></i>
-            </div>
-            <div className="topic">
-              <h4>แก้ไขทุน</h4>
-            </div>
+
+        <div className="left">
+          <div className="icons">  
+            <i className="bi bi-plus-lg"></i>
+          </div>
+          <div className="topic">
+            <h4>แก้ไขทุน</h4>
+          </div>
         </div>
 
         <div className="right">
         </div>
+
       </div>
+
       <div className = 'contents'> 
+
         <div className = 'content1'>  
-          <form onSubmit={(e) => onHandleSubmitBtn(e,scholarshipForm.id)}>
-            <div className="scholarListCrea-announceForm" >
+          <form onSubmit={(e) => onFormSubmit(e, scholarshipForm.id)}>
+
+            <div className="editDetailForm" >
               <EditDetailForm/>
             </div> 
 
-            {/* ----- FOOTER ------ */}
-            <div className="footer1">
-              <div className="btn-confirm-scholarCre ">
-                <button className="btn-confirm green1" type="submit">
-                  ตกลง 
-                </button>
+            <div className="footer2">
+              <div className="confirm ">
+                <button className="button-confirm green1" type="submit"> ตกลง </button>
               </div>
             </div>
+
           </form>
         </div>
+
       </div>
     </div>
   )

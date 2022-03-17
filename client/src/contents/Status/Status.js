@@ -9,7 +9,7 @@ function Status(props) {
           <div className="icons">
             <i className="bi bi-grid-3x3"></i>
           </div>
-          <div class="topic">
+          <div className="topic">
             <h4>สถานะการยื่นทุน</h4>
           </div>
         </div>

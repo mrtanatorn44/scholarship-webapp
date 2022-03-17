@@ -6,7 +6,7 @@ import Axios from 'axios';
 import Swal from 'sweetalert2'
 import Lightbox from 'react-image-lightbox';
 
-function AnnouncementCreate(props) {
+function AnnounceCreate(props) {
   const { User, Content, Announce } = useContext(WebContext)
   const         [ user, setUser ] = User;
   const   [ content, setContent ] = Content;
@@ -20,7 +20,7 @@ function AnnouncementCreate(props) {
     title         : '',
     detail        : '',
     dateFormat    : '',
-    image         : '',
+    imageData     : '',
     imageName     : '',
     imageModal    : false,
     toggleContent : true,
@@ -43,10 +43,9 @@ function AnnouncementCreate(props) {
       var reader = new FileReader();
       reader.onload = async function() {
         arrayBuffer = reader.result;
-        var binImage = _arrayBufferToBase64(arrayBuffer);
         setForm({
           ...form,
-          image     : binImage,
+          imageData : _arrayBufferToBase64(arrayBuffer),
           imageName : file.name,
         })
       }
@@ -72,9 +71,11 @@ function AnnouncementCreate(props) {
         Axios.post("http://localhost:5000/addAnnounce", {
           title       : form.title,
           detail      : form.detail,
-          imageData   : form.image,
+          imageData   : form.imageData,
           imageName   : form.imageName
         }).then((response) => {
+          
+          console.log(form.imageData)
           setAnnounce([]);
           setContent('Announcement');
           Swal.fire('Success!', 'บันทึกประกาศเรียบร้อย', 'success')
@@ -154,7 +155,7 @@ function AnnouncementCreate(props) {
             { /* IMAGE */
               !form.toggleContent && form.imageName!=='' &&
               <div className='content-image'>
-                <img  className='news-image' src={ 'data:image/jpeg;base64,' + form.image } alt='scholarship promote' 
+                <img  className='news-image' src={ 'data:image/jpeg;base64,' + form.imageData } alt='scholarship promote' 
                   onClick = {() => { form.imageModal = true; setForm({...form}); }}/> 
               </div> 
             }
@@ -164,7 +165,7 @@ function AnnouncementCreate(props) {
             }
             { /* MODAL POPUP IMAGE */
               form.imageModal && 
-              <Lightbox mainSrc={ 'data:image/jpeg;base64,' + form.image } onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
+              <Lightbox mainSrc={ 'data:image/jpeg;base64,' + form.imageData } onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
             }
             {/*---------- BOTTOM ----------*/}
             <div className='newsList-bottom'>
@@ -187,4 +188,4 @@ function AnnouncementCreate(props) {
   )
 }
 
-export default AnnouncementCreate;
+export default AnnounceCreate;

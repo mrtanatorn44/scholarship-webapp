@@ -1,3 +1,4 @@
+/*eslint no-unused-vars:*/
 
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App';

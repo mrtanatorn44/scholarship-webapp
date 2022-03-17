@@ -1,8 +1,10 @@
+/*eslint no-unused-vars:*/
+
 import React, { useState, useContext } from 'react';
 import { WebContext } from '../../App';
-//import ConfirmModal from '../../modals/ConfirmModal.js';
 
-import FileForm from './CreateFileform.js';
+
+import CFileForm from './CreateFileform.js';
 import RateForm from './CreateRateform.js';
 import DetailForm from './CreateDetail.js'; 
 
@@ -12,17 +14,18 @@ import Swal from 'sweetalert2'
 import Axios from 'axios';
 function ScholarshipListCreate() {
    
-  const { Content } = useContext(WebContext)
+  const { Content} = useContext(WebContext)
   const [ content , setContent] = Content;
-  const [showModal, setShowModal] = useState(false);
   
   const { ScholarshipForm } = useContext(WebContext)
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
-  
+
+  const { FileForm } = useContext(WebContext)
+  const [ fileForm , setFileForm] = FileForm;
+
+
   function onHandleSubmitBtn(e) {
     e.preventDefault();
-
-
     Swal.fire({
       title: 'คุณแน่ใจหรือไม่?',
       text: 'ที่จะบันทึกประกาศนี้!',
@@ -55,6 +58,7 @@ function ScholarshipListCreate() {
       }
     })
   }
+  //console.log(fileForm);
   
   return (
     <div className="frame">
@@ -74,25 +78,23 @@ function ScholarshipListCreate() {
       <div className = 'contents'> 
         <div className = 'content1'>  
           <form onSubmit={(e) => onHandleSubmitBtn(e)}>
-            <div className="scholarListCrea-announceForm" >
+            <div className="detailForm" >
               <DetailForm/>
             </div>
-            <div className='scholarListCrea-fileForm'> 
-              <FileForm/> 
+            <div className='fileForm'> 
+              <CFileForm/> 
             </div>  
-            <div className="scholarListCrea-rateForm">
+            <div className="rateForm">
               <RateForm/>
             </div> 
 
             {/* ----- FOOTER ------ */}
-            <div className="footer1">
+            <div className="footer2">
               <div className="confirm">
                 <button className="button-confirm green1" type="submit">
                   ตกลง 
                 </button>
-                <button className="button-confirm green1">
-                  null 
-                </button> 
+                
               </div>
             </div>
           </form>

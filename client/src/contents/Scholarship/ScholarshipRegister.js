@@ -1,6 +1,7 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App.js';
-//import ConfirmModal from '../../modals/ConfirmModal.js';
 import Axios from 'axios';
 
 function ScholarshipListRegister(props) {
@@ -75,6 +76,7 @@ function ScholarshipListRegister(props) {
   
   useEffect(()=>{
     getProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   return (
@@ -85,7 +87,7 @@ function ScholarshipListRegister(props) {
                 <i className="bi bi-three-dots"></i>
             </div>
             <div className="topic">
-              <h4>กรอกประวัติแรกเข้า</h4>
+              <h4>กรอกประวัติลงทะเบียนทุน</h4>
             </div>
           </div>
           <div className="right"/>
@@ -94,7 +96,7 @@ function ScholarshipListRegister(props) {
           <div className="content3"> 
             <form className="form2">
               <div className="name">
-                <h5>กรอกประวัติแรกเข้า</h5>
+                <h5>กรอกประวัติลงทะเบียนทุน</h5>
               </div>
               <div>
                 <label>ชื่อ-นามสกุล (ภาษาไทย)</label><br></br>
@@ -103,7 +105,7 @@ function ScholarshipListRegister(props) {
               
               <div>
                 <label>นิสิตชั้นปีที่</label><br></br>
-                <select className="form-select form-select-lg" defaultValue = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
+                <select  defaultValue = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
                   <option value="0">เลือก</option>
                   <option value="5">5</option>
                   <option value="4">4</option>
@@ -124,7 +126,7 @@ function ScholarshipListRegister(props) {
               
               <div>
                 <label>ภาคการเรียนการสอน</label><br></br>
-                <select className="form-select form-select-lg" defaultValue = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
+                <select defaultValue = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
                   <option value="0">เลือก</option>
                   <option value="ภาคปกติ">ภาคปกติ</option>
                   <option value="ภาคพิเศษ">ภาคพิเศษ</option>
@@ -133,7 +135,7 @@ function ScholarshipListRegister(props) {
               
               <div>
                 <label>สาขา</label><br></br>
-                <select className="form-select form-select-lg" defaultValue = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
+                <select defaultValue = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
                     <option value="0">เลือก</option>
                     <option value="5">คอมพิวเตอร์</option>
                     <option value="4">ไฟฟ้า</option>
@@ -171,7 +173,7 @@ function ScholarshipListRegister(props) {
 
                 <div className="fam-edit fam2">
                   <label>สถานะภาพ</label><br></br>
-                  <select className="form-select form-select-lg" value = {profile.status__father} onChange={(e)=>changeValue("status__father",e.target.value)} required>
+                  <select value = {profile.status__father} onChange={(e)=>changeValue("status__father",e.target.value)} required>
                     <option value="0">เลือก</option>
                     <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                     <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -218,7 +220,7 @@ function ScholarshipListRegister(props) {
                 </div>
                 <div className="fam-edit fam2">
                   <label>สถานะภาพ</label><br></br>
-                  <select className="form-select form-select-lg" defaultValue = {profile.status_mother} required>
+                  <select defaultValue = {profile.status_mother} required>
                     <option value="0">เลือก</option>
                     <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                     <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -255,7 +257,7 @@ function ScholarshipListRegister(props) {
 
               <div>
               <label>สถานะสมรสบิดา-มารดา</label><br></br>
-                <select className="form-select form-select-lg" defaultValue = {profile.status_marry} required>
+                <select defaultValue = {profile.status_marry} required>
                     <option value="0">เลือก</option>
                     <option value="แยกกันอยู่">แยกกันอยู่</option>
                     <option value="หย่าร้าง">หย่าร้าง</option>
@@ -320,6 +322,7 @@ function ScholarshipListRegister(props) {
               {/*showModal && <ConfirmModal sendConfirm={getConfirm}/>*/} 
             </div>
           </div>
+
       </div>
     </div> 
   );

@@ -1,13 +1,13 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App.js';
 import Axios from 'axios';
-
-//import ImageModal from "../../modals/ImageModal.js";
-
+import Lightbox from 'react-image-lightbox';
 import announce_empty from "../../data/images/announce_empty.png";
 
 function NewsListlogin(props) {
-  const { Announce } = useContext(WebContext);
+  const { Announce , Content } = useContext(WebContext);
   const [announce,setAnnounce] = Announce;
 
   const [ShowPopupImage, setShowPopupImage] = useState(false);
@@ -36,8 +36,8 @@ function NewsListlogin(props) {
         { /* IMAGE */
           !news.toggleContent && !news.imageIsEmpty &&
           <div className='content-image'>
-            <img  className='news-image' src={ news.image } alt='scholarship promote' 
-              onClick = {() => onImageClick(news.image) }/> 
+            <img  className='news-image' src={ news.imageSrc } alt='scholarship promote' 
+              onClick = {() => { news.ImageModal = true; setAnnounce([...announce]); }}/> 
           </div> 
         }
         { /* DETAIL */
@@ -45,17 +45,17 @@ function NewsListlogin(props) {
           <div  style={{whiteSpace:'pre-line'}} className='content'><h3>{ news.detail }</h3></div> 
         }
         { /* MODAL POPUP IMAGE */
-          //ShowPopupImage && 
-          //<ImageModal image={ PopupImage } sendConfirm={ (data) => setShowPopupImage(data) }/> 
+          news.ImageModal && 
+          <Lightbox mainSrc={ news.imageSrc } onCloseRequest={() => { news.ImageModal = false; setAnnounce([...announce]); }}/>
         }
 
         {/*---------- BOTTOM ----------*/}
-        <div className='newsList-bottom'>
+        <div className='bottom1'>
           <div className='admin-panel'></div>
           <div className='user-panel'>
             { /* USER BUTTON */
               !news.imageIsEmpty && !news.isEmpty &&
-              <h3 onClick={() => onToggleContentClick(news.number) }>
+              <h3 onClick={() => {news.toggleContent = !news.toggleContent; setAnnounce([...announce])} }>
                 { !news.toggleContent ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)" }
               </h3> 
             }

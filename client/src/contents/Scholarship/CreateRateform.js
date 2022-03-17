@@ -1,3 +1,5 @@
+/*eslint no-unused-vars:*/
+
 import React, { useState, useContext } from 'react';
 import { WebContext } from '../../App';
 
@@ -38,21 +40,21 @@ function RateForm (){
     return(
       <>
        
-        <div className="rateForm-head">
+        <div className="heading">
           <br></br>
           <h4>เกณฑ์การให้คะแนน</h4>
         </div>
-        <div className="rateForm-title">
-          <div className='rateForm-setTopic d-flex'>  
+        <div className="subject">
+          <div className='setSubject d-flex'>  
             <p className='topics'>หัวข้อ</p>
             <p className='typefile'>รูปแบบการให้คะแนน</p>
-            <p className='document'>น้ำหนัก</p>
+            <p className='weigth'>น้ำหนัก</p>
           </div>
-        <div className="rateForm-detail">
-        {
+        <div className="detail">
+         {
           rateForms.map((rateForm, index) => (
-            <div key={index}>
-              <p className="rateForm-order" >ลำดับที่ {index+1}</p>
+            <div className="d-flex" key={index}>
+              <p className="order" >ลำดับ {index+1}</p>
               <input className="file-document" required
                   type="text" 
                   name="name"
@@ -60,7 +62,7 @@ function RateForm (){
                   onChange={(e) => handleInputChangeName(e, index)}
               />
               
-              <select className="file-select-1">
+              <select className="select-2">
                 {
                   fileAutoFormat.map((format, format_index) =>
                     <option key={format_index}>{format.title}</option>
@@ -68,22 +70,22 @@ function RateForm (){
                 }
               </select>
   
-              <input className="file-select-2"
+              <input className="select-2"
                   type="number" min="0" max="100"
                   name="weigth"
                   value={rateForm.weigth || ""}
                   onChange={(e) => handleInputChangeWeigth(e, index)}
               />
               
-              <button className="btn-delete-circle" type="button" onClick={() => delrateForm(rateForm)}>
+              <button className="button-circle red1" type="button" onClick={() => delrateForm(rateForm)}>
                 <i className="bi bi-dash"></i>
               </button>
             </div>
           ))
           }
         </div>
-        <div className="btn-add-scholarCre">
-          <button className="btn-add-circle" type="button" onClick={() => addrateForm()}>
+        <div className="button-add2">
+          <button className="button-circle green1" type="button" onClick={() => addrateForm()}>
             <i className="bi bi-plus-lg"></i>
           </button>
         </div>

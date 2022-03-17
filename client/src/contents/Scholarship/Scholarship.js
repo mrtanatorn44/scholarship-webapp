@@ -1,3 +1,5 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext, useState, useEffect } from 'react';
 import ScholarshipList from './ScholarshipList.js';
 import { WebContext } from '../../App';
@@ -12,26 +14,28 @@ function Scholarship(props) {
   return (
     <div className="frame">
       <div className="header">
-         <div className="left">
-            <div className="icons">
-              <i className="bi bi-card-list"></i>
-            </div>  
-            <div className="topic">
-              <h4>ทุนที่เปิดให้ลงทะเบียน</h4>
-            </div>
+    
+        <div className="left">
+          <div className="icons">
+            <i className="bi bi-card-list"></i>
+          </div>  
+          <div className="topic">
+            <h4>ทุนที่เปิดให้ลงทะเบียน</h4>
           </div>
-          <div className="right">
-            { 
-              user.role == 'admin' &&
-              <button className = "button-add d-flex" type = "button" onClick={ () => setContent('ScholarshipCreate') } >
-                <i className="bi bi-plus-lg"/>
-                <p>สร้างทุน</p>
-              </button> 
-            }
-              
-          </div>
+        </div>
+
+        <div className="right">
+          { 
+            user.role === 'admin' &&
+            <button className = "button-add d-flex" type = "button" onClick={ () => setContent('ScholarshipCreate') } >
+              <i className="bi bi-plus-lg"/>
+              <p>สร้างทุน</p>
+            </button> 
+          }
+        </div>
 
       </div>
+
       <div className="contents">
         <div className="content1">
           <ScholarshipList/>

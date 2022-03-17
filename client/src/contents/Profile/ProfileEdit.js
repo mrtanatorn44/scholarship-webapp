@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 //import ConfirmModal from '../../modals/ConfirmModal.js';
 import { WebContext } from '../../App.js';
 import Axios from 'axios';
+import Swal from 'sweetalert2';
 /* eslint-disable */
 
 function ProfileEdit() {
@@ -91,25 +92,36 @@ function ProfileEdit() {
       [name]:value
     })
   }; 
+  
+  function onHandleSubmitBtn(e) {
+    e.preventDefault();
+    console.log('work')
 
-  function getConfirm(data) {
-    //console.log('form', form.newImage)
-    if (data) {
-      Axios.post("http://localhost:5000/editProfile",{
+    Swal.fire({
+      title: 'คุณแน่ใจหรือไม่?',
+      text: 'ที่จะบันทึกประกาศนี้!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#03A96B',
+      confirmButtonText: 'Save',
+      cancelButtonColor: '#A62639',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        setContent('Profile');
+        Swal.fire('บันทึกแล้ว!','','success')
+
+        Axios.post("http://localhost:5000/editProfile",{
         id            : user.id,
         profile_data  : JSON.stringify(profile),
         picture_data  : form.newImage===''? form.oldImage:form.newImage,
-        picture_name  : form.imageName 
-      }).then((response) => {
-        console.log('after axios edit profile', response)
-        setContent('Profile')
-      });
-    } else {
-      setShowModal(false)
-    }
-    //console.log("sdasdasdasd");
-    
+        picture_name  : form.imageName
+      })
+      }
+    })
   }
+  
   
   useEffect(()=>{
     getProfile();
@@ -135,7 +147,7 @@ function ProfileEdit() {
       </div>
       <div className="contents" >
         <div className="content3">
-          <form className="form2" onSubmit={(e)=> {onFormSumbit(e);}}>  
+          <form className="form2" onSubmit={(e)=> {onHandleSubmitBtn(e);}}>  
             <div className="name">
               <h5>แก้ไขข้อมูลส่วนตัว</h5>
             </div>
@@ -144,8 +156,8 @@ function ProfileEdit() {
                 <input placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required />
             </div>
             <div>
-              <label>นิสิตชั้นปีที่</label>
-              <select className="form-select form-select-lg mb-3" value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
+              <label>นิสิตชั้นปีที่</label><br></br>
+              <select  value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
                 <option value="0">เลือก</option>
                 <option value="5">5</option>
                 <option value="4">4</option>
@@ -164,8 +176,8 @@ function ProfileEdit() {
               <input type="number" min="0" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
             </div>
             <div>
-              <label>ภาคการเรียนการสอน</label>
-              <select className="form-select form-select-lg mb-3" value = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
+              <label>ภาคการเรียนการสอน</label><br></br>
+              <select  value = {profile.fieldStudy} onChange={(e)=>changeValue("fieldStudy",e.target.value)} required>
                 <option value="0">        เลือก       </option>
                 <option value="ภาคปกติ">   ภาคปกติ    </option>
                 <option value="ภาคพิเศษ">  ภาคพิเศษ   </option>
@@ -173,8 +185,8 @@ function ProfileEdit() {
             </div>
             
             <div>
-              <label>สาขา</label>
-              <select className="form-select form-select-lg mb-3" value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
+              <label>สาขา</label><br></br>
+              <select  value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
                   <option value="0">  เลือก       </option>
                   <option value="คอมพิวเตอร์">  คอมพิวเตอร์  </option>
                   <option value="ไฟฟ้า">  ไฟฟ้า      </option>
@@ -293,16 +305,15 @@ function ProfileEdit() {
               <input className = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" value = {profile.status_marry} onChange={(e)=>changeValue("status_marry",e.target.value)} required/>
             </div>*/}
             
-            <div className="footer1">
-              <div className="btn-confirm-profile">
-              <button className="btn-confirm" >บันทึก</button>
-              </div>
-            </div>
-          </form>
           
-          {showModal && <ConfirmModal sendConfirm={getConfirm}/>}
-    
+          </form>
         </div>
+        <div className="footer1">
+          <div className="confirm">
+            <button className="button-confirm green1" type ='submit' >บันทึก</button>
+          </div>
+        </div>
+
       </div>
     </div>
   ) 

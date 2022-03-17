@@ -1,11 +1,15 @@
-import React, { useState, useContext } from 'react';
+/*eslint no-unused-vars:*/
 
+import React, { useState, useContext } from 'react';
 import { WebContext } from '../../App';
+
 function InterviewSchedule(props) {
   const { Content } = useContext(WebContext)
   const [ content, setContent] = Content;
+
   return (
     <div className="frame">
+      {/* ----- HEADER ----- */}
       <div className="header">
         <div class="left">
           <div className="icons">
@@ -16,10 +20,13 @@ function InterviewSchedule(props) {
           </div>
         </div>
         <div className="right"></div>
-      </div>
+        </div>
+
+      {/* ----- CONTENT ----- */}
       <div className="contents">
         <div className="content1">
-          <form className="interviewSchedule-form ">
+          <form className="form5">
+            
             <div className="detail1">
               <p>สัมภาษณ์ ณ วันที่</p>
               <input type="date" placeholder="31 กุมภาพันธ์ 2565"/>
@@ -46,17 +53,21 @@ function InterviewSchedule(props) {
                 <option value="people2">MS-TEAM</option>
               </select>
             </div>
-            </form>
-            <div className="footer1">
-          <div className="confirm"> 
-            <button className= "button-confirm green1" onClick={() => setContent('Interview')}>ยืนยัน</button>    
+          </form>
+          
+          {/* ----- FOOTER ----- */}
+          <div className="footer3">
+            <div className="confirm"> 
+              <button className= "button-confirm green1" onClick={() => setContent('Interview')}>ยืนยัน</button>    
+            </div>
           </div>
-          </div>
+
         </div>
-     </div>
-    
-  </div>
+      </div>
+      
+    </div>
   )
+  
 }
 
 export default InterviewSchedule;

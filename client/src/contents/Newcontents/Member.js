@@ -1,15 +1,13 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext, useState} from 'react';
 import { WebContext } from '../../App.js'; 
 import Select from 'react-select';
 import MemberList from './MemberList.js';
 
-
-
 function Member() {
   const { Content} = useContext(WebContext)
   const [ content, setContent] = Content;
-  
-  
 
   const { Query } = useContext(WebContext);
   const [query, setQuery] = Query;
@@ -29,8 +27,8 @@ function Member() {
       </div>
 
       <div className="contents">
-        <div className="rolesSetting-search">
-          <div className="search-role">
+        <div className="search2">
+          <div className="button-search">
             <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
             <button className="btn " type="button" >
               <i className="bi bi-search"></i>

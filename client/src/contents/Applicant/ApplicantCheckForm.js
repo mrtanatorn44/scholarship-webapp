@@ -1,3 +1,5 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App.js';
 import Axios from 'axios';
@@ -50,6 +52,7 @@ function ScholarshipCheckForm(props) {
   
   useEffect(()=>{
     getProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   return (
@@ -81,7 +84,7 @@ function ScholarshipCheckForm(props) {
             
             <div>
               <label>นิสิตชั้นปีที่</label><br/>
-              <select className="form-select form-select-lg" value = {profile.yearofstudy} required>
+              <select  value = {profile.yearofstudy} required>
                 <option value="0">เลือก</option>
                 <option value="5">5</option>
                 <option value="4">4</option>
@@ -102,7 +105,7 @@ function ScholarshipCheckForm(props) {
             
             <div>
               <label>ภาคการเรียนการสอน</label><br/>
-              <select className="form-select form-select-lg" value = {profile.fieldStudy} required>
+              <select  value = {profile.fieldStudy} required>
                 <option value="0">เลือก</option>
                 <option value="ภาคปกติ">ภาคปกติ</option>
                 <option value="ภาคพิเศษ">ภาคพิเศษ</option>
@@ -111,7 +114,7 @@ function ScholarshipCheckForm(props) {
             
             <div>
               <label>สาขา</label><br/>
-              <select className="form-select form-select-lg" value = {profile.branch} required>
+              <select  value = {profile.branch} required>
                   <option value="0">เลือก</option>
                   <option value="คอมพิวเตอร์">คอมพิวเตอร์</option>
                   <option value="ไฟฟ้า">ไฟฟ้า</option>
@@ -147,9 +150,10 @@ function ScholarshipCheckForm(props) {
                 <label>อายุ</label><br></br>
                 <input className = "halfbar" type="number" min="0"  placeholder="อายุ" required></input>
               </div> 
+
               <div class="fam-edit fam2">
                 <label>สถานะภาพ</label>
-                <select className="form-select form-select-lg" required>
+                <select required>
                   <option value="0">เลือก</option>
                   <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                   <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -195,8 +199,8 @@ function ScholarshipCheckForm(props) {
                 <input className = "halfbar" type="number" min="0" placeholder="อายุ" required></input>
               </div>
               <div class="fam-edit fam2">
-                <label>สถานะภาพ</label>
-                <select className="form-select form-select-lg" required>
+                <label>สถานะภาพ</label><br></br>
+                <select  required>
                   <option value="0">เลือก</option>
                   <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                   <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -233,7 +237,7 @@ function ScholarshipCheckForm(props) {
             
             <div>
               <label>สถานะสมรสบิดา-มารดา</label><br></br>
-              <select className="form-select form-select-lg" required>
+              <select  required>
                   <option value="0">เลือก</option>
                   <option value="อยู่ด้วยกัน">อยู่ด้วยกัน</option>
                   <option value="แยกกันอยู่">แยกกันอยู่</option>
@@ -293,13 +297,13 @@ function ScholarshipCheckForm(props) {
 
           <form className="form3">
             
-              <div className="form-checks d-flex">
-                <div className="radio1">
+              <div className="check">
+                <div className="true">
                   <input type="radio" name="check" value="Pass" onChange={e=>setCheck(e.targer.value)}></input>
                   <label for="check1">สมบูรณ์</label>
                 </div>
                 
-                <div className="radio1">
+                <div className="false">
                   <input type="radio" name="check" value="Notpass" onChange={e=>setCheck(e.targer.value)}></input>
                   <label for="check2">ไม่สมบูรณ์</label>
                 </div> 

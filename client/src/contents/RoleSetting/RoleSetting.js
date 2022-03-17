@@ -1,8 +1,8 @@
+/*eslint no-unused-vars:*/
+
 import React, { useContext, useState, useEffect } from 'react';
 import RoleList from './RoleList.js';
 import { WebContext } from '../../App.js';
-
-
 
 function RoleSetting() {
 
@@ -23,8 +23,8 @@ function RoleSetting() {
         <div className="right"></div>
       </div>
       <div className="contents">
-        <div className="rolesSetting-search">
-          <div className="search-role">
+        <div className="search2">
+          <div className="button-search">
             <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
             <button className="btn " type="button" >
               <i className="bi bi-search"></i>

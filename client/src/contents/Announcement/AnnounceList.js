@@ -6,7 +6,7 @@ import Axios from 'axios';
 import Swal from 'sweetalert2'
 import Lightbox from 'react-image-lightbox';
 
-function NewsList() {
+function AnnounceList() {
 
   // Context
   const { User, Content, Announce, EditAnnounceID } = useContext(WebContext);
@@ -14,7 +14,6 @@ function NewsList() {
   const [content, setContent] = Content;
   const [announce,setAnnounce] = Announce;
   const [editAnnounceID, setEditAnnounceID] = EditAnnounceID;
-
 
   const onHandleDeleteAnnounceBtn = (newsID) => {
     Swal.fire({
@@ -40,19 +39,17 @@ function NewsList() {
 
   return (
     announce.map((news) => (
-      <div className="news" key={news.number}>
-
-        {/*---------- TITLE ----------*/}
+      <div className="news" key={news.id}>
+        {/* ----- TITLE ----- */}
         <div className='title'>
           <h2>{news.title}</h2>
           <h3>{news.dateFormat}</h3>
         </div>
-
-        {/*---------- CONTENT ----------*/}
+        {/* ----- CONTENT ----- */}
         { /* IMAGE */
           !news.toggleContent && !news.imageIsEmpty &&
           <div className='content-image'>
-            <img  className='news-image' src={ news.image } alt='scholarship promote' 
+            <img  className='news-image' src={ news.imageSrc } alt='scholarship promote' 
               onClick = {() => { news.ImageModal = true; setAnnounce([...announce]); }}/> 
           </div> 
         }
@@ -60,37 +57,37 @@ function NewsList() {
           news.toggleContent && 
           <div  style={{whiteSpace:'pre-line'}} className='content'><h3>{ news.detail }</h3></div> 
         }
-        
         { /* MODAL POPUP IMAGE */
           news.ImageModal && 
-          <Lightbox mainSrc={ news.image } onCloseRequest={() => { news.ImageModal = false; setAnnounce([...announce]); }}/>
+          <Lightbox mainSrc={ news.imageSrc } onCloseRequest={() => { news.ImageModal = false; setAnnounce([...announce]); }}/>
         }
 
-        {/*---------- BOTTOM ----------*/}
-        <div className='bottom1'>
-          
-          <div className='admin-panel'>
-            { /* ADMIN BUTTON */
-              user.role === 'admin' && !news.isEmpty && 
-              <>            
-              <button className="button-admin red2" onClick={() => { onHandleDeleteAnnounceBtn(news.id); }}> ลบ </button>
-              <button className="button-admin red1" onClick={() => { setEditAnnounceID(news.id);setContent("AnnouncementEdit"); }}> แก้ไข </button>
-              </> 
-            }
-          </div> 
-
-          <div className='user-panel'>
-            { /* USER BUTTON */
-              !news.imageIsEmpty && !news.isEmpty &&
-              <h3 onClick={() => {news.toggleContent = !news.toggleContent; setAnnounce([...announce])} }>
-                { !news.toggleContent ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)" }
-              </h3> 
-            }
+        {/* ----- BOTTOM ----- */}
+        { /* IF no announce from DB no render */
+          !news.isEmpty && 
+          <div className='bottom1'>
+            <div className='admin-panel'>
+              { /* ADMIN BUTTON */
+                user.role === 'admin' && 
+                <>            
+                <button className="button-admin red2" onClick={() => { onHandleDeleteAnnounceBtn(news.id); }}> ลบ </button>
+                <button className="button-admin red1" onClick={() => { localStorage.setItem('announceEditID_target',news.id);setContent("AnnouncementEdit"); }}> แก้ไข </button>
+                </> 
+              }
+            </div> 
+            <div className='user-panel'>
+              { /* USER BUTTON */
+                !news.imageIsEmpty &&
+                <h3 onClick={() => {news.toggleContent = !news.toggleContent; setAnnounce([...announce])} }>
+                  { !news.toggleContent ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)" }
+                </h3> 
+              }
+            </div>
           </div>
-        </div>
+        }
       </div>
     ))
   )
 }
 
-export default NewsList;
+export default AnnounceList;

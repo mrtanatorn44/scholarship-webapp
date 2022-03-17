@@ -1,4 +1,7 @@
+/*eslint no-unused-vars:*/
+
 import { React, useState, useEffect, useContext } from 'react';
+import { useLocation } from 'react-router-dom'
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { WebContext } from '../App.js';
 import Axios from 'axios';
@@ -18,7 +21,7 @@ function Login(props) {
   const [user, setUser] = User;
 
   // HANDLE USER
-  const initUser = (data) => {
+  const defineUser = (data) => {
     let userRole;
     let userID;
     let lName = data.familyName.charAt(0).toUpperCase() + data.familyName.slice(1).toLowerCase();
@@ -62,6 +65,7 @@ function Login(props) {
           alert('Welcome for the first time.')
         });
       }
+      console.log('Gmail Sign-in done!')
     });
   }
   
@@ -74,16 +78,19 @@ function Login(props) {
   }
 
   const onLoginSuccess = async(res) => {
-    if ( res.profileObj.email.split('@')[1] === "ku.th" ) {
-      if ( !user.isLogin ) { // If not login initialize User
-        initUser(res.profileObj);
+    console.log('Current page' + window.location.pathname);
+    if (res.profileObj.email.split('@')[1] === "ku.th") {
+      if (!user.isLogin) { // If not login initialize User
+        console.log('Gmail Sign-in...')
+        defineUser(res.profileObj);
         localStorage.setItem('isSignedIn', 'true');  // set isSignedIn session to true
       }
-      if ( localStorage.getItem('isSignedIn') === 'true' ) { // If isSignedIn session hide login btn 
-        setShowloginButton(false);
+      if (localStorage.getItem('isSignedIn') === 'true') { // If isSignedIn session hide login btn 
         setShowlogoutButton(true);
+        setShowloginButton(false);
       }
     } else {
+      console.log('Gmail Sign-in fail!')
       Swal.fire('Wrong Email Domain!', 'กรุณาใช้ E-mail ที่ลงท้ายด้วย @ku.th', 'warning')
       forceMyOwnLogout(res);
     }
@@ -93,22 +100,19 @@ function Login(props) {
     console.log('Login Failed:', res);
   };
 
-  const onSignoutSuccess = () => 
-  {
+  const onSignoutSuccess = () => {
     alert("You have been logged out successfully");
     localStorage.setItem('isSignedIn', 'false');  // set isSignedIn session to false
-    setUser( // set User to null to make controller know that logout
-      {
-        ...user,
-        role    : '',
-        imgUrl  : '',
-        email   : '',
-        name    : '',
-        fname   : '',
-        lname   : '',
-        isLogin : false
-      }
-    );                                
+    setUser({ // set User to null to make controller know that logout
+      ...user,
+      role    : '',
+      imgUrl  : '',
+      email   : '',
+      name    : '',
+      fname   : '',
+      lname   : '',
+      isLogin : false
+    });                                
     setShowloginButton(true);
     setShowlogoutButton(false);
   };
