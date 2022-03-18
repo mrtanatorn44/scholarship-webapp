@@ -49,7 +49,7 @@ function ProfileCheck(props) {
             </form>
             <div>
               <div className="button-profile">
-                <button className="button-3 red3" onClick = {() => setContent('FormProfile')}>
+                <button className="button-3 peach" onClick = {() => setContent('FormProfile')}>
                    <p>ดูข้อมูล</p>
                 </button>
               </div>             

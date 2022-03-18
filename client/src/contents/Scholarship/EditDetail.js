@@ -71,32 +71,41 @@ function EditDetailForm () {
       setScholarshipForm({...scholarshipForm, sponsor: e.label})
        
   }
+  
+    function checkKey(){
 
+    if ("scholarshipEditID_target" in localStorage) {
+      if (localStorage.getItem('scholarshipEditID_target') == '')
+        setContent('Scholarship');
+      else
+        console.log("not have id");
+    } else {
+      console.log("not have id");
+    }
+  }
+  
   //getScholar
   function getScholarshipForm() {
     Axios.post("http://localhost:5000/getScholarship", {
-        id : editScholarshipID
-      }).then((response)=> {       
-        var result =  response.data[0];
-        setScholarshipForm(
-          {
-            ...scholarshipForm,
-              id : result.id,
-              is_public : result.is_public,
-              type: result.type,
-              detail :result.detail,
-              amount  : result.amount,
-              on_year : result.on_year,
-              on_term : result.on_term,
-              max_student_year:result.max_student_year,
-              min_student_year : result.min_student_year,
-              open_date : result.open_date.split("T")[0],
-              close_date : result.close_date.split("T")[0],
-              sponsor : result.sponsor,
-          }) 
-          
-      }
-    )
+      id : localStorage.getItem('scholarshipEditID_target')
+    }).then((response)=> {       
+      var result =  response.data[0];
+      setScholarshipForm({
+        ...scholarshipForm,
+        id                : result.id,
+        is_public         : result.is_public,
+        type              : result.type,
+        detail            : result.detail,
+        amount            : result.amount,
+        on_year           : result.on_year,
+        on_term           : result.on_term,
+        max_student_year  : result.max_student_year,
+        min_student_year  : result.min_student_year,
+        open_date         : result.open_date.split("T")[0],
+        close_date        : result.close_date.split("T")[0],
+        sponsor           : result.sponsor,
+      }) 
+    })
   }
   //getType
   const getTypeScholar = () =>{
@@ -112,36 +121,7 @@ function EditDetailForm () {
       setTypeList(tempTypeList);
     })
   }
-  /*
-  const getScholarLabel = () =>{
-    console.log(typeList);
-    console.log('lag');
-    if (!executed) {
-          executed = true;
-          typeList.forEach((res) => {
-          var data = res.label
-          console.log(data);
-          if(data !== scholarshipForm.type )
-            typeList1.push({ label: data, value: data })
-          });
-          console.log(typeList1);
-      }
-  }*/
-  /*
-  function Showop(executed) {
-
-    if(!executed){
-      return <option value={scholarshipForm.type}> {scholarshipForm.type} </option>
-    }
-    else{
-      return
-      typeList.map((item, index) => (
-        <option key={index} value={item.value}> {item.label} </option>
-      ))
-    }
-  }
-*/
-
+  
   //getSponser
   const getSponsor = () =>{
     Axios.get("http://localhost:5000/getSponsor").then(response => {
@@ -228,7 +208,7 @@ function EditDetailForm () {
       </div>
 
       <div className="center">
-        <textarea className="detail" type="text" required placeholder="คุณสมบัติของผู้รับทุน" value={scholarshipForm.detail} onChange={(event) => {setScholarshipForm({...scholarshipForm ,detail: event.target.value })}}></textarea>
+        <textarea className="detail" type="text" required placeholder="คุณสมบัติของผู้รับทุน" value = {scholarshipForm.detail} onChange={(event) => {setScholarshipForm({...scholarshipForm ,detail: event.target.value })}}></textarea>
       </div>
   
       <div className="bottom">

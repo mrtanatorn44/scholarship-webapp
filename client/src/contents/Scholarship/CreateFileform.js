@@ -21,7 +21,15 @@ function FileForm (){
     {label: 'DOCX, DOC'      ,value: '2'},
     {label: 'PDF'           ,value: '3'}
   ])
+  function showLabelList() {
+    console.log('\n-----show-----')
 
+    labelList.forEach((label, idx) => {
+      console.log(label)
+    })
+    console.log('---show end---\n')
+
+  }
   function showAll() {
     console.log('\n-----show-----')
     files.forEach((file, idx) => { 
@@ -29,17 +37,22 @@ function FileForm (){
       Object.keys(file).forEach(function(key) {
         x += key + ': ' + file[key] + ', '
       });
-      x += '}'
-      
       console.log(x)
+      x += '}'
+      setFileForm({
+        ...fileForm,
+        file: x
+      })
     })
+    console.log(files)
     console.log('---show end---\n')
   }
 
   function delFile(targetHashID) {
     // delete input File Requirement
-    //console.log('target delete hashID :' + targetHashID)
+    //console.log('target delete hashID :' + targetHashID)                  
     setFiles((files) => files.filter((item) => item.hashID !== targetHashID))
+    setFileForm((files) => files.filter((item) => item.hashID !== targetHashID))
   }
   function addFile() {
     // add new input File Requirement
@@ -86,6 +99,7 @@ function FileForm (){
     })
     setFiles(tempFiles) // apply value
   }
+
   function onChangeCustomLabel(e, targetHashID) {
     var tempFiles = [...files];
     tempFiles.forEach((file) => { // loop to find target object
@@ -96,6 +110,7 @@ function FileForm (){
     })
     setFiles(tempFiles) // apply value
   }
+
   function onAddCustomLabel(targetHashID) {
     var tempFiles = [...files];
     tempFiles.forEach((file) => { // loop to find target object
@@ -103,16 +118,19 @@ function FileForm (){
         // update value
         file.label = file.customLabel
         file.customLabel = '';
-
+        file.isTyping = 0;
         // add new 'customLabel' to first element of 'labelList'
         var tempTypeList = labelList;
-        tempTypeList.unshift({ label: file.label, value: file.label })
+        //tempTypeList.unshift({ label: file.label, value: file.label })
+        tempTypeList.push({ label: file.label, value: file.label })
         setLabelList(tempTypeList);
       }
     })
     setFiles(tempFiles) // apply value
   }
-  function onCancelCustomLabel(targetHashID) {
+
+  function onCancelCustomLabel(e, targetHashID) {
+    e.preventDefault();
     var tempFiles = [...files];
     tempFiles.forEach((file) => { // loop to find target object
       if (file.hashID === targetHashID) { // check if found target from hashID
@@ -127,6 +145,8 @@ function FileForm (){
   return (
     <>
       <button type='button' onClick={() => showAll()}> SHOW ELEMENT</button>
+      <button type='button' onClick={() => showLabelList()}> SHOW LABEL</button>
+
       <div className="heading">
         <h4>เอกสารประกอบการยื่นทุน</h4>
       </div>
@@ -144,25 +164,12 @@ function FileForm (){
               <p className="order">ลำดับ {index+1}</p>
 
               <div className="set-select d-flex">
-                { /* ----- File Label ----- */ }
-                { 
+                { /* ----- File Label ----- */
                   (item.isTyping === 0 || item.isTyping === undefined ) && // Input by Default
-                  <select defaultValue={item.label} className="select-1" onChange={(e) => {onSelectLabel(e, item.hashID);
-                    if (e.target.value === '0') {
-                      setFileForm({ ...fileForm , requiredAdd: '', requiredInput: 1 })
-                    } else {
-                      setFileForm({ ...fileForm , required: e.target.selectedOptions[0].text })
-                    }
-                  }} required>
+                  <select className="select-1" defaultValue={item.label} onChange={(e) => {onSelectLabel(e, item.hashID);setFileForm(files)} } required>
                     {
                       labelList.map((label, idx) => (
-                        <>
-                        {
-                          label.label === item.label?
-                          <option key={idx} value={label.value} selected> {label.label} </option> :
-                          <option key={idx} value={label.value}> {label.label} </option>
-                        }
-                        </>
+                        <option key={idx} value={label.value}> {label.label} </option>
                       ))
                     }
                   </select>
@@ -171,28 +178,20 @@ function FileForm (){
                 { // Input by Typing
                   item.isTyping === 1 &&
                   <div className="input-1 d-flex" >
-                    <input className="document" placeHolder="เอกสาร"onChange={(e) => {onChangeCustomLabel(e, item.hashID);setFileForm({...fileForm ,required: e.target.value })}} type='text'/>
+                    <input className="document" placeholder="เอกสาร"onChange={(e) => onChangeCustomLabel(e, item.hashID)} type='text'/>
                     { 
                       item.customLabel !== ''?
-                      <button type='button' onClick={() => onAddCustomLabel(item.hashID)}   >Add</button>:
-                      <button className="button-circle  red1" type='button' onClick={() => onCancelCustomLabel(item.hashID)}>X</button>
+                      <button type='button' onClick={() => onAddCustomLabel(item.hashID) }>Add</button>:
+                      <button className="button-circle  red1" type='button' onClick={(e) => onCancelCustomLabel(e, item.hashID)}>X</button>
                     }
                   </div>
                 }
 
                 { /* ----- File Format ----- */ }
-                <select className="select-2" onChange={(e) => {onSelectFormat(e, item.hashID);
-                  setFileForm({ ...fileForm , file: e.target.selectedOptions[0].text })
-                }} required>
-                  {
-                    formatList.map((format, idx) => (
-                      <>{
-                        format.label === item.format?
-                        <option key={idx} value={format.value} selected> {format.label} </option> :
-                        <option key={idx} value={format.value}> {format.label} </option>
-                      }</>
-                    ))
-                  }
+                <select className="select-2" defaultValue={item.format} onChange={(e) => {onSelectFormat(e, item.hashID);setFileForm(files); }} required>
+                  { formatList.map((format, idx) => (
+                    <option key={idx} value={format.value}> {format.label} </option>
+                  )) }
                 </select>
 
                 {/* DELETE CURRENT INPUT */}

@@ -4,42 +4,92 @@ import React, { useState, useContext } from 'react';
 import { WebContext } from '../../App';
 
 function RateForm (){
-  const { ScholarshipForm } = useContext(WebContext)
-  const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
-    const [rateForms, setRateforms] = useState([{ id : 1, name : "", weigth : "0" }]);
+  const  { ScoringFormat }  = useContext(WebContext)
+  const [scoringFormat, setScoringFormat] = ScoringFormat;
+
+    const [rateForms, setRateforms] = useState([{ hashID : Math.random().toString(36).substr(2, 7), name : "", type:"" , weight : "" }]);
     const fileAutoFormat =[
+      {
+        title: 'เลือกเกณฑ์การให้คะแนน',
+        type: 'score',
+        value: ''
+      },
       {
         title: 'คะแนน(100.00%)',
         type: 'score',
+        value: '0'
       },
       {
         title: 'ผ่านไม่ผ่าน',
         type: 'pass',
+        value: '1'
       }
     ]
-    const delrateForm = (rateForm) => {
-      const id= rateForm.id;
-      setRateforms(rateForms.filter(rateForm => rateForm.id !== id));
-      setRateforms([...rateForm]) 
+    
+    function delrateForm(target) {   
+      const id = target.hashID;           
+      setRateforms((rateForms) => rateForms.filter((item) => item.hashID !== id))
+      setScoringFormat((rateForms) => rateForms.filter((item) => item.hashID !== id))
+      
     }
+     
     const addrateForm = () => {
-      setRateforms([...rateForms, { id : rateForms.length+1, name : "", weigth : "0" }])
+      setRateforms([...rateForms, {hashID : Math.random().toString(36).substr(2, 7), name : "", type:"", weight : "" }])
     }
-    const handleInputChangeName = (e, index) => {
-      let tempFiles = [...rateForms]
-      tempFiles[index][e.target.name] = e.target.value;
-      setRateforms(tempFiles);
+    
+    function onSelectFormat(e, targetHashID) {
+      // if it select 'label' that have value = '' 
+      // do nothing
+      if (e.target.value === '')
+        return;
+      var tempFiles = [...rateForms]; 
+      tempFiles.forEach((file) => { // loop to find target object
+        if (file.hashID === targetHashID) { // check if found target from hashID
+          // update value
+          file.type = e.target.value;
+        }
+      })
+      setRateforms(tempFiles) // apply value
     }
-  
-    const handleInputChangeWeigth = (e, index) => {
-      let tempFiles = [...rateForms]
-      tempFiles[index][e.target.name] = e.target.value;
-      setRateforms(tempFiles);
+
+    function handleInputChangeName(e, targetHashID) {
+      // if it select 'label' that have value = '' 
+      // do nothing
+      if (e.target.value === '')
+        return;
+      var tempFiles = [...rateForms]; 
+      tempFiles.forEach((file) => { // loop to find target object
+        if (file.hashID === targetHashID) { // check if found target from hashID
+          // update value
+          file.name = e.target.value;
+        }
+      })
+      setRateforms(tempFiles) // apply value
     }
+
+    function handleInputChangeWeight(e, targetHashID) {
+      // if it select 'label' that have value = '' 
+      // do nothing
+      if (e.target.value === '')
+        return;
+      var tempFiles = [...rateForms]; 
+      tempFiles.forEach((file) => { // loop to find target object
+        if (file.hashID === targetHashID) { // check if found target from hashID
+          // update value
+          file.weight = e.target.value;
+        }
+      })
+      setRateforms(tempFiles) // apply value
+    }
+
+    function showAll() {
+       console.log(rateForms);
+     }
+    
   
     return(
       <>
-       
+        <button type='button' onClick={() => showAll()}> SHOW ELEMENT</button>
         <div className="heading">
           <br></br>
           <h4>เกณฑ์การให้คะแนน</h4>
@@ -48,36 +98,37 @@ function RateForm (){
           <div className='setSubject d-flex'>  
             <p className='topics'>หัวข้อ</p>
             <p className='typefile'>รูปแบบการให้คะแนน</p>
-            <p className='weigth'>น้ำหนัก</p>
+            <p className='weight'>น้ำหนัก</p>
           </div>
         <div className="detail">
          {
-          rateForms.map((rateForm, index) => (
+          rateForms.map((item, index) => (
             <div className="d-flex" key={index}>
               <p className="order" >ลำดับ {index+1}</p>
               <input className="file-document" required
                   type="text" 
                   name="name"
-                  value={rateForm.name || ""}
-                  onChange={(e) => handleInputChangeName(e, index)}
+                  placeholder = "หัวข้อการให้คะแนน"
+                  onChange={(e) => {handleInputChangeName(e, item.hashID);setScoringFormat(rateForms)}}
               />
               
-              <select className="select-2">
+              <select className="select-2" required onChange={(e) => {onSelectFormat(e, item.hashID);setScoringFormat(rateForms)}} >
                 {
                   fileAutoFormat.map((format, format_index) =>
-                    <option key={format_index}>{format.title}</option>
+                    <option key={format_index}  value ={format.value} > {format.title}  </option>
                   )
                 }
               </select>
   
               <input className="select-2"
+                  required
                   type="number" min="0" max="100"
-                  name="weigth"
-                  value={rateForm.weigth || ""}
-                  onChange={(e) => handleInputChangeWeigth(e, index)}
+                  name="weight"
+                  placeholder = "น้ำหนักการให้คะแนน"
+                  onChange={(e) => {handleInputChangeWeight(e, item.hashID); setScoringFormat(rateForms)}}
               />
               
-              <button className="button-circle red1" type="button" onClick={() => delrateForm(rateForm)}>
+              <button className="button-circle red1" type="button" onClick={() => delrateForm(item)}>
                 <i className="bi bi-dash"></i>
               </button>
             </div>

@@ -100,7 +100,7 @@ function ReportList(props) {
           }     
             <div className="right">
               <button className="button-2 d-flex" type="button" onClick={() => setContent('ReportInspect')}>
-                <i className="bi bi-search"/>
+                <i className="bi bi-search sky"/>
                 <p>ดูรายละเอียด</p>
               </button> 
             </div>

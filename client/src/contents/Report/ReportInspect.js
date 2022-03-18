@@ -11,8 +11,8 @@ function ReportInspect() {
     Test.map((test) => (
       <div class="frame">
         <div class="contents">
-          <div class="content6">
-            <div class="reportInspect-head">     
+          <div class="content6 inspect">
+            <div class="head">     
               
               <center>
                 <br></br>
@@ -21,7 +21,7 @@ function ReportInspect() {
               </center>
             
             </div>
-            <div class="reportInspect-columns">
+            <div class="columns">
               <center>
                 <div>
                   <table border='1' >
@@ -61,12 +61,12 @@ function ReportInspect() {
                 <h4>โดยบริษัทเสี่ยโอ</h4>
               </center>
             </div>
-            <div class="reportInspect-fotter">
+            <div class="bottom">
               <div class="button">
-                <button class="dowload" type="button" >
+                <button class="button-4 green1" type="button" >
                   <p>ดาวน์โหลดรายงาน</p>
                 </button>
-                <button class="back" type="button" onClick = {() => setContent(['Report'])}>
+                <button class="button-4 red2" type="button" onClick = {() => setContent(['Report'])}>
                   <p>กลับ</p>
                 </button>
               </div>

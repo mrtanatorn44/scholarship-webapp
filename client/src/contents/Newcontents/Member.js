@@ -27,7 +27,7 @@ function Member() {
       </div>
 
       <div className="contents">
-        <div className="search2">
+        <div className="search-box search2">
           <div className="button-search">
             <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
             <button className="btn " type="button" >

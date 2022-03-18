@@ -17,15 +17,16 @@ function WebContextProvider ({ children }) {
   const [sponsor, setSponsor]                         = useState('');
   const [scholarshipForm, setScholarshipForm]         = useState('');
   const [scholarshipList, setScholarshipList]         = useState([]);
+  const [scoringFormat, setScoringFormat]             = useState([]);
   const [user, setUser]                               = useState({
-    id    : '',
-    imgUrl: '',
-    email : '',
-    name  : '',
-    fname : '',
-    lname : '',
-    role  : '',
-    isLogin: false
+    id      : '',
+    imgUrl  : '',
+    email   : '',
+    name    : '',
+    fname   : '',
+    lname   : '',
+    role    : '',
+    isLogin : false
   });
 
   
@@ -45,6 +46,7 @@ function WebContextProvider ({ children }) {
     ScholarshipForm     : [scholarshipForm, setScholarshipForm],
     ScholarshipList     : [scholarshipList, setScholarshipList],
     Sponsor             : [sponsor,setSponsor],
+    ScoringFormat       : [scoringFormat,setScoringFormat],
     FileForm            : [fileForm, setFileForm]
 	}
 

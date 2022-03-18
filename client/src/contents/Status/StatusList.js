@@ -27,7 +27,7 @@ function StatusList(props) {
 	return(
 		scholar.map((scholar, index) => (
 			<div className="d-flex" key={index}>
-				<div className="scholar-list">
+				<div className="list3">
 
 					<div className='title'>
 						<h2>{scholar.title}</h2>

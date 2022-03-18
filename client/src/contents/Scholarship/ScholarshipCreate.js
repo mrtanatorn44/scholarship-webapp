@@ -14,15 +14,32 @@ import Swal from 'sweetalert2'
 import Axios from 'axios';
 function ScholarshipListCreate() {
    
-  const { Content} = useContext(WebContext)
-  const [ content , setContent] = Content;
-  
-  const { ScholarshipForm } = useContext(WebContext)
+  const { Content, ScholarshipForm, FileForm, ScoringFormat } = useContext(WebContext)
+  const [ content , setContent]               = Content;
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
+  const [ fileForm , setFileForm]             = FileForm;
+  const [scoringFormat, setScoringFormat] = ScoringFormat;
 
-  const { FileForm } = useContext(WebContext)
-  const [ fileForm , setFileForm] = FileForm;
-
+  function insertScholarshipToDB(donator_id) {
+    Axios.post("http://localhost:5000/addScholar",{
+      donator_id      : donator_id,
+      is_public       : false,
+      type            : scholarshipForm.type,
+      detail          : scholarshipForm.detail,
+      amount          : scholarshipForm.amount,
+      min_student_year: scholarshipForm.min_student_year,
+      max_student_year: scholarshipForm.max_student_year,
+      on_year         : scholarshipForm.on_year,
+      on_term         : scholarshipForm.on_term,
+      open_date       : scholarshipForm.open_date,
+      close_date      : scholarshipForm.close_date,
+      required        : JSON.stringify(fileForm),
+      rating          : JSON.stringify(scoringFormat)
+    }).then((response) => {
+      setContent('Scholarship');
+      Swal.fire('บันทึกแล้ว!','','success')
+    })
+  }
 
   function onHandleSubmitBtn(e) {
     e.preventDefault();
@@ -37,28 +54,34 @@ function ScholarshipListCreate() {
       cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
-        
-        setContent('Scholarship');
-        Swal.fire('บันทึกแล้ว!','','success')
-        const {type,detail, amount , min_student_year,max_student_year,on_year,on_term,open_date, close_date, sponsor}=scholarshipForm;
 
-        Axios.post("http://localhost:5000/addScholar",{
-        is_public       : false,
-        type            : type,
-        detail          : detail,
-        amount          : amount,
-        min_student_year: min_student_year,
-        max_student_year: max_student_year,
-        on_year         : on_year,
-        on_term         : on_term,
-        open_date       : open_date,
-        close_date      : close_date,
-        sponsor         : sponsor
-      })
+        var donator_id;
+
+        Axios.get("http://localhost:5000/getDonator").then(response => {
+          var result = response.data
+          result.forEach((res, index) => {  
+            if (res.name === scholarshipForm.donator) {
+              console.log('Exist Donator :', res.name, res.id)
+              donator_id = res.id
+              insertScholarshipToDB(res.id)
+            }
+          })
+          console.log('id :', donator_id)
+          if (donator_id !== undefined)
+            return;
+
+          // if Donator not exist add it
+          Axios.post("http://localhost:5000/addDonator", {
+            name : scholarshipForm.donator
+          }).then(response => {
+            console.log('not Exist Donator :', scholarshipForm.donator, response.data.insertId)
+            insertScholarshipToDB(response.data.insertId);
+          })
+
+        })
       }
     })
   }
-  //console.log(fileForm);
   
   return (
     <div className="frame">

@@ -262,7 +262,10 @@ app.post("/getProfile", (req, res) => {
 /////////////SCHOLARSHIP///////////////////
 
 app.post("/addScholar", (req, res) => {
-  
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+  const donator_id= req.body.donator_id;
   const is_public= req.body.is_public;
   const type= req.body.type;
   const detail= req.body.detail;
@@ -273,12 +276,12 @@ app.post("/addScholar", (req, res) => {
   const on_term=req.body.on_term;
   const open_date=req.body.open_date;
   const close_date=req.body.close_date;
-  const sponsor = req.body.sponsor;
   const required = req.body.required;
+  const rating = req.body.rating;
 
   dbCon.query(
-    "INSERT INTO scholarship ( is_public, type, detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date, sponsor, required) VALUES (?,?, ?, ?,?, ?, ?,?,?,?,?, ?)",
-    [ is_public,type,detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date,sponsor,required], 
+    "INSERT INTO scholarship ( donator_id, is_public, type, detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date, required, rating) VALUES (?,?, ?, ?,?, ?, ?,?,?,?,?, ?, ?)",
+      [donator_id, is_public,type,detail, amount, min_student_year, max_student_year, on_year, on_term, open_date, close_date,required,rating],
     (err, result) => {
       if (err) {
         res.send(err);
@@ -307,7 +310,7 @@ app.get("/getAllScholarship", (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   dbCon.query(
-    "SELECT * FROM scholarship;", 
+    "SELECT * FROM scholarship ORDER BY id DESC;", 
     (err, result) => {
       if (err) {
         console.log(err);
@@ -319,9 +322,43 @@ app.get("/getAllScholarship", (req, res) => {
 });
 
 //get sposor
-app.get("/getSponsor", (req, res) => {
+app.get("/getallDonator", (req, res) => {
   dbCon.query(
-    "SELECT DISTINCT sponsor FROM scholarship",
+    "SELECT * FROM donator",
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/getDonator", (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  const id = req.body.id;
+  dbCon.query(
+    "SELECT * FROM donator WHERE id = ?",
+    [id],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/addDonator", (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  const name = req.body.name;
+  dbCon.query(
+    "INSERT INTO donator (name) VALUES (?)",
+    [name],
     (err, result) => {
       if (err) {
         res.send(err);

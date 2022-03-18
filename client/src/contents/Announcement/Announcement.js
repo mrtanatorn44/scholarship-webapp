@@ -24,7 +24,7 @@ function Announcement(props) {
         { 
           user.role === 'admin' &&
           <button  className='button-add d-flex' onClick={() => { setContent('AnnouncementCreate') }}>
-            <i className="bi bi-plus-lg"/>
+            <i className="bi bi-plus-lg green1"/>
             <p>เพิ่มข่าวสาร</p>
           </button> 
         }

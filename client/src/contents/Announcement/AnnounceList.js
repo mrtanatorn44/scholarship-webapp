@@ -70,7 +70,7 @@ function AnnounceList() {
               { /* ADMIN BUTTON */
                 user.role === 'admin' && 
                 <>            
-                <button className="button-admin red2" onClick={() => { onHandleDeleteAnnounceBtn(news.id); }}> ลบ </button>
+                <button className="button-admin orange1" onClick={() => { onHandleDeleteAnnounceBtn(news.id); }}> ลบ </button>
                 <button className="button-admin red1" onClick={() => { localStorage.setItem('announceEditID_target',news.id);setContent("AnnouncementEdit"); }}> แก้ไข </button>
                 </> 
               }

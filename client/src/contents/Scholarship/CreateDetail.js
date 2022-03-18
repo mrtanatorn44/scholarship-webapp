@@ -10,6 +10,7 @@ function DetailForm () {
   
   const { ScholarshipForm } = useContext(WebContext)
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
+
   // type schorlar
   const [typeList,setTypeList] = useState([
     {label: 'เลือกประเภททุน', value: ""},
@@ -18,14 +19,12 @@ function DetailForm () {
     {label: 'ทุนกิจกรรมเด่น',  value: '2'},
     {label: 'ทุนขาดคุณทรัพย์', value: '3'}
   ])
-
   var dataTypeList = ['ทุนเรียนดี', 'ทุนกิจกรรมเด่น', 'ทุนขาดคุณทรัพย์']
 
-  // type sponsor
-  
-  const [sponsorList,setSponsorList] = useState([
-    {label: 'เลือกผู้สนับสนุน', value: ""},
-    {label: 'เพิ่มผู้สนับสนุน...',     value: '0'}
+  // type donator
+  const [donatorList,setDonatorList] = useState([
+    {label: 'เลือกผู้สนับสนุน',    value: ""},
+    {label: 'เพิ่มผู้สนับสนุน...',  value: 0}
   ]);
   
   const getType = () =>{
@@ -42,22 +41,23 @@ function DetailForm () {
     })
   }
 
-  const getSponsor = () =>{
-    Axios.get("http://localhost:5000/getSponsor").then(response => {
-      var tempSponsorList = sponsorList;
+  const getDonator = () =>{
+    Axios.get("http://localhost:5000/getallDonator").then(response => {
+      var tempDonatorList = donatorList;
       var result = response.data
+      if (result.length === 0)
+        return
       result.forEach((res, index) => {  
-        var data = res.sponsor;
-        if (data !== '') {
-          tempSponsorList.push({ label: data, value: data })
+        if (res.data !== '') {
+          tempDonatorList.push({ label: res.name, value: res.id })
         }
       })
-      setSponsorList([...sponsorList])
+      setDonatorList([...donatorList])
     })
   }
 
   useEffect(() => {
-    getSponsor();
+    getDonator();
     getType();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -140,11 +140,13 @@ function DetailForm () {
               if (e.target.value === '0') {
                 setScholarshipForm({ ...scholarshipForm , sponsorAdd: '', sponsorInput: 1 })
               } else {
-                setScholarshipForm({ ...scholarshipForm , sponsor: e.target.selectedOptions[0].text })
+                let index = e.nativeEvent.target.selectedIndex;
+                let label = e.nativeEvent.target[index].text;
+                setScholarshipForm({ ...scholarshipForm , donator: label })
               } 
             }}>
               {
-                sponsorList.map((item, index) => (
+                donatorList.map((item, index) => (
                   <option key={index} value={item.value}> {item.label} </option>
                 ))
               }
@@ -157,17 +159,17 @@ function DetailForm () {
               { 
                 scholarshipForm.sponsorAdd !== '' &&
                 <button onClick={() => {
-                  var tempTypeList = sponsorList;
+                  var tempTypeList = donatorList;
                   tempTypeList.unshift({ label: scholarshipForm.sponsorAdd, value: scholarshipForm.sponsorAdd })
-                  setSponsorList(tempTypeList);
-                  setScholarshipForm({...scholarshipForm , sponsor : scholarshipForm.sponsorAdd, sponsorAdd: '', sponsorInput: 0})
+                  setDonatorList(tempTypeList);
+                  setScholarshipForm({...scholarshipForm , donator : scholarshipForm.sponsorAdd, sponsorAdd: '', sponsorInput: 0})
                 }}>
                   Add
                 </button>
               }
               { 
                 scholarshipForm.sponsorAdd === '' &&
-                <button onClick={() => setScholarshipForm({...scholarshipForm , sponsorInput: 1 })}>
+                <button onClick={() => setScholarshipForm({...scholarshipForm , sponsorInput: 0 })}>
                   X
                 </button>
               }

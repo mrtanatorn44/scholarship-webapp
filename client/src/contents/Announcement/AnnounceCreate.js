@@ -132,13 +132,14 @@ function AnnounceCreate(props) {
             <div className="detail">
               <textarea required type="text" placeholder="รายละเอียดข่าวสาร" onChange={(e) => setForm({ ...form, detail: e.target.value })}/>
             </div>
-            <div className="insertbutton">
-              <label>
-                <input className="insert" type="file" accept="image/jpeg, image/png" name="file" id="file" onChange={(file) => onHandleUpload(file)} onClick={(e) => e.target.value=''}/>
+            <div className="insertbutton ">
+              <label className="green1" >
+                <input className="insert green1" type="file" accept="image/jpeg, image/png" name="file" id="file" onChange={(file) => onHandleUpload(file)} onClick={(e) => e.target.value=''}/>
                 <i className="bi bi-card-image"/>
               </label>
               <p> {form.imageName===""? "เพิ่มรูปภาพ": form.imageName } </p>
-              { form.imageName!=='' && <button className="cancel-button" onClick={() => setForm({...form, imageSrc: '', imageData: '', imageName: ''})}><i className="bi bi-x"/></button> }
+              { form.imageName!=='' && 
+              <button className="button-circle red1"  onClick={() => setForm({...form, imageSrc: '', imageData: '', imageName: ''})}><i className="bi bi-x"/></button> }
             </div>
           </form>
           {/* ----- Preview ----- */} 

@@ -36,7 +36,7 @@ function Interview(props) {
             </div>
           </div>
           <div className="column-right" >
-            <div className="search1">
+            <div className="search-box search1">
               <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
               <button className="btn" type="button" >
                 <i className="bi bi-search"></i>

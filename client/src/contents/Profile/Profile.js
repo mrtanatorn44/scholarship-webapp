@@ -99,13 +99,14 @@ function Profile() {
                 </button>
               </div> :
                 <div className="button-profile">
-                  <button className="button-3 red3" onClick = {() => setContent('ProfileEdit')}>
+                  <button className="button-3 peach" onClick = {() => setContent('ProfileEdit')}>
                     <p>แก้ไขข้อมูล</p>
                   </button>
                 </div>
               }
             </div>
           </div>
+       
           <div className="bottom">
             <div className="dropdown">
               <label>ประเภทของทุน</label>

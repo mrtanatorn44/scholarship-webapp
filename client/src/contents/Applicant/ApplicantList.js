@@ -87,11 +87,11 @@ function ApplicantList(props){
           </div>
           <div className="right" >
             <button className="button-2 d-flex" type="button" onClick={ () => setContent('ScholarshipCheckForm') }>
-              <i className="bi bi-hourglass"></i>
+              <i className="bi bi-hourglass green1"/>
               <p>ตรวจสอบเอกสาร</p>
             </button>
             <button className="button-2 d-flex"  type="button" onClick={ () => setContent('ProfileCheck') }>
-              <i className="bi bi-search"></i>
+              <i className="bi bi-search sky"></i>
               <p>ตรวจสอบประวัติ</p>
             </button>  
           </div>

@@ -42,6 +42,7 @@ function Login(props) {
           lname   : lName,
           isLogin : true
         });
+        Swal.fire(`Welcome Back ${data.givenName}!`, '', 'success')
       } else { // if User is not exist
         userRole = 'student';
         Axios.post("http://localhost:5000/addUser", {
@@ -62,7 +63,7 @@ function Login(props) {
             lname   : lName,
             isLogin : true
           });
-          alert('Welcome for the first time.')
+          Swal.fire('Welcome for the first time!', '', 'success')
         });
       }
       console.log('Gmail Sign-in done!')
@@ -78,12 +79,10 @@ function Login(props) {
   }
 
   const onLoginSuccess = async(res) => {
-    console.log('Current page' + window.location.pathname);
     if (res.profileObj.email.split('@')[1] === "ku.th") {
       if (!user.isLogin) { // If not login initialize User
         console.log('Gmail Sign-in...')
         defineUser(res.profileObj);
-        localStorage.setItem('isSignedIn', 'true');  // set isSignedIn session to true
       }
       if (localStorage.getItem('isSignedIn') === 'true') { // If isSignedIn session hide login btn 
         setShowlogoutButton(true);
@@ -103,6 +102,7 @@ function Login(props) {
   const onSignoutSuccess = () => {
     alert("You have been logged out successfully");
     localStorage.setItem('isSignedIn', 'false');  // set isSignedIn session to false
+    localStorage.removeItem('isSignedIn_ssTime');
     setUser({ // set User to null to make controller know that logout
       ...user,
       role    : '',

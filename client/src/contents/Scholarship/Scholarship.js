@@ -28,7 +28,7 @@ function Scholarship(props) {
           { 
             user.role === 'admin' &&
             <button className = "button-add d-flex" type = "button" onClick={ () => setContent('ScholarshipCreate') } >
-              <i className="bi bi-plus-lg"/>
+              <i className="bi bi-plus-lg green1"/>
               <p>สร้างทุน</p>
             </button> 
           }

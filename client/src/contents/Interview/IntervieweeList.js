@@ -40,23 +40,23 @@ useEffect(() => {
           <div className="right" >
          
             <button className="button-2 d-flex" type="button" onClick={ () => setContent('ScholarshipCheckForm') }>
-              <i className="bi bi-hourglass"></i>
+              <i className="bi bi-hourglass green1"></i>
               <p>ตรวจสอบเอกสาร</p>
             </button>
           
             <button className="button-2 d-flex"  type="button" onClick={ () => setContent('ProfileCheck') }>
-              <i className="bi bi-search"></i>
+              <i className="bi bi-search sky"></i>
               <p>ตรวจสอบประวัติ</p>
             </button>   
             
           
             <button className="button-2 d-flex" type="button" onClick={() => setContent('InterviewRate') }>
-              <i className="bi bi-bookmark-check"></i>
+              <i className="bi bi-bookmark-check yellow1"></i>
               <p>การประเมิน</p>
             </button>
           
             <button className="button-2 d-flex"  type="button"onClick={() => setContent('InterviewSchedule') }>
-              <i className="bi bi-clock"/>
+              <i className="bi bi-clock red2"/>
               <p>เวลาสัมภาษณ์</p>
             </button>
           </div>

@@ -39,7 +39,7 @@ function MemberList(props){
             
             <div className="right">
               <button className="button-2 d-flex" type="button" onClick={() => { setEditProfileID(user.id);setContent("FormProfile"); }}> 
-                <i class="bi bi-card-checklist"></i>
+                <i class="bi bi-card-checklist green1"></i>
                 <p>ข้อมูลสมาชิก</p>
               </button>
             </div>

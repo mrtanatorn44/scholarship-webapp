@@ -151,7 +151,7 @@ function AnnounceEdit(props) {
       <div className="header">
         <div  className="left">
           <div className="icons"><i className="bi bi-plus-lg"/></div>
-          <div className="topic"><h4>เพิ่มข่าวสาร</h4></div>
+          <div className="topic"><h4>แก้ไขข่าวสาร</h4></div>
         </div>
         <div className="right">
           <div className="button-set">
@@ -179,14 +179,14 @@ function AnnounceEdit(props) {
               <textarea required type="text" defaultValue={form.detail} placeholder="รายละเอียดข่าวสาร" onChange={(e) => setForm({ ...form, detail: e.target.value })}/>
             </div>
             <div className="insertbutton">
-              <label>
+              <label className="green1" >
                 <input className="insert" type="file" accept="image/jpeg, image/png" name="file" id="file" onChange={(file) => onHandleUpload(file)} onClick={(e) => e.target.value=''}/>
                 <i className="bi bi-card-image"/>
               </label>
               <p> {form.imageName===""? "เพิ่มรูปภาพ": form.imageName } </p>
               { /* DELETE IMAGE BTN */
                 form.imageName!=='' && 
-                <button className="button-admin red1" onClick={() => setForm({...form, imageSrc: '', imageData: '', imageName: ''})}>
+                <button className="button-circle red1" onClick={() => setForm({...form, imageSrc: '', imageData: '', imageName: ''})}>
                   <i className="bi bi-x"/>
                  
                 </button> 

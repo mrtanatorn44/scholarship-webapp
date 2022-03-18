@@ -23,13 +23,11 @@ function RoleSetting() {
         <div className="right"></div>
       </div>
       <div className="contents">
-        <div className="search2">
-          <div className="button-search">
-            <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
-            <button className="btn " type="button" >
-              <i className="bi bi-search"></i>
-            </button>
-          </div>
+        <div className="search-box search2 ">
+          <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
+          <button className="btn" type="button" >
+            <i className="bi bi-search"></i>
+          </button>
         </div>
         <div className="line-gray"></div>
         

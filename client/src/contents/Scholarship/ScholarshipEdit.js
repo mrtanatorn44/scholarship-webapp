@@ -18,6 +18,15 @@ function ScholarshipEdit() {
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
 
   function onFormSubmit(e,id) {
+    if ("scholarshipEditID_target" in localStorage) {
+      if (localStorage.getItem('scholarshipEditID_target') !== '')
+        localStorage.removeItem('scholarshipEditID_target');
+      else
+        console.log("not have id");
+      } else {
+        console.log("not have id");
+      }
+    
     e.preventDefault();
     Swal.fire({
       title: 'คุณแน่ใจหรือไม่?',
@@ -50,6 +59,7 @@ function ScholarshipEdit() {
       }
     })
   }
+  console.log(scholarshipForm);
   
   return (
     <div className="frame">
@@ -74,7 +84,7 @@ function ScholarshipEdit() {
         <div className = 'content1'>  
           <form onSubmit={(e) => onFormSubmit(e, scholarshipForm.id)}>
 
-            <div className="editDetailForm" >
+            <div className="detailForm" >
               <EditDetailForm/>
             </div> 
 
