@@ -64,8 +64,14 @@ function DetailForm () {
 
   return (   
     <>
+
+      <div className="heading">
+        <h4>ข้อมูลทุนการศึกษา</h4>
+      </div>
+
       <div className="top">
         <div className="type">
+          <label>ประเภททุนการศึกษา</label>
           { /* ----- SELECT INPUT ----- */
             (scholarshipForm.typeInput === 0 || scholarshipForm.typeInput === undefined ) &&
             <select required onChange={(e) => {
@@ -104,15 +110,16 @@ function DetailForm () {
                 </button>
               }
             </div>
-          
           }
         </div>
 
         <div className="year">
+          <label>ทุนประจำปีการศึกษา</label>
           <input className="academic"  type="number" min="0"  placeholder="ประจำปีการศึกษา" required onChange={(event) => {setScholarshipForm({...scholarshipForm ,on_year: event.target.value })}}></input>
         </div>
         
         <div className="term">
+          <label>ทุนประจำภาคเรียนการศึกษา</label>
           <select  name="term" id="capital" required onChange={(event) => {setScholarshipForm({...scholarshipForm ,on_term: event.target.value })}}>
             <option value="">ภาคการศึกษา</option>
             <option value="ภาคต้น">ภาคต้น</option>
@@ -120,18 +127,22 @@ function DetailForm () {
           </select>
         </div>
       </div>
-
+      
+  
       <div className="center">
-        <textarea className="detail" type="text" required placeholder="คุณสมบัติของผู้รับทุน" onChange={(event) => {setScholarshipForm({...scholarshipForm , detail: event.target.value })}}></textarea>
+        <p className="details">
+          <label >ข้อมูลเบื้องต้น</label>
+          <textarea className="detail" type="text" required placeholder="ข้อมูลเบื้องต้น" onChange={(event) => {setScholarshipForm({...scholarshipForm , detail: event.target.value })}}></textarea>
+        </p>
       </div>
   
       <div className="bottom">
         <div className="bottom-1">
           <div className="min">
-            <input type="number" min="0" placeholder="min_student_year" required onChange={(event) => {setScholarshipForm({...scholarshipForm , min_student_year: event.target.value })}}></input>
+            <input type="number" min="1" placeholder="min_student_year" required onChange={(event) => {setScholarshipForm({...scholarshipForm , min_student_year: event.target.value })}}></input>
           </div>
           <div className="max">
-            <input type="number" min="0" placeholder="max_student_year" required onChange={(event) => {setScholarshipForm({...scholarshipForm , max_student_year: event.target.value })}}></input>
+            <input type="number" max="6" placeholder="max_student_year" required onChange={(event) => {setScholarshipForm({...scholarshipForm , max_student_year: event.target.value })}}></input>
           </div>
           <div className="type">
           { /* ----- SELECT INPUT ----- */

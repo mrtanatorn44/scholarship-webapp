@@ -304,15 +304,15 @@ function ProfileEdit() {
               <label>สถานะสมรสของบิดา-มารดา</label><br></br>
               <input className = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" value = {profile.status_marry} onChange={(e)=>changeValue("status_marry",e.target.value)} required/>
             </div>*/}
-            
+             <div className="footer1">
+              <div className="confirm">
+                <button className="button-confirm green1" type ='submit' >บันทึก</button>
+              </div>
+            </div>
           
           </form>
         </div>
-        <div className="footer1">
-          <div className="confirm">
-            <button className="button-confirm green1" type ='submit' >บันทึก</button>
-          </div>
-        </div>
+       
 
       </div>
     </div>

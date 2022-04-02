@@ -1,39 +1,38 @@
 const express = require("express");
 const mysql = require("mysql");
-const cors = require("cors");
-//const fileUpload = require("express-fileupload");
-//const fileType = require("file-type");
-
-
 const app = express();
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
 app.use(express.json({limit: '50mb'}));
-//app.use(express.urlencoded({limit: '50mb'}));
-
-//app.use(fileUpload());
-
-/*const storage = multer.diskStorage({
-  destination: function(req, file, cb){
-cb(null,file.originailname);
-  }
-});
-const upload =multer({storage: storage})*/
 
 let dbCon = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "scholarship-webapp",
+    database: "scholarship_webapp",
     timezone: 'gmt'
 })
 
 dbCon.connect(function(err) {
   if (err) throw err;
   console.log('Connected to DB');
+});
+
+/* ----- USER ----- */
+app.get("/getAllUser", (req, res) => {
+  dbCon.query(
+    "SELECT * FROM user ;", (err, result) => {
+    if(err){
+      console.log(err);
+    }else{
+      res.send(result);
+    }
+  });
 });
 
 app.post("/getUser", (req, res) => {
@@ -90,6 +89,7 @@ app.post("/editRole", (req, res) => {
   );
 });
 
+/* ----- ANNOUNCE ----- */
 app.get("/getAllAnnounce", (req, res) => {
   dbCon.query(
     "SELECT * FROM announce ORDER BY date DESC;", (err, result) => {
@@ -99,50 +99,6 @@ app.get("/getAllAnnounce", (req, res) => {
       res.send(result);
     }
   });
-});
-
-app.get("/getUser", (req, res) => {
-  dbCon.query(
-    "SELECT * FROM user ;", (err, result) => {
-    if(err){
-      console.log(err);
-    }else{
-      res.send(result);
-
-      //console.log(result)
-    }
-  });
-});
-
-/* ----- Announcement ----- */
-app.post("/addAnnounce", (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  const title = req.body.title;
-  const imageName = req.body.imageName;
-  const imageData = req.body.imageData;
-  const detail = req.body.detail;
-  dbCon.query(
-    "INSERT INTO announce (title, detail, image_data, image_name) VALUES (?, ?, ?, ?)",
-    [title, detail, imageData, imageName],
-    (err, result) => {
-    if (err) { console.log(err) } else { res.send(result) }
-  });
-});
-
-app.post("/deleteAnnounce", (req, res) => {
-  const id = req.body.id;
-  dbCon.query(
-    "DELETE FROM announce WHERE id = ?",
-    [id],
-    (err, result) => {
-      if(err){
-        console.log(err);
-      }else{
-        res.send(result);
-      }
-    }
-  )
 });
 
 app.post("/getAnnounce",(req ,res)=>{
@@ -159,6 +115,22 @@ app.post("/getAnnounce",(req ,res)=>{
     }
   )
 });
+
+app.post("/addAnnounce", (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  const title = req.body.title;
+  const imageName = req.body.imageName;
+  const imageData = req.body.imageData;
+  const detail = req.body.detail;
+  dbCon.query(
+    "INSERT INTO announce (title, detail, image_data, image_name) VALUES (?, ?, ?, ?)",
+    [title, detail, imageData, imageName],
+    (err, result) => {
+    if (err) { console.log(err) } else { res.send(result) }
+  });
+});
+
 
 app.post("/editAnnounce",(req ,res)=>{
   res.header('Access-Control-Allow-Origin', '*');
@@ -181,25 +153,20 @@ app.post("/editAnnounce",(req ,res)=>{
   )
 });
 
-
-
-/*
-app.post("/upload", (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  const image = req.files.pic;
-  "INSERT INTO announce (imade_url), VALUES (?)",
-  [image]
-  res.sendStatus(200);
-
-})
-
-app.post("/Upload",upload.array("file",2),(req, res) => {
-const fileImg = fs.readFileSync("upload/"+req.file[0].filename)
-})
-*/
-
-
+app.post("/deleteAnnounce", (req, res) => {
+  const id = req.body.id;
+  dbCon.query(
+    "DELETE FROM announce WHERE id = ?",
+    [id],
+    (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        res.send(result);
+      }
+    }
+  )
+});
 
 /* ----- PROFILE ----- */
 app.post("/addProfile", (req, res) => {
@@ -259,12 +226,41 @@ app.post("/getProfile", (req, res) => {
 });
 
 
-/////////////SCHOLARSHIP///////////////////
+/* ----- SCHOLARSHIP ----- */
+app.get("/getAllScholarship", (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  dbCon.query(
+    "SELECT * FROM scholarship ORDER BY id DESC;", 
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/getScholarship",(req ,res)=>{
+  const id = req.body.id;
+  dbCon.query(
+    "SELECT * FROM scholarship WHERE id = ?",
+    [id],
+    (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        res.send(result);
+        //console.log(result)
+      }
+    }
+  )
+});
 
 app.post("/addScholar", (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
   const donator_id= req.body.donator_id;
   const is_public= req.body.is_public;
   const type= req.body.type;
@@ -292,6 +288,48 @@ app.post("/addScholar", (req, res) => {
   );
 });
 
+app.post("/editScholar",(req ,res)=>{
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  const id = req.body.id;
+  const is_public= req.body.is_public;
+  const type= req.body.type;
+  const detail= req.body.detail;
+  const amount=req.body.amount;
+  const min_student_year=req.body.min_student_year;
+  const max_student_year=req.body.max_student_year;
+  const on_year=req.body.on_year;
+  const on_term=req.body.on_term;
+  const open_date=req.body.open_date;
+  const close_date=req.body.close_date;
+  const donator_id = req.body.donator_id;
+  dbCon.query(
+    "UPDATE scholarship SET is_public = ?,type = ?,detail = ?,amount = ?,min_student_year = ?,max_student_year = ?,on_year = ?,on_term = ?,open_date = ?,close_date = ?,donator_id = ?   WHERE id = ?",
+    [is_public,type,detail,amount,min_student_year,max_student_year,on_year,on_term,open_date,close_date,donator_id,id],
+    (err, result) => {
+      if(err){
+        res.send(err);
+      }else{
+        res.send(result);
+      }
+    }
+  )
+});
+
+app.post("/deleteScholarship", (req, res) => {
+  const id = req.body.id;
+  dbCon.query(
+    "DELETE FROM scholarship WHERE id = ?",
+    [id],
+    (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        res.send(result);
+      }
+    }
+  )
+});
 
 app.get("/getTypeScholar", (req, res) => {
   dbCon.query(
@@ -306,22 +344,7 @@ app.get("/getTypeScholar", (req, res) => {
   );
 });
 
-app.get("/getAllScholarship", (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  dbCon.query(
-    "SELECT * FROM scholarship ORDER BY id DESC;", 
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    }
-  );
-});
-
-//get sposor
+/* ----- DONATOR ----- */
 app.get("/getallDonator", (req, res) => {
   dbCon.query(
     "SELECT * FROM donator",
@@ -369,68 +392,6 @@ app.post("/addDonator", (req, res) => {
   );
 });
 
-app.post("/deleteScholarship", (req, res) => {
-  const id = req.body.id;
-  dbCon.query(
-    "DELETE FROM scholarship WHERE id = ?",
-    [id],
-    (err, result) => {
-      if(err){
-        console.log(err);
-      }else{
-        res.send(result);
-      }
-    }
-  )
-});
-
-app.post("/getScholarship",(req ,res)=>{
-  const id = req.body.id;
-  dbCon.query(
-    "SELECT * FROM scholarship WHERE id = ?",
-    [id],
-    (err, result) => {
-      if(err){
-        console.log(err);
-      }else{
-        res.send(result);
-        //console.log(result)
-      }
-    }
-  )
-});
-
-
-app.post("/editScholar",(req ,res)=>{
-  const id = req.body.id;
-  const is_public= req.body.is_public;
-  const type= req.body.type;
-  const detail= req.body.detail;
-  const amount=req.body.amount;
-  const min_student_year=req.body.min_student_year;
-  const max_student_year=req.body.max_student_year;
-  const on_year=req.body.on_year;
-  const on_term=req.body.on_term;
-  const open_date=req.body.open_date;
-  const close_date=req.body.close_date;
-  const sponsor = req.body.sponsor;
-  dbCon.query(
-    "UPDATE scholarship SET id=?,is_public = ?,type = ?,detail = ?,amount = ?,min_student_year = ?,max_student_year = ?,on_year = ?,on_term = ?,open_date = ?,close_date = ?,sponsor = ?   WHERE id = ?",
-    [id,is_public,type,detail,amount,min_student_year,max_student_year,on_year,on_term,open_date,close_date,sponsor,id],
-    (err, result) => {
-      if(err){
-        res.send(err);
-      }else{
-        res.send(result);
-      }
-    }
-  )
-});
-
-
-
 app.listen(5000, () => {
   console.log(`running at port 5000`);
 });
-
-

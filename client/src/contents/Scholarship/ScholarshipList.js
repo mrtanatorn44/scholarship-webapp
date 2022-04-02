@@ -28,6 +28,7 @@ function ScholarshipList() {
     toggleContent   : false
   }])
 
+
   function getScholarshipList () {
     Axios.get("http://localhost:5000/getAllScholarship").then((response) => { 
       var result = response.data;
@@ -37,7 +38,7 @@ function ScholarshipList() {
           Axios.post("http://localhost:5000/getDonator",{ 
             id: res.donator_id 
           }).then((donator) => {
-            
+            console.log(donator.data[0].name)
             Object.assign(res, {
               id                : res.id,
               is_public         : res.is_public,
@@ -61,6 +62,7 @@ function ScholarshipList() {
       setScholarshipList(result);
     })
   }
+
     
   const onDeleteScholarship = (scholarID) => {
     Swal.fire({
@@ -84,6 +86,42 @@ function ScholarshipList() {
     })
   }
 
+  const ChangeIs_public = (scholar,e) => {
+    Swal.fire({
+      title: 'คุณแน่ใจหรือไม่?',
+      text: "ที่จะประกาศ!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#03A96B',
+      confirmButtonText: 'ประกาศ',
+      cancelButtonColor: '#A62639',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Axios.post("http://localhost:5000/editScholar", 
+          { id : scholar.id, 
+            donator_id:scholar.donator_id,
+            is_public:e ,
+            type: scholar.type,
+            detail:scholar.detail,
+            amount:scholar.amount,
+            min_student_year:scholar.min_student_year,
+            max_student_year:scholar.max_student_year,
+            on_year:scholar.on_year,
+            on_term:scholar.on_term,
+            open_date:scholar.open_date,
+            close_date:scholar.close_date,
+            required:scholar.required,
+            rating:scholar.rating
+          }
+        ).then((response) => { 
+          getScholarshipList();
+          Swal.fire('!!!','','success')
+        })
+      }
+    })
+  }
+
   useEffect(() => {
     getScholarshipList();
   }, [])
@@ -102,8 +140,6 @@ function ScholarshipList() {
           { item.toggleContent ?
           <div>
             <div style={{float:'left'}}>
-              <b>คุณสมบัติ</b>
-              <p>{item.detail}</p>
               <b>ตั้งแต่นิสิตชั้นปีที่</b>
               <p>{item.min_student_year} ถึง {item.max_student_year}</p>
               <b>ประจำปีการศึกษา</b>
@@ -116,7 +152,7 @@ function ScholarshipList() {
 
             <div style={{float:'right'}}>
               <b>เปิดรับสมัครตั้งแต่วันที่</b>
-              <p>{item.open_date} ถึง {item.close_date}</p>
+              <p>{item.open_date.split("T")[0]} ถึง {item.close_date.split("T")[0]}</p>
               <p></p>
 
               <b>เอกสารที่ต้องการ</b>
@@ -128,8 +164,7 @@ function ScholarshipList() {
           </div>
           :
           <div className="test">
-            <p>{item.open_date} to {item.close_date}</p>
-            <p>สำหรับนิสิตปี {item.min_student_year}-{item.max_student_year}</p>
+            <p>{item.detail}</p>
           </div> }
     
           <div className='bottom1'>
@@ -149,10 +184,33 @@ function ScholarshipList() {
           </div> 
         </div>
 
-        <button className="button-big" type="button" onClick={ () => {setContent('ScholarshipListRegister')} }>
+        {/*<button className="button-big" type="button" onClick={ () => {setContent('ScholarshipListRegister')} }>
           ลงทะเบียน
-        </button>
+            </button>*/}
 
+        {user.role === 'student' &&
+        <div className='student-panel'>
+          <button className="button-big" type="button" onClick={ () => { setContent('ScholarshipListRegister'); }}>
+            <p>ลงทะเบียน</p>
+          </button>
+        </div> }
+        {user.role === 'admin' &&
+        <div className='admin-panel'>
+        {
+          item.is_public === 0 &&  
+            <button className="button-big" type="button" onClick = {() => {ChangeIs_public(item,true)}}>
+                <p>ประกาศ</p>
+             </button>
+        
+           
+        }
+
+        { item.is_public === 1 &&
+             <button className="button-big" type="button" onClick = {() => {ChangeIs_public(item,false)}}>
+               <p>ยกเลิกการประกาศ</p>
+             </button>
+         }
+        </div>}
       </div>
     ))
   )

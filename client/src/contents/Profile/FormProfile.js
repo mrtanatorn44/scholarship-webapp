@@ -104,7 +104,7 @@ function FormProfile() {
         <div className="right"></div>
       </div>
       <div className="contents">
-        <div className="content3">
+        <div className="content1">
           <form className="form2" onSubmit={(e)=> onFormSumbit(e)}>  
             <div class="name">
               <h5>ดูข้อมูลนิสิต</h5>

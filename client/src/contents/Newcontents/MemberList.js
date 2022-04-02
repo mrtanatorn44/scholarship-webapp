@@ -15,7 +15,7 @@ function MemberList(props){
   const [User,setUser] = useState([]);
   
   const getUser = () =>{
-    Axios.get("http://localhost:5000/getUser").then(response => {
+    Axios.get("http://localhost:5000/getAllUser").then(response => {
       setUser(response.data)
     })
   }
@@ -23,8 +23,6 @@ function MemberList(props){
   useEffect(() => {
     getUser();
   }, [])
-
-
   
   return (
     User.filter( user => {
@@ -33,16 +31,16 @@ function MemberList(props){
       
       <div className="container1 list2 d-flex" key={index}>
 
-            <div className="name">
-              <p>Name : {user.fname} {user.lname}</p>
-            </div>
-            
-            <div className="right">
-              <button className="button-2 d-flex" type="button" onClick={() => { setEditProfileID(user.id);setContent("FormProfile"); }}> 
-                <i class="bi bi-card-checklist green1"></i>
-                <p>ข้อมูลสมาชิก</p>
-              </button>
-            </div>
+        <div className="name">
+          <p>Name : {user.fname} {user.lname}</p>
+        </div>
+        
+        <div className="right">
+          <button className="button-2 d-flex" type="button" onClick={() => { setEditProfileID(user.id);setContent("FormProfile"); }}> 
+            <i class="bi bi-card-checklist green1"></i>
+            <p>ข้อมูลสมาชิก</p>
+          </button>
+        </div>
             
       </div>
     ))

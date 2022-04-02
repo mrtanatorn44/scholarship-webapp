@@ -41,7 +41,7 @@ function Interview(props) {
               <button className="btn" type="button" >
                 <i className="bi bi-search"></i>
               </button>
-            </div>
+            </div> 
           </div>
         </form>
         <div className="line-gray"></div>

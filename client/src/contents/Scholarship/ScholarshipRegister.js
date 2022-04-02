@@ -3,6 +3,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App.js';
 import Axios from 'axios';
+import Swal from 'sweetalert2';
 
 function ScholarshipListRegister(props) {
   const { User } = useContext(WebContext);
@@ -39,12 +40,13 @@ function ScholarshipListRegister(props) {
     status_marry:""
    })
    const getProfile = () =>{
-    Axios.get("http://localhost:5000/getProfile",{
+    Axios.post("http://localhost:5000/getProfile",{
       id: user.id
     }).then((response) =>{
       console.log(response);
       setProfile(JSON.parse(response.data[0].profile_data))
     })
+    console.log(profile);
   }
    const changeValue = (name,value) => {
     setProfile(profile=> ({
@@ -54,25 +56,33 @@ function ScholarshipListRegister(props) {
     console.log(profile);
   }; 
   //console.log(user);
+  function onHandleSubmitBtn(e) {
+    e.preventDefault();
 
-  function getConfirm(data){
-    if(data){
-      setContent('Profile')
-    }else{
-    }
-    //console.log("sdasdasdasd");
-    Axios.post("http://localhost:5000/editProfile",{
-      user_id:user.id,
-      file_path:JSON.stringify(profile),
-      file_path_family:JSON.stringify(profile)
-    }).then(
-      (response) => {
-        setShowModal(false);
-      },(err)=>{
-        alert("kkkkkk")
+    Swal.fire({
+      title: 'คุณแน่ใจหรือไม่?',
+      text: 'ที่จะบันทึกประกาศนี้!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#03A96B',
+      confirmButtonText: 'Save',
+      cancelButtonColor: '#A62639',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        setContent('Profile');
+        Swal.fire('บันทึกแล้ว!','','success')
+
+        Axios.post("http://localhost:5000/editProfile",{
+        id            : user.id,
+        profile_data  : JSON.stringify(profile)
+      })
       }
-    );
+    })
   }
+
+  
   
   useEffect(()=>{
     getProfile();
@@ -87,16 +97,16 @@ function ScholarshipListRegister(props) {
                 <i className="bi bi-three-dots"></i>
             </div>
             <div className="topic">
-              <h4>กรอกประวัติลงทะเบียนทุน</h4>
+              <h4>ลงทะเบียนทุน</h4>
             </div>
           </div>
           <div className="right"/>
         </div>
         <div className="contents"> 
           <div className="content3"> 
-            <form className="form2">
+            <form className="form2" onSubmit={(e)=> {onHandleSubmitBtn(e);}}>
               <div className="name">
-                <h5>กรอกประวัติลงทะเบียนทุน</h5>
+                <h5>ลงทะเบียนทุน</h5>
               </div>
               <div>
                 <label>ชื่อ-นามสกุล (ภาษาไทย)</label><br></br>
@@ -318,14 +328,13 @@ function ScholarshipListRegister(props) {
           </div>
           <div className="footer1">
             <div className="confirm">
-              <button className="button-confirm green1" onClick={()=> (setShowModal(true))}>บันทึก</button>
-              {/*showModal && <ConfirmModal sendConfirm={getConfirm}/>*/} 
+              <button className="button-confirm green1" type ='submit' >บันทึก</button>
             </div>
           </div>
 
       </div>
     </div> 
-  );
+  )
 }
 
 export default ScholarshipListRegister;

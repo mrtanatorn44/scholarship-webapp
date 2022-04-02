@@ -19,9 +19,9 @@ function EditDetailForm () {
   var dataTypeList = ['ทุนเรียนดี', 'ทุนกิจกรรมเด่น', 'ทุนขาดคุณทรัพย์']
   
   // type sponsor
-  const [sponsorList,setSponsorList] = useState([
-    {label: 'เลือกผู้สนับสนุน', value: ""},
-    {label: 'เพิ่มผู้สนับสนุน...',     value: '0'}
+  const [donatorList,setDonatorList] = useState([
+    {label: 'เลือกผู้สนับสนุน',    value: ""},
+    {label: 'เพิ่มผู้สนับสนุน...',  value: 0}
   ]);
   // type schorlar
   const [typeList,setTypeList] = useState([
@@ -32,7 +32,7 @@ function EditDetailForm () {
   ])
   const [typeList1,setTypeList1] = useState([])
 
-  const {type,detail, amount , min_student_year,max_student_year,on_year,on_term,open_date, close_date, sponsor}=scholarshipForm;
+  const {type,detail, amount , min_student_year,max_student_year,on_year,on_term,open_date, close_date, donator_id}=scholarshipForm;
   const [Scholar, setScholar] = useState({
     id:'',
     is_public       : false,
@@ -45,7 +45,8 @@ function EditDetailForm () {
     on_term         : '',
     open_date       : '',
     close_date      : '',
-    sponsor          :''
+    donator_id      :'',
+    donator :''
   })
   var number = '3';
 
@@ -103,10 +104,26 @@ function EditDetailForm () {
         min_student_year  : result.min_student_year,
         open_date         : result.open_date.split("T")[0],
         close_date        : result.close_date.split("T")[0],
-        sponsor           : result.sponsor,
+        donator_id         : result.donator_id,
       }) 
     })
   }
+  
+  const getDonator = () =>{
+    Axios.get("http://localhost:5000/getallDonator").then(response => {
+      var tempDonatorList = donatorList;
+      var result = response.data
+      if (result.length === 0)
+        return
+      result.forEach((res, index) => {  
+        if (res.data !== '') {
+          tempDonatorList.push({ label: res.name, value: res.id })
+        }
+      })
+      setDonatorList([...donatorList])
+    })
+  }
+  
   //getType
   const getTypeScholar = () =>{
     Axios.get("http://localhost:5000/getTypeScholar").then(response => {
@@ -123,6 +140,7 @@ function EditDetailForm () {
   }
   
   //getSponser
+  /*
   const getSponsor = () =>{
     Axios.get("http://localhost:5000/getSponsor").then(response => {
       var dummySponsorList = sponsorList;
@@ -137,11 +155,11 @@ function EditDetailForm () {
       setSponsorList(dummySponsorList);
     })
   }
-
+*/
   useEffect(() => {
     getTypeScholar();
-    getSponsor();
     getScholarshipForm();
+    getDonator()
     //getScholarLabel();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -152,7 +170,7 @@ function EditDetailForm () {
         <div className="type">
           { /* ----- SELECT INPUT ----- */
             (scholarshipForm.typeInput === 0 || scholarshipForm.typeInput === undefined ) &&
-            <select value = {scholarshipForm.type} onChange={(e) => {
+            <select  onChange={(e) => {
               if (e.target.value === '0') {
                 setScholarshipForm({ ...scholarshipForm , typeAdd: '', typeInput: 1 })
               } else {
@@ -222,7 +240,7 @@ function EditDetailForm () {
           <div className="type">
           { /* ----- SELECT INPUT ----- */
             (scholarshipForm.sponsorInput === 0 || scholarshipForm.sponsorInput === undefined ) &&
-            <select value={scholarshipForm.sponsor} required onChange={(e) => {
+            <select  required onChange={(e) => {
               if (e.target.value === '0') {
                 setScholarshipForm({ ...scholarshipForm , sponsorAdd: '', sponsorInput: 1 })
               } else {
@@ -230,7 +248,7 @@ function EditDetailForm () {
               } 
             }}>
               {
-                sponsorList.map((item, index) => (
+                donatorList.map((item, index) => (
                   <option key={index} value={item.value}> {item.label} </option>
                 ))
               }
@@ -243,9 +261,9 @@ function EditDetailForm () {
               { 
                 scholarshipForm.sponsorAdd !== '' &&
                 <button onClick={() => {
-                  var tempTypeList = sponsorList;
+                  var tempTypeList = donatorList;
                   tempTypeList.unshift({ label: scholarshipForm.sponsorAdd, value: scholarshipForm.sponsorAdd })
-                  setSponsorList(tempTypeList);
+                  setDonatorList(tempTypeList);
                   setScholarshipForm({...scholarshipForm , sponsor : scholarshipForm.sponsorAdd, sponsorAdd: '', sponsorInput: 0})
                 }}>
                   Add

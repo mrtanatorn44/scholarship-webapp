@@ -57,7 +57,7 @@ function ScholarshipListCreate() {
 
         var donator_id;
 
-        Axios.get("http://localhost:5000/getDonator").then(response => {
+        Axios.post("http://localhost:5000/getDonator").then(response => {
           var result = response.data
           result.forEach((res, index) => {  
             if (res.name === scholarshipForm.donator) {
