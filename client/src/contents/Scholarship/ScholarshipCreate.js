@@ -66,7 +66,6 @@ function ScholarshipListCreate() {
               insertScholarshipToDB(res.id)
             }
           })
-          console.log('id :', donator_id)
           if (donator_id !== undefined)
             return;
 

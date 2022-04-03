@@ -303,9 +303,11 @@ app.post("/editScholar",(req ,res)=>{
   const open_date=req.body.open_date;
   const close_date=req.body.close_date;
   const donator_id = req.body.donator_id;
+  const required = req.body.required;
+  const rating = req.body.rating;
   dbCon.query(
-    "UPDATE scholarship SET is_public = ?,type = ?,detail = ?,amount = ?,min_student_year = ?,max_student_year = ?,on_year = ?,on_term = ?,open_date = ?,close_date = ?,donator_id = ?   WHERE id = ?",
-    [is_public,type,detail,amount,min_student_year,max_student_year,on_year,on_term,open_date,close_date,donator_id,id],
+    "UPDATE scholarship SET is_public = ?,type = ?,detail = ?,amount = ?,min_student_year = ?,max_student_year = ?,on_year = ?,on_term = ?,open_date = ?,close_date = ?,donator_id = ?,required=?,rating=?   WHERE id = ?",
+    [is_public,type,detail,amount,min_student_year,max_student_year,on_year,on_term,open_date,close_date,donator_id,required,rating,id],
     (err, result) => {
       if(err){
         res.send(err);

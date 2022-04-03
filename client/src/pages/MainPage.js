@@ -17,8 +17,8 @@ import ScholarshipListRegister from '../contents/Scholarship/ScholarshipRegister
 import ScholarshipEdit         from '../contents/Scholarship/ScholarshipEdit.js';
 import ScholarshipCreate       from '../contents/Scholarship/ScholarshipCreate.js';
 
-import Member   from '../contents/Newcontents/Member.js';
-import MemberList   from '../contents/Newcontents/MemberList.js';
+import Member   from '../contents/Member/Member.js';
+import MemberList   from '../contents/Member/MemberList.js';
 
 
 import Applicant               from '../contents/Applicant/Applicant.js';

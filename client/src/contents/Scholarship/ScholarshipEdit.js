@@ -4,7 +4,7 @@ import React, { useState, useContext } from 'react';
 import Axios from 'axios';
 import { WebContext } from '../../App';
 
-import FileForm from './CreateFileform.js';
+import EditFileForm from './CreateFileform.js';
 import EditRateForm from './EditRateform.js';
 import EditDetailForm from './EditDetail.js'; 
 
@@ -20,6 +20,7 @@ function ScholarshipEdit() {
   function insertScholarshipToDB(donator_id) {
     Axios.post("http://localhost:5000/editScholar",{
       donator_id      : donator_id,
+      id              : scholarshipForm.id,
       is_public       : false,
       type            : scholarshipForm.type,
       detail          : scholarshipForm.detail,
@@ -87,7 +88,7 @@ function ScholarshipEdit() {
               <i className="bi bi-plus-lg"></i>
             </div>
             <div className="topic">
-              <h4>สร้างทุน</h4>
+              <h4>แก้ไขทุน</h4>
             </div>
         </div>
 
@@ -97,8 +98,10 @@ function ScholarshipEdit() {
       <div className = 'contents'> 
         <div className = 'content1'>  
           <form onSubmit={(e) => onHandleSubmitBtn(e)}>
-            <div className="detailForm" >
+            <div className="detailForm" >             
               <EditDetailForm/>
+              <EditFileForm/>
+              <EditRateForm/>
             </div>
 
             {/* ----- FOOTER ------ */}
@@ -107,7 +110,6 @@ function ScholarshipEdit() {
                 <button className="button-confirm green1" type="submit">
                   ตกลง 
                 </button>
-                
               </div>
             </div>
           </form>

@@ -65,7 +65,7 @@ function Main() {
               imageIsEmpty  : res.image_data.data.length===0 ? true : false,
               imageModal: false,
               toggleContent : res.image_data.data.length===0 ? true : false,
-              dateFormat   : "วันที่ " + (parseInt(dmy[0])) + " " + month_th[parseInt(dmy[1], 10)] + " " + (parseInt(dmy[2]) + 543)
+              dateFormat   : "วันที่ " + (parseInt(dmy[0])) + " " + month_th[parseInt(dmy[1], 10)] + " พ.ศ. " + (parseInt(dmy[2]) + 543)
             });
             // Delete Un-used Value
             delete res.date;

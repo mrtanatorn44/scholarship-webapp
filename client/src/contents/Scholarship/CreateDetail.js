@@ -131,7 +131,7 @@ function DetailForm () {
   
       <div className="center">
         <p className="details">
-          <label >ข้อมูลเบื้องต้น</label>
+          <label>ข้อมูลเบื้องต้น</label>
           <textarea className="detail" type="text" required placeholder="ข้อมูลเบื้องต้น" onChange={(event) => {setScholarshipForm({...scholarshipForm , detail: event.target.value })}}></textarea>
         </p>
       </div>
@@ -139,12 +139,15 @@ function DetailForm () {
       <div className="bottom">
         <div className="bottom-1">
           <div className="min">
+            <label>min_student_year</label>
             <input type="number" min="1" placeholder="min_student_year" required onChange={(event) => {setScholarshipForm({...scholarshipForm , min_student_year: event.target.value })}}></input>
           </div>
           <div className="max">
+            <label>max_student_year</label>
             <input type="number" max="6" placeholder="max_student_year" required onChange={(event) => {setScholarshipForm({...scholarshipForm , max_student_year: event.target.value })}}></input>
           </div>
           <div className="type">
+            <label>ผู้สนับสนุน</label>
           { /* ----- SELECT INPUT ----- */
             (scholarshipForm.sponsorInput === 0 || scholarshipForm.sponsorInput === undefined ) &&
             <select required onChange={(e) => {
@@ -189,6 +192,7 @@ function DetailForm () {
           }
         </div>
           <div className="amount">
+            <label>จำนวนเงิน</label>
             <input type="number" min="0"  placeholder="จำนวนเงิน" required onChange={(event) => {setScholarshipForm({...scholarshipForm ,amount: event.target.value })}}></input>
           </div>
         </div>

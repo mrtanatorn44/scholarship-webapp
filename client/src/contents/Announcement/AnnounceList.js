@@ -40,11 +40,13 @@ function AnnounceList() {
   return (
     announce.map((news) => (
       <div className="news" key={news.id}>
+
         {/* ----- TITLE ----- */}
         <div className='title'>
           <h2>{news.title}</h2>
           <h3>{news.dateFormat}</h3>
         </div>
+
         {/* ----- CONTENT ----- */}
         { /* IMAGE */
           !news.toggleContent && !news.imageIsEmpty &&

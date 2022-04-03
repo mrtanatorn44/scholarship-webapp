@@ -9,7 +9,7 @@ function Login() {
   const           [ user, setUser ] = User;
 
   useEffect(() => { 
-
+    /*
     // assign login sesion
     if (user.isLogin) {
       localStorage.setItem('isSignedIn', 'true');  // set isSignedIn session to true
@@ -54,8 +54,14 @@ function Login() {
         navigate('/');
       }
     }
+    */
 
-    
+    // assign login sesion
+    if (user.isLogin) {
+      navigate('/main');
+    } else {
+      navigate('/');
+    }
 
   }, [user])
 

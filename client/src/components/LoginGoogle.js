@@ -42,7 +42,7 @@ function Login(props) {
           lname   : lName,
           isLogin : true
         });
-        Swal.fire(`Welcome Back ${data.givenName}!`, '', 'success')
+        Swal.fire(`Welcome Back, ${data.givenName}!`, '', 'success')
       } else { // if User is not exist
         userRole = 'student';
         Axios.post("http://localhost:5000/addUser", {
@@ -83,6 +83,9 @@ function Login(props) {
       if (!user.isLogin) { // If not login initialize User
         console.log('Gmail Sign-in...')
         defineUser(res.profileObj);
+      } else {
+        setShowlogoutButton(true);
+        setShowloginButton(false);
       }
       if (localStorage.getItem('isSignedIn') === 'true') { // If isSignedIn session hide login btn 
         setShowlogoutButton(true);

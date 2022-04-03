@@ -103,6 +103,7 @@ function AnnounceCreate(props) {
   
   return (
     <div className="frame">
+
       <div className="header">
         <div  className="left">
           <div className="icons"><i className="bi bi-plus-lg"/></div>
@@ -121,27 +122,64 @@ function AnnounceCreate(props) {
           </div>
         </div>
       </div>
+
       <div className="contents">
         {/* ----- Content ----- */}
         <div className="content1">
           {/* ----- Form ------ */}
           <form className="form1" id='announce-form' onSubmit={(e) => onHandleSubmitBtn(e)}>
             <div className="heading">
-              <input required type="text" placeholder="หัวข้อข่าว" onChange={(e) => setForm({ ...form, title: e.target.value })}/>
+              <input
+                required 
+                type="text" 
+                placeholder="หัวข้อข่าว" 
+                onChange={(e) => 
+                  setForm({ ...form, title: e.target.value })
+                }
+              />
             </div>
             <div className="detail">
-              <textarea required type="text" placeholder="รายละเอียดข่าวสาร" onChange={(e) => setForm({ ...form, detail: e.target.value })}/>
+              <textarea 
+                required 
+                type="text" 
+                placeholder="รายละเอียดข่าวสาร" 
+                onChange={(e) => 
+                  setForm({ ...form, detail: e.target.value })
+                }
+              />
             </div>
-            <div className="insertbutton ">
+            <div className="insertbutton">
               <label className="green1" >
-                <input className="insert green1" type="file" accept="image/jpeg, image/png" name="file" id="file" onChange={(file) => onHandleUpload(file)} onClick={(e) => e.target.value=''}/>
+                <input 
+                  id="file" 
+                  className="insert green1" 
+                  type="file" 
+                  accept="image/jpeg, image/png" 
+                  name="file" 
+                  onChange={(file) => 
+                    onHandleUpload(file)
+                  } 
+                  onClick={(e) => 
+                    e.target.value=''
+                  }
+                />
                 <i className="bi bi-card-image"/>
               </label>
               <p> {form.imageName===""? "เพิ่มรูปภาพ": form.imageName } </p>
-              { form.imageName!=='' && 
-              <button className="button-circle red1"  onClick={() => setForm({...form, imageSrc: '', imageData: '', imageName: ''})}><i className="bi bi-x"/></button> }
+              { 
+                form.imageName!=='' && 
+                <button 
+                  className="button-circle red1"  
+                  onClick={() => 
+                    setForm({...form, imageSrc: '', imageData: '', imageName: ''})
+                  }
+                >
+                  <i className="bi bi-x"/>
+                </button> 
+              }
             </div>
           </form>
+
           {/* ----- Preview ----- */} 
           <div className="preview">
             <h4>Preview</h4>
@@ -169,7 +207,7 @@ function AnnounceCreate(props) {
               <Lightbox mainSrc={ 'data:image/jpeg;base64,' + form.imageData } onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
             }
             {/*---------- BOTTOM ----------*/}
-            <div className='newsList-bottom'>
+            <div className='bottom1'>
               <div className='admin-panel'>
               </div>
               <div className='user-panel'>

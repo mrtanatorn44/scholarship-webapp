@@ -34,6 +34,18 @@ body
  
 }
 
+.bg-ku-red {
+  background-color: $ku-red;
+}
+
+.bg-ku-green {
+  background-color: $ku-green;
+}
+
+.bg-gray {
+  background-color: gray;
+}
+
 /* ----- Sweet Alert ----- */
 .swal2-container{
 	font-family: 'Prompt', sans-serif;
@@ -203,7 +215,7 @@ body
 
   .sidebar 
   {
-    width   : 17%;
+    width   : 17vw;
     height  : 100%;
     color   : $white1;
 
@@ -321,7 +333,7 @@ body
 
   .column-right 
   {
-    width          : 83%;  
+    width          : 83vw;  
     height         : 100vh;
     display        : flex;
     flex-direction : column;
@@ -351,7 +363,7 @@ body
     .row-center 
     {
       height  : 86vh;
-      width   : 100%;
+      width   : 83vw;
       display : flex;
       background-color : $white2;
      
@@ -360,11 +372,11 @@ body
       {
         width            : 70vw;
         height           : 80vh;
-        //margin           : auto;
-        margin           : size(1.1) 0 0 size(4.5) ;
+        margin           : auto;
+        //margin           : size(1.1) 0 0 size(4.5) ;
         border-radius    : 0.5rem;
         background-color : $white1;
-        box-shadow       : 0px 0px 5px 0px $gray1;
+        box-shadow       : 0px 0px 10px 0px $gray1;
         font-family      : 'Prompt', sans-serif;
         
         
@@ -372,7 +384,7 @@ body
         {
           width   : 75vw;
           height  : 80vh;
-          margin  : 0 0 0 size(1.5);
+          margin  : auto;
         }
         .header{
           height        : 7vh;
@@ -472,23 +484,21 @@ input, select, textarea
 }
 
 .contents{  
-  height : 80vh;
-  
+  height : 73vh;
+  width  : 70vw;
 }
 
 .content1{ 
   height     : 73vh;
+  width      : 70vw;
   overflow-y : scroll;
   overflow-x : hidden;
-
-  
 }
 
 .content2{ 
   height     : 61vh;
   overflow-y : scroll;
   overflow-x : hidden;
- 
 }
 
 .content3{ 
@@ -516,7 +526,7 @@ input, select, textarea
   width         : size(1.9);
   height        : size(1.9);
   color         : $white1;
-  margin        : auto 0 auto 0.5vw;
+  margin        : auto 0 auto size(0.5);
   font-size     : size(1.2);
   border-radius : 50%;
   text-align    : center;
@@ -531,10 +541,14 @@ input, select, textarea
  
 } 
 .topic{
-  margin      : 1.8vh 0 auto 0.5vw;
-  font-size   : size(1);
-  font-weight : 500;
+  margin      : auto 0 auto 0.5vw;
 
+  h4{
+    font-size   : size(1);
+    font-weight : 500;
+    margin      : auto;
+  }
+  
   @media (max-width: 480px) 
   {
     h4{
@@ -677,13 +691,11 @@ input, select, textarea
 
 .button-add{
   width             : size(6);
-  height            : size(2);
-  margin            : auto 3vw auto auto;
+  height            : size(1.5);
+  margin            : auto size(1) auto auto;
   border-style      : hidden;
   border-radius     : size(0.5);
   background-color  : $white2;
-  
-  
   
   @media (max-width: 480px) 
   {  
@@ -719,17 +731,14 @@ input, select, textarea
 }
 
  // ปุ่มลงทะเบียน,นัดหมายสีเขียว 
- .button-big{
-  width             : 15%;
-  height            : 15vh;
+.button-big{
+  width             : 100%;
+  height            : 20vh;
   color             : $white1;
-  margin            : 3vh auto 2vh auto;
+  margin            : auto;
   border            : none ;
   border-radius     : 0.5rem;
   font-size         : size(0.75);
-  background-color  :$ku-green;
-  
- 
 } 
 
 //ปุ่ม ตกลง
@@ -754,16 +763,14 @@ input, select, textarea
   box-shadow    : 0px 4px 4px $black2;
   border-radius : 69px;
   border-style  : hidden;
-  
 }
 
 //ปุ่ม เพิ่มรูป
-.insertbutton
-{
-  width    : 97%;
+.insertbutton {
+  width: 100%;
   display  : flex;
-
-  .insert{
+  margin: auto;
+  .insert {
     width     : 0.1px;
     height    : 0.1px;
     opacity   : 0;
@@ -771,38 +778,30 @@ input, select, textarea
     position  : absolute;
     z-index   : -1;
   }
-  label{
+  label {
     width         : size(2);
     height        : size(2);
     cursor        : pointer;
     color         : $white1;
-    margin        : size(0.5) 0 0 0;
+    margin        : auto 0 auto 0;
     font-size     : size(1.5);
     border-radius : 10px;
     border-style  : hidden;
     text-align    : center;
     
-    @media (max-width: 480px) 
-    {
+    @media (max-width: 480px) {
       margin      : size(0.9) 0 0 0;
       font-size   : size(1.3);
-      
     }
   }
-  p{
-    width  : 88%;
-    margin : size(1) auto auto size(0.5) ;
-
-    @media (max-width: 480px) 
-    {
-      margin     : size(1) auto auto size(0.5) ;
+  p {
+    width  : auto;
+    margin : auto size(0.5) auto size(0.5);
+    @media (max-width: 480px) {
+      margin     : size(1) auto auto size(0.5);
       font-size  : size(1.2);
     }
-    
   }
-  .button-admin{
-    margin : auto;
-  }      
 }
 
 //สีปุ่ม
@@ -966,9 +965,13 @@ input, select, textarea
  //หน้า สร้าง/แก้ไข ข่าวสาร
 .form1
 {
-  width  : 98%;
-  margin : size(1) 0 0 size(1);
- 
+  width: 65vw;
+  margin           : 3vh auto 3vh auto;
+  //border           : 1px solid $gray2;
+  box-shadow: 0 0 5px gray;
+  border-radius    : 10px;
+  background-color : $gray4;  
+  padding: size(1);
   .heading{
     width     : 50%;
     height    : size(2);
@@ -981,15 +984,15 @@ input, select, textarea
     
   }
   .detail {
-    textarea{
-      width   : 97%;
-      height  : size(18);
+    textarea {
+      width   : 100%;
+      height  : size(10);
       padding : 9px;
       
     }
   }
   .button-circle{
-    margin : auto;
+    margin : auto size(0.5) auto size(0.5);
   }
 
 }
@@ -1171,36 +1174,68 @@ input, select, textarea
 
 }
 
+.detail2 {
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+
+  min-height : 20vh;
+  max-height : 30vh;
+  overflow-y : auto;
+  overflow-x : hidden;
+  transition : transform .5s; /* Animation */
+  padding: size(0.5);
+  span {
+    display: block;
+  }
+
+  .left {
+    width: 50%;
+  }
+
+  .right {
+    width: 50%;
+  }
+}
+
 .news
 {
-  margin           : 2.5%;
-  border           : 1px solid $gray2;
+  width: 65vw;
+  margin           : 3vh auto 3vh auto;
+  //border           : 1px solid $gray2;
+  box-shadow: 0 0 5px gray;
   border-radius    : 10px;
   background-color : $gray4;  
 
-  .content, .content-image
-   {
-    height     : 30vh;
+  .content {
+    background-color: lightgray;
+    min-height : 30vh;
+    max-height : 40vh;
     overflow-y : auto;
     overflow-x : hidden;
     transition : transform .5s; /* Animation */
-  
     h3{
       padding   : size(1); 
       font-size : size(0.8);
     }
-    /*--------- รูปของข่าวสาร ------------*/
+  }
+
+  .content-image {
+    background-color: lightgray;
+    min-height: 30vh;
+    max-height     : 40vh;
+    overflow-y : hidden;
+    overflow-x : hidden;
+    transition : transform .5s; /* Animation */
+
     .news-image {
-      width             : auto;
-      height            : 30vh;
+      width             : 100%;
       margin            : auto;
       display           : block;
       transition        : transform .5s; /* Animation */
       background-color  : $gray5;
-      
-    }
-    .news-image:hover {
-      cursor  : pointer;
+      &:hover{
+        cursor  : pointer;
+      }
     }
   }
 
@@ -1293,19 +1328,25 @@ input, select, textarea
 // list ทุนที่เปิดให้ลงทะเบียน
 .list3
 {
-  width            : 75%;
+  width            : 85%;
   margin           : 2.5%;
   box-shadow       : 0px 0px 5px 0px $gray1;
   border-radius    : 10px;
   background-color : $gray4;
 }
 
+.list3-panel {
+  width : 15%;
+  height: 100%;
+  margin           : 2.5% 2.5% 2.5% 0;
+}
 .news, .list1, .list3
 {
   //ลบแก้ไข รายละเอียดเพิ่มเติม
   .bottom1
   {
     width   : 100%;
+    height  : size(2);
     display : flex;
     h3
     {
@@ -1356,8 +1397,8 @@ input, select, textarea
 // กลุ่มปุ่ม ลบ แก้ไข
 .admin-panel
 {
-  width      : 60%;
-  margin     : size(0.5) 0  size(0.5) 0;  
+  width      : 100%;
+  margin     : auto;
   display    : flex;
   text-align : left;
 }
@@ -1372,23 +1413,23 @@ input, select, textarea
 }
 
 //หน้า previw ข่าว  ที่สร้างทุน
-.preview
-{
-  width      : 95%;
-  margin     : size(0.5) auto auto size(1);
-  border-top : 3px solid $line-gray; 
-  h4
-  {
-    margin     : size(0.8) auto auto ;
+.preview {
+  width      : 100%;
+  margin     : auto auto size(0) auto ;
+  text-align: center;
+  h4 {
+    margin     : auto;
     font-size  : size(1);
   }
 }
 
 .title 
 {
-  height        : 7vh;
+  height        : size(2);
   display       : flex;
-  border-bottom : 2px solid $gray3;
+  //background: lightgray;
+  //border-bottom : 2px solid $gray3;
+  
   h2
   {
     width      : 55%;
