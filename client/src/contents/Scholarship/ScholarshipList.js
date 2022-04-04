@@ -134,11 +134,10 @@ function ScholarshipList() {
   }, [])
   
   return (
-    
     ScholarshipList.map((item, index) => (
     <>
-    {user.role === 'student' && item.is_public === 1 && 
-
+    {
+      (user.role === 'student' || user.role === 'interviewer') && item.is_public === 1 && 
       <div className="d-flex" key={index}> 
         <div className="list3">
 
@@ -202,7 +201,7 @@ function ScholarshipList() {
                 <button className="button-admin red1" onClick={ () => { localStorage.setItem('scholarshipEditID_target', item.id); setContent('ScholarshipEdit') }}> แก้ไข </button>
               </>
             }
-            </div> 
+            </div>  
 
             <div className='user-panel'>
               <h3 onClick={ () => { item.toggleContent = !item.toggleContent; setScholarshipList([...ScholarshipList]); }}>
@@ -229,7 +228,7 @@ function ScholarshipList() {
         { 
           user.role !== 'student' && user.role !== 'admin' &&
           <button 
-            className="button-big bg-gray"
+            className="button-big gray1"
             type="button" 
           >
             <p> ไม่สามารถใช้ได้ </p>
@@ -240,7 +239,7 @@ function ScholarshipList() {
        </div>
     }
     {
-      user.role === 'admin'&& 
+      user.role === 'admin' && 
       <div className="d-flex" key={index}> 
         <div className="list3">
 
@@ -310,7 +309,7 @@ function ScholarshipList() {
               <h3 onClick={ () => { item.toggleContent = !item.toggleContent; setScholarshipList([...ScholarshipList]); }}>
                 { !item.toggleContent ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)" }
               </h3>  
-            </div>
+            </div> 
 
           </div> 
         </div>
@@ -319,7 +318,7 @@ function ScholarshipList() {
         { 
           user.role === 'admin' &&
           <button 
-            className={ item.is_public? "button-big bg-ku-red" : "button-big bg-ku-green" }
+            className={ item.is_public? "button-big red1" : "button-big green1" }
             type="button" 
             onClick={() => { 
               {

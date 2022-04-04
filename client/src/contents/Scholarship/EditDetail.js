@@ -10,10 +10,12 @@ import Swal from 'sweetalert2'
 
 function EditDetailForm () {
   
-  const { Content,ScholarshipForm, EditScholarshipID } = useContext(WebContext)
+  const { Content,ScholarshipForm, EditScholarshipID, FileForm, ScoringFormat } = useContext(WebContext)
   const [ content, setContent] = Content;
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
   const [editScholarshipID, setEditScholarshipID]= EditScholarshipID;
+  const [ fileForm , setFileForm]             = FileForm;
+  const [scoringFormat, setScoringFormat] = ScoringFormat;
 
   // type sponsor
   const [donatorList,setDonatorList] = useState([
@@ -84,9 +86,12 @@ function EditDetailForm () {
           open_date         : result.open_date.split("T")[0],
           close_date        : result.close_date.split("T")[0],
           donator_id        : result.donator_id,
-          donator_name      : donator.data[0].name
+          donator_name      : donator.data[0].name,
+          required          : JSON.parse(result.required),
+          rating            : JSON.parse(result.rating)
         })
-        
+        setFileForm(JSON.parse(result.required))
+        setScoringFormat(JSON.parse(result.rating))
       })   
     });
   }

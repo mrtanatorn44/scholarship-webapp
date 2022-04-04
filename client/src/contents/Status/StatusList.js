@@ -47,7 +47,7 @@ function StatusList(props) {
 					{scholar.check && <h3>{scholar.detail}</h3>} 
 					
 				</div>
-				<button className="button-big" onClick={() => setShowModal(true)}>
+				<button className="button-big green1" type="button"  onClick={() => setShowModal(true)}>
 					นัดหมาย
 				</button>
 				{/* showModal && <AlertModal sendConfirm={getConfirm}/> */}

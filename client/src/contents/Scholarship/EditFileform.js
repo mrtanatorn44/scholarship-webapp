@@ -1,10 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App';
 import Axios from 'axios';
+
 function EditFileForm (){
-  const { FileForm } = useContext(WebContext)
-  const [ fileForm , setFileForm] = FileForm;
-  const [files, setFiles] = useState([{ hashID : Math.random().toString(36).substr(2, 7), label : "", format :"" , isTyping : 0 , customLabel: "" }]);
+  const { FileForm , ScholarshipForm, ScoringFormat } = useContext(WebContext)
+  //const [ fileForm , setFileForm] = FileForm;
+  const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
+  const [files, setFiles] = FileForm;
 
   const [labelList,setLabelList] = useState([
     {label: 'เลือกเอกสาร'      ,value: ''},
@@ -29,8 +31,12 @@ function EditFileForm (){
 
   }
   function showAll() {
+    /*fileForm.forEach((file,index)=>{
+      files.push(file)
+    })*/
+    //setFiles(files)
     console.log('\n-----show-----')
-    files.forEach((file, idx) => { 
+    /*files.forEach((file, idx) => { 
       var x = String(idx) + '  { ' 
       Object.keys(file).forEach(function(key) {
         x += key + ': ' + file[key] + ', '
@@ -41,7 +47,7 @@ function EditFileForm (){
         ...fileForm,
         file: x
       })
-    })
+    })*/
     console.log(files)
     console.log('---show end---\n')
   }
@@ -50,7 +56,7 @@ function EditFileForm (){
     // delete input File Requirement
     //console.log('target delete hashID :' + targetHashID)                  
     setFiles((files) => files.filter((item) => item.hashID !== targetHashID))
-    setFileForm((files) => files.filter((item) => item.hashID !== targetHashID))
+    //setFileForm((files) => files.filter((item) => item.hashID !== targetHashID))
   }
   function addFile() {
     // add new input File Requirement
@@ -139,6 +145,7 @@ function EditFileForm (){
     })
     setFiles(tempFiles) // apply value
   }
+  console.log(files);
 
   return (
     <>
@@ -164,10 +171,10 @@ function EditFileForm (){
               <div className="set-select d-flex">
                 { /* ----- File Label ----- */
                   (item.isTyping === 0 || item.isTyping === undefined ) && // Input by Default
-                  <select className="select-1" defaultValue={item.label} onChange={(e) => {onSelectLabel(e, item.hashID);setFileForm(files)} } required>
+                  <select  className="select-1"  onChange={(e) => {onSelectLabel(e, item.hashID);} } required>
                     {
                       labelList.map((label, idx) => (
-                        <option key={idx} value={label.value}> {label.label} </option>
+                        <option selected={item.label===label.label? 'select':''} key={idx} value={label.value} > {label.label} </option>
                       ))
                     }
                   </select>
@@ -186,9 +193,9 @@ function EditFileForm (){
                 }
 
                 { /* ----- File Format ----- */ }
-                <select className="select-2" defaultValue={item.format} onChange={(e) => {onSelectFormat(e, item.hashID);setFileForm(files); }} required>
+                <select className="select-2"  onChange={(e) => {onSelectFormat(e, item.hashID);; }} required>
                   { formatList.map((format, idx) => (
-                    <option key={idx} value={format.value}> {format.label} </option>
+                    <option selected={item.format===format.label? 'select':''} key={idx} value={format.value}> {format.label} </option>
                   )) }
                 </select>
 

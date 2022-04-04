@@ -8,7 +8,7 @@ function WebContextProvider ({ children }) {
   const [announce,setAnnounce]                        = useState([]);  
   const [query, setQuery]                             = useState('');
 
-  const [fileForm, setFileForm]                       = useState([])
+  const [fileForm, setFileForm]                       = useState([{ hashID : Math.random().toString(36).substr(2, 7), label : "", format :"" , isTyping : 0 , customLabel: "" }]);
   const [editProfileID, setEditProfileID]             = useState(-1);
   const [editAnnounceID, setEditAnnounceID]           = useState();
   const [editScholarshipID,setEditScholarshipID]      = useState();
@@ -17,7 +17,7 @@ function WebContextProvider ({ children }) {
   const [sponsor, setSponsor]                         = useState('');
   const [scholarshipForm, setScholarshipForm]         = useState('');
   const [scholarshipList, setScholarshipList]         = useState([]);
-  const [scoringFormat, setScoringFormat]             = useState([]);
+  const [scoringFormat, setScoringFormat]             = useState([{ hashID : Math.random().toString(36).substr(2, 7), name : "", type:"" , weight : "" }]);
   const [user, setUser]                               = useState({
     id      : '',
     imgUrl  : '',

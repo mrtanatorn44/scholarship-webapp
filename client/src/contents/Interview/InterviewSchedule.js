@@ -27,17 +27,17 @@ function InterviewSchedule(props) {
         <div className="content1">
           <form className="form5">
             
-            <div className="detail1">
+            <div className="define">
               <p>สัมภาษณ์ ณ วันที่</p>
               <input type="date" placeholder="31 กุมภาพันธ์ 2565"/>
             </div>
 
-            <div className="detail2">
+            <div className="define">
               <p>เวลา</p>
               <input type="time" placeholder="28:39"/>
             </div>
                     
-            <div className="detail3">
+            <div className="define">
               <p>รายชื่อกรรมการที่จะทำการสัมภาษณ์</p>
               <select>
                 <option value="people1">ประยุท</option>
@@ -46,7 +46,7 @@ function InterviewSchedule(props) {
               </select>
             </div>
       
-            <div className="detail4">
+            <div className="define">
               <p>ช่องทางการสัมภาษณ์</p>
               <select>
                 <option value="people1">Zoom</option>

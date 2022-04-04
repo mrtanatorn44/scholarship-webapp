@@ -394,6 +394,29 @@ app.post("/addDonator", (req, res) => {
   );
 });
 
+app.post("/addRegister", (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  const id = req.body.id;
+  const profile_id= req.body.profile_id;
+  const scholarship_id= req.body.scholarship_id;
+  const profile_detail= req.body.profile_detail;
+  const check=req.body.check;
+  const file=req.body.file;
+  const rate=req.body.rate;
+  dbCon.query(
+    "INSERT INTO infomation (id,profile_id,scholarship_id,profile_detail,check,file,rate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+    [id,profile_id,scholarship_id,profile_detail,check,file,rate],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 app.listen(5000, () => {
   console.log(`running at port 5000`);
 });

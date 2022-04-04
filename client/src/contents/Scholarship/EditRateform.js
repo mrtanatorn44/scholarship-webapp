@@ -5,9 +5,10 @@ import { WebContext } from '../../App';
 function EditRateForm (){
 
     const  { ScoringFormat }  = useContext(WebContext)
-    const [scoringFormat, setScoringFormat] = ScoringFormat;
+    //const [scoringFormat, setScoringFormat] = ScoringFormat;
+    const [rateForms, setRateforms] =ScoringFormat;
 
-    const [rateForms, setRateforms] = useState([{ hashID : Math.random().toString(36).substr(2, 7), name : "", type:"" , weight : "" }]);
+    //const [rateForms, setRateforms] = useState([{ hashID : Math.random().toString(36).substr(2, 7), name : "", type:"" , weight : "" }]);
 
     const fileAutoFormat =[
       {
@@ -30,7 +31,7 @@ function EditRateForm (){
     function delrateForm(target) {   
       const id = target.hashID;           
       setRateforms((rateForms) => rateForms.filter((item) => item.hashID !== id))
-      setScoringFormat((rateForms) => rateForms.filter((item) => item.hashID !== id))
+      //setScoringFormat((rateForms) => rateForms.filter((item) => item.hashID !== id))
       
     }
      
@@ -86,6 +87,7 @@ function EditRateForm (){
     function showAll() {
        console.log(rateForms);
      }
+    console.log(rateForms);
     
   
     return(
@@ -102,31 +104,33 @@ function EditRateForm (){
             <p className='weight'>น้ำหนัก</p>
           </div>
         <div className="detail">
+          
          {
+          
           rateForms.map((item, index) => (
             <div className="d-flex" key={index}>
               <p className="order" >ลำดับ {index+1}</p>
-              <input className="file-document" required
+              <input value={item.name} className="file-document" required
                   type="text" 
                   name="name"
                   placeholder = "หัวข้อการให้คะแนน"
-                  onChange={(e) => {handleInputChangeName(e, item.hashID);setScoringFormat(rateForms)}}
+                  onChange={(e) => {handleInputChangeName(e, item.hashID);}}
               />
               
-              <select className="select-2" required onChange={(e) => {onSelectFormat(e, item.hashID);setScoringFormat(rateForms)}} >
+              <select  className="select-2" required onChange={(e) => {onSelectFormat(e, item.hashID);}} >
                 {
                   fileAutoFormat.map((format, format_index) =>
-                    <option key={format_index}  value ={format.value} > {format.title}  </option>
+                    <option selected={item.type} key={format_index}  value ={format.value} > {format.title}  </option>
                   )
                 }
               </select>
   
-              <input className="select-2"
+              <input value={item.weight} className="select-2"
                   required
                   type="number" min="0" max="100"
                   name="weight"
                   placeholder = "น้ำหนักการให้คะแนน"
-                  onChange={(e) => {handleInputChangeWeight(e, item.hashID); setScoringFormat(rateForms)}}
+                  onChange={(e) => {handleInputChangeWeight(e, item.hashID); }}
               />
               
               <button className="button-circle red1" type="button" onClick={() => delrateForm(item)}>
@@ -134,6 +138,7 @@ function EditRateForm (){
               </button>
             </div>
           ))
+          
           }
         </div>
         <div className="button-add2">

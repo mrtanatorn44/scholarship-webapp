@@ -4,7 +4,7 @@ import React, { useState, useContext } from 'react';
 import Axios from 'axios';
 import { WebContext } from '../../App';
 
-import EditFileForm from './CreateFileform.js';
+import EditFileForm from './EditFileform.js';
 import EditRateForm from './EditRateform.js';
 import EditDetailForm from './EditDetail.js'; 
 
@@ -13,8 +13,10 @@ import Swal from 'sweetalert2'
 
 function ScholarshipEdit() {
    
-  const { Content, ScholarshipForm } = useContext(WebContext)
+  const { Content, ScholarshipForm ,FileForm, ScoringFormat} = useContext(WebContext)
   const [ content , setContent] = Content;
+  const [ fileForm , setFileForm]             = FileForm;
+  const [scoringFormat, setScoringFormat] = ScoringFormat;
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
 
   function insertScholarshipToDB(donator_id) {
@@ -31,6 +33,8 @@ function ScholarshipEdit() {
       on_term         : scholarshipForm.on_term,
       open_date       : scholarshipForm.open_date,
       close_date      : scholarshipForm.close_date,
+      required        : JSON.stringify(fileForm),
+      rating          : JSON.stringify(scoringFormat)
     }).then((response) => {
       setContent('Scholarship');
       Swal.fire('บันทึกแล้ว!','','success')
@@ -78,7 +82,6 @@ function ScholarshipEdit() {
       }
     })
   }
-  console.log(scholarshipForm);
   
   return (
     <div className="frame">
@@ -100,9 +103,13 @@ function ScholarshipEdit() {
           <form onSubmit={(e) => onHandleSubmitBtn(e)}>
             <div className="detailForm" >             
               <EditDetailForm/>
-              <EditFileForm/>
-              <EditRateForm/>
             </div>
+            <div className='fileForm'> 
+              <EditFileForm/>
+            </div> 
+            <div className="rateForm">
+              <EditRateForm/>
+            </div> 
 
             {/* ----- FOOTER ------ */}
             <div className="footer2">

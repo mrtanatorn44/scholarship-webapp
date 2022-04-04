@@ -64,22 +64,22 @@ function InterviewRate(props) {
         <div className="content1">
           <form className="form6" onSubmit={(e)=> onFormSumbit(e)}>
             <div className="score">
-              <div className="detail1">
+              <div className="rate1">
                 <p>ประเมินด้าน1</p>
                 <input required type="number" 
                   min="0" max="100" maxlength="3" placeholder="50.00" 
                   onKeyPress={inputHandler}
                   />
               </div>
-              <div className="detail2">
-                <br></br>
+              <div className="rate2">
+               <br></br>
                 <p>ประเมินด้าน2</p>
                 <input type="number" 
                   min="0" max="100"  maxlength="3"  placeholder="70.00" 
                   onKeyPress={inputHandler}
                   required/>
               </div>
-              <div className="detail3">
+              <div className="rate3">
                 <br></br>
                 <p>ประเมินด้าน3</p>
                 <input type="number" 
