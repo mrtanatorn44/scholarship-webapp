@@ -6,16 +6,20 @@ import Axios from 'axios';
 
 // Alert
 import Swal from 'sweetalert2'
+import RateForm from './CreateRateform';
 
 
-function EditDetailForm () {
+function EditDetail() {
   
-  const { Content,ScholarshipForm, EditScholarshipID, FileForm, ScoringFormat } = useContext(WebContext)
+  const { Content,ScholarshipForm, EditScholarshipID, FileForm, RateForm, AttrForm } = useContext(WebContext)
   const [ content, setContent] = Content;
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
   const [editScholarshipID, setEditScholarshipID]= EditScholarshipID;
-  const [ fileForm , setFileForm]             = FileForm;
-  const [scoringFormat, setScoringFormat] = ScoringFormat;
+  const [attrForm, setAttrForm] = AttrForm;
+  
+  
+  const [ fileForm, setFileForm ] = FileForm;
+  const [ rateForm, setRateForm ] = RateForm;
 
   // type sponsor
   const [donatorList,setDonatorList] = useState([
@@ -32,10 +36,10 @@ function EditDetailForm () {
 
   var dataTypeList = ['ทุนเรียนดี', 'ทุนกิจกรรมเด่น', 'ทุนขาดคุณทรัพย์']
 
-  const {type,detail, amount , min_student_year,max_student_year,on_year,on_term,open_date, close_date, donator_id,donator_name}=scholarshipForm;
+  const {type,detail, amount , min_student_year,max_student_year,on_year,on_term,open_date, close_date, donator_id,donator}=scholarshipForm;
   const [Scholar, setScholar] = useState({
-    id              :'',
-    is_public       : false,
+    id              : '',
+    status          : '',
     type            : '',
     detail          : '',
     amount          : '',
@@ -46,7 +50,7 @@ function EditDetailForm () {
     open_date       : '',
     close_date      : '',
     donator_id      :'',
-    donator_name    :''
+    donator      :''
   })
   
 
@@ -60,7 +64,8 @@ function EditDetailForm () {
     } else {
       console.log("not have id");
     }
-  } 
+  }
+  
  
   //getScholar
   function getScholarshipForm() {
@@ -75,7 +80,7 @@ function EditDetailForm () {
         setScholarshipForm({
           ...scholarshipForm,
           id                : result.id,
-          is_public         : result.is_public,
+          status            : result.status,
           type              : result.type,
           detail            : result.detail,
           amount            : result.amount,
@@ -86,12 +91,11 @@ function EditDetailForm () {
           open_date         : result.open_date.split("T")[0],
           close_date        : result.close_date.split("T")[0],
           donator_id        : result.donator_id,
-          donator_name      : donator.data[0].name,
-          required          : JSON.parse(result.required),
-          rating            : JSON.parse(result.rating)
+          donator           : donator.data[0].name
         })
-        setFileForm(JSON.parse(result.required))
-        setScoringFormat(JSON.parse(result.rating))
+        setFileForm(JSON.parse(result.file_requirement));
+        setRateForm(JSON.parse(result.interview_requirement));
+        setAttrForm(JSON.parse(result.attribute_requirement));
       })   
     });
   }
@@ -110,14 +114,6 @@ function EditDetailForm () {
       setDonatorList([...donatorList])
     })
   }
-  
-  const changeValue = (value,valueOp) => {
-    if (value === '0') {
-        setScholarshipForm({ ...scholarshipForm , typeAdd: '', typeInput: 1 })
-    } else {
-        setScholarshipForm({ ...scholarshipForm , type: valueOp })
-      } 
-  };
   
   //getType
   const getTypeScholar = () =>{
@@ -138,13 +134,10 @@ function EditDetailForm () {
     getScholarshipForm();
     getTypeScholar();
     getAllDonator()
-    //getScholarLabel();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (   
     <>
-
       <div className="heading">
         <h4>ข้อมูลทุนการศึกษา</h4>
       </div>
@@ -197,7 +190,21 @@ function EditDetailForm () {
 
         <div className="year">
           <label>ทุนประจำปีการศึกษา</label>
-          <input className="academic"  type="number" min="0" value = {scholarshipForm.on_year} placeholder="ประจำปีการศึกษา" required onChange={(event) => {setScholarshipForm({...scholarshipForm ,on_year: event.target.value })}}></input>
+          <input className="academic"  type="number" 
+            min={String(new Date().getFullYear() + 543 - 2)}  
+            max={String(new Date().getFullYear() + 543 + 2)}
+            value = {scholarshipForm.on_year}
+            placeholder="ประจำปีการศึกษา"
+            required
+            onChange={
+              (event) => {
+                setScholarshipForm({
+                  ...scholarshipForm,
+                  on_year : event.target.value
+                })
+              }
+            }
+          />
         </div>
         
         <div className="term">
@@ -220,60 +227,52 @@ function EditDetailForm () {
   
       <div className="bottom">
         <div className="bottom-1">
-          <div className="min">
-            <label>min_student_year</label>
-            <input type="number" min="1"  value={scholarshipForm.min_student_year} placeholder="min_student_year" required onChange={(event) => {setScholarshipForm({...scholarshipForm , min_student_year: event.target.value })}}></input>
-          </div>
-          <div className="max">
-            <label>max_student_year</label>
-            <input type="number" max="6" value={scholarshipForm.max_student_year} placeholder="max_student_year" required onChange={(event) => {setScholarshipForm({...scholarshipForm , max_student_year: event.target.value })}}></input>
-          </div>
           <div className="type">
             <label>ผู้สนับสนุน</label>
-          { /* ----- SELECT INPUT ----- */
-            (scholarshipForm.sponsorInput === 0 || scholarshipForm.sponsorInput === undefined ) &&
-            <select onChange={(e) => {
-              if (e.target.value === '0') {
-                setScholarshipForm({ ...scholarshipForm , sponsorAdd: '', sponsorInput: 1 })
-              } else {
-                let index = e.nativeEvent.target.selectedIndex;
-                let label = e.nativeEvent.target[index].text;
-                setScholarshipForm({ ...scholarshipForm , donator: label })
-              } 
-            }}>
-              {
-                donatorList.map((item, index) => (
-                  <option selected={scholarshipForm.donator_name===item.label? 'select':''} key={index} value={item.value}> {item.label} </option>
-                ))
-              }
-            </select>
-          }
-          { /* ----- NORMAL INPUT ----- */
-            scholarshipForm.sponsorInput === 1 &&
-            <div className='input-button'>
-              <input onChange={(e) => setScholarshipForm({...scholarshipForm , sponsorAdd: e.target.value })} type='text' placeholder='ผู้สนับสนุน'/>
-              { 
-                scholarshipForm.sponsorAdd !== '' &&
-                <button onClick={() => {
-                  var tempTypeList = donatorList;
-                  tempTypeList.unshift({ label: scholarshipForm.sponsorAdd, value: scholarshipForm.sponsorAdd })
-                  setDonatorList(tempTypeList);
-                  setScholarshipForm({...scholarshipForm , donator : scholarshipForm.sponsorAdd, sponsorAdd: '', sponsorInput: 0})
-                }}>
-                  Add
-                </button>
-              }
-              { 
-                scholarshipForm.sponsorAdd === '' &&
-                <button onClick={() => setScholarshipForm({...scholarshipForm , sponsorInput: 0 })}>
-                  X
-                </button>
-              }
+            { /* ----- SELECT INPUT ----- */
+              (scholarshipForm.sponsorInput === 0 || scholarshipForm.sponsorInput === undefined ) &&
+              <select onChange={(e) => {
+                if (e.target.value === '0') {
+                  setScholarshipForm({ ...scholarshipForm , sponsorAdd: '', sponsorInput: 1 })
+                } else {
+                  let index = e.nativeEvent.target.selectedIndex;
+                  let label = e.nativeEvent.target[index].text;
+                  setScholarshipForm({ ...scholarshipForm , donator: label })
+                } 
+              }}>
+                {
+                  donatorList.map((item, index) => (
+                    <option selected={scholarshipForm.donator===item.label? 'select':''} key={index} value={item.value}> {item.label} </option>
+                  ))
+                }
+              </select>
+            }
+            { /* ----- NORMAL INPUT ----- */
+              scholarshipForm.sponsorInput === 1 &&
+              <div className='input-button'>
+                <input onChange={(e) => setScholarshipForm({...scholarshipForm , sponsorAdd: e.target.value })} type='text' placeholder='ผู้สนับสนุน'/>
+               { 
+                  scholarshipForm.sponsorAdd !== '' &&
+                  <button onClick={() => {
+                    var tempTypeList = donatorList;
+                    tempTypeList.unshift({ label: scholarshipForm.sponsorAdd, value: scholarshipForm.sponsorAdd })
+                    setDonatorList(tempTypeList);
+                    setScholarshipForm({...scholarshipForm , donator : scholarshipForm.sponsorAdd, sponsorAdd: '', sponsorInput: 0})
+                  }}>
+                    Add
+                  </button>
+                }
+                { 
+                  scholarshipForm.sponsorAdd === '' &&
+                  <button onClick={() => setScholarshipForm({...scholarshipForm , sponsorInput: 0 })}>
+                    X
+                  </button>
+                }
+              </div>
+              
+            }
             </div>
-          
-          }
-        </div>
-          <div className="amount">
+           <div className="amount">
             <label>จำนวนเงิน</label>
             <input type="number" min="0" value={scholarshipForm.amount} placeholder="จำนวนเงิน" required onChange={(event) => {setScholarshipForm({...scholarshipForm ,amount: event.target.value })}}></input>
           </div>
@@ -281,11 +280,37 @@ function EditDetailForm () {
         <div className="bottom-2">
           <div className="date-1">
             <label >วันที่เปิดให้ลงทะเบียน</label>
-            <input type="date" value={scholarshipForm.open_date} placeholder="วันที่เปิดให้ลงทะเบียน" required onChange={(event) => {setScholarshipForm({...scholarshipForm ,open_date: event.target.value })}}></input>
+            <input 
+              type="date"
+              defaultValue={scholarshipForm.open_date}
+              placeholder="วันที่เปิดให้ลงทะเบียน"
+              required
+              onChange={
+                (event) => {
+                  setScholarshipForm({
+                    ...scholarshipForm,
+                    open_date : event.target.value
+                  })
+                }
+              }
+            />
           </div>
           <div className="date-2">
             <label>วันที่ปิดการให้ลงทะเบียน</label>
-            <input type="date" value={scholarshipForm.close_date} placeholder="วันที่ปิดการให้ลงทะเบียน" required onChange={(event) => {setScholarshipForm({...scholarshipForm ,close_date: event.target.value })}}></input>
+            <input
+              type="date"
+              defaultValue={scholarshipForm.close_date}
+              placeholder="วันที่ปิดการให้ลงทะเบียน"
+              required
+              onChange={
+                (event) => {
+                  setScholarshipForm({
+                    ...scholarshipForm,
+                    close_date : event.target.value
+                  })
+                }
+              }
+            />
           </div>
         </div>
       </div>
@@ -293,4 +318,4 @@ function EditDetailForm () {
   )
 }
 
-export default EditDetailForm;
+export default EditDetail;

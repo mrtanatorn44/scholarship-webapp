@@ -37,8 +37,28 @@ body
 
 /* ----- Sweet Alert ----- */
 .swal2-container{
-	font-family: 'Prompt', sans-serif;
+	font-family: 'Prompt', sans-serif ;
+  pre{
+    font-family: 'Prompt', sans-serif;
+  }
+  
+  
 }
+
+
+.fs07 {
+  font-size: size(0.7);
+}
+.fs08 {
+  font-size: size(0.8);
+}
+.fs09 {
+  font-size: size(0.9);
+}
+.fs1 {
+  font-size: size(1);
+}
+
 
 /* ----- Input with Button ----- */
 .inputWithButton 
@@ -54,14 +74,24 @@ body
 .inputhalf {
   min-width: 50%;
 }
-.news
-{
-  width: 65vw;
-  margin           : 3vh auto 3vh auto;
-  //border           : 1px solid $gray2;
-  box-shadow: 0 0 5px gray;
+
+.news {
+  width            : 66vw;
+  margin           : 2.5%;
+  
+  box-shadow       : 0 0 5px gray;
   border-radius    : 10px;
-  background-color : $gray4;  
+
+  @media (max-width: 540px) {
+    margin  : size(1) auto auto size(1);
+    width   : 63vw;
+    
+  }
+  @media (max-width: 480px) 
+  {
+    margin  : size(1) auto size(1) auto;
+    width   : 65.5vw;
+  }
 
   .content {
     border-top: 1px solid gray;
@@ -79,11 +109,13 @@ body
   }
 
   .content-image {
+    margin: 0;
+    padding: 0;
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
 
-    min-height: 30vh;
-    max-height     : 40vh;
+    min-height  : 30vh;
+    max-height : 40vh;
     overflow-y : hidden;
     overflow-x : hidden;
     transition : transform .5s; /* Animation */
@@ -102,10 +134,6 @@ body
 
 }
 
-
-
-
-
 //--------------------- Login.js --------------------
 .login-button 
 {
@@ -117,14 +145,12 @@ body
   padding       : 0.25vw 0.5vw 0.25vw 0.25vw;
   font-size     : size(0.75);
   
-  @media (max-width: 480px)
-  {
+  @media (max-width: 480px) {
     width         : 100%;
     border-radius : 0.5vw;
     border        : none;
     padding       : 0.1vw 0.1vw 0.1vw 0.1vw;
     font-size     : size(0.1);
-
   }
 }
 .logo-button 
@@ -156,12 +182,22 @@ body
   height : 73vh;
   width  : 70vw;
 }
+
 //ประกาศช่าว มีที่หน้า login หน้า main
-.content1{ 
+.content1
+{ 
   height     : 73vh;
   width      : 70vw;
   overflow-y : scroll;
   overflow-x : hidden;
+
+  @media (max-width: 540px) {
+    width  : 68vw;
+  }
+  @media (max-width: 480px) {
+    width  : 73vw;
+    height : 76vh;
+  }
 }
 
 //-------------------- LoginPage.js --------------------
@@ -200,12 +236,13 @@ body
         .right {
           display : flex;
         }
+
       }
       
-      .content1{ 
+      .content1 { 
         width      : 61.2vw;
-        .news{
-          width: 55vw;
+        .news {
+          width: 58vw;
         }
       }
 
@@ -237,7 +274,6 @@ body
         font-weight : 400;
         font-size   : size(0.8);
         margin      : 12.5vh 0 0 0;
-      
       }
     }
   
@@ -273,23 +309,28 @@ body
 {
   display     : flex;
   font-family : 'Prompt', sans-serif;
-
-  .sidebar 
-  {
+  
+  .sidebar {
     width   : 17vw;
     height  : 100%;
     color   : $white1;
-
-    .row-top 
-    {
+  
+    @media (max-width: 540px) {
+      width   : 25vw;
+    }
+    @media (max-width: 480px) {
+      width   : 17vw;
+    }
+    .row-top {
       width       : 100%;
       height      : 7vh;
       background  : $dark-gray;
       text-align  : center;
+      @media (max-width: 912px) {
+        height : 6vh;
+      }
       
-      
-      .user-profile 
-      {
+      .user-profile {
         width   : 25%;
         height  : 100%;
         float   : left;
@@ -299,20 +340,29 @@ body
           width         : size(1.9);
           margin        : auto;
           border-radius : 50%;
+
+          @media (max-width: 912px) {
+            height : size(2.5);
+            width  : size(2.5);
+            margin : auto auto auto size(2);
+          }
+          @media (max-width: 540px) {
+            margin : auto auto auto size(4);
+          }
         }
 
-        @media (max-width: 480px)
-        {
+        @media (max-width: 480px) {
           width : 100%;
+          margin : auto size(5) auto 0;
           img {
-            height : size(3.5);
-            width  : size(3.5);
+            height : size(3);
+            width  : size(3);
+            margin : auto;
           }
         }
       }
        
-      .user-info 
-      {
+      .user-info {
         width      : 75%;
         float      : left;
         margin     : 3% 0 0 0;
@@ -322,11 +372,9 @@ body
           margin      : auto;
           font-size   : size(0.6);
           font-family : 'Prompt', sans-serif;
-       
         }
         
-        @media (max-width: 480px)
-        {
+        @media (max-width: 912px) {
           visibility : hidden;
         }
       }
@@ -338,6 +386,10 @@ body
       height          : 93vh;
       display         : flex;
       flex-direction  : column;
+
+      @media (max-width: 912px) {
+        height : 94vh;
+      }
      
       button {
         width  : 100%;
@@ -359,16 +411,23 @@ body
             margin      : size(0.2) 0 0 size(0.6);
             font-size   : size(1.1);
             padding-top : 0.5vh;
-            
 
-            @media (max-width: 480px) 
-            {
+            @media (max-width: 912px) {
+              font-size   :  size(0.8);
+              margin      : size(0.3) 0 0 size(0.4); 
+            }
+            @media (max-width: 540px) {
+              font-size   : size(1);
+              margin      : size(0.45) 0 0 size(0.6);
+              
+            }
+            
+            @media (max-width: 480px) {
               width      : 100%;
               height     : 100%;
               padding    : 0.5vh;
               margin     : auto auto auto 4vw;
-              font-size  :  size(3);
-              
+              font-size  :  size(2.2);
             }
           }
           p {
@@ -377,11 +436,19 @@ body
             font-size  : size(0.8);
             transition : 0.25s transform ease-out;
 
-            @media (max-width: 480px) 
-            {
-              visibility : hidden;
+            @media (max-width: 912px) {
+              font-size  :  size(0.55);
+              padding    : size(0.2) size(0.3);
             }
 
+            @media (max-width: 540px) {
+              font-size  :  size(0.8);
+              padding    : size(0.1) 0 0 size(0.5); 
+            }
+
+            @media (max-width: 480px) {
+              visibility : hidden;
+            }
           }
           &:hover p {
             transition : 0.25s transform ease-out;
@@ -398,25 +465,52 @@ body
     height         : 100vh;
     display        : flex;
     flex-direction : column;
+    @media (max-width: 540px) 
+    {
+      width   : 75vw;
+      
+    }
+    @media (max-width: 480px) 
+    {
+      width   : 83vw;
+      
+    }
    
 
-    .row-top 
-    {
+    .row-top {
       width            : 100%;
       height           : 7vh;
       color            : $white1;
       display          : flex;
       text-align       : center;
       background-color : $ku-red;
-      
+      @media (max-width: 912px) {
+        height : 6vh;
+      }
       p {
         width     : 70%;
         margin    : auto;        
         font-size : size(0.8);
+        @media (max-width: 912px) 
+        {
+          margin    : auto auto auto size(4);   
+          font-size : size(0.7);
+           
+        }
+        @media (max-width: 480px) 
+        { 
+          font-size : size(0.6);
+           
+        }
+
       }
       .logout-button{
         width   : 10%;
         margin  : auto;
+        @media (max-width: 912px) 
+        {
+          font-size : size(1.3);
+        }
       }
       
     }
@@ -427,6 +521,20 @@ body
       width   : 83vw;
       display : flex;
       background-color : $white2;
+
+      @media (max-width: 912px) 
+      {
+        height : 87vh;
+      }
+      @media (max-width: 540px) 
+      {
+        width   : 75vw;
+      }
+      @media (max-width: 480px) 
+      {
+        width   : 83vw;
+      }
+     
      
 
       .frame 
@@ -439,34 +547,47 @@ body
         background-color : $white1;
         box-shadow       : 0px 0px 10px 0px $gray1;
         font-family      : 'Prompt', sans-serif;
-        
+
+        @media (max-width: 540px) 
+        {
+          width   : 68vw;
+          margin  : auto auto auto size(1.7);
+        }
         
         @media (max-width: 480px) 
         {
-          width   : 75vw;
-          height  : 80vh;
-          margin  : auto;
+          width   : 73vw;
+          height  : 81vh;
+          margin  : auto auto size(1.8) size(1.8);
+          
         }
         .header{
           height        : 7vh;
           display       : flex;
           border-bottom : 2px solid $ku-red;
+          @media (max-width: 912px) { 
+            height : 5vh;
+          }
         
           .left{
-            width   : 50%;
+            width   : 77%;
             display : flex;
           }
 
           .right{
-            width   : 50%; 
+            width   : 23%; 
             display : flex;
 
             //กลุ่ม ปุ่ม บันทึก ยกเลิก สร้าง/แก้ไข ข่าวสาร
             .button-set
             {
+              width   : 100%; 
               display  : flex;
-              margin   : 0 0 0 size(12);
-
+              
+              @media (max-width: 912px) 
+              {
+                margin : size(0.3) 0 0 size(4.3);
+              }
               @media (max-width: 480px) 
               {
                 margin : 0 0 0 size(4.7);
@@ -475,9 +596,7 @@ body
           }
         }
       }
-      
 
-      
     }
 
     .footer-page
@@ -488,8 +607,8 @@ body
       bottom      : 0;
       background  : $ku-red;
       font-family : 'Prompt', sans-serif;
+
       
-  
       h5{
         margin    : auto 0 auto 0;
         font-size : size(0.8);
@@ -516,6 +635,9 @@ body
   
 }// MainPage.js
 
+
+
+
 input, select, textarea
 {
   display          : inline-block;
@@ -525,12 +647,20 @@ input, select, textarea
   border           : 1px solid $ku-red;
   border-radius    : 7px;
   background-color : $white2;
+  @media (max-width: 912px) 
+  {
+    font-size   : size(0.6); 
+     
+  }
   
 }
 
 ::-webkit-scrollbar {
   width : 8px;
   //border-radius : 0.5rem;
+  @media (max-width: 912px) { 
+    width : 5px;
+  }
   
 }
 
@@ -556,23 +686,42 @@ input, select, textarea
   height     : 67vh;
   overflow-y : scroll;
   overflow-x : hidden;
- 
+  @media (max-width: 480px) 
+  {
+    width  : 74vw;
+   
+  }
 }
 
 .content4{ 
-  height     : 64.75vh;
+  height     : 61vh;
   overflow-y : scroll;
   overflow-x : hidden;
+  @media (max-width: 540px) 
+  {
+    width  : 68vw;
+   
+  }
+  @media (max-width: 480px) 
+  {
+    width  : 74vw;
+   
+  }
 
 }
 
 .content5{
-  height     : 59.5vh;
+  height     : 60vh;
   overflow-y : scroll;
   overflow-x : hidden;
-
+}
+.content6{
+  height     : 50vh;
+  overflow-y : scroll;
+  overflow-x : hidden;
 }
 
+ 
 .icons{
   width         : size(1.9);
   height        : size(1.9);
@@ -604,7 +753,7 @@ input, select, textarea
   {
     h4{
       margin     : 0.3vh 0 0 0; 
-      font-size  : size(1.2);
+      font-size  : size(1);
       
     }
   }
@@ -615,6 +764,15 @@ input, select, textarea
   height      : 0.5vh;
   margin      : auto auto auto size(1);
   border-top  : 2px solid $line-gray; 
+
+  @media (max-width: 912px) { 
+    width    : 92%;
+    margin   : 0 auto auto size(1);
+  }
+  @media (max-width: 540px) { 
+    width    : 89%;
+   
+  }
 
   @media (max-width: 480px) { 
     width    : 95%;
@@ -634,8 +792,16 @@ input, select, textarea
   img{
     width         : size(6) ;
     height        : size(7.5); 
-    border-radius : 50%;
-   
+    border-radius : 50% ;
+  }
+  @media (max-width: 480px)
+  { 
+    width      : 20%;
+    margin     : size(1.5) auto auto size(0.5);
+    img{
+    width         : size(5) ;
+    height        : size(5); 
+    }
   }
 }
 
@@ -650,6 +816,8 @@ input, select, textarea
   border-radius : 4px;
   border-style  : hidden;
   font-size     : size(0.7);
+  
+  
 
  @media (max-width: 480px)
  {  
@@ -663,18 +831,39 @@ input, select, textarea
 
 // ปุ่มมี bi หลายสี
 .button-2{
-  width             : 80%; 
+  width             : 80.5%; 
   height            : 6vh;
-  float             : right; 
+  //float             : right; 
   margin            : size(0.5);
   display           : flex;
-  border-radius     : 5px;
+  border-radius     : 7px;
   border-style      : hidden;
   background-color  : $white2;
 
+ 
+  @media (max-width: 912px) { 
+    height  : 3vh;
+  }
+  @media (max-width: 540px) { 
+    height  : 4vh;
+    
+  }
+  
+
   p {
-    padding    : 11px 0 0 13px ;
-    font-size  : size(0.7);  
+    padding    : 12px 0 0 17px ;
+    font-size  : size(0.7); 
+    
+    @media (max-width: 912px) { 
+      font-size  : size(0.55); 
+    }
+    @media (max-width: 540px) { 
+      padding    : 4px 0 0 5px ;
+      font-size  : size(0.4); 
+    }
+    @media (max-width: 480px) { 
+      font-size  : size(1); 
+    }  
     
   }
   .bi{
@@ -685,6 +874,19 @@ input, select, textarea
     font-size      : size(1.1);
     border-radius  : 10px;
     box-shadow     : 0px 0px 2px 0px $gray1;
+
+    @media (max-width: 912px) { 
+      width          : size(1.5);
+      height         : size(1.5);
+      font-size      : size(0.9);
+    }
+    @media (max-width: 540px) { 
+      width          : size(1.6);
+      height         : size(1.6);
+      font-size      : size(1);
+      border-radius  : 5px;
+      margin         : size(0.25) 0 0 size(0.2);
+    }
   
   }
 }
@@ -701,7 +903,7 @@ input, select, textarea
   border-radius    : 50px;
 
   p {
-    margin    : 3px;
+    margin    : center;
     font-size : size(0.8);
     
   }
@@ -727,23 +929,35 @@ input, select, textarea
   margin         : 0 0 0 size(0.3);
   border-radius  : 3px;
   border-style   : hidden;
-  
-  @media (max-width: 480px) 
-  {  
-    width     : size(2.2);
-    height    :   size(1.2);
-    color     :$white1;
-    margin    : 0 0 0 size(0.3);
-    font-size : size(0.6);
-    
-  
-  }
+}
+
+.button-admin2{
+  width   : 45%;
+  height  : 80%;
+  margin: auto;
+  margin-bottom : size(3);
+  color          :$white1;
+  font-size      : size(0.6);
+  border-radius  : 5px;
+  border-style   : hidden;
+}
+
+.button-admin3 {
+  width   : 90%;
+  height  : 80%;
+  margin: auto;
+  color          :$white1;
+  font-size      : size(0.6);
+  border-radius  : 5px;
+  border-style   : hidden;
+  text-align: center;
+  font-size: size(0.75);
 }
 
 .button-add{
   width             : size(6);
   height            : size(1.5);
-  margin            : auto size(1) auto auto;
+  margin            : auto size(1.5) auto auto;
   border-style      : hidden;
   border-radius     : size(0.5);
   background-color  : $white2;
@@ -768,7 +982,7 @@ input, select, textarea
     width         : size(1);
     height        : size(1);
     color         : $white1; 
-    margin        : auto;
+    margin        : auto auto auto auto;
     font-size     : size(0.8);
     border-radius : 5px;
   
@@ -781,16 +995,63 @@ input, select, textarea
   }
 }
 
- // ปุ่มลงทะเบียน,นัดหมายสีเขียว 
-.button-big{
+.select-small {
   width             : 100%;
-  height            : 20vh;
+  height            : 7vh;
+  
+  padding   : size(0.2) size(0.5);
+  font-size         : size(0.75);
+
+  box-sizing: border-box;
+  resize: none;
+  border: 1px solid #A62639;
+  border-radius: 7px;
+  background-color: #F5F5F5;
+  color: #000000;
+
+  p{
+  }
+}
+.button-small {
+  width             : 100%;
+  height            : 7vh;
   color             : $white1;
   margin            : auto;
   border            : none ;
   border-radius     : 0.5rem;
   font-size         : size(0.75);
+  p{
+    margin   : auto;
+  }
 } 
+
+.button-half{
+  width             : 50%;
+  height            : 15vh;
+  margin-left       : 2.5%;
+  color             : $white1;
+  border            : none ;
+  border-radius     : 0.5rem;
+  font-size         : size(0.75);
+  p{
+    margin   : auto;
+  }
+} 
+
+
+.button-big {
+  width             : 100%;
+  height            : 17vh;
+  color             : $white1;
+  margin            : auto;
+  border            : none ;
+  border-radius     : 0.5rem;
+  font-size         : size(0.75);
+  p{
+    margin   : auto;
+  }
+} 
+
 
 //ปุ่ม ตกลง
 .button-confirm{
@@ -801,7 +1062,12 @@ input, select, textarea
   font-size      : size(0.6);
   border-style   : hidden;
   border-radius  : 12px;
-  
+  @media (max-width: 540px) { 
+    width        : size(5.5);
+    height       : size(1.7);
+    border-radius  : 8px;
+    
+  }
   
 
 }
@@ -814,6 +1080,14 @@ input, select, textarea
   box-shadow    : 0px 4px 4px $black2;
   border-radius : 69px;
   border-style  : hidden;
+  @media (max-width: 540px) 
+  {
+    width         : size(2);
+    height        : size(2);    
+    border-radius : 63px;
+    font-size: size(1);
+        
+  }
 }
 
 //ปุ่ม เพิ่มรูป
@@ -839,6 +1113,14 @@ input, select, textarea
     border-radius : 10px;
     border-style  : hidden;
     text-align    : center;
+
+    @media (max-width: 540px) 
+    {
+      width      : size(1.7);
+      height     : size(1.7);
+      font-size  : size(1.3);
+      border-radius : 6px;
+    }
     
     @media (max-width: 480px) {
       margin      : size(0.9) 0 0 0;
@@ -848,6 +1130,13 @@ input, select, textarea
   p {
     width  : auto;
     margin : auto size(0.5) auto size(0.5);
+
+    @media (max-width: 540px) 
+    {
+      font-size  :  size(0.8);
+    
+    }
+
     @media (max-width: 480px) {
       margin     : size(1) auto auto size(0.5);
       font-size  : size(1.2);
@@ -917,8 +1206,12 @@ input, select, textarea
   border-top        : 4px solid $ku-red;
   border-radius     : 10px;
   background-color  : $white1;
+  @media (max-width: 912px) { 
+    width    : 93%;
+  }
  
- 
+
+  
 }
 
 //กล่อง หมายเหตุ
@@ -928,25 +1221,107 @@ input, select, textarea
   height  : 35vh;
   .note{
     textarea{
-      width  : 80%;
+      width  : 100%;
       height : 30vh;
     } 
   }
 }
 
-// หน้า report
-.select1 {
-  width  : 15%;
-  margin : 0 0 0 size(1);
 
+.input-holder25 {
+  width  : 50%;
+  margin : 0 2.5% 0 0;
   select{
     width : 100%;
+    padding   : size(0.2) size(0.5);
+    font-size : size(0.7);
+  }
+  input {
+    width : 100%;
+    padding   : size(0.2) size(0.5);
+    font-size : size(0.7);
+  }
+}
+
+.input-holder25-left {
+  width  : 47.5%;
+  margin: auto 0 auto 2.5%;
+  select{
+    float: left;
+    width : 50%;
+    padding   : size(0.2) size(0.5);
+    font-size : size(0.7);
+  }
+  input {
+    float: left;
+    width : 75%;
+    padding   : size(0.2) size(0.5);
+    font-size : size(0.7);
+  }
+}
+
+.input-holder25-right {
+  width  : 47.5%;
+  margin: auto 2.5% auto 0;
+  select{
+    float: right;
+    width : 50%;
+    padding   : size(0.2) size(0.5);
+    font-size : size(0.7);
+  }
+  input {
+    float: right;
+    width : 75%;
+    padding   : size(0.2) size(0.5);
+    font-size : size(0.7);
+  }
+}
+// หน้า report
+.select1 {
+  width  : 22.5%;
+  margin : auto 2% auto 2%;
+  select{
+    width : 100%;
+    padding   : size(0.2) size(0.5);
+    font-size : size(0.7);
+  }
+  input {
+    width : 100%;
+    padding   : size(0.2) size(0.5);
+    font-size : size(0.7);
+  }
+  @media (max-width: 912px) { 
+    width  : 17%;
+  
   }
   @media (max-width: 480px) { 
     width  : 20%;
-    margin : 0 0 0 size(1);
+    
   }
    
+}
+.mgb1 {
+  margin-bottom: 1vh;
+}
+.select2 {
+  select{
+    margin : auto 5% auto 0;
+    width : 95%;
+    padding   : size(0.2) size(0.5);
+    font-size : size(0.7);
+  }
+  input {
+    margin : auto 5% auto 0;
+    width : 95%;
+    padding   : size(0.2) size(0.5);
+    font-size : size(0.7);
+  }
+}
+
+.status-box{
+  color          : $white2;
+  font-weight    : 700;    
+  border-radius  : 12px;
 }
 
 // กล่อง search
@@ -969,57 +1344,115 @@ input, select, textarea
     border-radius    : 14px;
     background-color : $white2;
   }
+ 
 }
 
 //serch ตรวจสอบข้อมุล
 .search1
 {
-  width       : 87%;
+  width       : 99%;
   height      : size(1.7);
-  margin      : size(1.4) 0 0 size(1.4);
   text-align  : right;
+  margin: 8% 0 0 0 ;
  
-
   input{
-    width          : 90%;
+    width          : 85%;
     height         : 100%;
-    padding        : size(0.7) size(0.8);
+    padding        : size(0.7) size(0.7);
     border-radius  : 14px;
+
   }
   button{
-    width  : 10%;
+    width  : 15%;
     height : 95%;
    
     
-  } 
+  }
+  @media (max-width: 912px) 
+  { 
+    margin     : size(1) 0 0 size(0.5);
+    input{
+      width    : 85%;
+    }
+    button{
+      width  : 15%;
+    }
+  }
+  @media (max-width: 540px) 
+  { 
+    width       : 80%;
+    height      : size(2.3);
+    margin      : size(1.7) 0 0 size(1.4);
+    
+    input{
+      width  : 80%;
+     
+    }
+    button{
+      width  : 20%;
+    }
+  }
+
+  @media (max-width: 480px) 
+  { 
+
+    width       : 90%;
+    height      : size(2.5);
+    margin      : size(2.5) 0 0 size(1);
+    
+    input{
+      width    : 75%;
+      height   : 70%;
+      padding  : 0 size(0.8);
+      
+    }
+    button{
+      width   : 25%;
+      height  : 92%
+    }
+  }
 }
 
 //roloSettin g &member
 .search2 
 {
   width    : size(42.5);
-  margin   : size(0.5) 0 size(0.5) size(1) ;
+  margin : 3% 2.5% 2%  ;
   
-  @media (max-width: 480px) { 
-    width   : 92%;
-    margin  : size(0.5) auto size(0.5) auto ;
-  }
   input{
     width   : 95%;
     height  : 100%;
     padding : size(0.3) size(0.5);
-    
-    @media (max-width: 480px) { 
-      width : 80%;
-    }
   }
   button
   {
     width   : 5%;
     height  : 100%;
 
-      @media (max-width: 480px) { 
-        width  : 10%;
+  }
+
+  @media (max-width: 912px) { 
+    width    : 92%;
+    input{
+      width    : 90%;
+    }
+    button{
+      width    : 10%;
+    }
+  }
+
+  @media (max-width: 540px) { 
+    width    : 90%;
+  
+  }
+
+  @media (max-width: 480px) { 
+    margin  : size(0.5) auto size(0.5) auto ;
+    input{
+      width : 80%;
+    }
+    button{
+      width  : 10%;
     }
   }
 
@@ -1029,13 +1462,13 @@ input, select, textarea
  //หน้า สร้าง/แก้ไข ข่าวสาร
 .form1
 {
-  width: 65vw;
-  margin           : 3vh auto 3vh auto;
-  //border           : 1px solid $gray2;
-  box-shadow: 0 0 5px gray;
+  width            : 66vw;
+  margin           : 2.5%;
+  box-shadow       : 0 0 5px gray;
   border-radius    : 10px;
   background-color : $gray4;  
-  padding: size(1);
+  padding          : size(1);
+
   .heading{
     width     : 50%;
     height    : size(2);
@@ -1058,25 +1491,23 @@ input, select, textarea
   .button-circle{
     margin : auto size(0.5) auto size(0.5);
   }
-
+  @media (max-width: 540px) 
+  {
+    width   : 63vw;
+    margin  : size(1) auto auto size(1);
+    
+  }
 }
+
 //แบบฟอร์มกรอกประวัติแรกเข้าและอื่นๆ
 .form2
 { 
   width  : 80%;
-  margin : 0 0 size(1) size(9);
-  @media (max-width: 480px) 
-  { 
-    margin : 0 0 size(1) size(5);
-  }
-
+  margin : 0 auto 0 auto;
   h5{
-    margin      : size(1) 0 size(1.5) size(10) ;
+    text-align: center;
+    margin      : size(1) 0 0 0 ;
     font-weight : 600;
-    @media (max-width: 480px) 
-    { 
-      margin : size(1) 0 size(1) size(1) ;
-    } 
   }
   
   p{
@@ -1087,23 +1518,22 @@ input, select, textarea
   }
   label{
     font-size  : size(0.7); 
-    @media (max-width: 480px) 
-    { 
-      font-size : size(1);
-    }
+
   }
   input, select{
-    width   : 80%;
-    height  : 6vh;
-    padding : 9px 10px; 
+    width        : 100%;
+    height       : 5vh; 
+    font-size    : size(0.75);
+    padding-left : size(0.5);
+
     border  : 2px solid $ku-red;
-    margin  : 0 0 size(0.5) 0;
+    margin  : 0 0 size(0.2) 0;
     
   }
   
   .profile-fam
   {
-    width  : 80%;
+    width  : 100%;
     height : 10vh;
     
     .fam-edit{
@@ -1125,23 +1555,65 @@ input, select, textarea
       }
     } 
   }
+
+  .upload{
+    background-color : $white2;
+    border  : 2px solid $ku-red;
+    border-radius : 10px;
+    margin: size(1) 0 0 0;
+    iframe{
+      margin: auto 0 0 size(2);
+      width : 90%  ;
+      height : size(20);
+    }
+  }
+
+
+
+  @media (max-width: 480px) 
+  { 
+    width  : 100%;
+    margin : 0  0 0 size(3);
+      h5{
+        margin : size(1) size(5)  size(1) size(0.1);
+      }
+    
+    label{
+      font-size : size(1);
+    }
+    input, select{
+      height  : 5vh;    
+      font-size  : size(0.77); 
+    }
+  }
 }
 
 //aplicantCheckform
 .form3
 {  
+  width  : 100%;
+  //height : 5vh;
+  margin : size(1) auto 0 0;
+
   .check {
-    margin : 0 0 0 size(9);
+    //margin : auto;
     .true, .false{
       width : 20%;
+      display: flex;
+      input{
+        width: 13%;
+      }
+      label{
+        margin-top : size(0.6);
+
+      }
     }
   }
   .form-note {
-    margin : size(1) 0 0 0; 
     
     .note{
-      margin : 0 0 0 size(9);
       textarea{
+        width: 100%;
         margin  : 8px 0;
         padding : 9px 10px;
         border  : 2px solid $ku-red;
@@ -1151,13 +1623,21 @@ input, select, textarea
  
   
 }
-// กลุ่ม ด้านบน รายงานทุน ตรวจสอบข้อมูล การสัมภาษณ์
+
+.filter-bar {
+  width   : 100%;
+  height  : 13vh;
+  // padding : 2% 2.5% 2% 2.5%;
+  display : flex;
+  border-bottom : 2px solid $gray3;
+  margin : 0;
+}
+
 .form4 
 {
   width   : 100%;
-  height  : 11vh;
   display : flex;
-  margin  : size(0.7) 0 0 0;
+  margin  : 0;
   
   
   select{
@@ -1166,28 +1646,45 @@ input, select, textarea
   }
   label{
     font-size : size(0.8);
+    @media (max-width: 912px) { 
+      font-size : size(0.7);
+    }
     @media (max-width: 480px) { 
-      font-size : size(0.5);
+      
+      font-size : size(0.8);
     }
   }
   .column-left{
-    width  : 50%;
-    margin : 0 0 0 size(1);
-    select{
-      width : 50%;
-    }  
-   
+    width  : 65%;
+    @media (max-width: 540px) 
+    { 
+      width  : 40%;
+    }
   } 
+  
   .column-right {
-    width : 50%;
-  }      
+    width : 35%;
+    height: 0vh;
+    
+    label{
+      margin : 0 0 0 2%;
+    }
+    
+    @media (max-width: 540px) 
+    { 
+      width  : 60%;
+    }
+  } 
+
+  
 }
 
 //กำหนดเวลาสัมภาษณ์ InterviewSchedule
 .form5 
 {
   width  : 100%;
-  margin : size(2) 0 0 size(2.5);
+  margin : size(1.5) 0 0 size(2.5);
+  font-size: size(0.8);
 
   input, select 
   {
@@ -1199,7 +1696,31 @@ input, select, textarea
     
   }
   .define{
-    margin-top : size(1);
+    margin-bottom: size(1);
+  }
+
+  @media (max-width: 912px) 
+  { 
+    margin : size(2) 0 0 size(1.5);
+    input, select 
+    {
+      width        : 91%;
+      height       : 3vh;
+      
+    }
+  }
+  @media (max-width: 540px) 
+  { 
+    input, select {
+      height  : 4vh; 
+
+    }
+    .define{
+      margin-top : size(0.5);
+      p{
+        margin-bottom: size(0.5);
+      }
+    }
   }
   
 }
@@ -1207,8 +1728,8 @@ input, select, textarea
 //interviewrate
 .form6
 {
-  width  : 95%;  
-  margin : size(1.5) size(3);
+  width  : 100%;  
+  margin : size(1.5) 0 0  size(2.5);
 
   .score 
   {
@@ -1217,14 +1738,17 @@ input, select, textarea
       height  : 5vh; 
       padding :size(0.5);
     }
+    .rate1{
+      margin-bottom: size(1);
+    }
   }
   .complete-set
   {
     width   : 100%;
     display : flex;
-    margin  : size(1) 0;
+    margin  : size(1) 0 0 0;
     
-    .complete1, .complete2 
+    .complete1
     {
       width : 50%;
       .check{
@@ -1232,156 +1756,334 @@ input, select, textarea
           width  : 30%;
           input {
             width : 10%;
+
           }
-        
+          @media (max-width: 912px) {
+            width      : 40%;
+            input {
+              width      : size(0.7);
+              height     : size(0.7);
+            }
+          }
+        }
+        @media (max-width: 912px) {
+          label{
+            font-size: size(0.7);
+          }
         }
       
       } 
+      @media (max-width: 540px) {
+        p{
+          margin-bottom: 0;
+        }
+      }
+
     }
 
   } 
+  @media (max-width: 912px) 
+  { 
+    margin : size(2) 0 0 size(1.5);
+    .score {
+      input {
+        width   : 91%;
+        height  : 3vh;
+      }
+    }
+  }
 
+  @media (max-width: 540px) 
+  { 
+    p{
+      font-size: size(0.7);
+    }
+    .score {
+      input {
+        height  : 4vh;
+      }
+      p{
+        margin-bottom: size(0.5);
+      }
+    }
+  }
+  
 }
 
 //เนื้อหาข้างในทุนที่เปิดให้ลงทะเบียน
+.preline {
+  white-space: pre-wrap;
+}
 
 .detail2 {
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
+  width   : 95%;
+  margin  : 0 2.5% 2.5% 2.5%;
+  padding : size(1);
 
-  min-height : 20vh;
-  max-height : 30vh;
-  overflow-y : auto;
-  overflow-x : hidden;
-  transition : transform .5s; /* Animation */
-  padding: size(0.5);
+  display: block;
+  overflow: auto;
+
+  border            : 1px solid $ku-red;
+  border-top        : 4px solid $ku-red;
+  border-radius     : 10px;
+  background-color  : $white1;
+
   span {
     display: block;
   }
 
   .left {
     width: 50%;
+    float: left;
   }
 
   .right {
     width: 50%;
+    float: right;
   }
 }
 
 
 
 //scholar-Interview 
-.list1 
-{
- 
-  .information
+.list1 {
+  .information 
   {
-    width   : 100%;
-    display : flex;
-    
+    width     : 100%;
+    display   : flex;
+    .left {
+      width   : 75%;
 
-    .left
-    {
-      width : 75%;
-      h3{
-        margin    : 2% 3% 2% 3%;
-        cursor    : pointer;
-        font-size : size(0.8);
+      @media (max-width: 912px) { 
+        width : 65%;
       }
-     
+
+      @media (max-width: 540px) { 
+        width : 60%;
+      }
+      p {
+        margin      : 2% 3% 2% 3%;
+        cursor      : pointer;
+        font-size   : size(0.8);
+
+        @media (max-width: 912px) { 
+          font-size : size(0.6);
+        } 
+      }
     }
     .detail{
       width  : 75%;
+      h4{
+        font-size : size(0.8);
+        margin    : 2% 3% 2% 3%;
+      }
+      @media (max-width: 912px) { 
+        width : 65%;
+      }
+      @media (max-width: 540px) { 
+        width : 60%;
+      }
     }
-    .right {
+    .right 
+    {
       width   : 25%;
       display : grid;
 
+      @media (max-width: 912px) { 
+        width : 35%;
+      }
+      @media (max-width: 540px) { 
+        width : 40%;
+      }
+
     } 
   }
+ 
 }
 
- //rolelist กำหนดสิทธิ์ผู้ใช้แต่ละ email
- .list2
- {
-  .list-form
-  {
-    width : 100%;   
-    @media (max-width: 480px) { 
-      width : 80%;
-    }
-  }
-  .name, .role{
-    margin    : size(0.5) 0 0;
-    font-size : size(0.8);
-    
-  }
-  .name
-  {
-    width  : 50%;
-    margin : auto 0  0 size(0.5);
-    
-    @media (max-width: 480px) { 
-      width : 30%;
-    }
 
+
+.text1 {
+  margin       : auto;
+  text-align   : center;
+  p {
+    text-align : center;
+    margin     : 0;
   }
-  .role{
-    width : 10%; 
+}
+
+.text2 {
+  height       : 100%;
+  margin       : auto;
+  text-align   : center;
+  display      : flex;
+}
+
+.text3 {
+  display      : flex;
+  text-align   : center;
+  h3 {
+    margin     : auto;
+    font-size  : size(1.5);
+  }
+}
+
+.big-icon {
+  margin       : auto;
+  font-size    : size(1);
+  
+}
+
+
+.list2 {
+  width   : 95%;
+  height  : 7vh;
+  margin  : 2.5%;
+  display : flex;
+}
+.list2-left {
+  width             : 75%;
+  display           : flex;
+  border            : 1px solid $ku-red;
+  border-top        : 4px solid $ku-red;
+  border-radius     : 10px;
+  background-color  : $white1;
+}
+.list2-right {
+  width       : 22.5%;
+  margin-left : 2.5%;
+  height      : 100%;
+}
+
+.list3 {
+  width   : 95%;
+  height  : 17vh;
+  margin  : 2.5%;
+  display : flex;
+}
+.list3-left {
+  width             : 100%;
+  display           : flex;
+  border            : 1px solid $ku-red;
+  border-top        : 4px solid $ku-red;
+  border-radius     : 10px;
+  background-color  : $white1;
+}
+.list3-right {
+  width       : 17.5%;
+  margin-left : 2.5%;
+  height      : 100%;
+}
+
+
+.list4 {
+  width   : 95%;
+  height  : 15vh;
+  margin  : 2.5%;
+  display : flex;
+}
+.list4-left {
+  width             : 60%;
+  display           : flex;
+
+  border            : 1px solid $ku-red;
+  border-top        : 4px solid $ku-red;
+  border-radius     : 10px;
+  background-color  : $white1;
+}
+.list4-right {
+  display     : flex;
+  width       : 40%;
+  height      : 100%;
+}
+
+
+.w10 { width: 10%; }
+.w20 { width: 20%; }
+.w30 { width: 30%; }
+.w40 { width: 40%; }
+.w50 { width: 50%; }
+.w60 { width: 60%; }
+.w70 { width: 70%; }
+.w80 { width: 80%; }
+.w90 { width: 90%; }
+.w100 { width: 100%; }
+
+.h10 { height: 10%;}
+.h20 { height: 20%;}
+.h30 { height: 30%;}
+.h40 { height: 40%;}
+.h50 { height: 50%;}
+.h60 { height: 60%;}
+.h70 { height: 70%;}
+.h80 { height: 80%;}
+.h90 { height: 90%;}
+.h100 { height: 100%;}
+
+.panel2 {
+  display: block;
+}
+
+.user-panel2 {
+  width       : 100%;
+  height      : 40%;
+  margin      : auto;
+  float       : right; 
+  text-align  : center;
+
+}
+
+.admin-panel2 {
+  width       : 100%;
+  height      : 30%;
+  display     : flex;
+  text-align  : center;
+ // margin     : auto;
+ 
+  
+  
+}
+
+
+.list5{
+  .left{
+    width: 40%;
+    margin : size(0.5) 0  0 size(0.5);
+    p{
+      font-size: size(0.8);
+    }
+    .name{
+      font-weight: 700;
+    }
+    .status-box{
+      width: 40%;
+      padding-left: size(0.7);
+      
+    }
   }
   .right{
-    width : 50%;
+    width: 60%;
+    margin    : size(1.5) 0 size(1) auto;
     .button-2{
       width : 40%;
+      float : right; 
+      
+      
     }
   }
-  //rolesetting only
-  .roleList
-  {
-    width : 40%; 
-    @media (max-width: 480px){ 
-      width : 30%;
-    }
-    select{
-      width     : 80%;
-      margin    : size(0.5) auto auto size(2.5);
-      padding   : size(0.2) size(0.5);
-      @media (max-width: 480px) { 
-        margin  : size(0.1) size(0.1) size(0.1) size(0.1);
-      }
-    }
-  }
-
 }
 
-// list ทุนที่เปิดให้ลงทะเบียน
-.list3
-{
-  width            : 85%;
-  margin           : 2.5%;
-  box-shadow       : 0px 0px 5px 0px $gray1;
-  border-radius    : 10px;
-  background-color : $gray4;
-}
-
-.list3-panel {
-  width : 15%;
-  height: 100%;
-  margin           : 2.5% 2.5% 2.5% 0;
-}
-.news, .list1, .list3
-{
-  //ลบแก้ไข รายละเอียดเพิ่มเติม
-  .bottom1
-  {
-    width   : 100%;
-    height  : size(2);
-    display : flex;
-    h3
-    {
-      margin    : 2% 3% 2% 3%;
-      cursor    : pointer;
-      font-size : size(0.8);
+.bottom1 {
+  width   : 100%;
+  height  : size(2);
+  display : flex;
+  h3 {
+    margin       : 2% 3% 2% 3%;
+    cursor       : pointer;
+    font-size    : size(0.8);
+    
+    @media (max-width: 912px) {
+      font-size  : size(0.65);  
     }
   }
 }
@@ -1389,19 +2091,36 @@ input, select, textarea
 // หน้า ฟอร์มกรอกประวัติ
 .footer1
 {
-  width  : 95%;
+  width  : 100%;
   height : 10vh; 
   .confirm{ 
-    float   : right;
-    display : flex;   
+    margin    : size(1) 0 0 0;
+    float     : right;
+    display   : flex;   
+    @media (max-width: 480px) 
+    {
+      margin  : 0 size(4.5) 0 0;
+      
+    }
   } 
 }
 
 //footer หน้าสร้่างทุน
 .footer2
 {
-  width  : 95%;
+  width  : 96%;
   height : 10vh;
+  @media (max-width: 912px) 
+  {
+    width  : 98%;
+    height : 6vh;
+    
+  }
+  @media (max-width: 540px) 
+  {
+    width  : 96%;
+    
+  }
   .confirm
   {
     float   : right;
@@ -1413,7 +2132,7 @@ input, select, textarea
 //footer กำหนดเวลาสัมภาษณ์
 .footer3
 {
-  width  : 96.5%;
+  width  : 96%;
   height : 10vh; 
   .confirm
   { 
@@ -1421,6 +2140,11 @@ input, select, textarea
     display : flex;
     margin  : size(1) 0 0 0;  
   } 
+  @media (max-width: 912px) { 
+    width  : 96.7%;
+  }
+  
+  
 }
 
 // กลุ่มปุ่ม ลบ แก้ไข
@@ -1449,7 +2173,12 @@ input, select, textarea
   h4 {
     margin     : auto;
     font-size  : size(1);
+    @media (max-width: 540px) 
+    { 
+      margin-top :  size(1) ;
+    }
   }
+  
 }
 
 .title 
@@ -1465,6 +2194,18 @@ input, select, textarea
     margin     : auto 0 auto 1rem;
     font-size  : size(0.9);
     text-align : left;
+
+    @media (max-width: 912px) 
+    {
+      width      : 50%;
+      font-size : size(0.5);  
+    }
+    @media (max-width: 540px) 
+    {
+      width      : 30%;
+      margin     : auto 0 auto 0.5rem; 
+    }
+    
   }
   h3
   {
@@ -1472,130 +2213,215 @@ input, select, textarea
     margin     : auto 1rem auto 0;
     font-size  : size(0.9);
     text-align : right; 
+
+    @media (max-width: 912px) 
+    {
+      width      : 60%;
+      font-size : size(0.7);  
+    }
+    @media (max-width: 540px) 
+    {
+      width      : 70%;
+      margin     : auto 0.5rem auto 0;
+      
+    }
+      
+    
   }
 }
 
-.detailForm
-{
-  width  : 95%;
-  height : 94%;
-  margin : size(0.8) 0 0 size(1); 
-  input, select, textarea
+.detailForm, .attrForm {
+  width  : 65vw;
+  margin : size(1) 2.5vw ;
+
+  @media (max-width: 540px) 
   {
+    width  : 63vw;
+     
+  }
+
+  input, select, textarea {
     padding : size(0.2) size(0.5);
   }
-  h4{
+  h4 {
     font-size   : size(1);
     font-weight : 600;
-    
+
+    @media (max-width: 912px) {
+      font-size   : size(0.8);  
+    }
   }
-  .top
+  label {
+    @media (max-width: 912px) {
+      font-size  : size(0.7);  
+    }
+  }
+  .top 
   {
     width   : 100%;
+    height  : 5vh;
     display : flex;
     margin  : size(0.5) 0 0 0;
-    @media (max-width: 480px){
-      width : 80%;
-    } 
-    .type, .year, .term
-    {
+    .type, .year, .term {
       width  : 25%;
       height : 100%;
-    
-      @media (max-width: 480px)
-      {
-        width  : 30%;
-        height : 60%;
-      }
-      select, input
-      {
+  
+      select, input {
         width  : 100%;
         height : 100%;
+        @media (max-width: 912px) {
+          width  : 100%;
+        }
       }
-      .input-button
-      {
+      .input-button {
         height   : 100%;
         position : relative;
-        input
-        {
+        input {
           width  : 100%;
-          height : 100%;
+          height : 100%;   
         }
-        button
-        {
+        button {
           top      : 7.5px;
           right    : 7.5px;
           border   : none;
           position : absolute;   
         }
+        
+      }
+
+      @media (max-width: 912px) {
+        width  : 31.7%;
+      }
+      @media (max-width: 540px) {
+        width  : 28%;
+      }
+      @media (max-width: 480px) {
+        width  : 30%;
+        height : 60%;
+      }
+      
+    }
+    .indicator{
+      width: 55%;
+    
+      input {
+        width  : 97%;
+        height  : 100%;
       }
     }
-    .year, .term
-    {
+   
+
+
+    .year, .term {
       margin : 0 0 0 size(0.4);
     }
+    @media (max-width: 540px) {
+      height  : 3.5vh;
+      .term{
+        width  : 39%;
+      }  
+    }
   }
+
   .center
   {
     display : flex;
     width   : 100%;  
-    margin : size(0.5) 0 size(0.5)  0;
-    
-   .details *
-   {
+    margin : size(2) 0 size(0.5)  0;
+
+   .details * {
     vertical-align: top; // ทำให้ label บน textarea มาอยู่ข้างบน
    }
-   .details
+
+   .details 
    {
-    width  : 100%;
-    .detail
-    {
       width  : 100%;
-      height : size(13);
-      
-      @media (max-width: 480px)
-      {
-        width : 95.5%;
-       
+      .detail {
+        width  : 100%;
+        height : size(13);
+
+        @media (max-width: 912px) {
+          width  : 98%;
+        }
+        @media (max-width: 480px) {
+          width : 95.5%;
+        }
       }
     }
 
-   }
-    
-   
+    @media (max-width: 540px) {
+      height: 26vh;   
+    }
+
   }
-  .bottom
-  {
+
+  .bottom {
     width         : 100%; 
     height        : size(7.5);
     border-bottom : 2px solid $line-gray;
+
+    @media (max-width: 912px) {
+      width : 97.5%; 
+    }
+    @media (max-width: 540px) {
+      height : size(10);
+    }
+   
   
     .bottom-1, .bottom-2
     {
-      height  : 5.5vh;
+      height  : 5vh;
       display : flex;
-      .min, .max, .type, .amount
+      margin  : size(0.5) 0 0 0;
+
+      @media (max-width: 912px) {
+        height  : 2.5vh;
+      }
+      @media (max-width: 540px) {
+        width : 100%;
+        height  : 3.5vh;
+      }
+      .type, .amount
       {
-        width : 25%;
+        width : 38%;
+      
         input, select 
         {
           width  : 100%;
           height : 100%;
         }
       }
-      .max, .type, .amount
+      .amount
       {
         margin : 0 0 0 size(0.5);
+      }
+  
+      .input-button{
+        height : 100%;
+        input
+        {
+          height : 100%;
+        }
+        .add{
+          width : 86%;
+        }
+        .button-circle{
+          margin-left: size(0.5);
+          
+        }
       }
     }
 
     .bottom-2
     {
-      margin    : size(2) 0  ;
+      width     : 77%;
+      margin    : size(2) 0 ;
       font-size : size(0.7);
+     
       .date-1, .date-2
       {
-        width   : 37%;
+        width   : 50%;
+        
         input
         {
           width     : 100%;
@@ -1606,80 +2432,166 @@ input, select, textarea
       }
       .date-2
       {
-        margin : 0 0 0 size(0.4);
+        margin : 0 0 0 size(0.5);
+      }
+
+      @media (max-width: 540px) {
+        width     : 100%;
+        margin    : size(3) 0 ;
+
+        .date-1, .date-2{
+          width   : 50%;
+        }
+        .date-2{
+          margin  : 0 0 0 size(0.5);
+        }
+
       }
     } 
   }
 }//EnddetailForm
 
-.fileForm , .rateForm{
-  width  : 95%;
-  margin : 0 0 0 size(1);
+.fileForm , .rateForm 
+{
+  width  : 100%;
+  padding : 2.5%;
+  @media (max-width: 540px){
+    width  : 63vw;
+     
+  }
+
   h4{
-    font-size   : size(0.9);
+    font-size   : size(1); 
     font-weight : 600;
+    @media (max-width: 912px) {
+      font-size   : size(0.8); 
+       
+    }
+    
   } 
-  .subject{
+  .subject
+  {
     
     input, select{
-    padding : size(0.2) size(0.5);
+      padding : size(0.2) size(0.5);
     }
-    .setSubject{
+    .setSubject
+    {
       width   : 100%;
       height  : 3vh;
       display : flex;
-      .topics{
+      .topics
+      {
         margin : 0 0 0 size(3.2);
+        @media (max-width: 912px) 
+        {
+          margin : 0 0 0 size(2.6);
+        }
+        @media (max-width: 540px) 
+        {
+          margin : 0 0 0 size(3.1);
+        }
       }
     
     }
-    .detail {
+    .detail
+    {
       width  : 100%;
       margin : size(1) 0 ;
-      
-      .order{
-        width       : 7%;
+      @media (max-width: 912px) 
+      {
+        margin : size(0.5) 0 ;
+         
+      }
+      .order
+      {
+        width : 7%;
         margin      : size(0.5) 0 ;
         font-size   : size(0.7);
         font-weight : 600;
+        @media (max-width: 912px) 
+        {
+          width       : 8%;
+          font-size   : size(0.6); 
+        
+        }
+        @media (max-width: 540px) 
+        {
+          width       : 10%;
+          font-size   : size(0.6); 
+        }
       }
-      .set-select {
-        width  : 93%;
-        height : 5.5vh;
-        
-        .select-1{
-          width : 44.5%;
-        }
-        .input-1{
-          width : 44.5%;
-          .document{
-            width : 90%;
-          }
-        }
-        .select-2{
-          width  : 44.5%;
+      .file
+      {
+        width: 100%;
+        margin-bottom: size(1);
+        .set-select
+        {
+          width  : 94%;
           height : 5.5vh;
-        
+          .select-1, .input-1{
+            width : 45.3%;
+            margin  : 0 0 0 size(0.5);
+            .document{
+              width : 90%;
+            }
+          }
+
+          .file-document, .select-2{
+            width  : 29.8%;
+            margin  : 0 0 0 size(0.5);
+          }
+
+          @media (max-width: 912px) 
+          {
+            .file-document, .select-1, .select-2
+            {
+              height : 3vh;
+            }
+            .file-document, .select-2
+            {
+              width  : 25.8%;
+              height : 3vh;
+            }
+          }
+
+          @media (max-width: 540px) 
+          {
+            width  : 87.7%;
+            height : 3.5vh;
+            .select-1, .select-2, .file-document
+            {
+              width : 50%;
+              height : 3.5vh;
+            }
+            .file-document, .select-2{
+              width  : 24.3%;
+              margin: 0;
+            }
+
+
+          }
+          .button-circle
+          {
+            margin : 0 0 0 size(0.5) ;
+            @media (max-width: 912px) 
+            {
+              margin : 0 0 0 size(0.7) ;
+            }
+            @media (max-width: 540px) 
+            {
+              margin : 0 0 0 size(1) ;
+            }
+          }
+          
         }
       }
      
-      .file-document, .select-1, .select-2{
-        width  : 27.2%;
-        height : 5.5vh;
-      
-        
-      }
-      .select-2 {
-        margin : 0 0 0 size(0.5) ;
-      }
-  
-      .button-circle  {
-        margin : 0 0 0 size(1) ;
-      }
-      
+     
     }
-    .button-add2{
-      width         : 97.5%;
+    .button-add2
+    {
+      width         : 99%;
       height        : 7vh;
       margin        : size(1) 0 ;
       border-bottom : 2px solid $line-gray; 
@@ -1687,41 +2599,95 @@ input, select, textarea
         float  : right;
         margin : auto;
       }
+      @media (max-width: 912px) 
+      {
+        width  : 100%;
+        height : 4vh;
+        margin : 0 ;
+      }
+      @media (max-width: 540px) {
+        width  : 98%;
+      }
     }
 
   }
-
-} //EndfileForm,rateForm
+}
 
 .fileForm 
 {
+  margin-top : size(2);
   .topics {
-    width : 42%;
+    width : 43%;
   }
   .typefile {
     width : 30%;
   } 
+
+  @media (max-width: 912px) {
+    margin-top : size(3);
+    .topic{
+      width : 40%; 
+    }
+  }
+
+  @media (max-width: 540px) {
+    margin-top : size(3);
+    .topic{
+      width: 35%;
+    }
+  }
+
+  
 }
+
 
 .rateForm 
 {
   .topics {
-    width : 29%;
+    width : 29.7%;
   }
   .typefile {
-    width : 28%;
+    width : 29%;
   }
   .weigth {
     width : 30%;
   }  
+
+  @media (max-width: 912px) {
+    .topics {
+      width : 27.9%;
+    }
+    .typefile {
+      width : 28%;
+    }
+  }
+  @media (max-width: 540px) {
+    .topics {
+      width : 22.5%;
+    }
+  }
 }
 
 .profile 
 {
+  height: 30vh;
+  @media (max-width: 912px) 
+  {
+    height: 16vh;
+  }
+  @media (max-width: 540px) 
+  {
+    height: 20vh;
+  }
   .top 
   {
-    height         : size(14);
+    height         : 100%;
     border-bottom  : 3px solid $line-gray;
+    @media (max-width: 912px) 
+    {
+      font-size: size(0.5);
+    }
+    
     .form
     {
       width     : 100%;
@@ -1732,7 +2698,8 @@ input, select, textarea
       }
 
    
-      .data {
+      .data 
+      {
         width   : 80%;
         margin  : size(2) 0 0 ;
         display : flex; 
@@ -1744,7 +2711,8 @@ input, select, textarea
           }
         }
         
-        .center {
+        .center
+        {
           width : 40%;
           input {
             width : 90%;
@@ -1752,21 +2720,62 @@ input, select, textarea
           .branch {
             input {
               width : 127%;
+              
             }
           }
+          
+          @media (max-width: 912px){
+            width   : 35%;
+            .branch {
+              input{
+                width   : 144%; 
+              }
+            } 
+          }
+
         }
-        .right {
+        .right 
+        {
           width : 20%; 
           .grade {
             input {
               width : 55%;
+              @media (max-width: 912px) 
+              {
+                width   : 70%; 
+              }
             }
           }
-        }    
+        }   
+        
+        @media (max-width: 480px) 
+        {
+          margin  : size(1) 0 0 ;
+          label
+          {
+            font-size : size(0.8);
+          }
+        }
       }
+
     }
     .button-profile {
       margin : 0 0 0 size(34.5);
+      
+      @media (max-width: 912px) 
+      {
+        margin : 0 0 0 size(19);
+      }
+      @media (max-width: 540px) 
+      {
+        margin : 0 0 0 size(20);
+      }
+
+      @media (max-width: 480px) 
+      {
+        margin : 0 0 size(1) size(21);
+      }
+
     }
   }
   .bottom{
@@ -1785,7 +2794,8 @@ input, select, textarea
 }
 
 //reprtInspect
-.inspect {
+.inspect 
+{
   .head {
     width  : 40%;
     margin : auto;
@@ -1812,3 +2822,47 @@ input, select, textarea
     }
   }
 }
+////Css table
+.app-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ffffff;
+  text-align: left;
+  padding: 8px;
+  font-size: 16px;
+}
+
+th {
+  background-color: rgb(117, 201, 250);
+}
+
+td {
+  background-color: rgb(205, 235, 253);
+}
+
+// form {
+//   display: flex;
+//   gap: 5px;
+// }
+
+// form td:last-child {
+//   display: flex;
+//   justify-content: space-evenly;
+// }
+
+// form * {
+//   font-size: 28px;
+// }
+
+//popup

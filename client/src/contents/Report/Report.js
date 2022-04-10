@@ -6,66 +6,85 @@ import Axios from 'axios';
 import ReportList from './ReportList';
 
 function Report(props) {
+  const { StatusQuery, TypeQuery , YearQuery , TermQuery  , DonatorQuery } = useContext(WebContext);
+  const [ statusQuery, setStatusQuery ] = StatusQuery;
+  const [ typeQuery , setTypeQuery ] = TypeQuery;
+  const [ yearQuery , setYearQuery ] = YearQuery;
+  const [ termQuery , setTermQuery ] = TermQuery;
+  const [ donatorQuery , setDonatorQuery ] = DonatorQuery;
 
-  const [Scholar, setScholar] = useState([{
-    id : '',
-    is_public       : false,
-    type            : '',
-    detail          : '',
-    amount          : '',
-    min_student_year: '',
-    max_student_year: '',
-    on_year         : '',
-    on_term         : '',
-    open_date       : '',
-    close_date      : '',
-    check           :false
-  }])
+  const [scholarshipStatusList, setScholarshipStatusList] = useState([
+    {label: 'สถานะทั้งหมด',   value: ''},
+    {label: 'เปิดให้ลงทะเบียน',  value: '1'},
+    {label: 'ไม่เปิดให้ลงทะเบียน',value: '0'},
+    {label: 'อยู่ระหว่างการสัมภาษณ์' , value: '2'},
+    {label: 'เสร็จสิ้นกระบวนการ', value: '9'},
+  ])
+  const [typeList,setTypeList] = useState([
+    {label: 'ทุนทั้งหมด',      value: ''},
+    {label: 'ทุนเรียนดี',      value: '1'},
+    {label: 'ทุนกิจกรรมเด่น',  value: '2'},
+    {label: 'ทุนขาดคุณทรัพย์', value: '3'}
+  ])
 
-  const getScholar = () => {
-    Axios.get("http://localhost:5000/getAllScholarship").then((response) => { 
-            var result = response.data;
-            if (result.length === 0) {
-              result = [{ 
-                id : '',
-                is_public       : false,
-                type            : '',
-                detail          : '',
-                amount          : '',
-                min_student_year: '',
-                max_student_year: '',
-                on_year         : '',
-                on_term         : '',
-                open_date       : '',
-                close_date      : '',
-                check           :false,
-              }]
-            } else {
-              result.forEach((res, index) => {
-                Object.assign(res, {
-                  id                : res.id,
-                  is_public         : res.is_public,
-                  type              : res.type,
-                  detail            : res.detail,
-                  amount            : res.amount,
-                  min_student_year  : res.min_student_year,
-                  max_student_year  : res.max_student_year,
-                  on_year           : res.on_year,
-                  on_term           : res.on_term,
-                  open_date         : res.open_date,
-                  close_date        : res.close_date,
-                  check             :false
-                });
-              });
-            }
-            setScholar(result);
-          })
-    }
 
-    useEffect(() => {
-      getScholar();
-    }, [])
+  var dataTypeList = ['ทุนเรียนดี', 'ทุนกิจกรรมเด่น', 'ทุนขาดคุณทรัพย์']
 
+  const [donatorList,setDonatorList] = useState([]);
+
+  const [yearList,setYearList] = useState([]);
+
+  const getTypeScholar = () =>{
+    Axios.get("http://localhost:5000/getTypeScholar").then(response => {
+      var tempTypeList = typeList;
+      var result = response.data;
+      result.forEach((res, index) => {  
+        var data = res.type;
+        if (data !== '' && !dataTypeList.includes(data)) {
+          tempTypeList.push({ label: data, value: data })
+        }
+      })
+      setTypeList([...typeList]);
+    })
+  }
+
+  function getDonator() {
+    Axios.get("http://localhost:5000/getallDonator").then(response => {
+      var tempDonatorList = donatorList;
+      var result = response.data
+      if (result.length === 0)
+        return
+      result.forEach((res, index) => {  
+        if (res.data !== '') {
+          tempDonatorList.push({ label: res.name, value: res.id })
+        }
+      })
+      setDonatorList([...donatorList])
+    })
+  }
+
+  const getYearScholar = () =>{
+    Axios.get("http://localhost:5000/getYearScholar").then(response => {
+      var tempTypeList = yearList;
+      var result = response.data;
+      result.forEach((res, index) => {  
+        var data = res.on_year;
+        if (data !== '' && !dataTypeList.includes(data)) {
+          tempTypeList.push({ label: data, value: data })
+        }
+      })
+      setYearList([...yearList]);
+      yearList.sort();
+    })
+  }
+
+  useEffect(() => {
+    getTypeScholar();
+    getDonator();
+    getYearScholar();
+  }, [])
+
+ 
   return (
 
       <div className="frame" >
@@ -80,42 +99,66 @@ function Report(props) {
           </div>
           <div className="right"></div>
         </div>
+
+        {/* CONTENT */}
         <div className="contents">
-          <form className="form4" >
+          {/* FILTER */}
+          <div className='filter-bar'>
+
             <div className="select1">
-              <label>ทุนปีการศึกษา</label><br></br>
-                <select  name="capital">
-                  <option value="2564">2564</option>
-                  <option value="2563">2563</option>
-                  <option value="2562">2562</option>
-                  <option value="2561">2561</option>
+              <label>สถานะทุน</label><br></br>
+              <select name="capital" onChange={(e) => {console.log(e.target.value);setStatusQuery(e.target.value)}}>
+                {
+                  scholarshipStatusList.map(
+                    (item, index) => (
+                      <option key={index} value={item.value}>{item.label}</option>
+                    )
+                  )
+                }
+              </select>
+            </div>
+            <div className="select1">
+              <label>ประเภททุน</label>
+              <select  name="capital" id="capital" onChange={e => setTypeQuery(e.target.value)}>
+                  {typeList.map(
+                    (item,index) => (
+                    <option key={index} value={item.label}>{item.label}</option>
+                    )
+                  )} 
+              </select>
+            </div>
+            <div className="select1">
+              <label>ปีการศึกษา</label><br></br>
+                <select  name="capital" onChange={e => setYearQuery(e.target.value)}>
+                  <option value="">ทั้งหมด</option>
+                  {yearList.map(
+                    (item,index) => (
+                    <option key={index} value = {item.label}>{item.label}</option>
+                    )
+                  )}
                 </select>
             </div> 
             <div className="select1">
-              <label>เทอม</label>
-              <select  name="capital" >
-                <option value="first">ต้น</option>
-                <option value="final">ปลาย</option>
+              <label>ภาคเรียน</label>
+              <select  name="capital" onChange={e => setTermQuery(e.target.value)}>
+                <option value="">ทั้งหมด</option>
+                <option value="ภาคต้น">ต้น</option>
+                <option value="ภาคปลาย">ปลาย</option>
               </select>
             </div>
             <div className="select1">
-              <label>ทุนประเภท</label>
-              <select  name="capital" id="capital">
-                <option value="study">ทุนเรียนดี</option>
-                <option value="activity">ทุนกิจกรรมเด่น</option>
-                <option value="property">ทุนขาดคุณทรัพย์</option>
-                <option value="other">ทุนอื่นๆ</option>
-              </select>
-            </div>
-            <div className="select1">
-              <label>โดย</label>
-              <select  name="capital" id="capital">
-                <option value="study">ผู้สนับสนุน</option>
+              <label>ผู้สนับสนุน</label>
+              <select  name="capital" id="capital" onChange={e => setDonatorQuery(e.target.value)}>
+                  <option value = "">ทั้งหมด</option>
+                  {donatorList.map(
+                    (item,index) => (
+                    <option key={index} value = {item.value}>{item.label}</option>
+                    )
+                  )} 
               </select>  
             </div> 
-            
-          </form>
-          <div className="line-gray"></div>
+              
+          </div>
           <div className="content5">
             <ReportList/>
           </div>

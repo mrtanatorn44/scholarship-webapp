@@ -20,7 +20,7 @@ function ProfileCreate() {
   const [profile, setProfile]=useState({
     name:"",
     yearofstudy:"",
-    age:"",
+    birth_date:"",
     std_id:"",
     fieldStudy:"",
     branch:"",
@@ -42,17 +42,20 @@ function ProfileCreate() {
     status_mother:"",
     place_of_work_mother:"",
     tel_mother:"",
-    status_marry:""
+    status_marry:"",
+    gpa:""
    })
+
   function _arrayBufferToBase64( buffer ) {
     var binary = '';
     var bytes = new Uint8Array( buffer );
     var len = bytes.byteLength;
     for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode( bytes[ i ] );
+      binary += String.fromCharCode( bytes[ i ] );
     }
     return window.btoa( binary );
   }
+
   function onHandleUpload(e) {
     var file = e.target.files[0];
     if (file.size <= 1048576) {
@@ -81,7 +84,6 @@ function ProfileCreate() {
   
   function onHandleSubmitBtn(e) {
     e.preventDefault();
-    console.log('work')
 
     Swal.fire({
       title: 'คุณแน่ใจหรือไม่?',
@@ -133,24 +135,27 @@ function ProfileCreate() {
               <input   placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required/>
             </div>
             <div>
-              <label>นิสิตชั้นปีที่</label><br></br>
-              <select  value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
-                <option value="">เลือก</option>
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
-              </select>
+              <label>วันเกิด</label><br></br>
+              <input type="date"  placeholder="วันเกิด" value = {profile.birth_date} onChange={(e)=>changeValue("birth_date",e.target.value)}  required/>
             </div>
-            <div>
-              <label>อายุ</label><br></br>
-              <input type="number" min="0" placeholder="อายุ" value = {profile.age} onChange={(e)=>changeValue("age",e.target.value)}  required/>
-            </div>
+            
+
             
             <div>
               <label>รหัสนิสิต</label><br></br>
-              <input type="number" min="0"  maxLength="10" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
+              <input 
+                type="number"
+                min={String(new Date().getFullYear() + 543 - 8).substring(2, 4) + "00000000"}
+                max={String(new Date().getFullYear() + 543 - 0).substring(2, 4) + "00000000"} 
+                placeholder="รหัสนิสิต"
+                value={profile.std_id}
+                onChange={
+                  (e)=> {
+                    changeValue("std_id",e.target.value)
+                  }
+                }
+                required
+              />
             </div>
             <div>
               <label>ภาคการเรียนการสอน</label><br></br>
@@ -165,13 +170,23 @@ function ProfileCreate() {
               <label>สาขา</label><br></br>
               <select  value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
                   <option value="">เลือก</option>
-                  <option value="คอมพิวเตอร์">  คอมพิวเตอร์  </option>
-                  <option value="ไฟฟ้า">  ไฟฟ้า      </option>
-                  <option value="เครื่องกล">  เครื่องกล    </option>
-                  <option value="หุ่นยนต์">  หุ่นยนต์     </option>
+                  <option value="วิศวกรรมโยธา (T05)">วิศวกรรมโยธา (T05)</option>
+                  <option value="วิศวกรรมอุตสาหการ (T07)">วิศวกรรมอุตสาหการ (T07)</option>
+                  <option value="วิศวกรรมคอมพิวเตอร์และสารสนเทศศาสตร์ (T12)">วิศวกรรมคอมพิวเตอร์และสารสนเทศศาสตร์ (T12)</option>
+                  <option value="วิศวกรรมเครื่องกลและการออกแบบ (T13)">วิศวกรรมเครื่องกลและการออกแบบ (T13)</option>
+                  <option value="วิศวกรรมไฟฟ้าและอิเล็กทรอนิกส์ (T14)">วิศวกรรมไฟฟ้าและอิเล็กทรอนิกส์ (T14)</option>
+                  <option value="วิศวกรรมอุตสาหการและระบบ (T17)">วิศวกรรมอุตสาหการและระบบ (T17)</option>
+                  <option value="วิศวกรรมเครื่องกลและระบบการผลิต (T18)">วิศวกรรมเครื่องกลและระบบการผลิต (T18)</option>
+                  <option value="วิศวกรรมหุ่นยนต์และระบบอัตโนมัติ (T19)">วิศวกรรมหุ่นยนต์และระบบอัตโนมัติ (T19)</option>
+                  <option value="วิศวกรรมระบบการผลิตดิจิทัล (T20)">วิศวกรรมระบบการผลิตดิจิทัล (T20)</option>
+
               </select>
             </div>
             
+            <div>
+                <label>คะแนนเฉลี่ยนสะสม(GPA)</label><br></br>
+                <input value = {profile.gpa} type="number" min="0" max="4" step="0.01"  placeholder = "คะแนนเฉลี่ยสะสม(GPA)" onChange={(e)=>changeValue("gpa",e.target.value)} required></input>
+            </div>
             <div>
               <label>ที่อยู่ปัจจุบัน (ที่ติดต่อได้สะดวก)</label><br></br>
               <input placeholder="ที่อยู่ปัจจุบัน" value = {profile.address} onChange={(e)=>changeValue("address",e.target.value)} required/>
@@ -182,12 +197,20 @@ function ProfileCreate() {
             </div>
             <div>
               <label>อัพโหลดรูปโปรไฟล์</label><br></br>
-              <input type="file" name="file" id="file"  onChange={(file) => onHandleUpload(file)} required/>
+              <input
+                type="file"
+                accept="image/jpeg,image/png"
+                name="file"
+                id="file"
+                onChange={
+                  (file) => onHandleUpload(file)
+                } 
+                required
+              />
             </div>
-            {/*
-            <div>
-              <h5>ประวัติครอบครัว</h5>
-            </div>
+
+            {/* MOTHER */}
+            <h5>ข้อมูลบิดา</h5>
             <div>
               <label>ชื่อ-นามสกุล(บิดา)</label><br></br>
               <input placeholder="ชื่อภาษาไทย" value = {profile.name_father} onChange={(e)=>changeValue("name_father",e.target.value)} required/>
@@ -234,6 +257,8 @@ function ProfileCreate() {
               <input className = "halfbar" placeholder="ที่อยู่ของบิดา" value = {profile.address_father} onChange={(e)=>changeValue("address_father",e.target.value)} required/>
             </div>
 
+            {/* MOTHER */}
+            <h5>ข้อมูลมารดา</h5>
             <div>
               <label>ชื่อ-นามสกุล(มารดา)</label><br></br>
               <input className = "halfbar" placeholder="ชื่อ-สกุล(มารดา)" value = {profile.name_mother} onChange={(e)=>changeValue("name_mother",e.target.value)} required/>
@@ -279,9 +304,14 @@ function ProfileCreate() {
               <input className = "halfbar" placeholder="ที่อยู่มารดา" value = {profile.address_mother} onChange={(e)=>changeValue("address_mother",e.target.value)} required/>
             </div>
             <div>
-              <label>สถานะสมรสของบิดา-มารดา</label><br></br>
-              <input className = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" value = {profile.status_marry} onChange={(e)=>changeValue("status_marry",e.target.value)} required/>
-            </div>*/}
+            <label>สถานะสมรสบิดา-มารดา</label><br></br>
+                <select Value = {profile.status_marry} required>
+                    <option value="">เลือก</option>
+                    <option value="แยกกันอยู่">แยกกันอยู่</option>
+                    <option value="หย่าร้าง">หย่าร้าง</option>
+                    <option value="อยู่ด้วยกัน">อยู่ด้วยกัน</option>
+                </select>
+            </div>
             <div className="footer1">
               <div className="confirm">
                 <button className="button-confirm green1" type='submit'>

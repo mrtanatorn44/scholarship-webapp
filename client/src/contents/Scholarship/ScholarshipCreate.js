@@ -3,39 +3,45 @@
 import React, { useState, useContext } from 'react';
 import { WebContext } from '../../App';
 
+import CreateDetailForm from './CreateDetail.js'; 
+import CreateAttrForm from './CreateAttrform.js';
+import CreateFileForm from './CreateFileform.js';
+import CreateRateform from './CreateRateform.js';
 
-import CFileForm from './CreateFileform.js';
-import RateForm from './CreateRateform.js';
-import DetailForm from './CreateDetail.js'; 
 
 // Alert & Image Modal
 import Swal from 'sweetalert2'
 
 import Axios from 'axios';
-function ScholarshipListCreate() {
+function ScholarshipCreate() {
    
-  const { Content, ScholarshipForm, FileForm, ScoringFormat } = useContext(WebContext)
+  const { Content, ScholarshipForm, FileForm, RateForm,AttrForm } = useContext(WebContext)
   const [ content , setContent]               = Content;
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
   const [ fileForm , setFileForm]             = FileForm;
-  const [scoringFormat, setScoringFormat] = ScoringFormat;
+  const [ rateForm , setRateForm] = RateForm;
+  const [attrForm, setAttrForm] = AttrForm;
 
   function insertScholarshipToDB(donator_id) {
-    Axios.post("http://localhost:5000/addScholar",{
+    Axios.post("http://localhost:5000/addScholarship",{
       donator_id      : donator_id,
-      is_public       : false,
+      status          : 0,
       type            : scholarshipForm.type,
       detail          : scholarshipForm.detail,
       amount          : scholarshipForm.amount,
-      min_student_year: scholarshipForm.min_student_year,
-      max_student_year: scholarshipForm.max_student_year,
       on_year         : scholarshipForm.on_year,
       on_term         : scholarshipForm.on_term,
       open_date       : scholarshipForm.open_date,
       close_date      : scholarshipForm.close_date,
-      required        : JSON.stringify(fileForm),
-      rating          : JSON.stringify(scoringFormat)
+      attribute_requirement   : JSON.stringify(attrForm),
+      file_requirement        : JSON.stringify(fileForm),
+      interview_requirement   : JSON.stringify(rateForm),
     }).then((response) => {
+      if (response.data.errno) { // Check if Backend return error
+        console.log(response.data)
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       setContent('Scholarship');
       Swal.fire('บันทึกแล้ว!','','success')
     })
@@ -56,16 +62,22 @@ function ScholarshipListCreate() {
       if (result.isConfirmed) {
 
         var donator_id;
-
-        Axios.post("http://localhost:5000/getDonator").then(response => {
+        Axios.get("http://localhost:5000/getallDonator").then(response => {
+          if (response.data.errno) { // Check if Backend return error
+            console.log(response.data)
+            Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+            return;
+          }
           var result = response.data
+
           result.forEach((res, index) => {  
             if (res.name === scholarshipForm.donator) {
-              console.log('Exist Donator :', res.name, res.id)
+              //console.log('Exist Donator :', res.name, res.id)
               donator_id = res.id
               insertScholarshipToDB(res.id)
             }
           })
+
           if (donator_id !== undefined)
             return;
 
@@ -73,6 +85,11 @@ function ScholarshipListCreate() {
           Axios.post("http://localhost:5000/addDonator", {
             name : scholarshipForm.donator
           }).then(response => {
+            if (response.data.errno) { // Check if Backend return error
+              console.log(response.data)
+              Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+              return;
+            }
             console.log('not Exist Donator :', scholarshipForm.donator, response.data.insertId)
             insertScholarshipToDB(response.data.insertId);
           })
@@ -83,7 +100,7 @@ function ScholarshipListCreate() {
   }
   
   return (
-    <div className="frame">
+    <div className="frame"> 
       <div className="header">
         <div  className="left">
             <div className="icons">  
@@ -101,13 +118,16 @@ function ScholarshipListCreate() {
         <div className = 'content1'>  
           <form onSubmit={(e) => onHandleSubmitBtn(e)}>
             <div className="detailForm" >
-              <DetailForm/>
+              <CreateDetailForm/>
+            </div>
+            <div className='attrForm'> 
+              <CreateAttrForm/> 
             </div>
             <div className='fileForm'> 
-              <CFileForm/> 
+              <CreateFileForm/> 
             </div>  
             <div className="rateForm">
-              <RateForm/>
+              <CreateRateform/>
             </div> 
 
             {/* ----- FOOTER ------ */}
@@ -116,7 +136,6 @@ function ScholarshipListCreate() {
                 <button className="button-confirm green1" type="submit">
                   ตกลง 
                 </button>
-                
               </div>
             </div>
           </form>
@@ -126,6 +145,6 @@ function ScholarshipListCreate() {
   )
 }
 
-export default ScholarshipListCreate;
+export default ScholarshipCreate;
 
 //

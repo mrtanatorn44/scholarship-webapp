@@ -38,8 +38,8 @@ function AnnounceList() {
   }
 
   return (
-    announce.map((news) => (
-      <div className="news" key={news.id}>
+    announce.map((news, news_idx) => (
+      <div className="news" key={news_idx}>
 
         {/* ----- TITLE ----- */}
         <div className='title'>
@@ -57,7 +57,7 @@ function AnnounceList() {
         }
         { /* DETAIL */
           news.toggleContent && 
-          <div  style={{whiteSpace:'pre-line'}} className='content'><h3>{ news.detail }</h3></div> 
+          <div className='content'><h3 className='preline'>{ news.detail }</h3></div> 
         }
         { /* MODAL POPUP IMAGE */
           news.ImageModal && 

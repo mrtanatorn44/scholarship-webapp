@@ -24,8 +24,8 @@ function NewsListlogin(props) {
   }
 
   return (
-    announce.map((news) => (
-      <div className="news" key={news.number}>
+    announce.map((news, idx) => (
+      <div className="news" key={idx}>
         {/*---------- TITLE ----------*/}
         <div className='title'>
           <h2>{news.title}</h2>

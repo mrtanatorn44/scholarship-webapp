@@ -1,147 +1,187 @@
 /*eslint no-unused-vars:*/
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { WebContext } from '../../App';
 
 function RateForm (){
-  const  { ScoringFormat }  = useContext(WebContext)
-  const [scoringFormat, setScoringFormat] = ScoringFormat;
+  const { RateForm }  = useContext(WebContext)
+  const [ rateForm, setRateForm ] = RateForm;
 
-    const [rateForms, setRateforms] = useState([{ hashID : Math.random().toString(36).substr(2, 7), name : "", type:"" , weight : "" }]);
-    const fileAutoFormat =[
+  const presetRateType =[
+    {
+      title: 'เลือกเกณฑ์การให้คะแนน',
+      type: '',
+    },
+    {
+      title: 'คะแนน(เต็มร้อย)',
+      type: 'score100',
+    },
+    {
+      title: 'คะแนน(เต็มสิบ)',
+      type: 'score10',
+    },
+    {
+      title: 'ผ่านหรือไม่ผ่าน',
+      type: 'state',
+    }
+  ]
+
+  useEffect(() => {
+    setRateForm([
       {
-        title: 'เลือกเกณฑ์การให้คะแนน',
-        type: 'score',
-        value: ''
-      },
-      {
-        title: 'คะแนน(100.00%)',
-        type: 'score',
-        value: '0'
-      },
-      {
-        title: 'ผ่านไม่ผ่าน',
-        type: 'pass',
-        value: '1'
+        hashID  : Math.random().toString(36).substr(2, 7), 
+        title   : "", 
+        type    : "",
+        weight  : ""
       }
-    ]
-    
-    function delrateForm(target) {   
-      const id = target.hashID;           
-      setRateforms((rateForms) => rateForms.filter((item) => item.hashID !== id))
-      setScoringFormat((rateForms) => rateForms.filter((item) => item.hashID !== id))
-      
-    }
-     
-    const addrateForm = () => {
-      setRateforms([...rateForms, {hashID : Math.random().toString(36).substr(2, 7), name : "", type:"", weight : "" }])
-    }
-    
-    function onSelectFormat(e, targetHashID) {
-      // if it select 'label' that have value = '' 
-      // do nothing
-      if (e.target.value === '')
-        return;
-      var tempFiles = [...rateForms]; 
-      tempFiles.forEach((file) => { // loop to find target object
-        if (file.hashID === targetHashID) { // check if found target from hashID
-          // update value
-          file.type = e.target.value;
-        }
-      })
-      setRateforms(tempFiles) // apply value
-    }
+    ]);
+  }, [])
 
-    function handleInputChangeName(e, targetHashID) {
-      // if it select 'label' that have value = '' 
-      // do nothing
-      if (e.target.value === '')
-        return;
-      var tempFiles = [...rateForms]; 
-      tempFiles.forEach((file) => { // loop to find target object
-        if (file.hashID === targetHashID) { // check if found target from hashID
-          // update value
-          file.name = e.target.value;
-        }
-      })
-      setRateforms(tempFiles) // apply value
-    }
+  return(
+    <>
+      <div className="heading">
+        <h4>เกณฑ์การให้คะแนน</h4>
+      </div>
 
-    function handleInputChangeWeight(e, targetHashID) {
-      // if it select 'label' that have value = '' 
-      // do nothing
-      if (e.target.value === '')
-        return;
-      var tempFiles = [...rateForms]; 
-      tempFiles.forEach((file) => { // loop to find target object
-        if (file.hashID === targetHashID) { // check if found target from hashID
-          // update value
-          file.weight = e.target.value;
-        }
-      })
-      setRateforms(tempFiles) // apply value
-    }
-
-    function showAll() {
-       console.log(rateForms);
-     }
-    
-  
-    return(
-      <>
-        <button type='button' onClick={() => showAll()}> SHOW ELEMENT</button>
-        <div className="heading">
-          <br></br>
-          <h4>เกณฑ์การให้คะแนน</h4>
+      <div className="subject">
+        <div className='w100 d-flex'>
+          <div className='w10'></div>
+          <div className='w30'>หัวข้อ</div>
+          <div className='w30'>เกณฑ์คะแนน</div>
+          <div className='w20'>น้ำหนัก</div>
+          <div className='w10'></div>
         </div>
-        <div className="subject">
-          <div className='setSubject d-flex'>  
-            <p className='topics'>หัวข้อ</p>
-            <p className='typefile'>รูปแบบการให้คะแนน</p>
-            <p className='weight'>น้ำหนัก</p>
-          </div>
-        <div className="detail">
-         {
-          rateForms.map((item, index) => (
-            <div className="d-flex" key={index}>
-              <p className="order" >ลำดับ {index+1}</p>
-              <input className="file-document" required
-                  type="text" 
-                  name="name"
+
+
+        
+        {
+          rateForm.map((rate, index) => (
+            <div className="w100 mgb1 d-flex" key={index}>
+              <div className="w10 text1 fs07"><b>ลำดับ {index+1}</b></div>
+              <div className="w30 select2">
+                <input className="file-document"
+                  value       = {rate.title}
+                  type        = "text" 
                   placeholder = "หัวข้อการให้คะแนน"
-                  onChange={(e) => {handleInputChangeName(e, item.hashID);setScoringFormat(rateForms)}}
-              />
-              
-              <select className="select-2" required onChange={(e) => {onSelectFormat(e, item.hashID);setScoringFormat(rateForms)}} >
-                {
-                  fileAutoFormat.map((format, format_index) =>
-                    <option key={format_index}  value ={format.value} > {format.title}  </option>
-                  )
-                }
-              </select>
-  
-              <input className="select-2"
+                  onChange    = {
+                    (e) => {
+                      var tempRateForm = [...rateForm];
+                      var handleInput = tempRateForm.filter(obj => {
+                        if (obj.hashID === rate.hashID) {
+                          rate.title = e.target.value; // set new 'title'
+                        }
+                      })
+                      setRateForm(tempRateForm) // apply value
+                    }
+                  }
                   required
-                  type="number" min="0" max="100"
-                  name="weight"
+                />
+              </div>
+              {/* RATE TYPE */}
+              <div className="w30 select2">
+                <select
+                  value         = {rate.type}
+                  onChange      = {
+                    (e) => {
+                      var tempRateForm = [...rateForm]; 
+                      var handleSelect = tempRateForm.filter(obj => {
+                        if (obj.hashID === rate.hashID) {
+                          rate.type = e.target.value; // update value
+                        }
+                      })
+                      setRateForm(tempRateForm) // apply value
+                    }
+                  }
+                  required
+                >
+                  {
+                    presetRateType.map((presetRate, presetRateIdx) =>
+                      <option 
+                        key   = {presetRateIdx}
+                        value = {presetRate.type}
+                      >
+                        {presetRate.title}
+                      </option>
+                    )
+                  }
+                </select>
+              </div>
+
+              {/* WEIGHT INPUT */}
+              <div className="w20 select2">
+                <input 
+                  value       = {rate.weight}
+                  type        = "number" min="0" max="100"
                   placeholder = "น้ำหนักการให้คะแนน"
-                  onChange={(e) => {handleInputChangeWeight(e, item.hashID); setScoringFormat(rateForms)}}
-              />
-              
-              <button className="button-circle red1" type="button" onClick={() => delrateForm(item)}>
-                <i className="bi bi-dash"></i>
-              </button>
+                  required
+                  onChange    = {
+                    (e) => {
+                      var tempRateForm = [...rateForm]; 
+                      var handleInput = tempRateForm.filter(
+                        (obj) => {
+                          if (obj.hashID === rate.hashID) {
+                            rate.weight = e.target.value; // update value
+                          }
+                        }
+                      )
+                      setRateForm(tempRateForm) // apply value
+                    }
+                  }
+                />
+              </div>
+
+              {/* DELETE CURRENT 'RATE' ELEMENT */}
+              <div className="w10 ">
+                <button 
+                  className="button-circle red1" 
+                  type="button" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setRateForm((rateForm) => 
+                      rateForm.filter((obj) => 
+                        obj.hashID !== rate.hashID
+                      )
+                    )
+                  }}
+                >
+                  <i className="bi bi-dash"></i>
+                </button>
+              </div>
+
             </div>
           ))
-          }
+        }
+
+        {/* ADD NEW 'RATE' ELEMENT */}
+        <div className='w100 d-flex'>
+          <div className='w10'></div>
+          <div className='w30'></div>
+          <div className='w30'></div>
+          <div className='w20'></div>
+          <div className='w10'>
+            <button 
+              className="button-circle green1" 
+              type="button" 
+              onClick={() => {
+                setRateForm([
+                  ...rateForm, 
+                  {
+                    hashID  : Math.random().toString(36).substr(2, 7),
+                    title   : "",
+                    type    : "",
+                    weight  : "" 
+                  }
+                ])
+              }}
+            >
+              <i className="bi bi-plus-lg"></i>
+            </button>
+          </div>
         </div>
-        <div className="button-add2">
-          <button className="button-circle green1" type="button" onClick={() => addrateForm()}>
-            <i className="bi bi-plus-lg"></i>
-          </button>
-        </div>
-        </div>
-      </>
-    )
-  }
-  export default RateForm;
+
+      </div>
+    </>
+  )
+}
+
+export default RateForm;

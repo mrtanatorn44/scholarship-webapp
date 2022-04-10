@@ -7,23 +7,25 @@ import { WebContext } from '../../App';
 import EditFileForm from './EditFileform.js';
 import EditRateForm from './EditRateform.js';
 import EditDetailForm from './EditDetail.js'; 
+import EditAttrform from './EditAttrform.js';
 
 // Alert & Image Modal
 import Swal from 'sweetalert2'
 
 function ScholarshipEdit() {
    
-  const { Content, ScholarshipForm ,FileForm, ScoringFormat} = useContext(WebContext)
-  const [ content , setContent] = Content;
-  const [ fileForm , setFileForm]             = FileForm;
-  const [scoringFormat, setScoringFormat] = ScoringFormat;
+  const {Content, ScholarshipForm ,FileForm, RateForm,AttrForm} = useContext(WebContext)
+  const [content , setContent] = Content;
+  const [fileForm , setFileForm]             = FileForm;
+  const [rateForm, setRateForm] = RateForm;
   const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
+  const [attrForm, setAttrForm] = AttrForm;
 
   function insertScholarshipToDB(donator_id) {
-    Axios.post("http://localhost:5000/editScholar",{
+    Axios.post("http://localhost:5000/editScholarship",{
       donator_id      : donator_id,
       id              : scholarshipForm.id,
-      is_public       : false,
+      status          : scholarshipForm.status,
       type            : scholarshipForm.type,
       detail          : scholarshipForm.detail,
       amount          : scholarshipForm.amount,
@@ -33,8 +35,9 @@ function ScholarshipEdit() {
       on_term         : scholarshipForm.on_term,
       open_date       : scholarshipForm.open_date,
       close_date      : scholarshipForm.close_date,
-      required        : JSON.stringify(fileForm),
-      rating          : JSON.stringify(scoringFormat)
+      attribute_requirement   : JSON.stringify(attrForm),
+      file_requirement        : JSON.stringify(fileForm),
+      interview_requirement   : JSON.stringify(rateForm)
     }).then((response) => {
       setContent('Scholarship');
       Swal.fire('บันทึกแล้ว!','','success')
@@ -54,18 +57,18 @@ function ScholarshipEdit() {
       cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
-
         var donator_id;
-
-        Axios.post("http://localhost:5000/getDonator").then(response => {
+        Axios.get("http://localhost:5000/getallDonator").then(response => {
           var result = response.data
           result.forEach((res, index) => {  
+            console.log(res.name)
             if (res.name === scholarshipForm.donator) {
               console.log('Exist Donator :', res.name, res.id)
               donator_id = res.id
               insertScholarshipToDB(res.id)
             }
           })
+          
           console.log('id :', donator_id)
           if (donator_id !== undefined)
             return;
@@ -86,23 +89,28 @@ function ScholarshipEdit() {
   return (
     <div className="frame">
       <div className="header">
-        <div  className="left">
-            <div className="icons">  
-              <i className="bi bi-plus-lg"></i>
-            </div>
-            <div className="topic">
-              <h4>แก้ไขทุน</h4>
-            </div>
+        <div className="left">
+          <div className="icons">  
+            <i className="bi bi-plus-lg"></i>
+          </div>
+          <div className="topic">
+            <h4>แก้ไขทุน</h4>
+          </div>
         </div>
 
         <div className="right">
+
         </div>
+
       </div>
       <div className = 'contents'> 
         <div className = 'content1'>  
           <form onSubmit={(e) => onHandleSubmitBtn(e)}>
             <div className="detailForm" >             
               <EditDetailForm/>
+            </div>
+            <div className="attrForm">
+              <EditAttrform/>
             </div>
             <div className='fileForm'> 
               <EditFileForm/>
@@ -127,5 +135,3 @@ function ScholarshipEdit() {
 }
 
 export default ScholarshipEdit;
-
-//

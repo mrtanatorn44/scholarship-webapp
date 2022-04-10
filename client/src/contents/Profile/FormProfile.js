@@ -19,7 +19,7 @@ function FormProfile() {
   const [profile, setProfile]=useState({
     name:"",
     yearofstudy:"",
-    age:"",
+    birth_date:"",
     std_id:"",
     fieldStudy:"",
     branch:"",
@@ -113,7 +113,7 @@ function FormProfile() {
             <label>ชื่อ-นามสกุล</label><br></br>
               <input  placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required/>
             </div>
-            <div>
+            {/* <div>
               <label>นิสิตชั้นปีที่</label><br></br>
               <select  value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
                 <option value="">เลือก</option>
@@ -123,10 +123,10 @@ function FormProfile() {
                 <option value="2">2</option>
                 <option value="1">1</option>
               </select>
-            </div>
+            </div> */}
             <div>
-              <label>อายุ</label><br></br>
-              <input type="number" min="0" placeholder="อายุ" value = {profile.age} onChange={(e)=>changeValue("age",e.target.value)}  required/>
+              <label>วันเกิด</label><br></br>
+              <input type="date"  placeholder="วันเกิด" value = {profile.birth_date} onChange={(e)=>changeValue("birth_date",e.target.value)}  required/>
             </div>
             
             <div>
@@ -145,11 +145,16 @@ function FormProfile() {
             <div>
               <label>สาขา</label><br></br>
               <select value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
-                  <option value="">เลือก</option>
-                  <option value="คอมพิวเตอร์">  คอมพิวเตอร์  </option>
-                  <option value="ไฟฟ้า">  ไฟฟ้า      </option>
-                  <option value="เครื่องกล">  เครื่องกล    </option>
-                  <option value="หุ่นยนต์">  หุ่นยนต์     </option>
+              <option value="">เลือก</option>
+                  <option value="วิศวกรรมโยธา (T05)">วิศวกรรมโยธา (T05)</option>
+                  <option value="วิศวกรรมอุตสาหการ (T07)">วิศวกรรมอุตสาหการ (T07)</option>
+                  <option value="วิศวกรรมคอมพิวเตอร์และสารสนเทศศาสตร์ (T12)">วิศวกรรมคอมพิวเตอร์และสารสนเทศศาสตร์ (T12)</option>
+                  <option value="วิศวกรรมเครื่องกลและการออกแบบ (T13)">วิศวกรรมเครื่องกลและการออกแบบ (T13)</option>
+                  <option value="วิศวกรรมไฟฟ้าและอิเล็กทรอนิกส์ (T14)">วิศวกรรมไฟฟ้าและอิเล็กทรอนิกส์ (T14)</option>
+                  <option value="วิศวกรรมอุตสาหการและระบบ (T17)">วิศวกรรมอุตสาหการและระบบ (T17)</option>
+                  <option value="วิศวกรรมเครื่องกลและระบบการผลิต (T18)">วิศวกรรมเครื่องกลและระบบการผลิต (T18)</option>
+                  <option value="วิศวกรรมหุ่นยนต์และระบบอัตโนมัติ (T19)">วิศวกรรมหุ่นยนต์และระบบอัตโนมัติ (T19)</option>
+                  <option value="วิศวกรรมระบบการผลิตดิจิทัล (T20)">วิศวกรรมระบบการผลิตดิจิทัล (T20)</option>
               </select>
             </div>
             

@@ -3,16 +3,18 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App';
 import Axios from 'axios';
+import Swal from 'sweetalert2';
 
 function Profile() {
 
   const { User, Content } = useContext(WebContext)
   const [content, setContent] = Content;
   const [user, setUser] = User;
-
+  const [scholarship, setScholarship] = useState([]);
+  const [form, setForm] = useState([]);
   const [profile, setProfile] = useState({
     name:"",
-    age:"",
+    birth_date:"",
     std_id:"",
     address:"",
     branch:"",
@@ -20,7 +22,7 @@ function Profile() {
     fieldStudy:"",
     image:""
   })
-
+ 
   const getProfile = () =>{
     if (user.id === undefined) {
       console.log(user.id)
@@ -46,16 +48,80 @@ function Profile() {
       setProfile(res)
     })
   }
+  /* const data = [{profile_data}];
+  document.getElementById("json").inner */
   
+
+  const getUserForm = () => {
+		Axios.post("http://localhost:5000/getFormByUserID",{
+			user_id:user.id
+		}).then((response) => {
+      if (response.data.errno) { // Check if Backend return error
+        console.log(response.data)
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
+		  var result = response.data;
+      if (result.length !== 0) {
+		  result.forEach((res, index) => {
+			  Axios.post("http://localhost:5000/getScholarship",{
+				  id : res.scholarship_id
+        }).then((scholar) => {
+          if (scholar.data.errno) { // Check if Backend return error
+            console.log(scholar.data)
+            Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + scholar.data.errno, 'warning');
+            return;
+          }
+          var sch=scholar.data[0]
+          Axios.post("http://localhost:5000/getDonator", { 
+            id: sch.donator_id 
+          }).then((donator) => {
+            if (donator.data.errno) { // Check if Backend return error
+              console.log(donator.data)
+              Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + donator.data.errno, 'warning');
+              return;
+            }
+            Object.assign(res, {
+              sch_id            : sch.id,
+              sch_status        : sch.status,
+              type              : sch.type,
+              detail            : sch.detail,
+              amount            : sch.amount,
+              on_year           : sch.on_year,
+              on_term           : sch.on_term,
+              open_date         : sch.open_date.split("T")[0],
+              close_date        : sch.close_date.split("T")[0],
+              donator_id        : sch.donator_id,
+              donator           : donator.data[0].name,
+              attr_requirement  : JSON.parse(sch.attribute_requirement),
+              file_requirement  : JSON.parse(sch.file_requirement),
+              interview_requirement   : JSON.parse(sch.interview_requirement),
+              appointment : JSON.parse(sch.appointment),
+              toggleContent     : false
+            });
+            setForm((form)=>[...form,res])
+          })
+        })
+      })
+      }        
+    })
+  }
  
+
+
+  function getDateFormat(date) { // [yyyy,mm,dd]
+    var month_th = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+    return "วันที่ " + (parseInt(date[2])) + " " + month_th[parseInt(date[1], 10)] + " พ.ศ. " + (parseInt(date[0]) + 543);
+  } 
+
   useEffect(() => {
     getProfile();
+    getUserForm();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   return(
     <div className="frame">   
-      <div className="contents" >
         <div className="profile">
           <div className="top">
             <form className="form">
@@ -86,8 +152,12 @@ function Profile() {
                 <div className="right">
                   <div className="grade">
                     <label >นิสิตชั้นปีที่</label><br></br>
-                    <input placeholder="5" defaultValue = {profile.yearofstudy} readOnly="readOnly" ></input>
+                    <input 
+                      value={parseInt(String(new Date().getFullYear() + 543).substring(2, 4)) - String(profile.std_id).substring(0,2)}
+                      readOnly="readOnly"
+                    />
                   </div>
+
                 </div>
               </div>
             </form>
@@ -106,20 +176,39 @@ function Profile() {
               }
             </div>
           </div>
-       
-          <div className="bottom">
-            <div className="dropdown">
-              <label>ประเภทของทุน</label>
-              <br></br>
-              <select>
-                <option defaultValue="study">ทุนเรียนดี</option>
-                <option defaultValue="activity">ทุนกิจกรรมเด่น</option>
-                <option defaultValue="property">ทุนขาดคุณทรัพย์</option>
-                <option defaultValue="other">ทุนอื่นๆ</option>
-              </select>
-            </div>
-          </div>
-        </div>
+        </div>  
+      <div className="content6">
+        { 
+          form.filter((item)=>{return item.status===4})
+          .map((item, scholarship_index) => (    
+                <div key={scholarship_index}>
+                  <div className="list3"> 
+                      <div className="list3-left">
+                        {/* HEADER */}
+                        <div className='box30 text1'>
+                          <h4>{item.type}</h4>
+                        </div>
+                        {/* DETAIL */}
+                        <div className='box40 text1'>
+                        <h6>ทุนประจำปีการศึกษา {item.on_year } {item.on_term}</h6>
+                          {/* <p>{item.open_date.split("T")[0].split('-').reverse().join('/')} - {item.close_date.split("T")[0].split('-').reverse().join('/')}</p> */}
+                        </div>
+                              
+                        {/* PANEL */}
+                        <div className='panel2 box30'>
+                          <div className='admin-panel2'>
+                            {/* FOR SPACING */}
+                          </div>
+                          <div className='user-panel2'>
+                            <p>ได้รับทุนเรียบร้อย</p>              
+                          </div>
+                        </div>       
+                      </div>      
+                  </div>
+                </div>   
+                      
+           ))
+          } 
       </div>
     </div>
   )

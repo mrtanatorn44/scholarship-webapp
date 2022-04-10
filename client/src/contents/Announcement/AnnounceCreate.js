@@ -74,7 +74,11 @@ function AnnounceCreate(props) {
           imageData   : form.imageData,
           imageName   : form.imageName
         }).then((response) => {
-          
+          if (response.data.errno) { // Check if Backend return error
+            console.log(response.data)
+            Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+            return;
+          }
           console.log(form.imageData)
           setAnnounce([]);
           setContent('Announcement');

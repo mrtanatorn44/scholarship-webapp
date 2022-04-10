@@ -10,8 +10,9 @@ function MemberList(props){
   const [content, setContent] = Content;
   const [editProfileID, setEditProfileID] = EditProfileID;
 
-  const { Query } = useContext(WebContext);
+  const { Query, RoleQuery} = useContext(WebContext);
   const [query, setQuery] = Query;
+  const [roleQuery, setRoleQuery] = RoleQuery;
   const [User,setUser] = useState([]);
   
   const getUser = () =>{
@@ -25,20 +26,19 @@ function MemberList(props){
   }, [])
   
   return (
-    User.filter( user => {
-      return user.fname.toLowerCase().includes(query.toLowerCase())
-    }).map((user, index) => (
+    User.filter(
+      user => user.fname.toLowerCase().includes(query.toLowerCase()) && (roleQuery === '' ? true : user.role === roleQuery)
+    ).map((user, index) => (
       
-      <div className="container1 list2 d-flex" key={index}>
+      <div className="list2" key={index}>
 
-        <div className="name">
-          <p>Name : {user.fname} {user.lname}</p>
+        <div className="list2-left">
+          <p className='text1'>{user.fname} {user.lname} <br/> ({user.email})</p>
         </div>
         
-        <div className="right">
-          <button className="button-2 d-flex" type="button" onClick={() => { setEditProfileID(user.id);setContent("FormProfile"); }}> 
-            <i class="bi bi-card-checklist green1"></i>
-            <p>ข้อมูลสมาชิก</p>
+        <div className="list2-right">
+          <button className="button-small sky" type="button" onClick={() => { setEditProfileID(user.id);setContent("FormProfile"); }}> 
+            โปรไฟล์
           </button>
         </div>
             

@@ -9,7 +9,6 @@ function Main() {
   const     { ScholarshipForm, Content, Announce } = useContext(WebContext);
   const   [ content, setContent ] = Content;
   const [ announce, setAnnounce ] = Announce;
-  const [scholarshipForm, setScholarshipForm] = ScholarshipForm;
 
   // Handle 'Content' localStorage
   useEffect(() => {
@@ -34,7 +33,8 @@ function Main() {
       base64 += String.fromCharCode.apply(null, arrayBuffer.slice(i, i+CHUNK_SIZE));
     return base64;
   }
-
+  /////////file Pdf/////////////
+  
   // Get Announce
   useEffect(() => {
 
@@ -42,7 +42,8 @@ function Main() {
       console.log('Loading Announce...')
       var start = new Date().getTime();
       Axios.get("http://localhost:5000/getAllAnnounce").then((response) => { 
-        var result = response.data;
+        console.log('res', response)
+        var result = response.data===undefined?{}:response.data;
         if (result.length === 0) {
           result = [{ 
             title         : "ไม่มีประกาศในขณะนี้", 

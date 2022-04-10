@@ -1,15 +1,41 @@
 import React, { useContext, useState, useEffect } from 'react';
-import ApplicantList from '../Applicant/ApplicantList';
-import IntervieweeList from './IntervieweeList.js';
+import ApplicantList from '../Applicant/ApplicantData';
+import InterviewData from './InterviewData.js';
 import { WebContext } from '../../App.js'; 
+import Axios from 'axios';
 
-function Interview(props) {
+function Interview() {
 
-  const { Query } = useContext(WebContext);
+  const { Query,TypeQuery } = useContext(WebContext);
   const [query, setQuery] = Query;
+  const [typeQuery, setTypeQuery] = TypeQuery;
+  
+  const [typeList,setTypeList] = useState([
+    {label: 'ทุนทั้งหมด',      value: '0'},
+    {label: 'ทุนเรียนดี',      value: '1'},
+    {label: 'ทุนกิจกรรมเด่น',  value: '2'},
+    {label: 'ทุนขาดคุณทรัพย์', value: '3'}
+  ])
+  var dataTypeList = ['ทุนเรียนดี', 'ทุนกิจกรรมเด่น', 'ทุนขาดคุณทรัพย์']
+  const getTypeScholar = () =>{
+    Axios.get("http://localhost:5000/getTypeScholar").then(response => {
+      var tempTypeList = typeList;
+      var result = response.data;
+      result.forEach((res, index) => {  
+        var data = res.type;
+        if (data !== '' && !dataTypeList.includes(data)) {
+          tempTypeList.push({ label: data, value: data })
+        }
+      })
+      setTypeList([...typeList]);
+    })
+  }
+  useEffect(() => {
+    getTypeScholar();
+    
+  }, [])
 
   return (
-
     <div className="frame">
       <div className="header">
         <div className="left">
@@ -22,31 +48,27 @@ function Interview(props) {
         </div>
           <div className="right"></div>
       </div>
-       <div className="contents">
-        <form className="form4">
-          <div className="column-left">
-            <div className="interview-left">
-              <label>ประเภทของทุน</label><br></br>
-              <select  name="capital" id="capital">
-                <option value="study">ทุนเรียนดี</option>
-                <option value="activity">ทุนกิจกรรมเด่น</option>
-                <option value="property">ทุนขาดคุณทรัพย์</option>
-                <option value="other">ทุนอื่นๆ</option>
-              </select>
-            </div>
+
+      <div className="contents">
+        <div className='filter-bar'>
+          <div className='input-holder25-left'>
+            <label>ประเภทของทุน</label><br></br>
+            <select onChange={event => setTypeQuery(event.target.selectedOptions[0].text)}>
+              {
+                typeList.map(
+                  (item,index) => (
+                    <option key={index} value = {item.label}>{item.label}</option>
+                  )
+                )
+              }
+            </select>
           </div>
-          <div className="column-right" >
-            <div className="search-box search1">
-              <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
-              <button className="btn" type="button" >
-                <i className="bi bi-search"></i>
-              </button>
-            </div> 
+          <div className='input-holder25-right'>
+
           </div>
-        </form>
-        <div className="line-gray"></div>
+        </div>
         <div className="content5">
-          <IntervieweeList/>
+          <InterviewData/>
         </div>
       </div>
     </div>

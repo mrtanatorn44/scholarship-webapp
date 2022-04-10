@@ -16,7 +16,7 @@ function ProfileEdit() {
   const [profile, setProfile]=useState({
     name:"",
     yearofstudy:"",
-    age:"",
+    birth_date:"",
     std_id:"",
     fieldStudy:"",
     branch:"",
@@ -39,7 +39,8 @@ function ProfileEdit() {
     place_of_work_mother:"",
     tel_mother:"",
     status_marry:"",
-    image:""
+    image:"",
+    gpa:""
    })
   const getProfile = () => {
 
@@ -47,7 +48,7 @@ function ProfileEdit() {
       id:user.id
     })
     .then((response) =>{
-      console.log(response.data[0])
+      
       var binaryImage   = ''; // ArrayBuffer to Base64
       var bytes         = new Uint8Array( response.data[0].picture_data.data );
       var len           = bytes.byteLength;
@@ -68,22 +69,22 @@ function ProfileEdit() {
   }
   function onHandleUpload(e) {
     var file = e.target.files[0];
-    console.log('file: ', file.name)
-
-    var arrayBuffer;
-    var reader = new FileReader();
-    reader.onload = async function() {
-      arrayBuffer = await new Uint8Array(reader.result);
-      var res = reader.result;
-      var binImage = _arrayBufferToBase64(arrayBuffer);
-      console.log('binImage: ', binImage)
-
-      setForm({...form,
-        newImage  :  binImage,
-        imageName : file.name
-      })
+    if (file.size <= 1048576) {
+      var arrayBuffer;
+      var reader = new FileReader();
+      reader.onload = async function() {
+        arrayBuffer = reader.result;
+        var binImage = _arrayBufferToBase64(arrayBuffer);
+        setForm({
+          ...form,
+          newImage  :  binImage,
+          imageName : file.name,
+        })
+      }
+      reader.readAsArrayBuffer(file); 
+    } else {
+      Swal.fire('Limit Image Size!', 'รูปต้องมีขนาดไม่เกิน 1Mb', 'warning')
     }
-    reader.readAsArrayBuffer(file); 
   }
   
   const changeValue = (name, value) => {
@@ -95,7 +96,6 @@ function ProfileEdit() {
   
   function onHandleSubmitBtn(e) {
     e.preventDefault();
-    console.log('work')
 
     Swal.fire({
       title: 'คุณแน่ใจหรือไม่?',
@@ -155,7 +155,7 @@ function ProfileEdit() {
               <label>ชื่อ-นามสกุล</label><br></br>
                 <input placeholder="ชื่อภาษาไทย" value = {profile.name} onChange={(e)=>changeValue("name",e.target.value)} required />
             </div>
-            <div>
+            {/* <div>
               <label>นิสิตชั้นปีที่</label><br></br>
               <select  value = {profile.yearofstudy} onChange={(e)=>changeValue("yearofstudy",e.target.value)} required>
                 <option value="0">เลือก</option>
@@ -165,15 +165,27 @@ function ProfileEdit() {
                 <option value="2">2</option>
                 <option value="1">1</option>
               </select>
-            </div>
+            </div> */}
             <div>
-              <label>อายุ</label><br></br>
-              <input type="number" min="0" placeholder="อายุ" value = {profile.age} onChange={(e)=>changeValue("age",e.target.value)}  required/>
+              <label>วันเกิด</label><br></br>
+              <input type="date"  placeholder="วันเกิด" value = {profile.birth_date} onChange={(e)=>changeValue("birth_date",e.target.value)}  required/>
             </div>
             
             <div>
               <label>รหัสนิสิต</label><br></br>
-              <input type="number" min="0" placeholder="รหัสนิสิต" value = {profile.std_id} onChange={(e)=>changeValue("std_id",e.target.value)} required/>
+              <input 
+                type="number"
+                min={String(new Date().getFullYear() + 543 - 8).substring(2, 4) + "00000000"}
+                max={String(new Date().getFullYear() + 543 - 0).substring(2, 4) + "00000000"} 
+                placeholder="รหัสนิสิต"
+                value={profile.std_id}
+                onChange={
+                  (e)=> {
+                    changeValue("std_id",e.target.value)
+                  }
+                }
+                required
+              />
             </div>
             <div>
               <label>ภาคการเรียนการสอน</label><br></br>
@@ -186,15 +198,31 @@ function ProfileEdit() {
             
             <div>
               <label>สาขา</label><br></br>
-              <select  value = {profile.branch} onChange={(e)=>changeValue("branch",e.target.value)} required>
-                  <option value="0">  เลือก       </option>
-                  <option value="คอมพิวเตอร์">  คอมพิวเตอร์  </option>
-                  <option value="ไฟฟ้า">  ไฟฟ้า      </option>
-                  <option value="เครื่องกล">  เครื่องกล    </option>
-                  <option value="หุ่นยนต์">  หุ่นยนต์     </option>
+              <select 
+                value = {profile.branch}
+                onChange = {
+                  (e) => changeValue("branch",e.target.value)
+                }
+                required
+              >
+                <option value="">เลือก</option>
+                <option value="วิศวกรรมโยธา (T05)">วิศวกรรมโยธา (T05)</option>
+                <option value="วิศวกรรมอุตสาหการ (T07)">วิศวกรรมอุตสาหการ (T07)</option>
+                <option value="วิศวกรรมคอมพิวเตอร์และสารสนเทศศาสตร์ (T12)">วิศวกรรมคอมพิวเตอร์และสารสนเทศศาสตร์ (T12)</option>
+                <option value="วิศวกรรมเครื่องกลและการออกแบบ (T13)">วิศวกรรมเครื่องกลและการออกแบบ (T13)</option>
+                <option value="วิศวกรรมไฟฟ้าและอิเล็กทรอนิกส์ (T14)">วิศวกรรมไฟฟ้าและอิเล็กทรอนิกส์ (T14)</option>
+                <option value="วิศวกรรมอุตสาหการและระบบ (T17)">วิศวกรรมอุตสาหการและระบบ (T17)</option>
+                <option value="วิศวกรรมเครื่องกลและระบบการผลิต (T18)">วิศวกรรมเครื่องกลและระบบการผลิต (T18)</option>
+                <option value="วิศวกรรมหุ่นยนต์และระบบอัตโนมัติ (T19)">วิศวกรรมหุ่นยนต์และระบบอัตโนมัติ (T19)</option>
+                <option value="วิศวกรรมระบบการผลิตดิจิทัล (T20)">วิศวกรรมระบบการผลิตดิจิทัล (T20)</option>
               </select>
             </div>
-            
+
+            <div>
+                <label>คะแนนเฉลี่ยนสะสม(GPA)</label><br></br>
+                <input value = {profile.gpa} type="number" min="0" max="4" step="0.01" placeholder = "คะแนนเฉลี่ยสะสม(GPA)" onChange={(e)=>changeValue("gpa",e.target.value)} required></input>
+            </div>
+
             <div>
               <label>ที่อยู่ปัจจุบัน (ที่ติดต่อได้สะดวก)</label><br></br>
               <input placeholder="ที่อยู่ปัจจุบัน" value = {profile.address} onChange={(e)=>changeValue("address",e.target.value)} required/>
@@ -205,11 +233,20 @@ function ProfileEdit() {
             </div>
             <div>
               <label>อัพโหลดรูปโปรไฟล์</label><br></br>
-              <input type="file" name="myfile" onChange={(file) => onHandleUpload(file)}/>
+              <input 
+                type="file"
+                accept="image/jpeg,image/png"
+                name="myfile"
+                onChange={
+                  (file) => {
+                    onHandleUpload(file)
+                  }
+                }
+              />
             </div>
-            {/*<div>
-              <h5>ประวัติครอบครัว</h5>
-            </div>
+
+            {/* FATHER */}
+            <h5>แก้ไขข้อมูลบิดา</h5>
             <div>
               <label>ชื่อ-นามสกุล(บิดา)</label><br></br>
               <input placeholder="ชื่อภาษาไทย" value = {profile.name_father} onChange={(e)=>changeValue("name_father",e.target.value)} required/>
@@ -221,7 +258,7 @@ function ProfileEdit() {
               </div>
               <div className="fam2-edit">
                 <label>สถานะภาพ</label>
-                <select className="form-select form-select-lg mb-3" value = {profile.status_father} onChange={(e)=>changeValue("status_father",e.target.value)} required>
+                <select value = {profile.status_father} onChange={(e)=>changeValue("status_father",e.target.value)} required>
                   <option value="0">เลือก</option>
                   <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                   <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -251,11 +288,14 @@ function ProfileEdit() {
               </div>
             </div>
           
+
             <div>
               <label>ที่อยู่ของบิดา</label><br></br>
               <input className = "halfbar" placeholder="ที่อยู่ของบิดา" value = {profile.address_father} onChange={(e)=>changeValue("address_father",e.target.value)} required/>
             </div>
 
+            {/* MOTHER */}
+            <h5>แก้ไขข้อมูลมารดา</h5>
             <div>
               <label>ชื่อ-นามสกุล(มารดา)</label><br></br>
               <input className = "halfbar" placeholder="ชื่อ-สกุล(มารดา)" value = {profile.name_mother} onChange={(e)=>changeValue("name_mother",e.target.value)} required/>
@@ -267,7 +307,7 @@ function ProfileEdit() {
               </div>
               <div className="fam2-edit">
                 <label>สถานะภาพ</label>
-                <select className="form-select form-select-lg mb-3" value = {profile.status_mother} onChange={(e)=>changeValue("status_mother",e.target.value)}  required>
+                <select  value = {profile.status_mother} onChange={(e)=>changeValue("status_mother",e.target.value)}  required>
                   <option value="0">เลือก</option>
                   <option value="ยังมีชีวิตอยู่">ยังมีชีวิตอยู่</option>
                   <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
@@ -301,9 +341,16 @@ function ProfileEdit() {
               <input className = "halfbar" placeholder="ที่อยู่มารดา" value = {profile.address_mother} onChange={(e)=>changeValue("address_mother",e.target.value)} required/>
             </div>
             <div>
-              <label>สถานะสมรสของบิดา-มารดา</label><br></br>
-              <input className = "halfbar" placeholder="สถานะสมรสของบิดา-มารดา" value = {profile.status_marry} onChange={(e)=>changeValue("status_marry",e.target.value)} required/>
-            </div>*/}
+
+            {/* PARENT STATE */}
+            <label>สถานะสมรสบิดา-มารดา</label><br></br>
+                <select value = {profile.status_marry} onChange={(e)=>changeValue("status_marry",e.target.value)}required>
+                    <option value="">เลือก</option>
+                    <option value="แยกกันอยู่">แยกกันอยู่</option>
+                    <option value="หย่าร้าง">หย่าร้าง</option>
+                    <option value="อยู่ด้วยกัน">อยู่ด้วยกัน</option>
+                </select>
+            </div>
              <div className="footer1">
               <div className="confirm">
                 <button className="button-confirm green1" type ='submit' >บันทึก</button>
