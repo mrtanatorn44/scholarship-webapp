@@ -61,9 +61,13 @@ function InterviewApprovement(props) {
   function getScholarshipForm() {
     Axios.post("http://localhost:5000/getForm", {
       id : localStorage.getItem('ApplicantID_target')
-    }).then((response)=> {      
+    }).then((response)=> {  
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }    
       var result =  response.data[0];
-      console.log(result); 
+      //console.log(result); 
       result.profile_detail = JSON.parse(result.profile_detail);
       setProfile(result.profile_detail); 
       result.file = JSON.parse(result.file);
@@ -75,14 +79,18 @@ function InterviewApprovement(props) {
       });
       Axios.post("http://localhost:5000/getScholarship", {
       id : result.scholarship_id
-    }).then((response)=> {       
+    }).then((response)=> {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }       
       var result =  response.data[0];
-      console.log(result);
+      //console.log(result);
       setRateForm(JSON.parse(result.interview_requirement)); 
     });
     });
   }
-  console.log(rate);
+  //console.log(rate);
   
 
   function onHandleSubmitBtn(e,textalert) {
@@ -103,9 +111,13 @@ function InterviewApprovement(props) {
           status  : approvement,
           rate : JSON.stringify(rateForm)
         }).then((response) => {
+          if (response.data.errno) { // Check if Backend return error
+            Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+            return;
+          }
           setContent('IntervieweeList');
           Swal.fire('บันทึกแล้ว!','','success')
-          console.log(response);
+          //console.log(response);
         });
       }
     })
@@ -304,7 +316,28 @@ function InterviewApprovement(props) {
                    fileForm.map((form,fidx)=>(
                     <div className='upload'>
                       <label>{form.title}.{form.format}</label><br></br>
-                      <iframe src={form.url}></iframe>
+                      {
+                        form.format === "DOCX, DOC" &&
+                        <center>
+                          <a 
+                            className='button-big green1 w100 mgb1'
+                            download={profile.std_id + '_' + form.title}
+                            href={form.url}                           
+                          >
+                            Download
+                          </a>
+                        </center>
+        
+                      }
+                      {
+                        form.format === 'PDF' &&
+                        <iframe className='w100 mgl0' src={form.url}></iframe>
+                      }
+                      {
+                        form.format === 'JPG, PNG' && 
+                        <center>
+                        <img src={form.url}></img></center>
+                      }
                     </div>))
                 }
                 

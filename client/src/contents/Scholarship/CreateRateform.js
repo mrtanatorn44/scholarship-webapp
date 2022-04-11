@@ -58,7 +58,7 @@ function RateForm (){
           rateForm.map((rate, index) => (
             <div className="w100 mgb1 d-flex" key={index}>
               <div className="w10 text1 fs07"><b>ลำดับ {index+1}</b></div>
-              <div className="w30 select2">
+                <div className="w30 select2">
                 <input className="file-document"
                   value       = {rate.title}
                   type        = "text" 

@@ -4,7 +4,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App';
 import Axios from 'axios';
 import ReportList from './ReportList';
-
+import Swal from 'sweetalert2';
 function Report(props) {
   const { StatusQuery, TypeQuery , YearQuery , TermQuery  , DonatorQuery } = useContext(WebContext);
   const [ statusQuery, setStatusQuery ] = StatusQuery;
@@ -36,6 +36,10 @@ function Report(props) {
 
   const getTypeScholar = () =>{
     Axios.get("http://localhost:5000/getTypeScholar").then(response => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var tempTypeList = typeList;
       var result = response.data;
       result.forEach((res, index) => {  
@@ -50,6 +54,10 @@ function Report(props) {
 
   function getDonator() {
     Axios.get("http://localhost:5000/getallDonator").then(response => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var tempDonatorList = donatorList;
       var result = response.data
       if (result.length === 0)
@@ -65,6 +73,10 @@ function Report(props) {
 
   const getYearScholar = () =>{
     Axios.get("http://localhost:5000/getYearScholar").then(response => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var tempTypeList = yearList;
       var result = response.data;
       result.forEach((res, index) => {  
@@ -73,8 +85,9 @@ function Report(props) {
           tempTypeList.push({ label: data, value: data })
         }
       })
+      
+      // console.log(result)
       setYearList([...yearList]);
-      yearList.sort();
     })
   }
 
@@ -118,7 +131,7 @@ function Report(props) {
               </select>
             </div>
             <div className="select1">
-              <label>ประเภททุน</label>
+              <label>ประเภทของทุน</label>
               <select  name="capital" id="capital" onChange={e => setTypeQuery(e.target.value)}>
                   {typeList.map(
                     (item,index) => (

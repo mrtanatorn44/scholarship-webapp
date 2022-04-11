@@ -26,7 +26,11 @@ function IntervieweeList(props){
   function getForm () {
     Axios.post("http://localhost:5000/getFormByScholarshipID",{
       scholarship_id : localStorage.getItem('ScholarshipID_target')
-    }).then((response) => { 
+    }).then((response) => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      } 
       var result = response.data;
 
     //  console.log('res', result)
@@ -81,20 +85,20 @@ function IntervieweeList(props){
           <h4>รายชื่อผู้ขอทุน</h4>
           </div>
         </div>
-        <div className="right"></div>
+        <div className="right">
+          <button className='button-add d-flex ' onClick={ () => {setContent('Interview')}}>
+            <i className='bi bi-arrow-left-circle sky'></i>
+            <p>ย้อนกลับ</p>
+            </button>
+        </div>
       </div>
       <div className="contents">
 
         <div className='filter-bar'>
-          <div className="input-holder-left" >    
+        <div className="input-holder25-left" >    
           </div>
-          <div className="input-holder-right" >
-            <div className="search-box search1">
-              <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
-              <button className="btn" type="button" >
-                <i className="bi bi-search"></i>
-              </button>
-            </div>
+          <div className="input-holder25-right" > 
+              <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>  
           </div> 
         </div>
       
@@ -108,20 +112,21 @@ function IntervieweeList(props){
               <>
                 { 
                   user.role === 'interviewer' && item.status == 2 &&
-                  <div className="container1 list5 d-flex" key={index} >
-                    <div className="left">
-                      <p className="name">{item.profile_detail.name} </p>
-                      <p>{item.profile_detail.branch} </p>
+                  <div className="list5" key={index} >
+                    <div className="list5-left">
+                    <p className='text1'>{item.profile_detail.name}<br/>
+                      {item.profile_detail.branch}<br/>
                       <p className="status-box peach">{statusForm(item.status)} </p>
+                      </p> 
                     </div>
 
-                    <div className='right'>
-                      <button className="button-2 d-flex"  type="button" onClick={ () => {setContent('InterviewProfile');localStorage.setItem('ProfileCheckID_target', item.user_id )}}>
+                    <div className="list5-right">
+                      <button className="button-test sky"  type="button" onClick={ () => {setContent('InterviewProfile');localStorage.setItem('ProfileCheckID_target', item.user_id )}}>
                         <i className="bi bi-search sky"></i>
                         <p>ตรวจสอบประวัติ</p>
                       </button>
-                      <button className="button-2 d-flex"  type="button" onClick={ () => {setContent('InterviewRate');localStorage.setItem('ApplicantID_target', item.id )}}>
-                        <i className="bi bi-search sky"></i>
+                      <button className="button-test green1"  type="button" onClick={ () => {setContent('InterviewRate');localStorage.setItem('ApplicantID_target', item.id )}}>
+                        <i className="bi bi-check2-square"></i>
                         <p>ให้คะแนน</p>
                       </button> 
                     </div>
@@ -129,20 +134,21 @@ function IntervieweeList(props){
                 }
                 { 
                   user.role === 'admin' && item.status === 3 &&
-                  <div className="container1 list5 d-flex" key={index} >
-                    <div className="left">
-                      <p className="name">{item.profile_detail.name} </p>
-                      <p>{item.profile_detail.branch} </p>
+                  <div className="list5" key={index} >
+                    <div className="list5-left">
+                      <p className='text1'>{item.profile_detail.name}<br/>
+                      {item.profile_detail.branch}<br/>
                       <p className="status-box peach">{statusForm(item.status)} </p>
+                      </p> 
                     </div>
 
-                    <div className='right'>
-                      <button className="button-2 d-flex"  type="button" onClick={ () => {setContent('InterviewProfile');localStorage.setItem('ProfileCheckID_target', item.user_id )}}>
+                    <div className="list5-right">
+                      <button className="button-test sky"  type="button" onClick={ () => {setContent('InterviewProfile');localStorage.setItem('ProfileCheckID_target', item.user_id )}}>
                         <i className="bi bi-search sky"></i>
                         <p>ตรวจสอบประวัติ</p>
                       </button>
-                      <button className="button-2 d-flex"  type="button" onClick={ () => {setContent('InterviewApprovement');localStorage.setItem('ApplicantID_target', item.id )}}>
-                        <i className="bi bi-search sky"></i>
+                      <button className="button-test green1"  type="button" onClick={ () => {setContent('InterviewApprovement');localStorage.setItem('ApplicantID_target', item.id )}}>
+                        <i className="bi bi-check2-square"></i>
                         <p>อนุมัติทุน</p>
                       </button> 
                     </div>

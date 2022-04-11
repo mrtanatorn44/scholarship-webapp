@@ -26,7 +26,11 @@ function ApplicantList(props){
   function getForm () {
     Axios.post("http://localhost:5000/getFormByScholarshipID",{
       scholarship_id : localStorage.getItem('ScholarshipID_target')
-    }).then((response) => { 
+    }).then((response) => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      } 
       var result = response.data;
 
     //  console.log('res', result)
@@ -65,7 +69,7 @@ function ApplicantList(props){
         // code block
     }
   }
-  console.log(NameForm);
+  // console.log(NameForm);
 
  
   useEffect(() => {
@@ -85,12 +89,18 @@ function ApplicantList(props){
           <h4>รายชื่อผู้ขอทุน</h4>
           </div>
         </div>
-        <div className="right"></div>
+        <div className="right">
+   
+          <button className='button-add d-flex' onClick={ () => {setContent('Applicant')}}>
+            <i className='bi bi-arrow-left sky'></i>
+            <p>ย้อนกลับ</p>
+          </button>
+        </div>
       </div>
       <div className="contents">
           
         <div className='filter-bar'>
-          <div className="input-holder-left" >    
+          <div className="input-holder25-left" >    
             {
               user.role === 'admin' &&
               <><br></br>
@@ -105,13 +115,10 @@ function ApplicantList(props){
             } 
 
           </div>
-          <div className="input-holder-right" >
-            <div className="search-box search1">
+          <div className="input-holder25-right" >
+          <br></br>
               <input type="text" placeholder="Search" aria-describedby="button-addon2" onChange={event => setQuery(event.target.value)}/>
-              <button className="btn" type="button" >
-                <i className="bi bi-search"></i>
-              </button>
-            </div>
+          
           </div> 
         </div>
       
@@ -141,15 +148,16 @@ function ApplicantList(props){
                 
                     {
                       user.role === 'admin' &&
-                      <div className="container1 list5 d-flex" key={index} >
-                          <div className="left">
-                            <p className="name">{item.profile_detail.name} </p>
-                            <p>{item.profile_detail.branch} </p>
+                      <div className="list5" key={index} >
+                          <div className="list5-left">
+                            <p className='text1'>{item.profile_detail.name}<br/>
+                            {item.profile_detail.branch}<br/>
                             <p className="status-box peach">{statusForm(item.status)} </p>
+                            </p> 
                           </div>
-                          <div className='right'>
+                          <div className="list5-right ">
                             <button 
-                              className="button-2 d-flex"  
+                              className="button-test sky"  
                               type="button" 
                               onClick={ 
                                 () => {
@@ -158,11 +166,11 @@ function ApplicantList(props){
                                 }
                               }
                             >
-                              <i className="bi bi-search sky"></i>
+                              <i className="bi bi-person-circle"></i>
                               <p>ตรวจสอบประวัติ</p>
                             </button>
                             <button 
-                              className="button-2 d-flex" 
+                              className="button-test green1" 
                               type="button" 
                               onClick={
                                 () => {
@@ -171,7 +179,7 @@ function ApplicantList(props){
                                 }
                               }
                             >
-                              <i className="bi bi-search sky"></i>
+                              <i className="bi bi-clipboard-check"></i>
                               <p>ตรวจเอกสารการยื่นทุน</p>
                             </button> 
                           </div>

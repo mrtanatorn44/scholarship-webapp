@@ -3,6 +3,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App.js';
 import Axios from 'axios';
+import Swal from 'sweetalert2';
 
 function FormProfile() {
   //usecontext
@@ -47,7 +48,11 @@ function FormProfile() {
     Axios.post("http://localhost:5000/getProfile",{
       id: editProfile
     }).then((response) => {
-      console.log(response)
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
+      //console.log(response)
       var binaryImage   = ''; // ArrayBuffer to Base64
       var bytes         = new Uint8Array( response.data[0].picture_data.data );
       var len           = bytes.byteLength;
@@ -56,7 +61,7 @@ function FormProfile() {
       var res   = JSON.parse(response.data[0].profile_data);
       res.image = "data:image/png;base64," + binaryImage;
       setProfile(res)
-      console.log(response.data[0].picture_data.data)
+      //console.log(response.data[0].picture_data.data)
     })
   }
   
@@ -66,7 +71,7 @@ function FormProfile() {
       ...profile,
       [name]:value
     }))
-    console.log(profile);
+    //console.log(profile);
   }; 
   
   //console.log("sdasdasdasd");
@@ -101,7 +106,12 @@ function FormProfile() {
           <h4>ข้อมูลนิสิต</h4>
         </div> 
         </div>
-        <div className="right"></div>
+        <div className="right">
+          <button className='button-add d-flex' onClick={ () => {setContent('Member')}}>
+            <i className='bi bi-arrow-left-circle sky'></i>
+            <p>ย้อนกลับ</p>
+          </button>
+        </div>
       </div>
       <div className="contents">
         <div className="content1">

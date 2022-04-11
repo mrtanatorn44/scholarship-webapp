@@ -12,9 +12,14 @@ function ScholarshipList() {
   const [content, setContent] = Content;
   const [sch,setSch] = useState([])
   const [ScholarshipList, setScholarshipList] = useState([])
+  const [profile,setProfile] = useState({})
 
   function getScholarshipList () {
-    Axios.get("http://localhost:5000/getAllScholarship").then((response) => { 
+    Axios.get("http://localhost:5000/getAllScholarship").then((response) => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      } 
       var result = response.data;
 
       // filter on scholarship that are open for register
@@ -26,8 +31,8 @@ function ScholarshipList() {
         result.forEach((res, index) => {
           Axios.post("http://localhost:5000/getDonator",{ 
             id: res.donator_id 
-          }).then((donator) => {
-            Object.assign(res, {
+          }).then(async (donator) => {
+            Object.assign((res), {
               id                : res.id,
               status            : res.status,
               type              : res.type,
@@ -39,15 +44,16 @@ function ScholarshipList() {
               close_date        : res.close_date.split("T")[0],
               donator_id        : res.donator_id,
               donator           : donator.data[0].name,
-              attr_requirement  : JSON.parse(res.attribute_requirement),
+              attr_requirement  : await JSON.parse(res.attribute_requirement),
               file_requirement  : JSON.parse(res.file_requirement),
               interview_requirement   : JSON.parse(res.interview_requirement),
               toggleContent     : false
             });
+            if (result.length-1 === index)
+              setScholarshipList(result)
           })
         });
       }
-      setScholarshipList(result);
     })
   }
   
@@ -55,12 +61,32 @@ function ScholarshipList() {
     Axios.post("http://localhost:5000/getFormByUserID",{
 			user_id : user.id
 		}).then((response) => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var result = response.data;
       result.forEach(res => {
         setSch((sch)=>[...sch,res.scholarship_id])
       });
     })
   }
+
+  const getProfile = () => {
+
+    Axios.post("http://localhost:5000/getProfile",{
+      id:user.id
+    })
+    .then((response) =>{
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
+      var res = JSON.parse(response.data[0].profile_data);
+      setProfile(res);
+    })
+  }
+
 
   const onDeleteScholarship = (scholarID) => {
     Swal.fire({
@@ -77,6 +103,10 @@ function ScholarshipList() {
         Axios.post("http://localhost:5000/deleteScholarship", 
           { id : scholarID }
         ).then((response) => { 
+          if (response.data.errno) { // Check if Backend return error
+            Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+            return;
+          }
           getScholarshipList();
           Swal.fire('ลบประกาศเรียบร้อย!','','success')
         })
@@ -87,7 +117,7 @@ function ScholarshipList() {
   const ChangeIs_public = (scholar, status) => {
     Swal.fire({
       title: 'คุณแน่ใจหรือไม่?',
-      text: "ที่จะประกาศ!",
+      text: scholar.status? "ที่จะปิดประกาศ":"ที่จะเปิดประกาศ",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#03A96B',
@@ -100,6 +130,10 @@ function ScholarshipList() {
           id                : scholar.id, 
           status            : status
         }).then((response) => { 
+          if (response.data.errno) { // Check if Backend return error
+            Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+            return;
+          }
           getScholarshipList();
           Swal.fire(scholar.status? "ปิดประกาศแล้ว":"เปิดประกาศแล้ว",'','success')
         })
@@ -110,8 +144,9 @@ function ScholarshipList() {
   useEffect(() => {
     getScholarshipList();
     getForm();
+    getProfile();
   }, [])
-  
+
   return (
     <>
       {
@@ -120,8 +155,11 @@ function ScholarshipList() {
           <h3>ไม่มีทุนที่เปิดให้ลงทะเบียนในขณะนี้</h3>
         </div>
       }
+      
       {
+        
         ScholarshipList.map((scholarship, scholarship_index) => (
+         
           <div key={scholarship_index}>
             <div className="list3"> 
               <div className="list3-left">
@@ -173,22 +211,23 @@ function ScholarshipList() {
               </div>
 
               <div className="list3-right">
+
                 { 
-                  user.role === 'student' &&
+                  user.role === 'student' && 
                   <button 
                     className={sch.includes(scholarship.id)?"button-big gray1":"button-big green1"}
                     onClick={() => {
                       if (sch.includes(scholarship.id)) {
                         return;
                       }
-
                       localStorage.setItem('scholarshipRegisterID_target', scholarship.id);
                       setContent('ScholarshipRegister')
                     }}
-                  >
+                    >
                     {sch.includes(scholarship.id)?"ลงทะเบียนแล้ว":"ลงทะเบียน"}
                   </button>
-                }
+                }   
+                
                 { 
                   user.role === 'interviewer' &&
                   <button 
@@ -205,10 +244,10 @@ function ScholarshipList() {
                     type="button" 
                     onClick={() => { 
                       {
-                        console.log(scholarship.status)
+                        // console.log(scholarship.status)
                         if (scholarship.status === 0){
                           ChangeIs_public(scholarship,1)
-                          console.log("ประกาศ")
+                          // console.log("ประกาศ")
                         }
                         else{
                           ChangeIs_public(scholarship,0)
@@ -229,7 +268,7 @@ function ScholarshipList() {
               <div className="detail2">
                 <div className="left">
                   <span>
-                    <b>ลายละเอียด</b>
+                    <b>รายละเอียด</b>
                     <p className='preline'>{scholarship.detail}</p>
                   </span>
                   <span>
@@ -251,17 +290,18 @@ function ScholarshipList() {
                 </div>
 
                 <div className="right">
-                  <span>
-                  
-                  </span>
+                 
 
                   <span>
                     <b>คุณสมบัติ</b>
-                    <p>1. เกรดเฉลี่ยสะสม {scholarship.attr_requirement.min_gpa}</p>
-                    <p>2. สำหรับนิสิตตั้งแต่รหัส {scholarship.attr_requirement.min_nisit_id} ขึ้นไป</p>
-                    <p>3. รหัสนิสิตไม่เกิน {scholarship.attr_requirement.max_nisit_id}</p>
-                    <p>4. มีความวิริยะอุตสาหะและมีความตั้งใจในการศึกษาเล่าเรียน</p>
-                    <p>5. มีความประพฤติเรียบร้อย ไม่เคยถูกลงโทษทางวินัย</p>
+                    <br></br>
+                    <a>1. เกรดเฉลี่ยสะสม {scholarship.attr_requirement.min_gpa}</a>
+                    <br></br>
+                    <a>2. สำหรับนิสิตตั้งแต่รหัส {scholarship.attr_requirement.min_nisit_id} ขึ้นไป</a>
+                    <br></br>
+                    <a>3. รหัสนิสิตไม่เกิน {scholarship.attr_requirement.max_nisit_id}</a><br></br>
+                    <a>4. มีความวิริยะอุตสาหะและมีความตั้งใจในการศึกษาเล่าเรียน</a><br></br>
+                    <a>5. มีความประพฤติเรียบร้อย ไม่เคยถูกลงโทษทางวินัย</a><br></br><br></br>
                   </span>
 
                   <span>
@@ -277,7 +317,8 @@ function ScholarshipList() {
                 </div> 
               </div>
             }
-          </div>   
+          </div>  
+        
         ))  
       }
     </>

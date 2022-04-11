@@ -5,7 +5,7 @@ import { WebContext } from '../../App.js';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
 
-function EditScholarshipRegister(props) {
+function EditScholarshipRegister() {
   const { FileForm , User,Content } = useContext(WebContext)
   const [user, setUser] = User;
   const [content, setContent] = Content;
@@ -80,10 +80,6 @@ function EditScholarshipRegister(props) {
     }   
   }
 
-
-
-   
-
   const changeValue = (name,value) => {
     setProfile(profile=> ({
       ...profile,
@@ -112,7 +108,6 @@ function EditScholarshipRegister(props) {
           file            : JSON.stringify(fileForm),      
         }).then((response) => {
           if (response.data.errno) { // Check if Backend return error
-            console.log(response.data)
             Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
             return;
           }
@@ -124,7 +119,6 @@ function EditScholarshipRegister(props) {
     })
   }
 
-  
   // function getScholarshipForm() {
   //   Axios.post("http://localhost:5000/getScholarship", {
   //     id : localStorage.getItem('scholarshipRegisterID_target')
@@ -144,6 +138,10 @@ function EditScholarshipRegister(props) {
     Axios.post("http://localhost:5000/getForm", {
       id : localStorage.getItem('EditFormID_target')
     }).then((response)=> {      
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var result =  response.data[0];
       console.log(result); 
       result.profile_detail = JSON.parse(result.profile_detail);
@@ -176,7 +174,12 @@ function EditScholarshipRegister(props) {
               <h4>แก้ไขลงทะเบียนทุน</h4>
             </div>
           </div>
-          <div className="right"/>
+          <div className="right">
+            <button className='button-add d-flex' onClick={ () => {setContent('Status')}}>
+              <i className='bi bi-arrow-left sky'></i>
+              <p>ย้อนกลับ</p>
+            </button>
+        </div>
         </div>
         <div className="contents"> 
           <div className="content3"> 

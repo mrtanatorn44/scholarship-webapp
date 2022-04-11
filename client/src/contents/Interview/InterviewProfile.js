@@ -26,6 +26,10 @@ function InterviewProfile() {
     Axios.post("http://localhost:5000/getProfile",{
       id: localStorage.getItem('ProfileCheckID_target')
     }).then((response) => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var data = response.data[0];
       //console.log('res', data)
       //console.log(data)
@@ -52,7 +56,7 @@ function InterviewProfile() {
 			user_id:localStorage.getItem('ProfileCheckID_target')
 		}).then((response) => {
       if (response.data.errno) { // Check if Backend return error
-        console.log(response.data)
+        //console.log(response.data)
         Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
         return;
       }
@@ -63,7 +67,7 @@ function InterviewProfile() {
 				  id : res.scholarship_id
         }).then((scholar) => {
           if (scholar.data.errno) { // Check if Backend return error
-            console.log(scholar.data)
+            //console.log(scholar.data)
             Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + scholar.data.errno, 'warning');
             return;
           }
@@ -72,7 +76,7 @@ function InterviewProfile() {
             id: sch.donator_id 
           }).then((donator) => {
             if (donator.data.errno) { // Check if Backend return error
-              console.log(donator.data)
+              //console.log(donator.data)
               Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + donator.data.errno, 'warning');
               return;
             }
@@ -119,79 +123,67 @@ function InterviewProfile() {
     <div className="frame">   
       <div className="content" >
         <div className="profile">
-          <div className="top">
-            <form className="form">
-              <div className="img-circle">
-                { profile.image !== '' && <img src={profile.image} alt='profile'/>}
+            <div className="profile-image w20 ">
+              { profile.image !== '' && <img src={profile.image} alt='profile'/>}
+            </div>
+            <div className="w20 h90 select1"> 
+              <div className="h50">
+                <label>ชื่อ-นามสกุล</label><br></br>
+                <input className="w90" placeholder="ชื่อ-นามสกุล" defaultValue = {profile.name} readOnly="readOnly" ></input>
               </div>
-              <div className="data">
-                <div className="left "> 
-                  <div className="name">
-                    <label>ชื่อ-นามสกุล</label><br></br>
-                    <input placeholder="ชื่อ-นามสกุล" defaultValue = {profile.name} readOnly="readOnly" ></input>
-                  </div>
-                  <div className="sector">
-                    <label >ภาคการเรียนการสอน</label><br></br>
-                    <input placeholder="ภาคปกติ" defaultValue = {profile.fieldStudy} readOnly="readOnly" ></input>
-                  </div>
-                </div>
-                <div className="center">
-                  <div className="code">
-                    <label >รหัสนิสิต</label><br></br>
-                    <input className="d-flex" type="number" placeholder="62XXXXX"  defaultValue = {profile.std_id} readOnly="readOnly" ></input>
-                  </div>
-                  <div className="branch">
-                    <label >สาขา</label><br></br>
-                    <input placeholder="" defaultValue = {profile.branch} readOnly="readOnly"></input>
-                  </div>
-                </div>
-                <div className="right">
-                <button className='button-add d-flex' onClick={ () => {setContent('IntervieweeList')}}>
-                  <i className='bi bi-arrow-left-circle'></i>
+              <div className="h40">
+                <label>ภาคการศึกษา</label><br></br>
+                <input className="w90" placeholder="ภาคปกติ" defaultValue = {profile.fieldStudy} readOnly="readOnly" ></input>
+              </div>
+            </div>
+            <div className="w40 h90 select1">
+              <div className="h50">
+                <label >รหัสนิสิต</label><br></br>
+                <input className="w90" type="number" placeholder="62XXXXX"  defaultValue = {profile.std_id} readOnly="readOnly" ></input>
+              </div>
+              <div className="h40">
+                <label >สาขา</label><br></br>
+                <input className="w90" placeholder="" defaultValue = {profile.branch} readOnly="readOnly"></input>
+              </div>
+            </div>
+            <div className="w20 h90 select1">
+              <div className="h50">
+                <label >นิสิตชั้นปีที่</label><br></br>
+                <input
+                  className='w100'
+                  value={parseInt(String(new Date().getFullYear() + 543).substring(2, 4)) - String(profile.std_id).substring(0,2)}
+                  readOnly="readOnly"
+                />
+              </div>
+              <div className="h40">
+                <label></label><br></br>
+                <button className='w100 h60 button-add d-flex' onClick={ () => {setContent('ApplicantList')}}>
+                  <i className='bi bi-arrow-left sky'></i>
                   <p>ย้อนกลับ</p>
-                 </button>
-                  <div className="grade">
-                    <label >นิสิตชั้นปีที่</label><br></br>
-                    <input 
-                      value={parseInt(String(new Date().getFullYear() + 543).substring(2, 4)) - String(profile.std_id).substring(0,2)}
-                      readOnly="readOnly"
-                    />
-                  </div>
-
-                </div>
+                </button>
               </div>
-            </form>
-          </div>
-          { 
-            form.filter((item)=>{return item.status===4})
-            .map((item, scholarship_index) => (
-              <div key={scholarship_index}>
-                <div className="list3"> 
-                  <div className="list3-left">
-                    {/* HEADER */}
-                    <div className='box30 text1'>
-                      <h4>{item.type}</h4>
+
+            </div>
+        </div> 
+      
+        <div className="content6">
+        { 
+          form.filter((item)=>{return item.status===4})
+          .map((item, scholarship_index) => (    
+              <div className="list6" key={scholarship_index}> 
+                  <div className="list6-left w100">
+                    <div className='text1'>
+                      <h5>{item.type}<br/>
+                        ทุนประจำปีการศึกษา {item.on_year } {item.on_term}
+                      </h5>
+                      <h5 className="status-box green1">
+                        ได้รับทุนเรียบร้อย
+                      </h5> 
                     </div>
-                    {/* DETAIL */}
-                    <div className='box40 text1'>
-                      <h6>ทุนประจำปีการศึกษา {item.on_year } {item.on_term}</h6>
-                      {/* <p>{item.open_date.split("T")[0].split('-').reverse().join('/')} - {item.close_date.split("T")[0].split('-').reverse().join('/')}</p> */}
-                    </div>
-                
-                    {/* PANEL */}
-                    <div className='panel2 box30'>
-                      <div className='admin-panel2'>
-                        {/* FOR SPACING */}
-                      </div>
-                      <div className='user-panel2'>
-                        <p>ได้รับทุนเรียบร้อย</p>              
-                      </div>
-                    </div>       
                   </div>      
-                </div>
-              </div>   
-          ))
-          }
+              </div>         
+            ))
+          } 
         </div>
       </div>
     </div>

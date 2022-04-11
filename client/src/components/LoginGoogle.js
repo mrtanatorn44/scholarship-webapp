@@ -28,6 +28,10 @@ function Login(props) {
     Axios.post("http://localhost:5000/getUser", { // get Role from DB
       email : data.email,
     }).then((response) => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       if (response.data.length !== 0) { // if User is exist
         userRole = response.data[0].role;
         userID   = response.data[0].id;
@@ -51,6 +55,10 @@ function Login(props) {
           lname   : lName, 
           role    : userRole
         }).then((response) => {
+          if (response.data.errno) { // Check if Backend return error
+            Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+            return;
+          }
           userID = response.data.insertId;
           setUser({ // set User from GAPI 
             ...user,

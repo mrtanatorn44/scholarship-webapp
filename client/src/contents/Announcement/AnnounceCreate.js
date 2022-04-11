@@ -75,7 +75,6 @@ function AnnounceCreate(props) {
           imageName   : form.imageName
         }).then((response) => {
           if (response.data.errno) { // Check if Backend return error
-            console.log(response.data)
             Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
             return;
           }

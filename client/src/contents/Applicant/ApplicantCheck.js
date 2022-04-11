@@ -58,9 +58,13 @@ function ApplicantCheck() {
   function getScholarshipForm() {
     Axios.post("http://localhost:5000/getForm", {
       id : localStorage.getItem('ApplicantID_target')
-    }).then((response)=> {      
+    }).then((response)=> {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }      
       var result =  response.data[0];
-      console.log(result); 
+      // console.log(result); 
       result.profile_detail = JSON.parse(result.profile_detail);
       setProfile(result.profile_detail); 
       result.file = JSON.parse(result.file);
@@ -94,6 +98,10 @@ function ApplicantCheck() {
           status  : adminCheck.status,
           notation : adminCheck.notation      
         }).then((response) => {
+          if (response.data.errno) { // Check if Backend return error
+            Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+            return;
+          }
           setContent('ApplicantList');
           Swal.fire('บันทึกแล้ว!','','success')
           console.log(response);
@@ -101,10 +109,10 @@ function ApplicantCheck() {
       }
     })
   }
-  console.log(adminCheck);
-  console.log(idAppcant);
+  // console.log(adminCheck);
+  // console.log(idAppcant);
 
-  
+
   
   useEffect(()=>{
     getScholarshipForm();
@@ -125,7 +133,7 @@ function ApplicantCheck() {
         </div>
         <div className="right"/>
           <button className='button-add d-flex' onClick={ () => {setContent('ApplicantList')}}>
-            <i className='bi bi-arrow-left-circle'></i>
+            <i className='bi bi-arrow-left sky'></i>
             <p>ย้อนกลับ</p>
             </button>
         </div>
@@ -140,7 +148,7 @@ function ApplicantCheck() {
               <label>ชื่อ-นามสกุล (ภาษาไทย)</label><br></br>
               <input 
                 placeholder="ชื่อภาษาไทย"
-                value={profile.name}
+                defaultValue={profile.name}
                 readOnly="readOnly"
               />
             </div>
@@ -158,14 +166,14 @@ function ApplicantCheck() {
             <div> 
               <label>อายุ</label><br></br>
               <input 
-                value={Math.floor((new Date() - new Date(profile.birth_date).getTime()) / 3.15576e+10)}
+                  value={Math.floor((new Date() - new Date(profile.birth_date).getTime()) / 3.15576e+10)}
                  required>
                 </input>
             </div>
             
             <div>
               <label>รหัสนิสิต</label><br></br>
-              <input value={profile.std_id} type="number" placeholder="รหัสนิสิต"  readOnly="readOnly"></input>
+              <input defaultValue={profile.std_id} type="number" placeholder="รหัสนิสิต"  readOnly="readOnly"></input>
             </div>
             
             <div>
@@ -195,28 +203,28 @@ function ApplicantCheck() {
             
             <div>
               <label>คะแนนเฉลี่ยนสะสม(GPA)</label><br></br>
-              <input value={profile.gpa}  type="number" min="0"  step="0.01" placeholder = "คะแนนเฉลี่ยสะสม(GPA)" readOnly="readOnly"></input>
+              <input defaultValue={profile.gpa}  type="number" min="0"  step="0.01" placeholder = "คะแนนเฉลี่ยสะสม(GPA)" readOnly="readOnly"></input>
             </div>
   
             <div>
               <label>ที่อยู่ปัจจุบัน(ที่ติดต่อได้สะดวก)</label><br></br>
-              <input value={profile.address}  placeholder = "ที่อยู่ปัจจุบัน" readOnly="readOnly" ></input>
+              <input defaultValue={profile.address}  placeholder = "ที่อยู่ปัจจุบัน" readOnly="readOnly" ></input>
             </div>
             <div>
               <label>เบอร์โทรศัพท์</label><br></br>
-              <input value={profile.tel} type="tel" placeholder = "เบอร์โทรศัพท์" readOnly="readOnly"></input>
+              <input defaultValue={profile.tel} type="tel" placeholder = "เบอร์โทรศัพท์" readOnly="readOnly"></input>
             </div>
 
 
             <h5>ข้อมูลบิดา</h5>
             <div>
               <label>ชื่อ-นามสกุล(บิดา)</label><br></br>
-              <input placeholder = "ชื่อภาษาไทย" value = {profile.name_father} readOnly="readOnly" ></input>
+              <input placeholder = "ชื่อภาษาไทย" defaultValue = {profile.name_father} readOnly="readOnly" ></input>
             </div> 
             <div className="profile-fam d-flex">
               <div className="fam-edit fam1">
                 <label>อายุ</label><br></br>
-                <input className = "halfbar" type="number" min="0" placeholder="อายุ" value = {profile.age_father} readOnly="readOnly"  ></input>
+                <input className = "halfbar" type="number" min="0" placeholder="อายุ" defaultValue = {profile.age_father} readOnly="readOnly"  ></input>
               </div>
 
               <div className="fam-edit fam2">
@@ -232,7 +240,7 @@ function ApplicantCheck() {
             <div className="profile-fam d-flex">
               <div className="fam-edit fam1">
                 <label>อาชีพ</label><br></br>
-                <input className = "halfbar" value = {profile.career_father} placeholder="ระบุอาชีพ"  readOnly="readOnly" ></input>
+                <input className = "halfbar" defaultValue = {profile.career_father} placeholder="ระบุอาชีพ"  readOnly="readOnly" ></input>
               </div>
               <div className="fam-edit fam2">
                 <label>เบอร์โทรศัพท์</label><br></br>
@@ -321,7 +329,28 @@ function ApplicantCheck() {
                    fileForm.map((form,fidx)=>(
                     <div className='upload'>
                       <label>{form.title}.{form.format}</label><br></br>
-                      <iframe src={form.url}></iframe>
+                      {
+                        form.format === "DOCX, DOC" &&
+                        <center>
+                          <a 
+                            className='button-big green1 w100 mgb1'
+                            download={profile.std_id + '_' + form.title}
+                            href={form.url}                           
+                          >
+                            Download
+                          </a>
+                        </center>
+        
+                      }
+                      {
+                        form.format === 'PDF' &&
+                        <iframe className='w100 mgl0' src={form.url}></iframe>
+                      }
+                      {
+                        form.format === 'JPG, PNG' && 
+                        <center>
+                        <img src={form.url}></img></center>
+                      }
                     </div>))
                 }
   

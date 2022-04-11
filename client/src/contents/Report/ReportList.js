@@ -3,8 +3,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App';
 import Axios from 'axios';
-
-function ReportList(props) {
+import Swal from 'sweetalert2';
+function ReportList() {
 
   const { Content, StatusQuery, TypeQuery , YearQuery , TermQuery  , DonatorQuery } = useContext(WebContext);
   const [ content, setContent ] = Content;
@@ -19,7 +19,11 @@ function ReportList(props) {
   // console.log("เทอม:",termQuery,"donator:",donatorQuery);
 
   function getScholarshipList () {
-    Axios.get("http://localhost:5000/getAllScholarship").then((response) => { 
+    Axios.get("http://localhost:5000/getAllScholarship").then((response) => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      } 
       var result = response.data;
       if (result.length !== 0) {
         result.forEach((res, index) => {
@@ -44,13 +48,18 @@ function ReportList(props) {
               appointment       : JSON.parse(res.appointment),
               toggleContent     : false
             });
-            console.log(res.type, res.status)
           })
         });
       }
       setScholarshipList(result);
     })
   }
+
+  function getDateFormat(date) {
+		// [yyyy,mm,dd]
+		var month_th      = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+		return (parseInt(date[2])) + " " + month_th[parseInt(date[1], 10)] + " " + (parseInt(date[0]) + 543);
+  } 
 
   useEffect(() => {
     getScholarshipList();
@@ -78,20 +87,20 @@ function ReportList(props) {
       })
       .map((scholarship, index) => (
       <div key={index}>
-        <div className="list4" key={index}>
-          <div className="list4-left">
+        <div className="list3" key={index}>
+          <div className="list3-left">
             {/* HEADER */}
-            <div className='box30 text1'>
+            <div className='w30 text1'>
               <h5>{scholarship.type}</h5>
             </div>
             {/* DETAIL */}
-            <div className='box60 text1'>
+            <div className='w40 text1'>
               <h6>ทุนประจำปีการศึกษา {scholarship.on_year } {scholarship.on_term}</h6>
-              <p>{scholarship.open_date.split("T")[0].split('-').reverse().join('/')} - {scholarship.close_date.split("T")[0].split('-').reverse().join('/')}</p>
+              <p>{getDateFormat(scholarship.open_date.split('-'))} - {getDateFormat(scholarship.close_date.split('-'))}</p>
             </div>
           
             {/* PANEL */}
-            <div className='panel2 box10'>
+            <div className='panel2 w30'>
               <div className='admin-panel2'>
                 {/* FOR SPACING */}
               </div>
@@ -119,15 +128,10 @@ function ReportList(props) {
             </div> 
           </div>
 
-          <div className="list4-right">
+          <div className="list3-right">
+        
             <button 
-              className={"button-half green1" }
-              type="button" 
-            >
-               ดาวน์โหลดรายงาน
-            </button>
-            <button 
-              className={"button-half sky" }
+              className={"button-big sky" }
               type="button" 
               onClick={() => {
                 localStorage.setItem('ScholarshipID_target', scholarship.id);
@@ -143,7 +147,7 @@ function ReportList(props) {
             <div className="detail2">
               <div className="left">
                 <span>
-                  <b>ลายละเอียด</b>
+                  <b>รายละเอียด</b>
                   <p className='preline'>{scholarship.detail}</p>
                 </span>
                 <span>
@@ -165,19 +169,20 @@ function ReportList(props) {
               </div>
 
               <div className="right">
-                <span>
+                <span></span>
                 
-                </span>
 
                 <span>
-                  <b>คุณสมบัติ</b>
-                  <p>1. เกรดเฉลี่ยสะสม {scholarship.attr_requirement.min_gpa}</p>
-                  <p>2. สำหรับนิสิตตั้งแต่รหัส {scholarship.attr_requirement.min_nisit_id} ขึ้นไป</p>
-                  <p>3. รหัสนิสิตไม่เกิน {scholarship.attr_requirement.max_nisit_id}</p>
-                  <p>4. มีความวิริยะอุตสาหะและมีความตั้งใจในการศึกษาเล่าเรียน</p>
-                  <p>5. มีความประพฤติเรียบร้อย ไม่เคยถูกลงโทษทางวินัย</p>
-                </span>
-
+                    <b>คุณสมบัติ</b>
+                    <br></br>
+                    <a>1. เกรดเฉลี่ยสะสม {scholarship.attr_requirement.min_gpa}</a>
+                    <br></br>
+                    <a>2. สำหรับนิสิตตั้งแต่รหัส {scholarship.attr_requirement.min_nisit_id} ขึ้นไป</a>
+                    <br></br>
+                    <a>3. รหัสนิสิตไม่เกิน {scholarship.attr_requirement.max_nisit_id}</a><br></br>
+                    <a>4. มีความวิริยะอุตสาหะและมีความตั้งใจในการศึกษาเล่าเรียน</a><br></br>
+                    <a>5. มีความประพฤติเรียบร้อย ไม่เคยถูกลงโทษทางวินัย</a><br></br><br></br>
+                  </span>
                 <span>
                   <b>เอกสารที่ต้องการ</b>
                   { 

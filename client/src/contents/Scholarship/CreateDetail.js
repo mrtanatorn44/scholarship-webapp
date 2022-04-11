@@ -3,6 +3,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { WebContext } from '../../App';
 import CreatableSelect from 'react-select/creatable';
+import Swal from 'sweetalert2';
 
 import Axios from 'axios';
 
@@ -28,6 +29,10 @@ function CreateDetail () {
   
   function getType() {
     Axios.get("http://localhost:5000/getTypeScholar").then(response => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var tempPresetTypeList = presetTypeList;
       var databaseTypeList = response.data;
       // loop type from database
@@ -51,6 +56,10 @@ function CreateDetail () {
 
   function getDonator() {
     Axios.get("http://localhost:5000/getallDonator").then(response => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var tempDonatorList = presetDonatorList;
       var result = response.data
       if (result.length === 0)
@@ -77,74 +86,74 @@ function CreateDetail () {
 
       <div className="top">
         <div className="type">
-          <label>ประเภททุนการศึกษา</label>
-          { /* ----- SELECT INPUT ----- */
-            !scholarshipForm.isInputType &&
-            <select 
-              defaultValue={scholarshipForm.type}
-              onChange={(e) => {
-                if (e.target.value === '0') {
-                  setScholarshipForm({ ...scholarshipForm , typeAdd: '', isInputType: true })
-                } else {
-                  setScholarshipForm({ ...scholarshipForm , type: e.target.selectedOptions[0].text })
-                } 
-              }}
-              required
-            >
-              {
-                presetTypeList.map((presetType, presetTypeIndex) => (
-                  <option
-                    key={presetTypeIndex} 
-                    value={presetType.value}
-                  >
-                    {presetType.label}
-                  </option>
-                ))
-              }
-            </select>
-          }
-          { /* ----- TEXT INPUT ----- */
-            scholarshipForm.isInputType &&
-            <div className='input-button'>
-              <input 
+            <label>ประเภททุนการศึกษา</label>
+            { /* ----- SELECT INPUT ----- */
+              !scholarshipForm.isInputType &&
+              <select 
+                defaultValue={scholarshipForm.type}
                 onChange={(e) => {
-                  setScholarshipForm({
-                    ...scholarshipForm,
-                    typeAdd: e.target.value 
-                  })
-                }} 
-                type='text' 
-                placeholder='ทุนที่ต้องการ'
-              />
-              { 
-                // [TYPE INPUT] has data
-                scholarshipForm.typeAdd !== '' &&
-                <button onClick={() => {
-                  var tempTypeList = presetTypeList;
-                  tempTypeList.push({ label: scholarshipForm.typeAdd, value: scholarshipForm.typeAdd })
-                  setPresetTypeList(tempTypeList);
-                  setScholarshipForm({...scholarshipForm , type : scholarshipForm.typeAdd, typeAdd: '', isInputType: false})
-                }}>
-                  Add
-                </button>
-              }
-              { 
-                // [TYPE INPUT] is empty
-                scholarshipForm.typeAdd === '' &&
-                <button 
-                  onClick={() => {
+                  if (e.target.value === '0') {
+                    setScholarshipForm({ ...scholarshipForm , typeAdd: '', isInputType: true })
+                  } else {
+                    setScholarshipForm({ ...scholarshipForm , type: e.target.selectedOptions[0].text })
+                  } 
+                }}
+                required
+              >
+                {
+                  presetTypeList.map((presetType, presetTypeIndex) => (
+                    <option
+                      key={presetTypeIndex} 
+                      value={presetType.value}
+                    >
+                      {presetType.label}
+                    </option>
+                  ))
+                }
+              </select>
+            }
+            { /* ----- TEXT INPUT ----- */
+              scholarshipForm.isInputType &&
+              <div className='input-button'>
+                <input 
+                  onChange={(e) => {
                     setScholarshipForm({
                       ...scholarshipForm,
-                      isInputType: false
+                      typeAdd: e.target.value 
                     })
-                  }}
-                >
-                  X
-                </button>
-              }
-            </div>
-          }
-        </div>
+                  }} 
+                  type='text' 
+                  placeholder='ทุนที่ต้องการ'
+                />
+                { 
+                  // [TYPE INPUT] has data
+                  scholarshipForm.typeAdd !== '' &&
+                  <button onClick={() => {
+                    var tempTypeList = presetTypeList;
+                    tempTypeList.push({ label: scholarshipForm.typeAdd, value: scholarshipForm.typeAdd })
+                    setPresetTypeList(tempTypeList);
+                    setScholarshipForm({...scholarshipForm , type : scholarshipForm.typeAdd, typeAdd: '', isInputType: false})
+                  }}>
+                    Add
+                  </button>
+                }
+                { 
+                  // [TYPE INPUT] is empty
+                  scholarshipForm.typeAdd === '' &&
+                  <button 
+                    onClick={() => {
+                      setScholarshipForm({
+                        ...scholarshipForm,
+                        isInputType: false
+                      })
+                    }}
+                  >
+                    X
+                  </button>
+                }
+              </div>
+            }
+          </div>
 
         <div className="year">
           <label>ทุนประจำปีการศึกษา</label>
@@ -185,7 +194,7 @@ function CreateDetail () {
       </div>
   
       <div className="bottom">
-        <div className="bottom-1"> 
+        <div className="top"> 
           <div className="type">
             <label>ผู้สนับสนุน</label>
             { 
@@ -227,7 +236,7 @@ function CreateDetail () {
                 /* ----- NORMAL INPUT ----- */
                 scholarshipForm.isInputDonator &&
                 <div className='input-button'>
-                  <input className="add"
+                  <input 
                     onChange={(e) => {
                       setScholarshipForm({
                         ...scholarshipForm,
@@ -240,7 +249,7 @@ function CreateDetail () {
                   {  
                     // [DONATOR INPUT] has data
                     scholarshipForm.donatorAdd !== '' &&
-                    <button className='button-circle green1'
+                    <button 
                       // add 'Custom Donator' to preset
                       onClick={() => {
                         var tempTypeList = presetDonatorList;
@@ -255,13 +264,14 @@ function CreateDetail () {
                           donatorAdd : '',
                           isInputDonator : false
                         })
-                      }}
-                    ><i className="bi bi-plus-lg"></i></button>
+                      }}>
+                        Add
+                        </button>
                   }
                   { 
                     // [DONATOR INPUT] is empty
                     scholarshipForm.donatorAdd === '' &&
-                    <button className='button-circle red1'
+                    <button 
                       // back to 'Select Donator'
                       onClick={() => {
                         setScholarshipForm({
@@ -270,12 +280,12 @@ function CreateDetail () {
                       })
                     }}
                   >X</button>
-                }
-              </div>
+                  }
+                </div>
             }
           </div>
 
-          <div className="amount">
+          <div className="year">
             <label>จำนวนเงิน</label>
             <input type="number" min="0"  placeholder="จำนวนเงิน" required onChange={(event) => {setScholarshipForm({...scholarshipForm ,amount: event.target.value })}}></input>
           </div>   

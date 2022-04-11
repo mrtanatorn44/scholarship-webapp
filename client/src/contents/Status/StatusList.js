@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { WebContext } from '../../App.js';
 import { useContext,React, useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-function StatusList(props) {
+function StatusList() {
 
 	const {User,Content,TypeQuery} =useContext(WebContext)
   const [typeQuery, setTypeQuery] = TypeQuery;
@@ -16,16 +16,17 @@ function StatusList(props) {
 			user_id:user.id
 		}).then((response) => {
       if (response.data.errno) { // Check if Backend return error
-        console.log(response.data)
         Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
         return;
       }
+
 		  var result = response.data;
-      if (result.length !== 0) {
-        result.forEach((res, index) => {
-          getScholarship(res);
-        })
-      }
+      if (result.length === 0) return;
+
+      result.forEach((res, index) => {
+        getScholarship(res);
+      })
+      
     })
   }
 
@@ -34,10 +35,11 @@ function StatusList(props) {
       id : res.scholarship_id
     }).then((scholar) => {
       if (scholar.data.errno) { // Check if Backend return error
-        console.log(scholar.data)
         Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + scholar.data.errno, 'warning');
         return;
       }
+      
+      if (scholar.data.length === 0) return;
 
       var sch = scholar.data[0]
       Object.assign(res, {
@@ -66,10 +68,11 @@ function StatusList(props) {
       id: donatorID
     }).then((donator) => {
       if (donator.data.errno) { // Check if Backend return error
-        console.log(donator.data)
         Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + donator.data.errno, 'warning');
         return;
       }
+
+      if (donator.data.length === 0) return;
       Object.assign(res, {
         donator : donator.data[0].name,
       });
@@ -79,10 +82,10 @@ function StatusList(props) {
   }
 
   const onHandleDeleteFormBtn = (formID) => {
-    console.log(formID);
+    // console.log(formID);
     Swal.fire({
       title: 'คุณแน่ใจหรือไม่?',
-      text: "ที่จะยกเลิกการสะมักทุนนี้!",
+      text: "ที่จะยกเลิกการสมัครทุนนี้!", 
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#03A96B',
@@ -93,6 +96,10 @@ function StatusList(props) {
       if (result.isConfirmed) {
           Axios.post("http://localhost:5000/deleteForm", { id : formID })
           .then((response) => { 
+            if (response.data.errno) { // Check if Backend return error
+              Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+              return;
+            }
             setFormList([]);
             getUserForm();
             Swal.fire('ลบประกาศเรียบร้อย!','','success')
@@ -122,17 +129,17 @@ function StatusList(props) {
           <div className="list3"> 
             <div className="list3-left">
               {/* HEADER */}
-              <div className='box30 text1'>
+              <div className='w30 text1'>
                 <h4>{form.sch_type}</h4>
               </div>
               {/* sch_detail */}
-              <div className='box40 text1'>
+              <div className='w40 text1'>
                 <h6>ทุนประจำปีการศึกษา {form.sch_on_year } {form.sch_on_term}</h6>
                 <p>{getDateFormat(form.sch_open_date.split('-'))} - {getDateFormat(form.sch_close_date.split('-'))}</p>
               </div>
           
               {/* PANEL */}
-              <div className='panel2 box30'>
+              <div className='panel2 w30'>
                 <div className='admin-panel2'>
                   {/* FOR SPACING */}
                 </div>
@@ -158,7 +165,7 @@ function StatusList(props) {
                 <div className='admin-panel2'>
                   {
                     // รออนุมัติ หรือสำเร็จ จะยกเลิกไม่ได้
-                    (form.status !== 3 || form.status !== 4 ) &&
+                    form.status !== 4  && form.status !== 3 && form.status !== 0 &&
                     <button 
                       className='button-admin3 orange1'
                       onClick={
@@ -312,14 +319,16 @@ function StatusList(props) {
                 </span>
 
                 <span>
-                  <b>คุณสมบัติ</b>
-                  <p>1. เกรดเฉลี่ยสะสม {form.sch_attr_requirement.min_gpa}</p>
-                  <p>2. สำหรับนิสิตตั้งแต่รหัส {form.sch_attr_requirement.min_nisit_id} ขึ้นไป</p>
-                  <p>3. รหัสนิสิตไม่เกิน {form.sch_attr_requirement.max_nisit_id}</p>
-                  <p>4. มีความวิริยะอุตสาหะและมีความตั้งใจในการศึกษาเล่าเรียน</p>
-                  <p>5. มีความประพฤติเรียบร้อย ไม่เคยถูกลงโทษทางวินัย</p>
-                </span>
-
+                    <b>คุณสมบัติ</b>
+                    <br></br>
+                    <a>1. เกรดเฉลี่ยสะสม {form.sch_attr_requirement.min_gpa}</a>
+                    <br></br>
+                    <a>2. สำหรับนิสิตตั้งแต่รหัส{form.sch_attr_requirement.min_nisit_id} ขึ้นไป</a>
+                    <br></br>
+                    <a>3. รหัสนิสิตไม่เกิน {form.sch_attr_requirement.max_nisit_id}</a><br></br>
+                    <a>4. มีความวิริยะอุตสาหะและมีความตั้งใจในการศึกษาเล่าเรียน</a><br></br>
+                    <a>5. มีความประพฤติเรียบร้อย ไม่เคยถูกลงโทษทางวินัย</a><br></br><br></br>
+                  </span>
                 <span>
                   <b>เอกสารที่ต้องการ</b>
                   { 

@@ -49,7 +49,7 @@ function CreateFileForm (){
         { 
           fileForm.map((file, index) => (
             // EACH FILE
-            <div className="w100 d-flex" key={index}>
+            <div className="w100 mgb1 d-flex" key={index}>
               { /* ----- ORDER ----- */ }
               <div className="w10 text1 fs07"><b>ลำดับ {index+1}</b></div>
 
@@ -188,7 +188,7 @@ function CreateFileForm (){
         } 
 
         { /* ----- ADD NEW FILE OPTION ----- */ }
-        <div className='w100 d-flex'>
+        <div className='w100  d-flex'>
           <div className='w10'></div>
           <div className='w40'></div>
           <div className='w40'></div>

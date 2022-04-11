@@ -3,6 +3,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Axios from 'axios';
 import { WebContext } from '../../App.js';
+import Swal from 'sweetalert2';
 
 function MemberList(props){
 
@@ -17,6 +18,10 @@ function MemberList(props){
   
   const getUser = () =>{
     Axios.get("http://localhost:5000/getAllUser").then(response => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       setUser(response.data)
     })
   }

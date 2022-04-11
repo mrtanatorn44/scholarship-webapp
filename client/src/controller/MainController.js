@@ -42,7 +42,6 @@ function Main() {
       console.log('Loading Announce...')
       var start = new Date().getTime();
       Axios.get("http://localhost:5000/getAllAnnounce").then((response) => { 
-        console.log('res', response)
         var result = response.data===undefined?{}:response.data;
         if (result.length === 0) {
           result = [{ 

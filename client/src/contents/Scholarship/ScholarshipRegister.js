@@ -81,6 +81,10 @@ function ScholarshipListRegister(props) {
     Axios.post("http://localhost:5000/getProfile",{
       id: user.id
     }).then((response) => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var result = response.data[0];
       setProfile(JSON.parse(result.profile_data))
     })
@@ -117,7 +121,6 @@ function ScholarshipListRegister(props) {
           notation        : ""         
         }).then((response) => {
           if (response.data.errno) { // Check if Backend return error
-            console.log(response.data)
             Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
             return;
           }
@@ -135,7 +138,11 @@ function ScholarshipListRegister(props) {
     Axios.post("http://localhost:5000/getScholarship", {
       id : localStorage.getItem('scholarshipRegisterID_target')
       
-    }).then((response)=> {       
+    }).then((response)=> {  
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }     
       var result =  response.data[0];
       console.log('get scholar', result)
       setFileForm(JSON.parse(result.file_requirement))

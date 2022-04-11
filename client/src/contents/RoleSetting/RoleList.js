@@ -27,7 +27,6 @@ function RoleList(props){
     }).then(
       (response) => {
         if (response.data.errno) { // Check if Backend return error
-          console.log(response.data)
           Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
           return;
         }
@@ -40,6 +39,10 @@ function RoleList(props){
   }
   const getUser = () =>{
     Axios.get("http://localhost:5000/getAllUser").then(response => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       setUser(response.data)
     })
   }

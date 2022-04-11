@@ -23,16 +23,24 @@ function EditFileForm (){
   ])
   
   useEffect(() => {
-    setFileForm([
-      {
-        hashID : Math.random().toString(36).substr(2, 7),
-        title : "",
-        format :"",
-        isTyping : false,
-        customTitle: ""
+
+    // Add fileForm.title to preset titleList.label
+    fileForm.forEach((ff, ff_idx) => {
+      var isDupe = false;
+      titleList.forEach((tt, tt_idx) => {
+        if (ff.title !== tt.label) {
+          isDupe = true;
+          // console.log(ff.title, tt.label)
+        }
+      })
+      if (isDupe) {
+        titleList.push({label: ff.title, value: ff.title})
       }
-    ]);
+    })
+    
   }, [])
+
+
   return (
     <>
       <div className="heading">
@@ -40,20 +48,23 @@ function EditFileForm (){
       </div>
 
       <div className="subject">
-        <div className='setSubject'>
-          <p className='topics' > หัวข้อ</p>
-          <p className='typefile'>&nbsp;&nbsp;นามสกุลไฟล์</p>
+        <div className='w100 d-flex'>
+          <div className='w10'></div>
+          <div className='w40'>หัวข้อ</div>
+          <div className='w40'>นามสกุลไฟล์</div>
+          <div className='w10'></div>
         </div>
 
         {/* ----- FILE OPTION ----- */}
-        <div className="detail"> 
+        
           { 
             fileForm.map((file, index) => (
               // EACH FILE
-              <div className="file d-flex" key={index}>
-                <p className="order">ลำดับ {index+1}</p>
-
-                <div className="set-select d-flex">
+              <div className="w100 mgb1  d-flex" key={index}>
+                { /* ----- ORDER ----- */ }
+                <div className="w10 text1 fs07"><b>ลำดับ {index+1}</b></div>
+                { /* ----- File Name ----- */ }
+                <div className="w40 select2">
                   { 
                     // SELECT OPTION
                     !file.isTyping && 
@@ -144,10 +155,11 @@ function EditFileForm (){
                       }
                     </div>
                   }
-
-                  { /* ----- File Format ----- */ }
+                </div>
+                <div className="w40 select2">
+                { /* ----- File Format ----- */ }
                   <select 
-                    className="select-1" 
+                      
                     value={file.format}
                     onChange={(e) => {
                       if (e.target.value === '')
@@ -157,7 +169,7 @@ function EditFileForm (){
                     }} 
                     required
                   >
-                    { 
+                    {  
                       formatList.map((format, idx) => (
                         <option 
                           key={idx}
@@ -168,41 +180,50 @@ function EditFileForm (){
                       )) 
                     }
                   </select>
-
-                  {/* DELETE CURRENT INPUT */}
-                  <button 
-                    className="button-circle red1" 
-                    type='button' 
-                    onClick={() => {
-                      setFileForm((fileForm) => fileForm.filter((obj) => obj.hashID !== file.hashID))
-                    }}>
-                    <i className="bi bi-dash"></i>
-                  </button>
-                </div>
+                </div>  
+                 
+                {/* DELETE CURRENT INPUT */}
+                  <div className="w10">
+                    <button 
+                      className="button-circle red1" 
+                      type='button' 
+                      onClick={() => {
+                        setFileForm((fileForm) => fileForm.filter((obj) => obj.hashID !== file.hashID))
+                      }}
+                    >
+                      <i className="bi bi-dash"></i>
+                    </button>
+                  </div>
+                
               </div>
             )) 
           } 
-        </div>
+       
 
         { /* ----- ADD NEW FILE OPTION ----- */ }
-        <div className="button-add2">
-          <button 
-            className="button-circle green1" 
-            type='button' 
-            onClick={() => {
-              setFileForm([
-                ...fileForm, 
-                { 
-                  hashID      : Math.random().toString(36).substr(2, 7),
-                  title       : "", 
-                  format      : "",
-                  isTyping    : false,
-                  customTitle : ""
-                }
-              ])
-            }}>
-            <i className="bi bi-plus-lg"></i>
-          </button>
+        <div className="w100  d-flex">
+          <div className='w10'></div>
+          <div className='w40'></div>
+          <div className='w40'></div>
+          <div className='w10'>
+            <button 
+              className="button-circle green1" 
+              type='button' 
+              onClick={() => {
+                setFileForm([
+                  ...fileForm, 
+                  { 
+                    hashID      : Math.random().toString(36).substr(2, 7),
+                    title       : "", 
+                    format      : "",
+                    isTyping    : false,
+                    customTitle : ""
+                  }
+                ])
+              }}>
+              <i className="bi bi-plus-lg"></i>
+            </button>
+          </div>
         </div>
       </div>
     </>

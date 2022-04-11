@@ -59,9 +59,13 @@ function InterviewRate(props) {
   function getScholarshipForm() {
     Axios.post("http://localhost:5000/getForm", {
       id : localStorage.getItem('ApplicantID_target')
-    }).then((response)=> {      
+    }).then((response)=> {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }      
       var result =  response.data[0];
-      console.log(result); 
+      //console.log(result); 
       result.profile_detail = JSON.parse(result.profile_detail);
       setProfile(result.profile_detail); 
       result.file = JSON.parse(result.file);
@@ -72,9 +76,13 @@ function InterviewRate(props) {
       });
       Axios.post("http://localhost:5000/getScholarship", {
       id : result.scholarship_id
-    }).then((response)=> {       
+    }).then((response)=> {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }       
       var result =  response.data[0];
-      console.log(result);
+      //console.log(result);
       setRateForm(JSON.parse(result.interview_requirement)); 
     });
     });
@@ -108,14 +116,18 @@ function InterviewRate(props) {
           status  : 3,
           rate : JSON.stringify(rateForm)
         }).then((response) => {
-          setContent('Applicant');
+          if (response.data.errno) { // Check if Backend return error
+            Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+            return;
+          }
+          setContent('IntervieweeList');
           Swal.fire('บันทึกแล้ว!','','success')
-          console.log(response);
+          //console.log(response);
         });
       }
     })
   }
-  console.log(rateForm);
+  //console.log(rateForm);
 
   
   
@@ -374,6 +386,7 @@ function InterviewRate(props) {
                   <button className="button-confirm green1" type ='submit' >บันทึก</button>
                 </div>
               </div>
+              
           </form>       
         </div>        
       </div>

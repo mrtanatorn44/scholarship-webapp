@@ -2,13 +2,13 @@ import React, { useContext, useState, useEffect } from 'react';
 import ApplicantData from './ApplicantData';
 import { WebContext } from '../../App.js'; 
 import Axios from 'axios';
-
+import Swal from 'sweetalert2';
 function Applicant() {
 
-  const { Query , TypeQuery} = useContext(WebContext);
+  const { Query , TypeQuery,Content} = useContext(WebContext);
   const [query, setQuery] = Query;
   const [typeQuery, setTypeQuery] = TypeQuery;
-  
+  const [content, setContent] = Content;
   const [typeList,setTypeList] = useState([
     {label: 'ทุนทั้งหมด',      value: '0'},
     {label: 'ทุนเรียนดี',      value: '1'},
@@ -19,6 +19,10 @@ function Applicant() {
 
   const getTypeScholar = () =>{
     Axios.get("http://localhost:5000/getTypeScholar").then(response => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var tempTypeList = typeList;
       var result = response.data;
       result.forEach((res, index) => {  
@@ -77,7 +81,8 @@ function Applicant() {
             <h4>ตรวจสอบเอกสาร</h4>
           </div>
         </div>
-        <div className="right"></div>
+        <div className="right">
+        </div>
       </div> 
 
       <div className="contents">

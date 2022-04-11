@@ -78,21 +78,23 @@ app.post("/getUser", (req, res) => {
   );
 });
 
-app.post("/getUserRole", (req, res) => {
+
+app.post("/getUserRole",(req ,res)=>{
   const role = req.body.role;
-  const id = req.body.id;
   dbCon.query(
-    "UPDATE user SET role = ? WHERE role = ?",
-    [role, id], 
+    "SELECT * FROM user WHERE role = ?",
+    [role],
     (err, result) => {
-      if (err) {
+      if(err){
         res.send(err);
-      } else {
+      }else{
         res.send(result);
       }
     }
-  );
+  )
 });
+
+
 
 app.post("/addUser", (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -315,7 +317,7 @@ app.post("/getScholarship",(req ,res)=>{
 
 app.get("/getYearScholar", (req, res) => {
   dbCon.query(
-    "SELECT DISTINCT on_year FROM scholarship",
+    "SELECT DISTINCT on_year FROM scholarship ORDER BY on_year;",
     (err, result) => {
       if (err) {
         res.send(err);
@@ -329,6 +331,19 @@ app.get("/getYearScholar", (req, res) => {
 app.get("/getTypeScholar", (req, res) => {
   dbCon.query(
     "SELECT DISTINCT type FROM scholarship",
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.get("/getScholarship_Id", (req, res) => {
+  dbCon.query(
+    "SELECT DISTINCT scholarship_id FROM form",
     (err, result) => {
       if (err) {
         res.send(err);
@@ -373,6 +388,37 @@ app.post("/editScholarshipStatus", (req, res) => {
   dbCon.query(
     "UPDATE scholarship SET status=? WHERE id=?",
     [status, id], 
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/getScholarshipInterviewer", (req, res) => {
+  const id = req.body.id;
+  dbCon.query(
+    "SELECT interviewer FROM scholarship WHERE id=?",
+    [id], 
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/editScholarshipInterviewer", (req, res) => {
+  const id = req.body.id;
+  const interviewer = req.body.interviewer;
+  dbCon.query(
+    "UPDATE scholarship SET interviewer=? WHERE id=?",
+    [interviewer, id], 
     (err, result) => {
       if (err) {
         res.send(err);

@@ -86,7 +86,6 @@ function ScholarshipCreate() {
             name : scholarshipForm.donator
           }).then(response => {
             if (response.data.errno) { // Check if Backend return error
-              console.log(response.data)
               Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
               return;
             }
@@ -112,6 +111,10 @@ function ScholarshipCreate() {
         </div>
 
         <div className="right">
+        <button className='button-add d-flex' onClick={ () => {setContent('Scholarship')}}>
+          <i className='bi bi-arrow-left sky'></i>
+            <p>ย้อนกลับ</p>
+            </button>
         </div>
       </div>
       <div className = 'contents'> 
@@ -134,7 +137,7 @@ function ScholarshipCreate() {
             <div className="footer2">
               <div className="confirm">
                 <button className="button-confirm green1" type="submit">
-                  ตกลง 
+                  บันทึก 
                 </button>
               </div>
             </div>

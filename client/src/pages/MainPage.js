@@ -124,6 +124,7 @@ function MainPage() {
         return <InterviewApprovement/>
       case 'InterviewProfile':
         return <InterviewProfile/>
+      
         default:
         return <Announcement/>
     }
@@ -175,11 +176,11 @@ function MainPage() {
         const adminContent = [
           {icon: 'bi bi-megaphone'        , content: 'Announcement' , text: 'ประกาศข่าวสาร'},
           {icon: 'bi bi-pencil-square'    , content: 'Scholarship'  , text: 'ทุนที่เปิดให้ลงทะเบียน'},
-          {icon: 'bi bi-file-text'        , content: 'Report'       , text: 'รายงานทุน'},
           {icon: 'bi bi-clipboard-check'  , content: 'Applicant'    , text: 'ตรวจสอบเอกสาร'},
-          {icon: 'bi bi-gear'             , content: 'RoleSetting'  , text: 'กำหนดสิทธิ์การเข้าถึง'},
           {icon: 'bi bi-chat-square-text' , content: 'Interview'    , text: 'การสัมภาษณ์'},
-          {icon: 'bi bi-person-circle'    , content: 'Member'        , text: 'รายชื่อสมาชิก'}
+          {icon: 'bi bi-file-text'        , content: 'Report'       , text: 'รายงานทุน'},
+          {icon: 'bi bi-person-circle'    , content: 'Member'       , text: 'รายชื่อสมาชิก'},
+          {icon: 'bi bi-gear'             , content: 'RoleSetting'  , text: 'กำหนดสิทธิ์การเข้าถึง'},      
         ]
         return (
           <ul className="side-link"> {
@@ -205,6 +206,7 @@ function MainPage() {
       id    : user.id,
       role  : targetRole
     }).then(
+      
       (response) => {
         window.location.reload(false);
       }

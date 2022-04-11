@@ -48,7 +48,10 @@ function ProfileEdit() {
       id:user.id
     })
     .then((response) =>{
-      
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var binaryImage   = ''; // ArrayBuffer to Base64
       var bytes         = new Uint8Array( response.data[0].picture_data.data );
       var len           = bytes.byteLength;
@@ -229,7 +232,7 @@ function ProfileEdit() {
             </div>
             <div>
               <label>เบอร์โทรศัพท์</label><br></br>
-              <input type="tel"  placeholder="เบอร์โทรศัพท์" value = {profile.tel} onChange={(e)=>changeValue("tel",e.target.value)} required/>
+              <input className = "halfbar" type="tel" pattern="[0-9]{10}" minLength = "10" maxLength = "10"  placeholder="เบอร์โทรศัพท์" value = {profile.tel} onChange={(e)=>changeValue("tel",e.target.value)} required/>
             </div>
             <div>
               <label>อัพโหลดรูปโปรไฟล์</label><br></br>
@@ -252,11 +255,11 @@ function ProfileEdit() {
               <input placeholder="ชื่อภาษาไทย" value = {profile.name_father} onChange={(e)=>changeValue("name_father",e.target.value)} required/>
             </div>
             <div className="profile-fam d-flex">
-              <div className="fam1-edit">
+              <div className="fam-edit fam1">
                 <label>อายุ</label><br></br>
-                <input className = "halfbar" type="number" min="0" placeholder="อายุ" value = {profile.age_father} onChange={(e)=>changeValue("age_father",e.target.value)} required/>
+                <input className = "halfbar" type="number" min="0" max="120" placeholder="อายุ" value = {profile.age_father} onChange={(e)=>changeValue("age_father",e.target.value)} required/>
               </div>
-              <div className="fam2-edit">
+              <div className="fam-edit fam2">
                 <label>สถานะภาพ</label>
                 <select value = {profile.status_father} onChange={(e)=>changeValue("status_father",e.target.value)} required>
                   <option value="0">เลือก</option>
@@ -267,22 +270,22 @@ function ProfileEdit() {
             </div>
             
             <div className="profile-fam d-flex">
-              <div className="fam1-edit">
+              <div className="fam-edit fam1">
                 <label>อาชีพ</label><br></br>
                 <input className = "halfbar" placeholder="ระบุอาชีพ" value = {profile.career_father} onChange={(e)=>changeValue("career_father",e.target.value)} required/>
               </div>
-              <div className="fam2-edit">
+              <div className="fam-edit fam2">
                 <label>เบอร์โทรศัพท์</label><br></br>
-                <input className = "halfbar" type="tel"  placeholder="ระบุเบอร์โทรศัพท์" value = {profile.tel_father} onChange={(e)=>changeValue("tel_father",e.target.value)} required/>
+                <input className = "halfbar" type="tel" pattern="[0-9]{10}" minLength = "10" maxLength = "10"  placeholder="ระบุเบอร์โทรศัพท์" value = {profile.tel_father} onChange={(e)=>changeValue("tel_father",e.target.value)} required/>
               </div>
             </div>
         
             <div className="profile-fam d-flex">
-              <div className="fam1-edit">
+              <div className="fam-edit fam1">
                 <label>รายได้ต่อเดือน</label><br></br>
                 <input className = "halfbar" type="number" min="0" placeholder="ระบุรายได้ต่อเดือน" value = {profile.income_father} onChange={(e)=>changeValue("income_father",e.target.value)} required/>
               </div>
-              <div className="fam2-edit">
+              <div className="fam-edit fam2">
                 <label>สถานที่ประกอบอาชีพ</label><br></br>
                 <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" value = {profile.place_of_work_father} onChange={(e)=>changeValue("place_of_work_father",e.target.value)} required/>
               </div>
@@ -301,11 +304,11 @@ function ProfileEdit() {
               <input className = "halfbar" placeholder="ชื่อ-สกุล(มารดา)" value = {profile.name_mother} onChange={(e)=>changeValue("name_mother",e.target.value)} required/>
             </div>
             <div className="profile-fam d-flex">
-              <div className="fam1-edit">
+              <div className="fam-edit fam1">
                 <label>อายุ</label><br></br>
-                <input className="halfbar" type="number" min="0" placeholder="อายุ" value = {profile.age_mother} onChange={(e)=>changeValue("age_mother",e.target.value)}  required/>
+                <input className="halfbar" type="number" min="0" max="120" placeholder="อายุ" value = {profile.age_mother} onChange={(e)=>changeValue("age_mother",e.target.value)}  required/>
               </div>
-              <div className="fam2-edit">
+              <div className="fam-edit fam2">
                 <label>สถานะภาพ</label>
                 <select  value = {profile.status_mother} onChange={(e)=>changeValue("status_mother",e.target.value)}  required>
                   <option value="0">เลือก</option>
@@ -316,22 +319,22 @@ function ProfileEdit() {
             </div>
 
             <div className="profile-fam d-flex">
-              <div className="fam1-edit">
+              <div className="fam-edit fam1">
                 <label>อาชีพ</label><br></br>
                 <input className = "halfbar" placeholder="ระบุอาชีพ" value = {profile.career_mother} onChange={(e)=>changeValue("career_mother",e.target.value)} required/>
               </div>
-              <div className="fam2-edit">
+              <div className="fam-edit fam2">
                 <label>เบอร์โทรศัพท์</label><br></br>
-                <input className = "halfbar" type="tel"  placeholder="ระบุเบอร์โทรศัพท์" value = {profile.tel_mother} onChange={(e)=>changeValue("tel_mother",e.target.value)} required/>
+                <input type="tel" pattern="[0-9]{10}" placeholder="เบอร์โทรศัพท์ " value = {profile.tel_mother} onChange={(e)=>changeValue("tel_mother",e.target.value)} required/>
               </div>
             </div>
 
             <div className="profile-fam d-flex">
-              <div className="fam1-edit">
+              <div className="fam-edit fam1">
                 <label>รายได้ต่อเดือน</label><br></br>
                 <input className = "halfbar" type="number" min="0" placeholder="ระบุรายได้ต่อเดือน" value = {profile.income_mother} onChange={(e)=>changeValue("income_mother",e.target.value)} required/>
               </div>
-              <div className="fam2-edit">
+              <div className="fam-edit fam2">
                 <label>สถานที่ประกอบอาชีพ</label>
                 <input className = "halfbar" placeholder="สถานที่ประกอบอาชีพ" value = {profile.place_of_work_mother} onChange={(e)=>changeValue("place_of_work_mother",e.target.value)} required/>
               </div>

@@ -3,7 +3,7 @@ import ApplicantList from '../Applicant/ApplicantData';
 import InterviewData from './InterviewData.js';
 import { WebContext } from '../../App.js'; 
 import Axios from 'axios';
-
+import Swal from 'sweetalert2';
 function Interview() {
 
   const { Query,TypeQuery } = useContext(WebContext);
@@ -19,6 +19,10 @@ function Interview() {
   var dataTypeList = ['ทุนเรียนดี', 'ทุนกิจกรรมเด่น', 'ทุนขาดคุณทรัพย์']
   const getTypeScholar = () =>{
     Axios.get("http://localhost:5000/getTypeScholar").then(response => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       var tempTypeList = typeList;
       var result = response.data;
       result.forEach((res, index) => {  

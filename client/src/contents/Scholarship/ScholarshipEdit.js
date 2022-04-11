@@ -39,6 +39,10 @@ function ScholarshipEdit() {
       file_requirement        : JSON.stringify(fileForm),
       interview_requirement   : JSON.stringify(rateForm)
     }).then((response) => {
+      if (response.data.errno) { // Check if Backend return error
+        Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+        return;
+      }
       setContent('Scholarship');
       Swal.fire('บันทึกแล้ว!','','success')
     })
@@ -59,6 +63,10 @@ function ScholarshipEdit() {
       if (result.isConfirmed) {
         var donator_id;
         Axios.get("http://localhost:5000/getallDonator").then(response => {
+          if (response.data.errno) { // Check if Backend return error
+            Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+            return;
+          }
           var result = response.data
           result.forEach((res, index) => {  
             console.log(res.name)
@@ -77,6 +85,10 @@ function ScholarshipEdit() {
           Axios.post("http://localhost:5000/addDonator", {
             name : scholarshipForm.donator
           }).then(response => {
+            if (response.data.errno) { // Check if Backend return error
+              Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+              return;
+            }
             console.log('not Exist Donator :', scholarshipForm.donator, response.data.insertId)
             insertScholarshipToDB(response.data.insertId);
           })
@@ -99,6 +111,12 @@ function ScholarshipEdit() {
         </div>
 
         <div className="right">
+      
+          <button className='button-add d-flex' onClick={ () => {setContent('Scholarship')}}>
+            <i className='bi bi-arrow-left sky'></i>
+            <p>ย้อนกลับ</p>
+            </button>
+        
 
         </div>
 

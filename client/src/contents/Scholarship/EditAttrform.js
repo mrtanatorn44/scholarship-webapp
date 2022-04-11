@@ -16,7 +16,7 @@ function EditAttrform (){
       }
     );
   }, [])
-  console.log(attrForm);
+
   return (
     <>
       <div className="heading">

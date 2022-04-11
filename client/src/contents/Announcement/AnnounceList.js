@@ -29,6 +29,10 @@ function AnnounceList() {
       if (result.isConfirmed) {
         if (user.role === 'admin') {
           Axios.post("http://localhost:5000/deleteAnnounce", { id : newsID }).then((response) => { 
+            if (response.data.errno) { // Check if Backend return error
+              Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
+              return;
+            }
             setAnnounce([]);
             Swal.fire('ลบประกาศเรียบร้อย!','','success')
           })

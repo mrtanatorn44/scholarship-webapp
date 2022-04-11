@@ -6,84 +6,109 @@ import Aplicants from '../../data/datanews.js';
 import { WebContext } from '../../App';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
-import SweetAlert2 from 'react-sweetalert2';
 
 function InterviewData(){
-  const { User,Query,TypeQuery } = useContext(WebContext);
+  const { User,Query,TypeQuery,AllScholarship } = useContext(WebContext);
   const [typeQuery, setTypeQuery] = TypeQuery;
-
+  const [ interview, setInterview ] = useState([{}]);
+  const [allScholarship, setAllScholarship] = AllScholarship;
+  
+  const [ itvSelected, setItvSelected] = useState([]);
   const { Content } = useContext(WebContext)
   const [content, setContent] = Content;
   const [user,setUser] = User;
   const [ScholarshipList, setScholarshipList] = useState([])
   
-  function getScholarshipList () {
-    Axios.get("http://localhost:5000/getAllScholarship").then((response) => { 
-      var result = response.data;
+  // function getScholarshipList () {
+  //   Axios.get("http://localhost:5000/getAllScholarship").then((response) => { 
+  //     var result = response.data;
+  //     // filter on scholarship that are open for register
+  //     if (user.role === 'student' || user.role === 'interviewer') {
+  //       result = result.filter((scholarship) => scholarship.status === 1)
+  //     }
 
-      // filter on scholarship that are open for register
-      if (user.role === 'student' || user.role === 'interviewer') {
-        result = result.filter((scholarship) => scholarship.status === 1)
-      }
-
-      if (result.length !== 0) {
-        result.forEach((res, index) => {
-          Axios.post("http://localhost:5000/getDonator",{ 
-            id: res.donator_id 
-          }).then(async(donator) => {
-            Object.assign(res, {
-              id                : res.id,
-              status            : res.status,
-              type              : res.type,
-              detail            : res.detail,
-              amount            : res.amount,
-              on_year           : res.on_year,
-              on_term           : res.on_term,
-              open_date         : res.open_date.split("T")[0],
-              close_date        : res.close_date.split("T")[0],
-              donator_id        : res.donator_id,
-              donator           : donator.data[0].name,
-              attr_requirement  : JSON.parse(res.attribute_requirement),
-              file_requirement  : JSON.parse(res.file_requirement),
-              interview_requirement   : JSON.parse(res.interview_requirement),
-              appointment       : JSON.parse(res.appointment),
-              toggleContent     : false
-            });
-          })
-        });
-      }
-      setScholarshipList(result);
-    })
-  }
+  //     if (result.length !== 0) {
+  //       result.forEach((res, index) => {
+  //         Axios.post("http://localhost:5000/getDonator",{ 
+  //           id: res.donator_id 
+  //         }).then(async(donator) => {
+  //           //interviewer       : JSON.parse(res.interviewer),
+  //           Object.assign(res, {
+  //             id                : res.id,
+  //             status            : res.status,
+  //             type              : res.type,
+  //             detail            : res.detail,
+  //             amount            : res.amount,
+  //             on_year           : res.on_year,
+  //             on_term           : res.on_term,
+  //             open_date         : res.open_date.split("T")[0],
+  //             close_date        : res.close_date.split("T")[0],
+  //             donator_id        : res.donator_id,
+  //             donator           : donator.data[0].name,
+  //             attr_requirement  : JSON.parse(res.attribute_requirement),
+  //             file_requirement  : JSON.parse(res.file_requirement),
+  //             interview_requirement   : JSON.parse(res.interview_requirement),
+  //             appointment       : JSON.parse(res.appointment),
+  //             toggleContent     : false,
+  //             interviewer       : res.interviewer
+  //           });
+  //         })
+  //       });
+  //     }
+  //     setScholarshipList(result);
+      
+  //   })
+  // }
+  function getDateFormat(date) {
+		// [yyyy,mm,dd]
+		var month_th      = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+		return (parseInt(date[2])) + " " + month_th[parseInt(date[1], 10)] + " " + (parseInt(date[0]) + 543);
+  } 
 
   useEffect(() => {
-    getScholarshipList();
+    //getScholarshipList();
   }, [])
 
+  //console.log(typeQuery);
+
   return (
-    ScholarshipList.filter( scholarship => {
-      if (typeQuery=="ทุนทั้งหมด"){
+    allScholarship
+    .filter(scholarship => {
+      if 
+        (
+          user.role === 'interviewer' && 
+          scholarship.interviewer !== null &&  JSON.stringify(scholarship.interviewer).includes(user.email) &&
+          scholarship.status === 1
+        ) 
+      {
+        return scholarship;
+      }
+      if (user.role === 'admin')
+        return scholarship;
+    }).filter((scholarship) =>{
+      if(typeQuery==="" || typeQuery==="ทุนทั้งหมด"){
         return scholarship
-      } else if (scholarship.type.includes(typeQuery)){
+      }else if(scholarship.type===typeQuery){
         return scholarship
       }
-    }).map((scholarship, scholarship_index) => (
+    })                     
+    .map((scholarship, scholarship_index) => (
         <div key={scholarship_index}>
             
           <div className="list4"> 
             <div className="list4-left">
               {/* HEADER */}
-              <div className='box30 text1'>
+              <div className='w30 text1'>
                 <h5>{scholarship.type}</h5>
               </div>
               {/* DETAIL */}
-              <div className='box60 text1'>
+              <div className='w60 text1'>
                 <h6>ทุนประจำปีการศึกษา {scholarship.on_year } {scholarship.on_term}</h6>
-                <p>{scholarship.open_date.split("T")[0].split('-').reverse().join('/')} - {scholarship.close_date.split("T")[0].split('-').reverse().join('/')}</p>
+                <p>{getDateFormat(scholarship.open_date.split('-'))} - {getDateFormat(scholarship.close_date.split('-'))}</p>
               </div>
             
               {/* PANEL */}
-              <div className='panel2 box10'>
+              <div className='panel2 w10'>
                 <div className='admin-panel2'>
                   {/* FOR SPACING */}
                 </div>
@@ -183,7 +208,7 @@ function InterviewData(){
                             appointment : JSON.stringify(appointment_data)
                           }).then((response) => {
                             if (response.data.errno) { // Check if Backend return error
-                              console.log(response.data)
+                              // console.log(response.data)
                               Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
                               return;
                             }
@@ -277,11 +302,14 @@ function InterviewData(){
 
                   <span>
                     <b>คุณสมบัติ</b>
-                    <p>1. เกรดเฉลี่ยสะสม {scholarship.attr_requirement.min_gpa}</p>
-                    <p>2. สำหรับนิสิตตั้งแต่รหัส {scholarship.attr_requirement.min_nisit_id} ขึ้นไป</p>
-                    <p>3. รหัสนิสิตไม่เกิน {scholarship.attr_requirement.max_nisit_id}</p>
-                    <p>4. มีความวิริยะอุตสาหะและมีความตั้งใจในการศึกษาเล่าเรียน</p>
-                    <p>5. มีความประพฤติเรียบร้อย ไม่เคยถูกลงโทษทางวินัย</p>
+                    <br></br>
+                    <a>1. เกรดเฉลี่ยสะสม {scholarship.attr_requirement.min_gpa}</a>
+                    <br></br>
+                    <a>2. สำหรับนิสิตตั้งแต่รหัส {scholarship.attr_requirement.min_nisit_id} ขึ้นไป</a>
+                    <br></br>
+                    <a>3. รหัสนิสิตไม่เกิน {scholarship.attr_requirement.max_nisit_id}</a><br></br>
+                    <a>4. มีความวิริยะอุตสาหะและมีความตั้งใจในการศึกษาเล่าเรียน</a><br></br>
+                    <a>5. มีความประพฤติเรียบร้อย ไม่เคยถูกลงโทษทางวินัย</a><br></br><br></br>
                   </span>
 
                   <span>
