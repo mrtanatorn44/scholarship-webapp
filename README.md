@@ -1,4 +1,4 @@
-<h6>FOLDER\</h6>
+<h4>FOLDER\</h4>
 Folder 'client' is front-end.\
 Folder 'server' is back-end.
 
