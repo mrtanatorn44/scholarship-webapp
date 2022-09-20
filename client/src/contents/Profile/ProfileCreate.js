@@ -12,11 +12,7 @@ function ProfileCreate() {
   const { Content } = useContext(WebContext);
   const [user, setUser] = User;
   const [content, setContent] = Content;
-  const [form, setForm] = useState({
-    imageData:"",
-    imageName :""
-  })
-  //
+
   const [profile, setProfile]=useState({
     name:"",
     yearofstudy:"",
@@ -43,37 +39,9 @@ function ProfileCreate() {
     place_of_work_mother:"",
     tel_mother:"",
     status_marry:"",
-    gpa:""
+    gpa:"",
+    image:""
    })
-
-  function _arrayBufferToBase64( buffer ) {
-    var binary = '';
-    var bytes = new Uint8Array( buffer );
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-      binary += String.fromCharCode( bytes[ i ] );
-    }
-    return window.btoa( binary );
-  }
-
-  function onHandleUpload(e) {
-    var file = e.target.files[0];
-    if (file.size <= 1048576) {
-      var arrayBuffer;
-      var reader = new FileReader();
-      reader.onload = async function() {
-        arrayBuffer = reader.result;
-        setForm({
-          ...form,
-          imageData : _arrayBufferToBase64(arrayBuffer),
-          imageName : file.name,
-        })
-      }
-      reader.readAsArrayBuffer(file); 
-    } else {
-      Swal.fire('Limit Image Size!', 'รูปต้องมีขนาดไม่เกิน 1Mb', 'warning')
-    }
-  } 
 
   const changeValue = (name,value) => {
     setProfile(profile=> ({
@@ -103,8 +71,7 @@ function ProfileCreate() {
         Axios.post("http://localhost:5000/addProfile",{
         id            : user.id,
         profile_data  : JSON.stringify(profile),
-        picture_data  : form.imageData,
-        picture_name  : form.imageName
+        picture_data  : profile.imageData,
       })
       }
     })
@@ -197,15 +164,11 @@ function ProfileCreate() {
             </div>
             <div>
               <label>อัพโหลดรูปโปรไฟล์</label><br></br>
-              <input
-                type="file"
-                accept="image/jpeg,image/png"
-                name="file"
-                id="file"
-                onChange={
-                  (file) => onHandleUpload(file)
-                } 
-                required
+              <input 
+                type="text"
+                name="myfile"
+                value={profile.image}
+                onChange={(e)=>changeValue("image",e.target.value)}
               />
             </div>
 

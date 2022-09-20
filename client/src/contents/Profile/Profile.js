@@ -36,25 +36,16 @@ function Profile() {
         return;
       }
       var data = response.data[0];
-      //console.log('res', data)
-      //console.log(data)
       if (data === undefined) {
         return;
+      } else {
+        // setProfile
+        var res   = JSON.parse(data.profile_data);
+        res.image = data.picture_data; // add profile picture
+        setProfile(res)
       }
-      var binaryImage   = ''; // ArrayBuffer to Base64
-      var bytes         = new Uint8Array( data.picture_data.data );
-      var len           = bytes.byteLength;
-      for (var i = 0; i < len; i++) binaryImage += String.fromCharCode( bytes[ i ] );
-      // setProfile
-      var res   = JSON.parse(data.profile_data);
-      res.image = "data:image/png;base64," + binaryImage;
-      //console.log(res)
-      setProfile(res)
     })
   }
-  /* const data = [{profile_data}];
-  document.getElementById("json").inner */
-  
 
   const getUserForm = () => {
 		Axios.post("http://localhost:5000/getFormByUserID",{
@@ -110,8 +101,6 @@ function Profile() {
       }        
     })
   }
- 
-
 
   function getDateFormat(date) { // [yyyy,mm,dd]
     var month_th = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];

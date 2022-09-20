@@ -16,27 +16,11 @@ function AnnounceEdit(props) {
     title         : '',
     detail        : '',
     dateFormat    : '',
-    image         : '',
-    imageName     : '',
+    imageData         : '',
     imageModal    : false,
     toggleContent : true,
   })
 
-  /*
-  date: "2022-03-09T00:41:17.000Z"
-  dateFormat: "วันที่ 9 มีนาคม 2565"
-  detail: "test\ns\nets\nets\net\nsetset"
-  id: 225
-  image: "data:image/png;base64,/9j/4QAWRXhpZgAATU0AKgAAAAg
-  imageIsEmpty: false
-  imageModal: false
-  image_data: {type: 'Buffer', data: Array(144092)}
-  image_name: "58649 (1).jpg"
-  isEmpty: false
-  number: 0
-  title: "ดเ้ดเ้ด"
-  toggleContent: false
-  */
   function getAnnounceTarget() {
     var announceID = parseInt(localStorage.getItem('announceEditID_target'));
     var announceTarget = announce.filter(obj => {
@@ -48,13 +32,12 @@ function AnnounceEdit(props) {
       setContent('Announcement');
       return;
     }
+    console.log(announceTarget)
     setForm({
       ...form, 
       id          : announceTarget[0].id,
       title       : announceTarget[0].title,
       detail      : announceTarget[0].detail,
-      imageSrc    : announceTarget[0].imageSrc,
-      imageName   : announceTarget[0].imageName,
       imageData   : announceTarget[0].imageData,
       dateFormat  : announceTarget[0].dateFormat,
     })
@@ -62,36 +45,6 @@ function AnnounceEdit(props) {
   useEffect(() => {
     getAnnounceTarget();
   }, [])
-
-  function _arrayBufferToBase64( buffer ) {
-    var binary = '';
-    var bytes = new Uint8Array( buffer );
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-      binary += String.fromCharCode( bytes[ i ] );
-    }
-    return window.btoa( binary );
-  }
-
-  function onHandleUpload(e) {
-    var file = e.target.files[0];
-    if (file.size <= 1048576) {
-      var arrayBuffer;
-      var reader = new FileReader();
-      reader.onload = async function() {
-        arrayBuffer = reader.result;
-        setForm({
-          ...form,
-          imageSrc  : 'data:image/jpeg;base64,' + _arrayBufferToBase64(arrayBuffer),
-          imageData :  _arrayBufferToBase64(arrayBuffer),
-          imageName : file.name,
-        })
-      }
-      reader.readAsArrayBuffer(file); 
-    } else {
-      Swal.fire('Limit Image Size!', 'รูปต้องมีขนาดไม่เกิน 1Mb', 'warning')
-    }
-  }
 
   function onHandleSubmitBtn(e) {
     e.preventDefault();
@@ -110,8 +63,7 @@ function AnnounceEdit(props) {
           id          : form.id,
           title       : form.title,
           detail      : form.detail,
-          imageData   : form.imageName === '' ? '' : form.imageData,
-          imageName   : form.imageName
+          imageData   : form.imageData,
         }).then((response) => {
           if (response.data.errno) { // Check if Backend return error
             console.log(response.data)
@@ -179,18 +131,15 @@ function AnnounceEdit(props) {
               <textarea required type="text" defaultValue={form.detail} placeholder="รายละเอียดข่าวสาร" onChange={(e) => setForm({ ...form, detail: e.target.value })}/>
             </div>
             <div className="insertbutton">
-              <label className="green1" >
-                <input className="insert" type="file" accept="image/jpeg, image/png" name="file" id="file" onChange={(file) => onHandleUpload(file)} onClick={(e) => e.target.value=''}/>
-                <i className="bi bi-card-image"/>
-              </label>
-              <p> {form.imageName===""? "เพิ่มรูปภาพ": form.imageName } </p>
-              { /* DELETE IMAGE BTN */
-                form.imageName!=='' && 
-                <button className="button-circle red1" onClick={() => setForm({...form, imageSrc: '', imageData: '', imageName: ''})}>
-                  <i className="bi bi-x"/>
-                 
-                </button> 
-              }
+              <input 
+                required 
+                type="text" 
+                placeholder="ลิงค์รูป" 
+                defaultValue={form.imageData}
+                onChange={(e) => 
+                  setForm({ ...form, imageData: e.target.value })
+                }
+              />
             </div>
           </form>
           {/* ----- Preview ----- */} 
@@ -205,9 +154,9 @@ function AnnounceEdit(props) {
             </div>
             {/*---------- CONTENT ----------*/}
             { /* IMAGE */
-              !form.toggleContent && form.imageName!=='' &&
+              !form.toggleContent && form.imageData!=='' &&
               <div className='content-image'>
-                <img className='news-image' src={form.imageSrc} alt='scholarship promote' 
+                <img className='news-image' src={form.imageData} alt='scholarship promote' 
                   onClick = {() => { form.imageModal = true; setForm({...form}); }}/> 
               </div> 
             }
@@ -217,7 +166,7 @@ function AnnounceEdit(props) {
             }
             { /* MODAL POPUP IMAGE */
               form.imageModal && 
-              <Lightbox mainSrc={form.imageSrc} onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
+              <Lightbox mainSrc={form.imageData} onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
             } 
             {/*---------- BOTTOM ----------*/}
             <div className='bottom1'>
@@ -225,7 +174,7 @@ function AnnounceEdit(props) {
               </div>
               <div className='user-panel'>
                 { /* USER BUTTON */
-                  form.imageName!=='' &&
+                  form.imageData!=='' &&
                   <h3 onClick={() => setForm({...form, toggleContent: !form.toggleContent}) }>
                     { !form.toggleContent ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)" }
                   </h3> 

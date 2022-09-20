@@ -1,7 +1,7 @@
 /*eslint no-unused-vars:*/
 
 import React, { useContext } from 'react';
-import NewsList from './AnnounceList.js';
+import AnnounceList from './AnnounceList.js';
 import { WebContext } from '../../App';
 
 function Announcement(props) {
@@ -32,7 +32,7 @@ function Announcement(props) {
       </div>
       <div className="contents">
         <div className="content1">
-          <NewsList/>
+          <AnnounceList/>
         </div>
       </div>  
     </div>

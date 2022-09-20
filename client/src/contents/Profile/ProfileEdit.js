@@ -10,7 +10,6 @@ function ProfileEdit() {
   const { Content } = useContext(WebContext);
   const [user, setUser] = User;
   const [content, setContent] = Content;
-  const [form, setForm] = useState({ oldImage: '', newImage: '', imageName: '' })
 
   const[showModal, setShowModal] = useState(false);
   const [profile, setProfile]=useState({
@@ -41,53 +40,30 @@ function ProfileEdit() {
     status_marry:"",
     image:"",
     gpa:""
-   })
-  const getProfile = () => {
+  })
 
+  const getProfile = () =>{
+    if (user.id === undefined) {
+      console.log(user.id)
+      return;
+    }
     Axios.post("http://localhost:5000/getProfile",{
-      id:user.id
-    })
-    .then((response) =>{
+      id: user.id
+    }).then((response) => {
       if (response.data.errno) { // Check if Backend return error
         Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
         return;
       }
-      var binaryImage   = ''; // ArrayBuffer to Base64
-      var bytes         = new Uint8Array( response.data[0].picture_data.data );
-      var len           = bytes.byteLength;
-      for (var i = 0; i < len; i++) binaryImage += String.fromCharCode( bytes[ i ] );
-      var res = JSON.parse(response.data[0].profile_data);
-      setForm({...form, oldImage: binaryImage, imageSrc: "data:image/png;base64," + binaryImage});
-      setProfile(res)
-    })
-  }
-  function _arrayBufferToBase64( buffer ) {
-    var binary = '';
-    var bytes = new Uint8Array( buffer );
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode( bytes[ i ] );
-    }
-    return window.btoa( binary );
-  }
-  function onHandleUpload(e) {
-    var file = e.target.files[0];
-    if (file.size <= 1048576) {
-      var arrayBuffer;
-      var reader = new FileReader();
-      reader.onload = async function() {
-        arrayBuffer = reader.result;
-        var binImage = _arrayBufferToBase64(arrayBuffer);
-        setForm({
-          ...form,
-          newImage  :  binImage,
-          imageName : file.name,
-        })
+      var data = response.data[0];
+      if (data === undefined) {
+        return;
+      } else {
+        // setProfile
+        var res   = JSON.parse(data.profile_data);
+        res.image = data.picture_data; // add profile picture
+        setProfile(res)
       }
-      reader.readAsArrayBuffer(file); 
-    } else {
-      Swal.fire('Limit Image Size!', 'รูปต้องมีขนาดไม่เกิน 1Mb', 'warning')
-    }
+    })
   }
   
   const changeValue = (name, value) => {
@@ -118,13 +94,11 @@ function ProfileEdit() {
         Axios.post("http://localhost:5000/editProfile",{
         id            : user.id,
         profile_data  : JSON.stringify(profile),
-        picture_data  : form.newImage===''? form.oldImage:form.newImage,
-        picture_name  : form.imageName
+        picture_data  : profile.image,
       })
       }
     })
   }
-  
   
   useEffect(()=>{
     getProfile();
@@ -237,14 +211,10 @@ function ProfileEdit() {
             <div>
               <label>อัพโหลดรูปโปรไฟล์</label><br></br>
               <input 
-                type="file"
-                accept="image/jpeg,image/png"
+                type="text"
                 name="myfile"
-                onChange={
-                  (file) => {
-                    onHandleUpload(file)
-                  }
-                }
+                value={profile.image}
+                onChange={(e)=>changeValue("image",e.target.value)}
               />
             </div>
 

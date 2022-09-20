@@ -21,39 +21,9 @@ function AnnounceCreate(props) {
     detail        : '',
     dateFormat    : '',
     imageData     : '',
-    imageName     : '',
     imageModal    : false,
     toggleContent : true,
   })
-
-  function _arrayBufferToBase64( buffer ) {
-    var binary = '';
-    var bytes = new Uint8Array( buffer );
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-      binary += String.fromCharCode( bytes[ i ] );
-    }
-    return window.btoa( binary );
-  }
-
-  function onHandleUpload(e) {
-    var file = e.target.files[0];
-    if (file.size <= 1048576) {
-      var arrayBuffer;
-      var reader = new FileReader();
-      reader.onload = async function() {
-        arrayBuffer = reader.result;
-        setForm({
-          ...form,
-          imageData : _arrayBufferToBase64(arrayBuffer),
-          imageName : file.name,
-        })
-      }
-      reader.readAsArrayBuffer(file); 
-    } else {
-      Swal.fire('Limit Image Size!', 'รูปต้องมีขนาดไม่เกิน 1Mb', 'warning')
-    }
-  }
 
   function onHandleSubmitBtn(e) {
     e.preventDefault();
@@ -72,13 +42,11 @@ function AnnounceCreate(props) {
           title       : form.title,
           detail      : form.detail,
           imageData   : form.imageData,
-          imageName   : form.imageName
         }).then((response) => {
           if (response.data.errno) { // Check if Backend return error
             Swal.fire('Error!', 'ทำงานไม่สำเร็จ errno: ' + response.data.errno, 'warning');
             return;
           }
-          console.log(form.imageData)
           setAnnounce([]);
           setContent('Announcement');
           Swal.fire('Success!', 'บันทึกประกาศเรียบร้อย', 'success')
@@ -152,34 +120,14 @@ function AnnounceCreate(props) {
               />
             </div>
             <div className="insertbutton">
-              <label className="green1" >
-                <input 
-                  id="file" 
-                  className="insert green1" 
-                  type="file" 
-                  accept="image/jpeg, image/png" 
-                  name="file" 
-                  onChange={(file) => 
-                    onHandleUpload(file)
-                  } 
-                  onClick={(e) => 
-                    e.target.value=''
-                  }
-                />
-                <i className="bi bi-card-image"/>
-              </label>
-              <p> {form.imageName===""? "เพิ่มรูปภาพ": form.imageName } </p>
-              { 
-                form.imageName!=='' && 
-                <button 
-                  className="button-circle red1"  
-                  onClick={() => 
-                    setForm({...form, imageSrc: '', imageData: '', imageName: ''})
-                  }
-                >
-                  <i className="bi bi-x"/>
-                </button> 
-              }
+              <input 
+                required 
+                type="text" 
+                placeholder="ลิงค์รูป" 
+                onChange={(e) => 
+                  setForm({ ...form, imageData: e.target.value })
+                }
+              />
             </div>
           </form>
 
@@ -195,9 +143,9 @@ function AnnounceCreate(props) {
             </div>
             {/*---------- CONTENT ----------*/}
             { /* IMAGE */
-              !form.toggleContent && form.imageName!=='' &&
+              !form.toggleContent && form.imageData!=='' &&
               <div className='content-image'>
-                <img  className='news-image' src={ 'data:image/jpeg;base64,' + form.imageData } alt='scholarship promote' 
+                <img  className='news-image' src={ form.imageData } alt='scholarship promote' 
                   onClick = {() => { form.imageModal = true; setForm({...form}); }}/> 
               </div> 
             }
@@ -207,7 +155,7 @@ function AnnounceCreate(props) {
             }
             { /* MODAL POPUP IMAGE */
               form.imageModal && 
-              <Lightbox mainSrc={ 'data:image/jpeg;base64,' + form.imageData } onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
+              <Lightbox mainSrc={ form.imageData } onCloseRequest={() => { form.imageModal = false; setForm({...form}); }}/>
             }
             {/*---------- BOTTOM ----------*/}
             <div className='bottom1'>
@@ -215,7 +163,7 @@ function AnnounceCreate(props) {
               </div>
               <div className='user-panel'>
                 { /* USER BUTTON */
-                  form.imageName!=='' &&
+                  form.imageData!=='' &&
                   <h3 onClick={() => setForm({...form, toggleContent: !form.toggleContent}) }>
                     { !form.toggleContent ? "รายละเอียดเพิ่มเติม (แสดง)" : "รายละเอียดเพิ่มเติม (ซ่อน)" }
                   </h3> 

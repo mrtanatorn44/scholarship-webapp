@@ -36,7 +36,7 @@ function NewsListlogin(props) {
         { /* IMAGE */
           !news.toggleContent && !news.imageIsEmpty &&
           <div className='content-image'>
-            <img  className='news-image' src={ news.imageSrc } alt='scholarship promote' 
+            <img  className='news-image' src={ news.imageData } alt='scholarship promote' 
               onClick = {() => { news.ImageModal = true; setAnnounce([...announce]); }}/> 
           </div> 
         }
@@ -46,7 +46,7 @@ function NewsListlogin(props) {
         }
         { /* MODAL POPUP IMAGE */
           news.ImageModal && 
-          <Lightbox mainSrc={ news.imageSrc } onCloseRequest={() => { news.ImageModal = false; setAnnounce([...announce]); }}/>
+          <Lightbox mainSrc={ news.imageData } onCloseRequest={() => { news.ImageModal = false; setAnnounce([...announce]); }}/>
         }
 
         {/*---------- BOTTOM ----------*/}

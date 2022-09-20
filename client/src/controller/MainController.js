@@ -24,17 +24,6 @@ function Main() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content])
 
-  const arrayBufferToBase64 = (arrayBuffer) => {
-    var CHUNK_SIZE = 8*1024;
-    if (arrayBuffer.length <= CHUNK_SIZE)
-      return String.fromCharCode.apply(null, arrayBuffer);
-    var base64 = '';
-    for (var i = 0; i < arrayBuffer.length; i += CHUNK_SIZE)
-      base64 += String.fromCharCode.apply(null, arrayBuffer.slice(i, i+CHUNK_SIZE));
-    return base64;
-  }
-  /////////file Pdf/////////////
-  
   // Get Announce
   useEffect(() => {
 
@@ -47,7 +36,7 @@ function Main() {
           result = [{ 
             title         : "ไม่มีประกาศในขณะนี้", 
             isEmpty       : true,
-            imageSrc      : announce_empty,
+            imageData      : announce_empty,
             imageIsEmpty  : false,
             imageModal    : false,
             toggleContent : false,
@@ -59,12 +48,10 @@ function Main() {
             //console.log('idx:', index, 'size:', parseInt(JSON.stringify(res.image_data.data).length / 3.24 / 1024), 'KB', res )
             // Assign Usage Value
             Object.assign(res, {
-              imageSrc      : 'data:image/jpeg;base64,' + arrayBufferToBase64(res.image_data.data),
-              imageData     : arrayBufferToBase64(res.image_data.data),
-              imageName     : res.image_name,
-              imageIsEmpty  : res.image_data.data.length===0 ? true : false,
+              imageData      : res.image_data,
+              imageIsEmpty  : res.image_data.length===0 ? true : false,
               imageModal: false,
-              toggleContent : res.image_data.data.length===0 ? true : false,
+              toggleContent : res.image_data.length===0 ? true : false,
               dateFormat   : "วันที่ " + (parseInt(dmy[0])) + " " + month_th[parseInt(dmy[1], 10)] + " พ.ศ. " + (parseInt(dmy[2]) + 543)
             });
             // Delete Un-used Value

@@ -168,12 +168,11 @@ app.post("/addAnnounce", (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   const title = req.body.title;
-  const imageName = req.body.imageName;
   const imageData = req.body.imageData;
   const detail = req.body.detail;
   dbCon.query(
-    "INSERT INTO announce (title, detail, image_data, image_name) VALUES (?, ?, ?, ?)",
-    [title, detail, imageData, imageName],
+    "INSERT INTO announce (title, detail, image_data) VALUES (?, ?, ?)",
+    [title, detail, imageData],
     (err, result) => {
     if (err) { 
       res.send(err) 
@@ -190,11 +189,10 @@ app.post("/editAnnounce",(req ,res)=>{
   const id = req.body.id;
   const title = req.body.title;
   const detail = req.body.detail;
-  const imageName = req.body.imageName;
   const imageData = req.body.imageData;
   dbCon.query(
-    "UPDATE announce SET title=?, detail=?, image_data=?, image_name=? WHERE id=?",
-    [title, detail, imageData, imageName, id],
+    "UPDATE announce SET title=?, detail=?, image_data=? WHERE id=?",
+    [title, detail, imageData, id],
     (err, result) => {
       if(err){
         res.send(err);
@@ -250,10 +248,9 @@ app.post("/editProfile", (req, res)=>{
   const id            = req.body.id;
   const profile_data  = req.body.profile_data;
   const picture_data  = req.body.picture_data;
-  const picture_name  = req.body.picture_name;
   dbCon.query(
-    "UPDATE profile SET profile_data=?, picture_data=?, picture_name=? WHERE id=?",
-    [ profile_data, picture_data, picture_name, id ],
+    "UPDATE profile SET profile_data=?, picture_data=? WHERE id=?",
+    [ profile_data, picture_data, id ],
     (err, result) => {
       if (err) {
         res.send(err);
