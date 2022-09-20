@@ -11,9 +11,8 @@
 <h1>เตรียม DATABASE</h1>
 เชื่อม Back-end กับ Database ด้วย xampp Apache and MySQL.<br/>
 back-end ติดต่อบน localhost port 5000.<br/>
-*อย่าลืม import ไฟล์ 'scholarship_db.sql' เข้าไปยัง phpMyAdmin<br/>
-โดยให้ใช้ชื่อ table ว่า 'scholarship_webapp'<br/>
-*
+*อย่าลืม import ไฟล์ 'scholarship_webapp.sql' เข้าไปยัง phpMyAdmin<br/>
+โดยให้ใช้ชื่อ table ว่า 'scholarship_webapp'*<br/>
 
 <h1>เตรียม GOOGLE LOGIN API (สำคัญ)</h1>
 ในโฟลเดอร์ 'client/.env' จะมีตัวแปรชื่อ 'REACT_APP_GOOGLE_CLIENT_ID'.<br/>
